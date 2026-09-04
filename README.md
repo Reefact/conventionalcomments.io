@@ -23,6 +23,9 @@ sont arrêtés, l'implémentation Astro reste à faire.
 | [`docs/identite-fr.md`](./docs/identite-fr.md) | Positionnement, marque, les quatre règles, palette, typographie, composants, voix |
 | [`docs/decoupage-pages-fr.md`](./docs/decoupage-pages-fr.md) | Les onze routes de contenu, le bilinguisme, la navigation, ce qui reste à trancher |
 | [`docs/tokens.css`](./docs/tokens.css) | Jetons de design, trois états de thème, prêts à importer |
+| [`docs/mockups/`](./docs/mockups/) | Maquettes HTML autonomes de `/`, `/docs/labels/` et `/docs/adoption/` |
 
-Rendu visuel de la proposition (marque, spécimens, composants montés, mockup du premier
-écran) : <https://claude.ai/code/artifact/70e2f349-e416-41f3-8cce-0215c71dd668>
+Rendus publiés :
+
+- [Identité](https://claude.ai/code/artifact/70e2f349-e416-41f3-8cce-0215c71dd668) — marque, palette, spécimens, système de composants
+- [Pages](https://claude.ai/code/artifact/694a5694-3c66-49fc-b3dc-10fdc5c4611f) — les trois pages complètes, navigation active
