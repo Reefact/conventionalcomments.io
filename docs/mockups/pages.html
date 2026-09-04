@@ -297,10 +297,24 @@ ul.bul code { font-size:13px; color:var(--fg-2); }
              text-transform:uppercase; color:var(--fg-faint); font-variant-numeric:tabular-nums; }
 .tcell .md { font-family:var(--font-mono); font-size:13.5px; font-weight:600; color:var(--st); }
 .tcell .ds { font-size:12.5px; color:var(--fg-muted); line-height:1.45; }
+
+/* --- matrice de support (/platforms/) --- */
+.g18{gap:18px}
+.legend-row { display:flex; gap:10px; flex-wrap:wrap; }
+.st { display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono);
+      font-size:11px; letter-spacing:.02em; padding:2px 9px 3px; border-radius:2px; white-space:nowrap; }
+.st .dot { width:6px; height:6px; }
+.st.ok { background:var(--pass-soft);  color:var(--pass);  border:1px solid var(--pass); }
+.st.fb { background:var(--warn-soft);  color:var(--warn);  border:1px solid var(--warn); }
+.st.no { background:var(--block-soft); color:var(--block); border:1px solid var(--block); }
+.why { display:block; margin-top:6px; font-size:12px; line-height:1.45; color:var(--fg-muted); }
+.why code { font-size:11.5px; }
+table.t.wide { min-width:800px; }
 </style>
 
 <p class="mock-note">
-  <b>maquette —</b> trois pages complètes du système appliqué
+  <b>maquette —</b> quatre pages complètes du système appliqué
+  <b>·</b> accueil · plateformes · labels · adoption
   <b>·</b> la navigation d'en-tête et la barre latérale sont actives
   <b>·</b> contenu en anglais (locale racine) ; les routes <span style="color:var(--fg-muted)">/fr/</span> sont indiquées dans la barre d'adresse
 </p>
@@ -326,7 +340,7 @@ ul.bul code { font-size:13px; color:var(--fg-2); }
     </span>
     <nav class="snav">
       <button class="navlink" data-goto="home">how&nbsp;it&nbsp;holds:</button>
-      <button class="navlink">platforms:</button>
+      <button class="navlink" data-goto="platforms">platforms:</button>
       <button class="navlink" data-goto="labels">docs:</button>
     </nav>
     <span class="sp"></span>
@@ -533,6 +547,176 @@ it has to be dropped from the cache too.</div>
         </div>
         <div class="hero-btns">
           <button class="btn btn-p" data-goto="adoption">Adopt it in your team</button>
+          <button class="btn btn-s" data-goto="labels">Browse the labels</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+  <!-- =====================================================================
+       PAGE 4 — /platforms/
+       ================================================================== -->
+  <main data-page="platforms" hidden>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g18 measure">
+          <span class="eyebrow acc">platforms:</span>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Where it runs — and where it runs on a fallback.</h1>
+          <p class="lede">Two platforms, six editions, two browsers. Some of that is demonstrated. Some of it rests on an assumption we have not been able to establish on a real, authenticated instance — and each of those ships with a fallback already written into the code. This page says which is which.</p>
+        </div>
+
+        <div class="plat">
+          <div><span class="ph">GitHub</span><span class="pl">github.com<br>Enterprise Cloud<br>Enterprise Managed Users<br>Enterprise Server</span></div>
+          <div><span class="ph">Azure DevOps</span><span class="pl">Services<br>Server (self-hosted)</span></div>
+          <div><span class="ph">Browsers</span><span class="pl">Chromium — Manifest V3<br>Firefox — separate bundle<br>No remote code, ever</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">the matrix:</span>
+          <h2>Capability by platform</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Three states, and we use all three. A green row is demonstrated. An amber row means the assumption is open and a documented fallback is carrying it. A red row means the rule does not run on that platform at all.</p>
+        </div>
+
+        <div class="legend-row">
+          <span class="st ok"><span class="dot"></span>established</span>
+          <span class="st fb"><span class="dot"></span>on a fallback</span>
+          <span class="st no"><span class="dot"></span>not applied</span>
+        </div>
+
+        <div class="scroller">
+          <table class="t wide">
+            <thead><tr><th>Capability</th><th>GitHub</th><th>Azure DevOps</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Authoring toolbar, shortcuts, prefix insertion</td>
+                <td><span class="st ok"><span class="dot"></span>established</span></td>
+                <td><span class="st fb"><span class="dot"></span>on a fallback</span><span class="why">Editor type not confirmed on a real instance; <code>writeToTextField()</code> covers both a textarea and a rich editor.</span></td>
+              </tr>
+              <tr>
+                <td>Real-time validation and send guard</td>
+                <td><span class="st ok"><span class="dot"></span>established</span></td>
+                <td><span class="st ok"><span class="dot"></span>established</span></td>
+              </tr>
+              <tr>
+                <td>Reading <code>.conventional-comments.json</code> from the repository</td>
+                <td><span class="st ok"><span class="dot"></span>established</span></td>
+                <td><span class="st fb"><span class="dot"></span>on a fallback</span><span class="why">Read route unconfirmed. A failure returns <code>unreachable</code>: the extension assists without blocking, and says so.</span></td>
+              </tr>
+              <tr>
+                <td>Native suggestion block counted as an implicit label</td>
+                <td><span class="st ok"><span class="dot"></span>established</span></td>
+                <td><span class="st fb"><span class="dot"></span>on a fallback</span><span class="why">Info string unknown, so no implicit stage. An explicit <code>suggestion:</code> is still accepted.</span></td>
+              </tr>
+              <tr>
+                <td>Required status check on the pull request</td>
+                <td><span class="st ok"><span class="dot"></span>established</span><span class="why">Check run.</span></td>
+                <td><span class="st ok"><span class="dot"></span>established</span><span class="why">PR Status, referenced as <code>conventional-comments/compliance</code>.</span></td>
+              </tr>
+              <tr>
+                <td>Governed resolution — who is allowed to resolve a blocking thread</td>
+                <td><span class="st ok"><span class="dot"></span>established</span><span class="why"><code>resolvedBy</code> is exposed.</span></td>
+                <td><span class="st no"><span class="dot"></span>not applied</span><span class="why"><code>resolvedBy</code> is not exposed — a long-standing open request. Resolutions are accepted, and every evaluation carries <code>resolution-unattributed</code>.</span></td>
+              </tr>
+              <tr>
+                <td>Governed pull-request exemption</td>
+                <td><span class="st ok"><span class="dot"></span>established</span><span class="why">Label provenance is available.</span></td>
+                <td><span class="st fb"><span class="dot"></span>on a fallback</span><span class="why">Provenance is not exposed by the documented API. The §6.3.2 path is implemented end to end: admin endpoint, persisted exemption, label posted by the server.</span></td>
+              </tr>
+              <tr>
+                <td>Detection latency under 60&nbsp;s</td>
+                <td><span class="st ok"><span class="dot"></span>established</span><span class="why">Event channel.</span></td>
+                <td><span class="st fb"><span class="dot"></span>on a fallback</span><span class="why">Set <code>reconcileIntervalSeconds</code> to 60 or below. Above that, in <code>enforce</code>, the server emits a <code>config-warning</code>.</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout blk">
+          <span class="ct">the one thing that does not work on Azure DevOps</span>
+          <h4>Resolution attribution, and therefore the §6.1 governance rule.</h4>
+          <p>The platform does not tell us who resolved a thread. So the rule that only the comment's author — or a member of <code>resolverOverrideGroup</code> — may resolve it cannot be enforced there. Resolutions are honoured, and the status carries <code>resolution-unattributed</code> on every evaluation, so nobody has to discover this from a support ticket. It is stated here because a tech lead choosing between platforms deserves to know before adopting, not after.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="split">
+          <div class="stack g14">
+            <span class="eyebrow">permissions:</span>
+            <h2 style="font-size:24px">Out of the box, it runs on github.com and nowhere else.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">There is no <code>&lt;all_urls&gt;</code> in the required permissions, and one single content-script match. Azure DevOps, a GitHub Enterprise Server instance, an enterprise configuration host — each is an <em>optional</em> host permission, requested on demand and granted by you, then tagged with its platform on the options page.</p>
+            <p class="small">Two required permissions in total: <code>storage</code> for your own preferences, and <code>scripting</code>. No authentication token is stored. The extension CSP is <code>script-src 'self'</code> — no remote code can be loaded, which the packaging workflow verifies on every push.</p>
+          </div>
+          <div class="stack g10">
+            <span class="eyebrow">manifest.json:</span>
+            <div class="code"><span class="tk-k">"manifest_version"</span>: <span class="tk-v">3</span>,
+<span class="tk-k">"permissions"</span>: [<span class="tk-v">"storage"</span>, <span class="tk-v">"scripting"</span>],
+<span class="tk-k">"optional_host_permissions"</span>: [<span class="tk-v">"https://*/*"</span>],
+<span class="tk-k">"content_scripts"</span>: [<span class="tk-k">{</span>
+  <span class="tk-k">"matches"</span>: [<span class="tk-v">"https://github.com/*"</span>],   <span class="tk-cm">// ← the only one</span>
+  <span class="tk-k">"js"</span>: [<span class="tk-v">"content.js"</span>],
+  <span class="tk-k">"run_at"</span>: <span class="tk-v">"document_idle"</span>
+<span class="tk-k">}</span>],
+<span class="tk-k">"content_security_policy"</span>: <span class="tk-k">{</span>
+  <span class="tk-k">"extension_pages"</span>: <span class="tk-v">"script-src 'self'; object-src 'self'"</span>
+<span class="tk-k">}</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">enterprise server:</span>
+          <h2>One open item, and a failure mode chosen on purpose</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Which GitHub Enterprise Server DOM generations to target is still being settled. Selectors are written as chains with fallbacks, and covered by a multi-version smoke test.</p>
+        </div>
+        <div class="callout acc">
+          <span class="ct">when a selector stops matching</span>
+          <h4>The extension disables its own zone. It never touches the page it no longer understands.</h4>
+          <p>Selector degradation is a designed behaviour, not an accident: when the platform DOM moves under it, the affected zone goes quiet and the reason is reported, rather than the extension writing into an element it has misidentified. You lose assistance on that zone. You never lose the ability to use GitHub — and the server companion keeps judging, because it never depended on the DOM in the first place.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">how these claims stay true:</span>
+          <h2>Four checks, and one we deliberately do not run</h2>
+        </div>
+        <div class="scroller">
+          <table class="t">
+            <thead><tr><th>Check</th><th>Question it answers</th><th>When</th></tr></thead>
+            <tbody>
+              <tr><td class="m">browser&#8209;smoke</td><td class="d">Does the programmatic-write strategy still hold in a <em>current</em> Chromium — the one thing a simulated DOM cannot tell us?</td><td class="m d">daily, 04:17&nbsp;UTC</td></tr>
+              <tr><td class="m">mv3&#8209;smoke</td><td class="d">Does the packaged extension actually load in a real Chromium?</td><td class="m d">daily</td></tr>
+              <tr><td class="m">cors&nbsp;probes</td><td class="d">What is a content script allowed to read, and what needs the service-worker relay?</td><td class="m d">daily</td></tr>
+              <tr><td class="m">extension&#8209;package</td><td class="d">Does the bundle stay free of remote code, and do both manifests stay loadable?</td><td class="m d">every push to <code>packages/</code></td></tr>
+              <tr><td class="m" style="color:var(--fg-faint)">selector&nbsp;smoke</td><td class="d"><strong style="color:var(--fg-2)">Not run in CI.</strong> Checking selectors against the <em>real</em> platforms needs authenticated sessions. The harness exists and exits cleanly while no DOM captures are supplied — rather than reporting an assurance it does not have.</td><td class="m d">manual</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small measure">That last row is the honest one. A green tick on a test that cannot reach the thing it claims to test is worse than no test, because someone will believe it.</p>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="cta-in">
+        <div class="stack g8">
+          <h2>On GitHub today. On Azure DevOps with its fallbacks named.</h2>
+          <p class="small" style="color:var(--fg-2)">Start in <code style="font-family:var(--font-mono);font-size:.9em">assist</code> — nothing is required until you make it required.</p>
+        </div>
+        <div class="hero-btns">
+          <button class="btn btn-p" data-goto="adoption">Read the adoption guide</button>
           <button class="btn btn-s" data-goto="labels">Browse the labels</button>
         </div>
       </div>
@@ -857,6 +1041,7 @@ and this handler is deleted with it.</div>
 (function () {
   var ROUTES = {
     home:     { en: '/',                 fr: '/fr/' },
+    platforms:{ en: '/platforms/',        fr: '/fr/plateformes/' },
     labels:   { en: '/docs/labels/',     fr: '/fr/docs/labels/' },
     adoption: { en: '/docs/adoption/',   fr: '/fr/docs/adoption/' }
   };

@@ -1,10 +1,11 @@
 # Maquettes
 
-`pages.html` — trois pages complètes du site, dans un seul fichier autonome :
+`pages.html` — quatre pages complètes du site, dans un seul fichier autonome :
 
 | Route maquettée | Ce qu'elle éprouve |
 | --- | --- |
 | `/` | Le récit d'accueil, cadré tech lead : l'écart que l'extension ne peut pas combler, les deux composants, les deux critères, l'authoring, la trajectoire, la confidentialité |
+| `/platforms/` | Le support par plateforme, qui n'est pas binaire : établi / sur repli / non appliqué |
 | `/docs/labels/` | La densité de référence : 13 labels, décorations, table de précédence, 15 codes de diagnostic |
 | `/docs/adoption/` | La page opérationnelle : séquence, prérequis, retour arrière, indicateurs |
 
@@ -33,7 +34,8 @@ npx http-server docs/mockups -o /pages.html
   barre d'adresse mais le contenu français reste à écrire.
 - **Tout est vrai.** Couleurs, abréviations clavier, codes de diagnostic, table de
   précédence du §3.3, les deux critères du §6.2.1, les six indicateurs, les cinq prérequis
-  à `enforce` : chaque valeur vient du dépôt
+  à `enforce`, les hypothèses ouvertes du spike P1′ et leurs replis, le `manifest.json` :
+  chaque valeur vient du dépôt
   [`conventional-comments-toolkit`](https://github.com/Reefact/conventional-comments-toolkit).
   Une valeur qui change là-bas est fausse ici.
 - **Trois blocs sont des composants, pas des sections** : le badge de label (`.pill`), le
