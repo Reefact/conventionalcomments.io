@@ -1,0 +1,20 @@
+# En-têtes des assets statiques, lus par Cloudflare au déploiement.
+# https://developers.cloudflare.com/workers/static-assets/headers/
+#
+# Ce fichier n'est jamais servi lui-même : Workers le consomme et l'écarte.
+
+# Le schéma est la seule ressource du site consommée par des programmes plutôt que
+# par un navigateur qui visite la page.
+#
+#   Access-Control-Allow-Origin — un éditeur qui tourne DANS un navigateur (VS Code
+#   pour le web, github.dev, les bacs à sable Monaco) va le chercher en `fetch` depuis
+#   une autre origine. Sans cet en-tête, le navigateur refuse la réponse et l'éditeur
+#   perd l'autocomplétion sans dire pourquoi. Un schéma public n'a rien à protéger.
+#
+#   Cache-Control — par défaut Cloudflare envoie `max-age=0, must-revalidate` : un
+#   aller-retour à chaque ouverture de fichier, pour un document qui bouge deux fois
+#   par an. Une heure, en revalidant ensuite : une correction de description met au
+#   pire une heure à se propager, ce qui est le bon compromis pour une URL versionnée.
+/schema/*
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=3600, must-revalidate

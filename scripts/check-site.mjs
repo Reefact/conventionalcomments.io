@@ -28,6 +28,16 @@ function walk(dir, out = []) {
   }
   return out;
 }
+/** Tout ce qui est servi, quelle qu'en soit l'extension. */
+function walkAll(dir, out = []) {
+  for (const name of readdirSync(dir)) {
+    const p = join(dir, name);
+    if (statSync(p).isDirectory()) walkAll(p, out);
+    else out.push(p);
+  }
+  return out;
+}
+
 const pages = walk(DIST);
 ok(`${pages.length} pages produites`);
 
@@ -115,6 +125,36 @@ else {
   if (same) ok('/version et /version.json nomment le même build');
   else fail('/version et /version.json ne nomment pas le même build');
 }
+
+// ————— 6. Le schéma est servi, et il dit où il est servi —————
+// Son `$id` est la seule chaîne du dépôt qui prétend connaître sa propre URL publique.
+// Un déplacement de fichier la laisserait mentir sans que rien ne compile de travers, et
+// c'est un éditeur tiers qui le découvrirait — donc on la compare à l'adresse réelle.
+const SCHEMA = '/schema/v1.json';
+const schemaFile = join(DIST, SCHEMA.slice(1));
+if (!existsSync(schemaFile)) fail(`${SCHEMA} non servi`);
+else {
+  let schema;
+  try {
+    schema = JSON.parse(readFileSync(schemaFile, 'utf8'));
+  } catch (e) {
+    fail(`${SCHEMA} ne parse pas : ${e.message}`);
+  }
+  if (schema) {
+    const expected = `https://conventionalcomments.io${SCHEMA}`;
+    if (schema.$id !== expected) fail(`$id vaut ${schema.$id}, l'adresse servie est ${expected}`);
+    else ok(`${SCHEMA} servi, et son $id nomme son adresse`);
+  }
+}
+
+// ————— 7. Rien de la cuisine interne n'est servi —————
+// public/ est copié tel quel : un document de maintenance qu'on y dépose se retrouve en
+// ligne sans que personne ne l'ait décidé. Ça s'est produit une fois.
+for (const f of walkAll(DIST)) {
+  const rel = relative(DIST, f);
+  if (/\.(md|mjs|ts)$/.test(rel)) fail(`${rel} est servi — la place d'un document interne est docs/`);
+}
+ok('aucune source ni note de maintenance dans dist/');
 
 if (failures.length) {
   console.error('\n' + failures.map((f) => `  ✗ ${f}`).join('\n'));

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://conventionalcomments.io/schema/v1.json",
-  "$comment": "PROVISOIRE — transcription manuelle de packages/core/src/config/schema.ts. La cible est de générer ce fichier depuis le dépôt du toolkit, qui reste la source de vérité. Ne pas éditer à la main en comptant que ça survive : voir public/schema/README.md.",
+  "$comment": "Transcrit à la main de packages/core/src/config/schema.ts dans Reefact/conventional-comments-toolkit, qui fait foi. scripts/check-schema.mjs, dans Reefact/conventionalcomments.io, tient les deux en accord ; y lire docs/schema-fr.md avant d'éditer ce fichier. ($comment ne s'adresse qu'aux mainteneurs du schéma : draft-07 pose qu'il n'est pas présenté à l'utilisateur.)",
   "title": "Conventional Comments Toolkit — repository configuration",
   "description": "Schema for .conventional-comments.json, read from a repository's default branch by conventional-comments-toolkit. Transcribed from packages/core/src/config/schema.ts; the validator in that file remains authoritative. Unknown keys are ignored with a warning at runtime — this schema flags them so you see them while editing.",
   "type": "object",

@@ -146,9 +146,14 @@ Source : `packages/extension/src/ui/strings.ts`, `docs/store-listing-en.md`.
 ### `/schema/v1.json`
 
 **Le seul contenu du site qui serve tous les jours.** Aujourd'hui le `$schema` du toolkit
-pointe vers `https://conventional-comments-toolkit.dev/schema/v1.json`, un domaine qui ne
-répond pas. L'héberger ici donne l'autocomplétion et la validation dans l'éditeur à tout
-dépôt configuré.
+pointe vers `https://conventional-comments-toolkit.dev/schema/v1.json` : un domaine qui ne
+répond pas — une requête y échoue comme vers un domaine inventé, quand
+`conventionalcomments.org` répond 200 par le même chemin — et le dépôt du toolkit ne
+contient aucun fichier de schéma. L'héberger ici donne l'autocomplétion et la validation
+dans l'éditeur à tout dépôt configuré.
+
+Servi avec `Access-Control-Allow-Origin: *` (`public/_headers`), sans quoi un éditeur qui
+tourne dans un navigateur ne peut pas le lire. Détails : [`schema-fr.md`](./schema-fr.md).
 
 Décision à prendre côté toolkit, pas ici : si le schéma déménage, `$schema` change dans
 `.conventional-comments.example.json` **et** dans `specifications-fr.md` (ligne 1005).

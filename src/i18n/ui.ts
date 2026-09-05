@@ -23,6 +23,7 @@ type Dict = {
   docsGroup: string;
   refGroup: string;
   docsNav: Record<PageKey, string>;
+  jsonSchema: string;
   releaseNotes: string;
   footerIndependent: string;
   footerSpec: string;
@@ -50,6 +51,7 @@ export const UI: Record<Locale, Dict> = {
       troubleshooting: 'Troubleshooting',
       home: '', howitworks: '', platforms: '', privacy: '', releasenotes: '', version: '',
     },
+    jsonSchema: 'JSON schema ↗',
     releaseNotes: 'Release notes',
     footerIndependent: 'Independent tooling. The specification lives on',
     footerSpec: '; this site does not speak for it.',
@@ -79,6 +81,7 @@ export const UI: Record<Locale, Dict> = {
       troubleshooting: 'Diagnostic',
       home: '', howitworks: '', platforms: '', privacy: '', releasenotes: '', version: '',
     },
+    jsonSchema: 'schéma JSON ↗',
     releaseNotes: 'Notes de version',
     footerIndependent: 'Outillage indépendant. La spécification vit sur',
     footerSpec: `${NBSP}; ce site ne parle pas en son nom.`,
