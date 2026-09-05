@@ -155,6 +155,32 @@ Décision à prendre côté toolkit, pas ici : si le schéma déménage, `$schem
 
 Source : `packages/core/src/config/schema.ts`.
 
+### `/release-notes/v1/` · `/fr/notes-de-version/v1/`
+
+**Travail :** dire ce qui a changé, version après version, à qui met à jour.
+
+Reprend le modèle de [justdummies.io](https://justdummies.io/release-notes/lib/v1/) — le
+site frère, même pile Astro + Cloudflare : une colonne d'index à gauche, les versions de la
+plus récente à la plus ancienne, chacune avec sa date, sa maturité, une tagline en italique,
+et des rubriques `✨ Nouveautés` / `🐛 Corrections` / `🔧 Changements`.
+
+**La source existe déjà et est bilingue :** `docs/release-notes-1.x-fr.md` et
+`-en.md`, neuf versions rédigées pour le lecteur plutôt que dérivées des commits. Le
+`CHANGELOG.md` reste le relevé technique, lié depuis la page.
+
+**Différence assumée avec justdummies :** là-bas quatre paquets NuGet distincts justifient
+quatre « trains » de version dans la colonne de gauche. Ici tout sort sous un numéro unique
+— l'extension, le serveur et `core/` partagent `1.0.0-beta.N` — donc inventer des trains
+serait faux. La colonne de gauche porte l'index des versions de la page, ce qui est utile
+sur une page longue, et la ligne de version en tête. Elle accueillera des lignes
+supplémentaires le jour où les composants divergeront, ou à la v2.
+
+Le schéma de justdummies vaut d'être copié si la génération arrive : `index.json` +
+`majors/{train}-v{major}.{locale}.json`, avec `summaryHtml`, `sections[].label`,
+`sections[].anchor` et `items[]` en HTML.
+
+Source : `docs/release-notes-1.x-{fr,en}.md`, `CHANGELOG.md`.
+
 ### `/sitemap-index.xml` · `/robots.txt` · `/404`
 
 Sitemap généré par Astro, alternats `hreflang` inclus. La 404 renvoie vers `/docs/`, pas
