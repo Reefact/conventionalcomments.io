@@ -44,13 +44,24 @@ Source : `docs/architecture-fr.md`, `README.md` §2.
 
 ### `/platforms/` · `/fr/plateformes/`
 
-**Travail :** répondre à « est-ce que ça marche chez nous ».
+**Travail :** répondre à « est-ce que ça marche chez nous », et à rien d'autre.
 
-Matrice GitHub.com / GHEC / EMU / GHES et Azure DevOps Services / Server · Chromium et
-Firefox · **ce qui diffère sur Azure DevOps** : repli étiquettes du §6.3.2, latence de
-détection et la NFR 60 s.
+Ce qui est **disponible** — GitHub (github.com, Enterprise Cloud, EMU, Enterprise Server),
+Azure DevOps (Services, Server), les navigateurs · ce qui est **à venir** sans date promise
+(GitLab, Bitbucket) et l'invitation à demander le reste · ce qu'il faut pour démarrer
+(l'extension seule ne demande rien ; le serveur n'est utile qu'à qui veut la contrainte) ·
+sur quels domaines l'extension regarde.
 
-Source : `README.md`, `spikes/p1-prime/`.
+**Une page de disponibilité, pas une page d'aveux.** Une première version y étalait les
+hypothèses ouvertes du spike P1′ sous forme de matrice à trois états. C'était une lecture
+fausse du dépôt — le spike dit que « l'implémentation reste correcte tant qu'elles ne sont
+pas tranchées » — et surtout une faute commerciale : sur la page qui doit rassurer, écrire
+« une partie a été vérifiée pour de vrai » laisse entendre que le reste ne marche pas.
+
+Les limites réelles ont leur place, mais pas ici : elles vont en documentation, là où
+quelqu'un qui a déjà décidé vient chercher des faits.
+
+Source : `README.md`, `manifest.json`.
 
 ### `/privacy/` · `/fr/confidentialite/`
 

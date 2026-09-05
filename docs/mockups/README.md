@@ -6,7 +6,7 @@ seul fichier autonome :
 | Route maquettée | Ce qu'elle éprouve |
 | --- | --- |
 | `/` | Le récit d'accueil, humain d'abord : le ton qui ne s'écrit pas, les quatre malentendus, l'effort demandé au relecteur, la proportion visible — l'outil n'arrive qu'en sixième section |
-| `/platforms/` | Le support par plateforme, qui n'est pas binaire : établi / sur repli / non appliqué |
+| `/platforms/` | La disponibilité, et rien d'autre : ce qui marche, ce qui est à venir, ce qu'il faut pour démarrer |
 | `/docs/labels/` | La densité de référence : 13 labels, décorations, table de précédence, 15 codes de diagnostic |
 | `/docs/adoption/` | La page opérationnelle : séquence, prérequis, retour arrière, indicateurs |
 
