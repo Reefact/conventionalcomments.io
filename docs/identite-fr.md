@@ -193,7 +193,7 @@ quelles dans les deux thèmes du site.
 | `decision`   | 🏁    | `#936DD4` | toujours non-bloquant | `?de`  |
 | `typo`       | 🔤    | `#CC549C` | désactivé             | `?ty`  |
 | `polish`     | ✨    | `#0C8E9A` | désactivé             | `?po`  |
-| `quibble`    | 🫶    | `#61896C` | désactivé             | `?qui` |
+| `quibble`    | 🪶    | `#61896C` | désactivé             | `?qui` |
 
 Les émojis sont le champ `icon` de chaque label : **de la donnée produit, pas de
 l'ornement**. Ils n'apparaissent nulle part ailleurs sur le site.
