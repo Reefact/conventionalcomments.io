@@ -181,6 +181,37 @@ Le schéma de justdummies vaut d'être copié si la génération arrive : `index
 
 Source : `docs/release-notes-1.x-{fr,en}.md`, `CHANGELOG.md`.
 
+### `/version` · `/fr/version` — non liée, volontairement
+
+**Travail :** répondre à « qu'est-ce qui est en ligne, exactement ». Reprise de la page
+équivalente de justdummies.io.
+
+**Aucun lien du site n'y mène** — ni en-tête, ni pied de page, ni plan du site. On y arrive
+en tapant l'adresse. C'est une page d'exploitation, pas de contenu : elle sert à un
+mainteneur qui vérifie ce qu'un visiteur reçoit, pas à un visiteur.
+
+Trois faits, dans cet ordre : le **tag de release** dont vient ce build, le **commit** en
+entier avec ses sept premiers caractères lisibles, et l'**heure de build** en UTC. Puis ce
+que la dernière release a changé, puis les cinq précédentes, puis un lien vers les suivantes
+sur GitHub.
+
+**Deux règles reprises de justdummies, et qui sont l'essentiel :**
+
+1. **Le fichier est écrit par le build, depuis git — jamais par le job de déploiement.**
+   Le déploiement publie l'artefact qu'il a téléchargé et ne reconstruit rien, précisément
+   pour que rien n'atteigne la production sans avoir été vérifié. Un fichier écrit après la
+   vérification serait le seul octet de l'envoi qu'aucun contrôle n'aurait jamais vu.
+2. **La page et l'endpoint `/version.json` servent le même fichier.** Une page qui affiche
+   la version et un endpoint qui la sert ne doivent pas pouvoir nommer deux builds
+   différents.
+
+Corollaire : **chaque** build en produit un, pas seulement un build de release. Un fichier
+qui n'existe que parfois est un fichier que chaque lecteur doit tester ; et `release: null`
+dit « ceci n'est pas une release » plus utilement qu'un 404.
+
+Sur la maquette, le bouton `/version` est dans la barre de méta **hors du cadre**, avec les
+autres informations de maquette : il tient lieu de barre d'adresse, pas de lien du site.
+
 ### `/sitemap-index.xml` · `/robots.txt` · `/404`
 
 Sitemap généré par Astro, alternats `hreflang` inclus. La 404 renvoie vers `/docs/`, pas

@@ -1,6 +1,6 @@
 # Maquettes
 
-`pages.html` — **le site complet**, douze pages en anglais et en français, dans un seul
+`pages.html` — **le site complet**, treize pages en anglais et en français, dans un seul
 fichier autonome :
 
 | Route maquettée | Ce qu'elle éprouve |
@@ -17,6 +17,7 @@ fichier autonome :
 | `/docs/server/` | Docker, persistance, stockage, variables, et déclarer la vérification obligatoire |
 | `/docs/troubleshooting/` | Sept symptômes, leur cause, et s'il y a quelque chose à faire |
 | `/release-notes/v1/` | Les neuf versions publiées, avec leur tagline et leurs rubriques — sur le modèle de justdummies.io |
+| `/version` | Ce que le déploiement est : tag de release, commit, heure de build, et ce que la dernière release a changé. **Aucun lien du site n'y mène.** |
 
 La marque, la navigation d'en-tête, la barre latérale de documentation, les cartes de
 parcours, les liens de pagination et le **sélecteur EN / FR** sont actifs. Le sélecteur conserve la page courante ; la barre
