@@ -1,0 +1,109 @@
+---
+import Docs from '../../../layouts/Docs.astro';
+import { href } from '../../../i18n/routes';
+
+const lang = 'fr' as const;
+const page = 'adoption' as const;
+---
+<Docs lang={lang} page={page}
+  title="Adoption : assist → warn → enforce"
+  description="La séquence, les cinq prérequis, le retour arrière, et ce que l'étape de mesure mesure.">
+<div class="dhead stack g12">
+          <p class="crumb"><b>doc</b> / adoption</p>
+          <h1>Adoption&nbsp;: assist → warn → enforce</h1>
+          <p class="lede measure">Transformer la convention en condition de fusion, ça se décide&nbsp;: ça ne se coche pas. Voici dans quel ordre procéder, ce qu'il faut avoir en place avant, et comment revenir en arrière si ça se passe mal.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>La séquence</h2>
+          <div class="timeline">
+            <div class="tcell" style="--st:var(--fg-faint)"><span class="wk">semaine 0–2</span><span class="md">assist</span><span class="ds">Installer, laisser les gens s'en servir. Aucun statut publié, rien de mesuré.</span></div>
+            <div class="tcell" style="--st:var(--warn)"><span class="wk">semaine 2–6</span><span class="md">warn</span><span class="ds">Le serveur publie un statut qui n'échoue jamais. Vous avez désormais un taux de conformité.</span></div>
+            <div class="tcell" style="--st:var(--block)"><span class="wk">ensuite</span><span class="md">enforce</span><span class="ds">Un dépôt pilote. Prérequis tenus, retour arrière répété.</span></div>
+            <div class="tcell" style="--st:var(--accent)"><span class="wk">après</span><span class="md">généralisation</span><span class="ds">Élargi dépôt par dépôt, sur les chiffres du pilote.</span></div>
+          </div>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th>Réglage</th><th>Ce que fait l'extension</th><th>Ce que publie le serveur</th><th>Effet sur une PR</th></tr></thead>
+              <tbody>
+                <tr><td class="m">off</td><td class="d">Rien.</td><td class="d">Rien.</td><td class="d">Aucun.</td></tr>
+                <tr><td class="m">assist</td><td class="d">Aide à écrire, signale les erreurs. Ne bloque jamais.</td><td class="d">Rien.</td><td class="d">Aucun.</td></tr>
+                <tr><td class="m" style="color:var(--warn)">warn</td><td class="d">Identique à <code>assist</code>.</td><td class="d">Une vérification toujours verte, dont le détail liste ce qui n'allait pas.</td><td class="d">Visible, jamais bloquant.</td></tr>
+                <tr><td class="m" style="color:var(--block)">enforce</td><td class="d">Bloque l'envoi d'un commentaire non conforme.</td><td class="d">Une vérification qui échoue s'il reste un commentaire bloquant non traité.</td><td class="d">Fusion refusée.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small">Pour la personne qui écrit une revue, <code>assist</code> et <code>warn</code> sont exactement pareils&nbsp;: tout se joue côté serveur. C'est ce qui fait de <code>warn</code> une bonne étape de mesure — rien ne change dans le quotidien de l'équipe, donc rien ne vient fausser les chiffres.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Prérequis à <code style="font-size:.9em">enforce</code></h2>
+          <p>Trois valent partout. Deux s'ajoutent sur Azure DevOps.</p>
+          <ul class="tick">
+            <li><span class="mk">1</span><b><code>resolverOverrideGroup</code> est désigné</b><span class="tx">Sans ce groupe, les deux portes de sortie sont fermées&nbsp;: ni <code>decision</code>, ni exemption de pull request. Un point bloquant dont l'auteur est absent immobilise alors la PR, sans recours. Le serveur vous avertit à chaque évaluation tant que le groupe est vide.</span></li>
+            <li><span class="mk">2</span><b>La procédure de retour arrière est écrite, et son exécutant est désigné</b><span class="tx">Pas « quelqu'un s'en occupera ». Une personne nommée, avec accès au canal de configuration d'organisation et au point d'entrée d'administration du serveur. Voir plus bas.</span></li>
+            <li><span class="mk">3</span><b>Le check est déclaré obligatoire, et le contournement est interdit</b><span class="tx">GitHub&nbsp;: <em>Require status checks to pass</em> sur <code>conventional-comments</code>, plus <em>Do not allow bypassing the above settings</em>. Azure DevOps&nbsp;: une policy de branche <em>Status checks</em> sur <code>conventional-comments/compliance</code>, réglée sur <em>Block</em> plutôt que <em>Warn</em>. Sans la seconde option, les administrateurs peuvent passer outre — et la garantie ne vaut plus rien.</span></li>
+            <li><span class="mk n">4</span><b>Azure DevOps — l'exemption passe par le serveur</b><span class="tx">La plateforme ne dit pas qui a posé une étiquette&nbsp;: c'est donc le serveur qui pose celle d'exemption et garde la trace de qui l'a demandée. Rien à configurer, mais une exemption se demande par le point d'entrée d'administration, pas par un clic dans l'interface.</span></li>
+            <li><span class="mk n">5</span><b>Azure DevOps — la latence de détection respecte la cible de 60&nbsp;s</b><span class="tx">Sans notification en temps réel, le serveur doit repasser voir de lui-même au moins toutes les 60 secondes. Au-delà, il vous avertit&nbsp;: une PR resterait bloquée plus d'une minute après avoir été réglée.</span></li>
+          </ul>
+        </section>
+
+        <section class="dsec">
+          <h2>Retour arrière</h2>
+          <div class="callout blk">
+            <span class="ct">la seule chose à ne pas rater</span>
+            <h4>On redescend en <code>warn</code>. Jamais en <code>off</code>, jamais en <code>assist</code>.</h4>
+            <p>En <code>warn</code>, le serveur publie encore une vérification, mais toujours verte&nbsp;: toutes les pull requests repartent <em>tout de suite</em>, sans toucher à la protection de branche. <code>assist</code> et <code>off</code>, eux, ne publient plus rien du tout. Vous vous retrouvez alors avec une vérification déclarée obligatoire qui n'arrive jamais — et c'est <em>toute</em> l'organisation qui se bloque, jusqu'à ce que quelqu'un retire la protection dépôt par dépôt. En pleine panne, choisir <code>off</code> transforme le retour arrière en deuxième incident.</p>
+          </div>
+          <ul class="tick">
+            <li><span class="mk">1</span><b>Passer <code>mode</code> à <code>warn</code> dans la configuration d'organisation</b><span class="tx">Assouplir prend effet tout de suite, y compris sur les pull requests déjà ouvertes. Pas besoin d'attendre qu'elles se ferment.</span></li>
+            <li><span class="mk">2</span><b>Attendre — l'invalidation du cache est automatique</b><span class="tx">La configuration est relue toutes les 60 secondes. Dès qu'un réglage plus doux est détecté, tout le cache est vidé sans que vous ayez rien à faire. Si 60 secondes c'est encore trop long, un appel à <code>POST /admin/cache/invalidate</code> force l'effet immédiatement.</span></li>
+            <li><span class="mk">3</span><b>Vérifier qu'un statut <code>warn</code> vert réapparaît sur une PR témoin</b><span class="tx">Vérifiez sur une vraie pull request, pas dans le fichier de configuration.</span></li>
+          </ul>
+          <p class="small">L'objectif&nbsp;: revenir en arrière sur tous les dépôts en quelques minutes, sans avoir à intervenir dépôt par dépôt. Si votre procédure demande d'en faire le tour, ce n'est pas la bonne.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Ce que <code style="font-size:.9em">warn</code> mesure</h2>
+          <p>Six chiffres. Les deux premiers disent si le blocage est défendable&nbsp;; le dernier dit si on le contourne.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th>Indicateur</th><th>Ce que ça vous dit</th></tr></thead>
+              <tbody>
+                <tr><td class="m">complianceRate</td><td class="d">La part des commentaires écrits par des humains qui passent sans erreur. C'est le chiffre qui justifie, ou non, de passer au blocage.</td></tr>
+                <tr><td class="m">warningRate</td><td class="d">La part qui ne récolte que des avertissements. Un taux élevé mais stable n'est pas un problème&nbsp;: ils ne bloquent rien.</td></tr>
+                <tr><td class="m">labelDistribution</td><td class="d">Combien de fois chaque étiquette est employée. Si tout se concentre sur <code>note</code> et <code>nitpick</code>, c'est que l'équipe évite celles qui bloquent.</td></tr>
+                <tr><td class="m">serviceAccountShare</td><td class="d">La part des commentaires écrits par des robots. Vous dit si vos listes d'exemptions sont bien réglées.</td></tr>
+                <tr><td class="m">totalHumanComments</td><td class="d">Le dénominateur. Un pourcentage calculé sur douze commentaires ne veut rien dire.</td></tr>
+                <tr><td class="m" style="color:var(--warn)">decisionsInBlockingThreads</td><td class="d">À quelle fréquence la porte de sortie est utilisée. Si ça monte sans arrêt, c'est qu'on contourne le blocage au lieu de le satisfaire. À regarder avant d'élargir.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Ce qui change dans la configuration</h2>
+          <p>Une seule clé change d'une étape à l'autre. Tout le reste est stable.</p>
+          <pre class="code"><span class="tk-cm">// configuration d'organisation — le point de bascule</span>
+<span class="tk-k">&#123;</span>
+  <span class="tk-k">"version"</span>: <span class="tk-v">1</span>,
+  <span class="tk-k">"mode"</span>: <span class="tk-v">"warn"</span>,                    <span class="tk-cm">// assist → warn → enforce</span>
+  <span class="tk-k">"resolverOverrideGroup"</span>: [<span class="tk-v">"acme/tech-leads"</span>],
+  <span class="tk-k">"formatSeverity"</span>: <span class="tk-v">"warn"</span>,          <span class="tk-cm">// le critère 1 ne bloque pas</span>
+  <span class="tk-k">"exemptUsers"</span>: [<span class="tk-v">"dependabot[bot]"</span>, <span class="tk-v">"github-actions[bot]"</span>],
+  <span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>],
+  <span class="tk-k">"server"</span>: <span class="tk-k">&#123;</span> <span class="tk-k">"gracePeriodSeconds"</span>: <span class="tk-v">900</span>, <span class="tk-k">"reconcileIntervalSeconds"</span>: <span class="tk-v">900</span> <span class="tk-k">&#125;</span>
+<span class="tk-k">&#125;</span></pre>
+          <div class="callout">
+            <span class="ct">note de migration</span>
+            <p style="margin:0">La liste des commandes exemptées est <strong>vide par défaut</strong>. Avant, des commandes comme <code>/rebase</code> étaient reconnues toutes seules&nbsp;; ce n'est plus le cas. En mode bloquant, un <code>/rebase</code> est donc refusé comme n'importe quel commentaire tant que le dépôt ne l'a pas déclaré. Mettre <code>"/*"</code> réactive l'exemption pour toutes les commandes.</p>
+          </div>
+        </section>
+
+        <div class="pager">
+          <a class="pgl" href={href('labels', 'fr')}><span class="dir">← précédent</span><span class="ttl">Labels et décorations</span></a>
+          <a class="pgl" href={href('server', 'fr')} style="text-align:right"><span class="dir">suivant →</span><span class="ttl">Le serveur</span></a>
+        </div>
+      </div>
+    </div>
+</Docs>

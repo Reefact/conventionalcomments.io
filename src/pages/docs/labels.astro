@@ -1,0 +1,167 @@
+---
+import Docs from '../../layouts/Docs.astro';
+import { href } from '../../i18n/routes';
+
+const lang = 'en' as const;
+const page = 'labels' as const;
+---
+<Docs lang={lang} page={page}
+  title="Labels & decorations"
+  description="The thirteen labels, the decorations, the precedence rule that decides whether a comment blocks, and the fifteen diagnostics.">
+<div class="dhead stack g12">
+          <p class="crumb"><b>docs</b> / labels &amp; decorations</p>
+          <h1>Labels &amp; decorations</h1>
+          <p class="lede measure">Thirteen labels, three known decorations, and one precedence table that decides whether a comment blocks a merge. This page is the reference for all three.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>The grammar</h2>
+          <p>Every validated comment starts with a prefix line. Everything after the first blank line is discussion, and is never parsed.</p>
+          <div class="anno">
+            <pre class="line"><span class="tk-l">label</span> <span class="tk-d">[decorations]</span><span class="tk-c">:</span> subject
+
+<span class="tk-k">[discussion]</span></pre>
+            <div class="legend">
+              <i style="color:var(--accent)">■ label — required, lowercase</i>
+              <i>■ decorations — optional, comma-separated, in parentheses</i>
+              <i style="color:var(--block)">■ the pivot</i>
+            </div>
+          </div>
+          <p class="small">Casing is corrected rather than rejected: <code>Issue:</code> raises <code>W-CASE</code>, a warning that ships with a one-click fix.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>The thirteen labels</h2>
+          <p>Ten are enabled by default. Three — <code>typo</code>, <code>polish</code>, <code>quibble</code> — ship disabled; they're expressive variants of <code>todo</code>, <code>suggestion</code> and <code>nitpick</code>, and a repository enables them if it wants them.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead>
+                <tr><th>Label</th><th>What it says</th><th>Blocking</th><th>Key</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-praise)">🎉 praise</span></td><td class="d">Highlights something done well.</td><td class="m d">by decoration</td><td class="m">?pr</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-nitpick)">🔍 nitpick</span></td><td class="d">A trivial preference, with nothing at stake.</td><td class="m"><span class="deco nb">never</span></td><td class="m">?ni</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-suggestion)">💡 suggestion</span></td><td class="d">A reasoned proposal for improvement.</td><td class="m d">by decoration</td><td class="m">?su</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-issue)">🔨 issue</span></td><td class="d">A problem identified. Ideally paired with a suggestion.</td><td class="m"><span class="deco b">by default</span></td><td class="m">?i · ?ib</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-todo)">📌 todo</span></td><td class="d">A small but necessary change.</td><td class="m"><span class="deco b">by default</span></td><td class="m">?to</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-question)">❓ question</span></td><td class="d">A request for clarification on an uncertain point.</td><td class="m d">by decoration</td><td class="m">?que</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-thought)">💭 thought</span></td><td class="d">An idea that came up in review, with no action requested.</td><td class="m"><span class="deco nb">never</span></td><td class="m">?th</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-chore)">🧹 chore</span></td><td class="d">A side task to complete before acceptance.</td><td class="m"><span class="deco b">by default</span></td><td class="m">?ch</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-note)">📝 note</span></td><td class="d">Information worth knowing.</td><td class="m"><span class="deco nb">never</span></td><td class="m">?no</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-decision)">🏁 decision</span></td><td class="d">Records the choice <em>not</em> to address a point, and says why.</td><td class="m"><span class="deco nb">never</span></td><td class="m">?de</td></tr>
+                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-typo)">🔤 typo</span></td><td class="d">A typing mistake.</td><td class="m d">off by default</td><td class="m">?ty</td></tr>
+                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-polish)">✨ polish</span></td><td class="d">A finishing improvement.</td><td class="m d">off by default</td><td class="m">?po</td></tr>
+                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-quibble)">🪶 quibble</span></td><td class="d">A debatable detail.</td><td class="m d">off by default</td><td class="m">?qui</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small">Colours and icons are cosmetic by design: they're excluded from the configuration fingerprint and from the enterprise floor, so they can never make two verdicts diverge, and can never be locked by an administrator.</p>
+        </section>
+
+        <section class="dsec">
+          <h2><code style="font-size:.9em">decision</code> — the label this toolkit adds</h2>
+          <p><code>decision</code> is not in the original specification. It exists because <code>enforce</code> without a release valve is a trap: a blocking thread whose author has gone on leave would hold a pull request forever, with no recourse.</p>
+          <div class="split">
+            <div class="callout">
+              <span class="ct">it is judged where nothing else is</span>
+              <h4>The one label read in an unvalidated zone</h4>
+              <p>Thread replies aren't validated by default (<code>validateReplies: false</code>). A reply whose resolved label is <code>decision</code> is picked up anyway — otherwise the valve would only work in repositories that had already opted into validating replies.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">and it must be justified at length</span>
+              <h4><code>E-DECISION-SUBJECT</code>, an error — not a warning</h4>
+              <p>A <code>decision</code> reply must reach <code>minDecisionSubjectLength</code> — 20 characters by default — and that's the <em>only</em> length threshold that applies to it. Closing a blocking thread costs you a sentence explaining why. “wontfix” doesn't clear the bar.</p>
+            </div>
+          </div>
+          <pre class="code"><span class="tk-l">decision</span><span class="tk-c">:</span> out of scope for this PR, debt tracked in PROJ-142
+
+Agreed with the platform team on 3 Sep: the cache rewrite lands in Q4
+and this handler is deleted with it.</pre>
+          <p class="small">Who may record one is governed, not open: <code>resolverOverrideGroup</code> names the group whose members can override a resolution. Designating it is a hard prerequisite for <code>enforce</code> — an empty group makes both release valves inert at once.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Decorations</h2>
+          <p>Decorations qualify a label. Three are known to the product; free decorations are allowed by default and carry meaning for humans without changing the verdict.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th>Decoration</th><th>Forces</th><th>Meaning</th></tr></thead>
+              <tbody>
+                <tr><td class="m"><span class="deco b">blocking</span></td><td class="m" style="color:var(--block)">blocking</td><td class="d">Must be resolved before the subject under review is accepted.</td></tr>
+                <tr><td class="m"><span class="deco nb">non-blocking</span></td><td class="m" style="color:var(--pass)">non-blocking</td><td class="d">Must not prevent acceptance.</td></tr>
+                <tr><td class="m"><span class="deco nb">if-minor</span></td><td class="m" style="color:var(--pass)">non-blocking</td><td class="d">Resolve only if the change turns out to be trivial. The author decides.</td></tr>
+                <tr><td class="m"><span class="deco">security</span> <span class="deco">test</span> <span class="deco">ux</span></td><td class="m d">nothing</td><td class="d">Free decorations. Rendered, counted, indexed — never a verdict input. An organization defines its own.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small"><code>suggestion</code> and <code>question</code> written with no decoration at all raise <code>W-MISSING-DECORATION</code>: they're the two labels whose blocking intent a reader genuinely cannot guess.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Precedence — how blocking is resolved</h2>
+          <p>Five rules, evaluated in order. The first that matches decides. This table is the whole of it; there is no other input.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th>#</th><th>Condition</th><th>Result</th><th>Diagnostic</th></tr></thead>
+              <tbody>
+                <tr><td class="m num">1</td><td class="d">Label is <code>alwaysNonBlocking</code>, yet a decoration forces blocking</td><td class="m">the label's own default applies</td><td class="m" style="color:var(--block)">E-CONFLICT</td></tr>
+                <tr><td class="m num">2</td><td class="d">One decoration forces blocking <em>and</em> another forces non-blocking</td><td class="m">the label's own default applies</td><td class="m" style="color:var(--block)">E-CONFLICT</td></tr>
+                <tr><td class="m num">3</td><td class="d">A decoration forces blocking</td><td class="m" style="color:var(--block)">blocking</td><td class="m d">—</td></tr>
+                <tr><td class="m num">4</td><td class="d">A decoration forces non-blocking</td><td class="m" style="color:var(--pass)">non-blocking</td><td class="m d">—</td></tr>
+                <tr><td class="m num">5</td><td class="d">No forcing decoration</td><td class="m">the label's <code>blockingByDefault</code></td><td class="m d">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout">
+            <span class="ct">why a conflict still produces a verdict</span>
+            <p style="margin:0">Rules 1 and 2 raise an error, but they don't refuse to answer. A contradictory comment still resolves — to the label's default — because leaving a thread in an undefined blocking state would make criterion 2 unanswerable, and the pull request unmergeable for a reason nobody could act on.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Diagnostics</h2>
+          <p>Fifteen codes. <strong>Errors</strong> make a comment non-compliant, and only gate a merge when the repository sets <code>formatSeverity: "error"</code>. <strong>Warnings</strong> are counted and surfaced, never a cause of failure. Any code can be re-levelled — or silenced — per repository through <code>severities</code>.</p>
+          <div class="split">
+            <div class="scroller">
+              <table class="t">
+                <thead><tr><th style="color:var(--block)">error</th><th>raised when</th></tr></thead>
+                <tbody>
+                  <tr><td class="m">E-NO-LABEL</td><td class="d">No prefix line at all.</td></tr>
+                  <tr><td class="m">E-MALFORMED-PREFIX</td><td class="d">A prefix that nearly parses, but doesn't.</td></tr>
+                  <tr><td class="m">E-UNKNOWN-LABEL</td><td class="d">Label not enabled in this repository.</td></tr>
+                  <tr><td class="m">E-EMPTY-SUBJECT</td><td class="d">Label and colon, then nothing.</td></tr>
+                  <tr><td class="m">E-DECORATION-SYNTAX</td><td class="d">Parentheses or separators malformed.</td></tr>
+                  <tr><td class="m">E-UNKNOWN-DECORATION</td><td class="d">Unknown, and free decorations are off.</td></tr>
+                  <tr><td class="m">E-CONFLICT</td><td class="d">Precedence rule 1 or 2.</td></tr>
+                  <tr><td class="m">E-DECISION-SUBJECT</td><td class="d">A <code>decision</code> that doesn't say why.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="scroller">
+              <table class="t">
+                <thead><tr><th style="color:var(--warn)">warning</th><th>raised when</th></tr></thead>
+                <tbody>
+                  <tr><td class="m">W-CASE</td><td class="d">Wrong casing. Ships a fix.</td></tr>
+                  <tr><td class="m">W-DECORATION-STYLE</td><td class="d">Spacing or order off. Ships a fix.</td></tr>
+                  <tr><td class="m">W-SUBJECT-TOO-SHORT</td><td class="d">Under 5 characters.</td></tr>
+                  <tr><td class="m">W-SUBJECT-TOO-LONG</td><td class="d">Over 120 characters.</td></tr>
+                  <tr><td class="m">W-MISSING-DECORATION</td><td class="d"><code>suggestion</code> or <code>question</code>, undecorated.</td></tr>
+                  <tr><td class="m">W-NO-DISCUSSION</td><td class="d">A blocking comment with no discussion.</td></tr>
+                  <tr><td class="m">W-NOT-BLOCKABLE</td><td class="d">Blocking, in a zone that can't hold that state.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="callout acc">
+            <span class="ct">calibration</span>
+            <h4>A short subject is a warning on purpose, at a low threshold.</h4>
+            <p>Five characters, and never an error. A too-short subject isn't a serious defect, and making it a blocking one pushes people to work around the rule rather than apply it. Enforcement that punishes small things loses the argument for the large ones.</p>
+          </div>
+        </section>
+
+        <div class="pager">
+          <a class="pgl" href={href('howitworks', 'en')}><span class="dir">← previous</span><span class="ttl">How it works</span></a>
+          <a class="pgl" href={href('adoption', 'en')} style="text-align:right"><span class="dir">next →</span><span class="ttl">Adoption</span></a>
+        </div>
+      </div>
+</Docs>

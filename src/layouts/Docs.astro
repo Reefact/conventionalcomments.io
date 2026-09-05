@@ -1,0 +1,16 @@
+---
+import Base from './Base.astro';
+import DocsSidebar from '../components/DocsSidebar.astro';
+import type { Locale, PageKey } from '../i18n/routes';
+
+interface Props { lang: Locale; page: PageKey; title: string; description: string }
+const { lang, page, title, description } = Astro.props;
+---
+<Base lang={lang} page={page} title={title} description={description}>
+  <div class="docs">
+    <DocsSidebar lang={lang} page={page} />
+    <div class="dmain">
+      <slot />
+    </div>
+  </div>
+</Base>

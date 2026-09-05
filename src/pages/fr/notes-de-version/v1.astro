@@ -1,0 +1,167 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { href } from '../../../i18n/routes';
+
+const lang = 'fr' as const;
+const page = 'releasenotes' as const;
+---
+<Base lang={lang} page={page}
+  title="Notes de version — Toolkit 1.x"
+  description="Ce qui change pour vous, version après version, écrit pour la personne qui s'en sert.">
+<div class="docs rn">
+      <aside class="rn-side">
+        <p class="grp">ligne de version&nbsp;:</p>
+        <div class="rn-line">
+          <span class="rn-ln">Toolkit 1.x</span>
+          <span class="rn-lv">1.0.0-beta.9</span>
+          <span class="rn-ld">4 septembre 2026 · 9 versions</span>
+        </div>
+        <p class="grp">sur cette page&nbsp;:</p>
+        <ul class="rn-jump">
+          <li><a href="#v1-0-0-beta-9" class="cur">1.0.0-beta.9</a></li>
+          <li><a href="#v1-0-0-beta-8">1.0.0-beta.8</a></li>
+          <li><a href="#v1-0-0-beta-7">1.0.0-beta.7</a></li>
+          <li><a href="#v1-0-0-beta-6">1.0.0-beta.6</a></li>
+          <li><a href="#v1-0-0-beta-5">1.0.0-beta.5</a></li>
+          <li><a href="#v1-0-0-beta-4">1.0.0-beta.4</a></li>
+          <li><a href="#v1-0-0-beta-3">1.0.0-beta.3</a></li>
+          <li><a href="#v1-0-0-beta-2">1.0.0-beta.2</a></li>
+          <li><a href="#v1-0-0-beta-1">1.0.0-beta.1</a></li>
+        </ul>
+        <p class="grp">aussi&nbsp;:</p>
+        <ul>
+          <li><a href={'https://github.com/Reefact/conventional-comments-toolkit/blob/main/CHANGELOG.md'} rel="noopener noreferrer" target="_blank">Changelog complet ↗</a></li>
+          <li><a href={href('docsindex', 'fr')}>Documentation</a></li>
+        </ul>
+      </aside>
+
+      <div class="dmain">
+        <div class="dhead stack g12">
+          <p class="crumb"><b>notes de version</b> / toolkit 1.x</p>
+          <h1>Notes de version</h1>
+          <p class="lede measure">Ce qui change pour vous, version après version — écrit pour la personne qui s'en sert, pas dérivé des messages de commit. Pour le relevé complet, avec chaque contrainte et chaque cas limite, voir le changelog.</p>
+          <div class="callout">
+            <span class="ct">à savoir avant de lire</span>
+            <p style="margin:0">L'extension démarre en mode <code>assist</code>&nbsp;: elle aide et signale, elle ne bloque jamais un envoi. La source de vérité sur la conformité reste le compagnon serveur.</p>
+          </div>
+        </div>
+
+        <h2 class="rn-major">Version 1</h2>
+
+        <article class="rel" id="v1-0-0-beta-9">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.9</span><span class="rel-m">beta</span><span class="rel-d">4 septembre 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">L'extension ne s'impose plus sur la description d'une pull request, ne s'endort plus sur une page vide au départ, et dit enfin pourquoi quand elle n'arrive pas à lire votre configuration.</p>
+          <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+            <li>Quand la configuration ne peut pas être lue, la page d'options affiche désormais <strong>pourquoi</strong> — <code>HTTP 429</code>, une <code>TypeError</code>, un 404 qu'on ne distingue pas d'un refus — avec le niveau d'où vient l'échec, au lieu du seul mot <code>unreachable</code>. La raison reste sur votre machine.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li><strong>La description d'une pull request n'est plus traitée comme un commentaire de revue.</strong> La convention n'en dit rien, et pourtant la barre d'outils s'y affichait — et sous <code>enforce</code>, une description sans préfixe <code>label:</code> ne pouvait tout simplement plus être enregistrée.</li>
+            <li><strong>Le bandeau « Configuration non lue » ne s'affiche plus sur tous les dépôts.</strong> Toute lecture échouait avant même de quitter le navigateur&nbsp;: l'extension retombait donc toujours dans son état dégradé.</li>
+            <li><strong>Une page qui n'avait rien à montrer ne cesse plus de surveiller au bout de cinq secondes.</strong> Sur <em>Files changed</em> sans encore aucun fil, le premier commentaire publié ensuite ne recevait ni badge ni bandeau avant un rechargement complet.</li>
+            <li><strong>Une page absente n'est plus lue comme une page cachée pendant que vous êtes connecté.</strong> Deux signaux indépendants doivent maintenant concorder pour qu'un 404 signifie une configuration illisible.</li>
+            <li><strong>Le journal de dégradation des sélecteurs est de nouveau utilisable.</strong> Visiter une seule pull request fermée remplissait ses cinquante lignes d'une même entrée et évinçait toute dégradation réelle.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-8">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.8</span><span class="rel-m">beta</span><span class="rel-d">4 septembre 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">Un commentaire publié se lit comme un titre — les badges, puis le sujet en gras sur la même ligne — et trois façons de perdre silencieusement ses badges sont refermées.</p>
+          <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+            <li>Le sujet d'un commentaire publié s'affiche désormais <strong>en gras sur la ligne des badges</strong>, à leur droite. Quand il ne peut pas être borné sans risque, la mise en page précédente est conservée plutôt que de couper au mauvais endroit.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li>Modifier un commentaire ne lui retire plus ses badges. La plateforme réécrit le corps rendu lors d'une mise à jour, et rien ne les ramenait avant un rechargement.</li>
+            <li>Le préfixe structuré est remasqué quand la plateforme le rétablit d'elle-même.</li>
+            <li>Quitter une pull request, ou passer en <code>mode: off</code>, ne laisse plus une partie d'un commentaire invisible — une extension qui se déclare inactive continuait de cacher du texte que vous aviez écrit.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changements</h4><ul>
+            <li>La barre d'outils est désormais sur <strong>deux rangées</strong> — les labels, puis les décorations — pour qu'une fenêtre étroite ne puisse plus mettre un bouton de label à côté d'un segment de décoration comme s'il s'agissait d'une même commande.</li>
+            <li>Les boutons de label n'affichent plus leur icône&nbsp;; les badges des commentaires publiés, si. Les boutons se partagent la largeur d'une rangée, où une icône se paie sur tous les autres.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-7">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.7</span><span class="rel-m">beta</span><span class="rel-d">3 septembre 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">Le préfixe structuré disparaît d'un commentaire publié — les badges le disent déjà — sauf partout où le dire deux fois était la réponse la plus sûre.</p>
+          <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+            <li><code>issue (blocking):</code> n'apparaît plus dans un commentaire publié. À l'écran seulement — le commentaire stocké n'est pas touché, et rouvrir le formulaire d'édition le réaffiche en entier.</li>
+            <li>Là où les badges ne diraient pas la même chose, le texte reste&nbsp;: une décoration que la configuration rejette, un défaut de casse que l'outil existe pour signaler, des décorations repliées dans un badge <code>+N</code>.</li>
+            <li>Une ligne qui ressemble seulement à un préfixe — dans un bloc de code, une citation, une liste, un titre, un tableau — est laissée telle quelle.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changements</h4><ul>
+            <li>Chaque label par défaut a désormais une icône et une couleur, dont le contraste est vérifié au regard de WCAG 1.4.11.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-6">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.6</span><span class="rel-m">beta</span><span class="rel-d">3 septembre 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">Les décorations ont leurs propres badges, et l'affichage suit un changement de configuration sous vos yeux.</p>
+          <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+            <li>Chaque décoration reçoit son badge à côté du label&nbsp;: rouge quand elle force le caractère bloquant, vert quand elle force le non-bloquant, en pointillés quand elle n'est déclarée nulle part.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li>Changer la configuration rafraîchit désormais ce qui est déjà à l'écran, y compris sur un onglet resté ouvert sur une pull request.</li>
+            <li><strong>Une boîte de commentaire déjà ouverte suit ce changement elle aussi</strong>, y compris sur le fait de bloquer votre envoi — une organisation passant d'<code>enforce</code> à <code>off</code> vous laissait bloqué tant que vous ne l'aviez pas rouverte.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-5">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.5</span><span class="rel-m">beta</span><span class="rel-d">2 septembre 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">La configuration du dépôt redevient lisible sur les dépôts privés.</p>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li>La lecture suit une redirection que le navigateur refuse d'authentifier&nbsp;; les identifiants ne sont désormais retirés que sur ce saut-là, si bien que le fichier reste lisible sans vous demander la moindre permission d'hôte.</li>
+            <li>Un fichier illisible faute de session n'est plus pris pour un fichier absent — ce qui appliquait silencieusement la mauvaise configuration.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-4">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.4</span><span class="rel-m">beta</span><span class="rel-d">1er septembre 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">Le sélecteur de décoration dit ce que porte votre commentaire, pas ce que vous avez cliqué en dernier.</p>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li>Une décoration que vous avez retirée en modifiant le texte, ou partie avec un label que la configuration a désactivé, ne reste plus allumée dans la barre d'outils.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-3">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.3</span><span class="rel-m">beta</span><span class="rel-d">1er septembre 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">Deux permissions retirées du manifeste, une télémétrie qui n'existe que si vous la demandez, et de quoi soumettre aux stores.</p>
+          <div class="rel-s"><h4>🔧 Changements</h4><ul>
+            <li><strong><code>activeTab</code> et la permission d'hôte permanente sur <code>github.com</code> sont retirées.</strong> Les hôtes sont accordés à la demande — l'extension demande ce dont elle a besoin, quand elle en a besoin.</li>
+            <li>Le bandeau de pull request est un sommaire, pas une barrière au merge. Le verdict appartient au check de la plateforme, déjà rouge et déjà bloquant&nbsp;; le rejouer ici dévaluait les deux.</li>
+          </ul></div>
+          <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+            <li>Télémétrie facultative, éteinte tant que vous ne l'activez pas, liée à l'adresse pour laquelle vous avez consenti et configurée par la politique de votre organisation plutôt que par un fichier de dépôt.</li>
+            <li>La version affichée dans <code>chrome://extensions</code> distingue les pré-versions.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li><strong>Sur GitHub Enterprise Server et Azure DevOps Server auto-hébergé, accorder la permission d'hôte vous donne enfin l'extension.</strong> La plateforme que sert chaque hôte est désormais enregistrée avec lui.</li>
+            <li><strong>Une configuration d'organisation hébergée hors de votre plateforme redevient lisible.</strong> Elle ne l'avait jamais été&nbsp;: la politique CORS de la page la bloquait quelle que soit la permission accordée.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-2">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.2</span><span class="rel-m">beta</span><span class="rel-d">24 août 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">Les commentaires de bots et d'outils cessent d'être signalés, et la barre d'outils cesse d'être collée au bord.</p>
+          <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+            <li><strong>Une commande d'outil n'est plus signalée comme un commentaire mal formé.</strong> Une commande slash, ou la mention d'un bot listé dans <code>toolCommands</code>, est exemptée — <code>/rebase</code> et <code>@dependabot recreate</code> passent intacts.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li>La barre d'outils et le retour visuel s'alignent sur le texte de la boîte de commentaire au lieu d'en toucher la bordure.</li>
+            <li>La couleur d'un label peint désormais la bordure du bouton actif plutôt que son fond&nbsp;: cette couleur vient de votre configuration, et l'employer en fond produisait un contraste descendu à 1,54 là où 4,5 est exigé.</li>
+            <li>Les boutons sont de nouveau espacés — un commentaire CSS fermé un caractère trop tôt avalait silencieusement la règle qui les espaçait.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-1">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.1</span><span class="rel-m">beta</span><span class="rel-d">24 août 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">Première version installable.</p>
+          <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+            <li>L'extension pour GitHub et Azure DevOps&nbsp;: une barre d'outils au-dessus de la boîte de commentaire, une saisie rapide au clavier, un retour visuel pendant la frappe, et un garde d'envoi en mode <code>enforce</code>.</li>
+            <li>Le compagnon serveur, auto-hébergeable, qui fait autorité sur la conformité et sur le blocage de la complétion d'une pull request.</li>
+            <li>Des archives Chromium et Firefox publiées à chaque tag, chargeables sans Node ni npm.</li>
+          </ul></div>
+        </article>
+      </div>
+    </div>
+    </div>
+</Base>

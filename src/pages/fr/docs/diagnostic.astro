@@ -1,0 +1,68 @@
+---
+import Docs from '../../../layouts/Docs.astro';
+import { href } from '../../../i18n/routes';
+
+const lang = 'fr' as const;
+const page = 'troubleshooting' as const;
+---
+<Docs lang={lang} page={page}
+  title="Diagnostic"
+  description="Sept symptômes, leur cause, et s'il y a quelque chose à faire.">
+<div class="dhead stack g12">
+          <p class="crumb"><b>doc</b> / diagnostic</p>
+          <h1>Quand quelque chose cloche</h1>
+          <p class="lede measure">L'essentiel de ce qui surprend est délibéré. Chaque cas ci-dessous dit ce que vous voyez, pourquoi, et s'il y a quelque chose à faire.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>La barre n'apparaît pas</h2>
+          <ul class="tick">
+            <li><span class="mk n">·</span><b>Vous n'êtes pas sur github.com</b><span class="tx">Par défaut l'extension ne tourne que là. Azure DevOps et les instances auto-hébergées demandent une autorisation à accorder dans les réglages, et un marquage disant de quelle plateforme il s'agit.</span></li>
+            <li><span class="mk n">·</span><b>La page a changé sous elle</b><span class="tx">Quand le balisage de la plateforme bouge, l'extension éteint la zone concernée plutôt que d'écrire dans un élément qu'elle a peut-être mal identifié. Les réglages gardent le journal des cinquante dernières fois — nom de la règle et horodatage, jamais de contenu.</span></li>
+            <li><span class="mk n">·</span><b>Le mode est <code>off</code></b><span class="tx">Votre organisation ou votre dépôt peut l'éteindre complètement.</span></li>
+          </ul>
+        </section>
+
+        <section class="dsec">
+          <h2>Bandeau « configuration non lue »</h2>
+          <p>L'extension n'a pas pu récupérer <code>.conventional-comments.json</code>&nbsp;: elle assiste sans connaître vos règles et ne bloque jamais un envoi. C'est tout l'intérêt&nbsp;: on ne rejette personne au nom d'une règle qu'on n'a pas su lire.</p>
+          <div class="callout">
+            <span class="ct">ce que ça ne veut pas dire</span>
+            <p style="margin:0">Un dépôt <strong>sans aucun fichier de configuration</strong> est un cas nominal, pas une dégradation — vous avez les valeurs du produit et aucun bandeau. Le bandeau signifie qu'il y avait quelque chose à lire et que la lecture a échoué. Sur un dépôt public, ou privé avec une session ouverte, il ne devrait pas apparaître&nbsp;; déconnecté, il dit quelque chose de vrai.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>« Configuration décalée par rapport au serveur »</h2>
+          <p>L'extension et le serveur publient chacun une empreinte de la configuration qu'ils appliquent. Quand elles diffèrent, l'extension <strong>cesse de bloquer les envois</strong> et le signale.</p>
+          <p>C'est normalement passager&nbsp;: un durcissement se propage, et une pull request déjà ouverte est jugée sur la configuration épinglée lors de sa première évaluation. Si ça dure, les deux composants tournent sur des versions différentes de la bibliothèque partagée — le levier pour ça est <code>coreMinVersion</code>, pas l'empreinte.</p>
+        </section>
+
+        <section class="dsec">
+          <h2><code>/rebase</code> se fait refuser</h2>
+          <p>C'est attendu, et c'est la surprise la plus fréquente après une montée de version. Les commandes slash étaient exemptées par une liste intégrée&nbsp;; cette liste a disparu et <code>toolCommands</code> est vide par défaut.</p>
+          <pre class="code"><span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>]</pre>
+          <p><code>"/*"</code> rétablit la reconnaissance de toutes les commandes slash. Les handles de robots se déclarent exactement, un par un — la comparaison porte sur le premier jeton entier, donc <code>@codex review</code> est une commande et <code>@codexplique pourquoi</code> n'en est pas une.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Les commentaires d'un robot font échouer la vérification</h2>
+          <p>Ajoutez son identifiant à <code>exemptUsers</code>. La comparaison porte sur l'identifiant de la plateforme, sans tenir compte de la casse — jamais sur le nom affiché.</p>
+          <p class="small">Les entrées générées par la plateforme — événements de timeline, mises à jour de branche, notifications système — sont exemptées structurellement et n'ont pas à être listées. De même pour une revue approuvée <strong>sans aucun texte</strong>&nbsp;: un corps vide est toujours exempté, sans quoi le geste le plus ordinaire d'une revue échouerait à chaque approbation, sans correction possible — on n'édite pas la revue d'un tiers.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>La vérification est grise, ni rouge ni verte</h2>
+          <p>Un statut neutre signifie que le serveur n'a pas pu lire l'état courant au-delà de son délai de grâce, et qu'il le dit plutôt que de deviner. Il conserve d'abord son dernier verdict pendant ce délai&nbsp;; le statut ne devient neutre qu'ensuite.</p>
+          <p>Regardez d'abord le jeton de la plateforme — expiré, ou aux portées insuffisantes — puis le secret des webhooks.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Un point bloquant ne peut pas être refermé</h2>
+          <p>Seul l'auteur du commentaire, ou un membre du groupe désigné, peut résoudre un fil bloquant. Si personne ne le peut, c'est que le groupe est vide — et le désigner est une condition du mode strict précisément pour que cette situation n'arrive pas.</p>
+          <p>L'autre issue est une réponse <code>decision</code> disant pourquoi le point ne sera pas traité, en au moins vingt caractères. Elle est inscrite dans le fil, jamais silencieuse.</p>
+        </section>
+        <div class="pager"></div>
+      </div>
+    </div>
+</Docs>

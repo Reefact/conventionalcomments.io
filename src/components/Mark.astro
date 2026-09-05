@@ -1,0 +1,19 @@
+---
+/** La marque — bulle, chevrons, coche. Héritée de assets/branding/ du dépôt toolkit,
+ *  aplatie pour l'écran. La découpe derrière la pastille prend la couleur de surface du
+ *  thème : la marque ne transporte jamais de blanc en dur. */
+interface Props { size?: number }
+const { size = 21 } = Astro.props;
+---
+<svg width={size} height={size} viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+  <path d="M6 13a7 7 0 0 1 7-7h22a7 7 0 0 1 7 7v13a7 7 0 0 1-7 7H23l-8 8v-8h-2a7 7 0 0 1-7-7V13Z"
+        fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round" />
+  <path d="M19 15.5 15 20l4 4.5" fill="none" stroke="var(--accent)" stroke-width="3.6"
+        stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M29 15.5 33 20l-4 4.5" fill="none" stroke="var(--accent)" stroke-width="3.6"
+        stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="37.5" cy="35.5" r="10.4" fill="var(--mark-knock)" />
+  <circle cx="37.5" cy="35.5" r="8.4" fill="none" stroke="var(--pass)" stroke-width="3.4" />
+  <path d="m33.6 35.7 2.9 2.9 5.3-5.7" fill="none" stroke="var(--pass)" stroke-width="3.6"
+        stroke-linecap="round" stroke-linejoin="round" />
+</svg>

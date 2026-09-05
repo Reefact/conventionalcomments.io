@@ -1,0 +1,38 @@
+---
+import version from '../generated/version.json';
+import type { Locale } from '../i18n/routes';
+
+/** Les trois faits que /version rapporte, lus du fichier que le build a écrit.
+ *  Le même fichier est servi à /version.json : la page et l'endpoint ne peuvent pas
+ *  nommer deux builds différents. */
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+
+const REPO = 'https://github.com/Reefact/conventionalcomments.io';
+const none = '—';
+const noneHint = lang === 'fr'
+  ? "ce build ne vient pas d'un tag de release"
+  : 'this build did not come from a release tag';
+---
+<div class="vfacts">
+  <div class="vrow">
+    <span class="vk">release</span>
+    <span class="vv">
+      {version.release
+        ? <a href={`${REPO}/releases/tag/${version.release}`} rel="noopener noreferrer" target="_blank">{version.release}</a>
+        : <>{none}{' '}<span class="vhint">{noneHint}</span></>}
+    </span>
+  </div>
+  <div class="vrow">
+    <span class="vk">commit</span>
+    <span class="vv">
+      {version.commit
+        ? <><a href={`${REPO}/commit/${version.commit}`} rel="noopener noreferrer" target="_blank">{version.commit.slice(0, 7)}</a> <span class="vhint">{version.commit}</span></>
+        : <>{none}</>}
+    </span>
+  </div>
+  <div class="vrow">
+    <span class="vk">built</span>
+    <span class="vv">{version.built.replace('T', ' ').replace('Z', ' UTC')}</span>
+  </div>
+</div>

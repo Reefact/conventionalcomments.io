@@ -1,0 +1,81 @@
+---
+import Docs from '../../../layouts/Docs.astro';
+import { href } from '../../../i18n/routes';
+
+const lang = 'fr' as const;
+const page = 'configure' as const;
+---
+<Docs lang={lang} page={page}
+  title="Configurer un dépôt"
+  description="Un fichier sur la branche par défaut : les trois niveaux, les clés qui comptent, et celle qui piège.">
+<div class="dhead stack g12">
+          <p class="crumb"><b>doc</b> / configuration</p>
+          <h1>Configurer un dépôt</h1>
+          <p class="lede measure">Un fichier, <code>.conventional-comments.json</code>, sur la branche par défaut. Tout ce qui n'y est pas garde la valeur du produit — vous n'avez jamais à tout réécrire.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>Le plus petit fichier utile</h2>
+          <pre class="code"><span class="tk-k">&#123;</span>
+  <span class="tk-k">"$schema"</span>: <span class="tk-v">"https://conventionalcomments.io/schema/v1.json"</span>,
+  <span class="tk-k">"version"</span>: <span class="tk-v">1</span>,
+  <span class="tk-k">"mode"</span>: <span class="tk-v">"assist"</span>
+<span class="tk-k">&#125;</span></pre>
+          <p>La ligne <code>$schema</code> n'est pas décorative&nbsp;: votre éditeur va la chercher, puis complète chaque clé, affiche au survol ce qu'elle fait, et souligne <code>"enforc"</code> avant que vous ne commitiez.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Trois niveaux, et comment ils se combinent</h2>
+          <p>Un dépôt n'est jamais seul. Trois sources se résolvent ensemble, et l'ordre ne se négocie pas.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th>Niveau</th><th>Qui le pose</th><th>Ce qu'il peut faire</th></tr></thead>
+              <tbody>
+                <tr><td class="m">plancher</td><td class="d">L'organisation, par le déploiement — pas par un fichier de dépôt.</td><td class="d">Fixe un mode minimum et une liste de règles que personne ne peut éteindre. Un dépôt peut être <em>plus strict</em>, jamais plus souple.</td></tr>
+                <tr><td class="m">organisation</td><td class="d">Un document partagé, lu à l'adresse que le plancher désigne.</td><td class="d">La base commune. C'est le point de bascule&nbsp;: changer <code>mode</code> ici s'applique partout, y compris aux pull requests déjà ouvertes.</td></tr>
+                <tr><td class="m">dépôt</td><td class="d">Ce fichier, sur la branche par défaut.</td><td class="d">Les ajustements locaux — exempter des robots, activer une étiquette optionnelle, éteindre un diagnostic.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout acc">
+            <span class="ct">le plancher a deux canaux, et les deux doivent porter la même valeur</span>
+            <p style="margin:0">L'extension lit le plancher dans la politique d'entreprise de votre navigateur. Le serveur le lit dans sa propre configuration de déploiement. Un canal de navigateur est <strong>structurellement illisible</strong> par un serveur qui n'a pas de navigateur — n'y mettre le plancher que là reviendrait à ne le faire appliquer que par le composant explicitement contournable, c'est-à-dire à ne pas l'appliquer du tout. Le serveur publie une empreinte de ce qu'il applique, ce qui rend tout désaccord visible plutôt que silencieux.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Les clés qui comptent</h2>
+          <p>Il y en a vingt-cinq. Voici celles qui changent le comportement, pas l'apparence.</p>
+          <div class="scroller">
+            <table class="t wide">
+              <thead><tr><th>Clé</th><th>Défaut</th><th>Ce qu'elle décide</th></tr></thead>
+              <tbody>
+                <tr><td class="m">mode</td><td class="m d">assist</td><td class="d"><code>off</code> · <code>assist</code> · <code>warn</code> · <code>enforce</code>. Lisez le guide d'adoption avant de dépasser <code>warn</code>.</td></tr>
+                <tr><td class="m">formatSeverity</td><td class="m d">warn</td><td class="d">Si un commentaire mal formé peut faire échouer la vérification. La plupart des équipes n'y touchent pas&nbsp;: seuls les points bloquants non résolus devraient arrêter une fusion.</td></tr>
+                <tr><td class="m">resolverOverrideGroup</td><td class="m d">vide</td><td class="d">Qui peut passer outre une résolution et acter une <code>decision</code>. <strong>Condition dure pour <code>enforce</code></strong> — vide, les deux portes de sortie sont fermées.</td></tr>
+                <tr><td class="m">exemptUsers</td><td class="m d">vide</td><td class="d">Auteurs jamais validés. Comparés à l'identifiant de la plateforme, sans tenir compte de la casse.</td></tr>
+                <tr><td class="m">toolCommands</td><td class="m d">vide</td><td class="d">Commentaires adressés à un robot. Voir l'avertissement ci-dessous.</td></tr>
+                <tr><td class="m">labels</td><td class="m d">13 étiquettes</td><td class="d">Surcharges par étiquette. Ne listez que ce que vous changez.</td></tr>
+                <tr><td class="m">severities</td><td class="m d">produit</td><td class="d">Requalifier ou éteindre n'importe quel diagnostic, un par un.</td></tr>
+                <tr><td class="m">coreMinVersion</td><td class="m d">1.0.0</td><td class="d">Le levier pour imposer une version dans toute une organisation. Pas l'empreinte&nbsp;: celle-ci ne fait que signaler un désaccord.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout blk">
+            <span class="ct">celle qui piège</span>
+            <h4><code>toolCommands</code> est vide par défaut, et ça n'a pas toujours été le cas.</h4>
+            <p>Les commandes comme <code>/rebase</code> étaient autrefois reconnues par une liste intégrée. Cette liste a disparu. En mode strict, un <code>/rebase</code> nu est désormais refusé comme n'importe quel commentaire tant que le dépôt ne l'a pas déclaré. Ajouter <code>"/*"</code> rétablit l'exemption pour toutes les commandes slash&nbsp;; les handles de robots se déclarent un par un, exactement, sous la forme <code>"@dependabot"</code>.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Deux comportements qui surprennent une fois</h2>
+          <ul class="bul">
+            <li><strong>Une clé inconnue est ignorée avec un avertissement, pas rejetée.</strong> Mais une clé <em>connue</em> portant une valeur impossible invalide le document entier — on ne peut rien en conclure, donc rien n'est appliqué.</li>
+            <li><strong><code>configUrl</code> posé dans un fichier de dépôt est ignoré.</strong> L'adresse de la configuration d'organisation vient exclusivement du canal du plancher&nbsp;; laisser un dépôt la pointer ailleurs reviendrait à le laisser choisir ses propres règles.</li>
+          </ul>
+        </section>
+        <div class="pager"></div>
+      </div>
+    </div>
+</Docs>

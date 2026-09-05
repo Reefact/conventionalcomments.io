@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import { href } from '../i18n/routes';
+import BuildFacts from '../components/BuildFacts.astro';
+
+const lang = 'en' as const;
+const page = 'version' as const;
+---
+<Base lang={lang} page={page} noindex
+  title="Version"
+  description="Which release is live, from which commit, built when.">
+<section class="hband">
+      <div class="in">
+        <div class="stack g18 measure">
+          <span class="eyebrow acc">this build:</span>
+          <h1 style="font-size:clamp(27px,3.4vw,36px);font-weight:700;letter-spacing:-.03em;line-height:1.06">Latest release</h1>
+          <p class="lede">What you are being served right now, and where it came from. Deployment lists report times; this reports a commit. The same facts are served as JSON at <code>/version.json</code> — one file, generated once per build, so the page and the endpoint cannot name two different builds.</p>
+        </div>
+
+        <BuildFacts lang={lang} />
+        <p class="small measure"><code>release</code> is empty on any build that did not come from a release tag — every build on a branch. <code>commit</code> is empty only where there was no git to read. <code>built</code> is always a time.</p>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">what it changed:</span>
+          <h2>5 September 2026</h2>
+        </div>
+        <div class="rel-s"><h4>✨ New</h4><ul>
+          <li>The site publishes its own release notes, at <code>/release-notes/v1/</code> — the toolkit's nine releases, in English and French, with what each one changed for the person using it rather than a list of commits.</li>
+          <li>The configuration schema is served at <code>/schema/v1.json</code>. Put it in a repository's <code>$schema</code> line and your editor completes the keys, describes them on hover, and underlines a wrong value before you commit.</li>
+        </ul></div>
+        <div class="rel-s"><h4>🙌 Improvements</h4><ul>
+          <li>Every page exists in both languages, with translated routes — <code>/docs/configure/</code> answers to <code>/fr/docs/configuration/</code> — and the language switcher keeps you on the page you were reading instead of sending you home.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">previous releases:</span>
+          <h2>What came before</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The five releases published just before this one.</p>
+        </div>
+
+        <div class="stack g28">
+          <article class="rel">
+            <div class="rel-h"><span class="rel-v" style="font-size:15px">release/2026-09-04T17-30-11Z</span><span class="rel-d">4 September 2026</span><span class="rel-tag">on GitHub ↗</span></div>
+            <div class="rel-s"><h4>✨ New</h4><ul>
+              <li>Documentation: install, labels and decorations, configuration, adoption, the server, and troubleshooting — seven pages in two languages, each written from the toolkit's own sources rather than from a summary of them.</li>
+            </ul></div>
+          </article>
+
+          <article class="rel">
+            <div class="rel-h"><span class="rel-v" style="font-size:15px">release/2026-09-04T08-02-55Z</span><span class="rel-d">4 September 2026</span><span class="rel-tag">on GitHub ↗</span></div>
+            <div class="rel-s"><h4>🙌 Improvements</h4><ul>
+              <li>The home page now opens on the misunderstanding it exists to fix — “is that feedback, or a dig?” — instead of on the mechanism. The tool arrives in the sixth section, where it belongs.</li>
+            </ul></div>
+            <div class="rel-s"><h4>🐛 Fixes</h4><ul>
+              <li>The site's brand in the header is a link again, so there was a way back to the home page from a documentation page.</li>
+              <li>The <code>quibble</code> label showed the wrong emoji — a hand heart instead of a feather. Thirteen icons transcribed by hand, one of them wrong.</li>
+            </ul></div>
+          </article>
+
+          <article class="rel">
+            <div class="rel-h"><span class="rel-v" style="font-size:15px">release/2026-09-03T11-45-20Z</span><span class="rel-d">3 September 2026</span><span class="rel-tag">on GitHub ↗</span></div>
+            <div class="rel-s"><h4>✨ New</h4><ul>
+              <li>First publication: the home page, how it works, supported platforms, and privacy.</li>
+            </ul></div>
+          </article>
+        </div>
+
+        <p class="small measure"><a href="#">See further releases on GitHub ↗</a></p>
+      </div>
+    </section>
+</Base>

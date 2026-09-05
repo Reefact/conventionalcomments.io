@@ -1,0 +1,147 @@
+---
+import Base from '../../layouts/Base.astro';
+import { href } from '../../i18n/routes';
+
+const lang = 'fr' as const;
+const page = 'privacy' as const;
+---
+<Base lang={lang} page={page}
+  title="Confidentialité"
+  description="Aucun contenu de commentaire, de code ou de diff ne quitte votre navigateur. Exactement ce qui vit où, y compris ce qui est inconfortable.">
+<section class="hband">
+      <div class="in">
+        <div class="stack g18 measure">
+          <span class="eyebrow acc">confidentialité&nbsp;:</span>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Ce que vous écrivez en revue ne part nulle part.</h1>
+          <p class="lede">Un commentaire de revue est souvent plus sensible que le code&nbsp;: il dit ce qu'on pense du travail de quelqu'un. <strong>L'extension ne collecte, ne stocke sur un serveur distant, ni ne transmet aucun contenu de code, de commentaire ou de diff.</strong> Cette page dit exactement ce qui vit où.</p>
+        </div>
+        <div class="callout">
+          <span class="ct">périmètre</span>
+          <p style="margin:0">Ce qui suit couvre l'<strong>extension navigateur</strong>, celle qui est distribuée sur les stores. Le <strong>serveur</strong> est un composant distinct, optionnel, hébergé et exploité par votre organisation&nbsp;: il a sa propre surface de persistance, décrite plus bas.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">l'extension, ligne par ligne&nbsp;:</span>
+          <h2>Ce qui vit où</h2>
+        </div>
+        <div class="scroller">
+          <table class="t wide">
+            <thead><tr><th>Donnée</th><th>Où elle vit</th><th>Sort du navigateur&nbsp;?</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Le contenu de vos commentaires, du code, des diffs</strong></td>
+                <td class="d">Dans la page, dans l'éditeur natif de la plateforme.</td>
+                <td><span class="st ok"><span class="dot"></span>jamais</span></td>
+              </tr>
+              <tr>
+                <td>Langue d'interface et raccourcis directs</td>
+                <td class="d"><code>chrome.storage.sync</code></td>
+                <td><span class="st fb"><span class="dot"></span>synchronisé</span><span class="why">Par le mécanisme natif de votre navigateur, si vous l'avez activé — pas par un serveur de l'extension. Ces deux préférences, rien d'autre.</span></td>
+              </tr>
+              <tr>
+                <td>Votre identifiant, et ceux des auteurs des commentaires affichés</td>
+                <td class="d">Mémoire vive de l'onglet, lus dans la page.</td>
+                <td><span class="st ok"><span class="dot"></span>non</span><span class="why">Ni écrits, ni envoyés. Ils disparaissent à la fermeture de l'onglet.</span></td>
+              </tr>
+              <tr>
+                <td>La configuration du dépôt affiché</td>
+                <td class="d">Lue par une requête vers le fichier, avec vos cookies de session ; gardée en mémoire par onglet.</td>
+                <td><span class="st ok"><span class="dot"></span>non</span><span class="why">C'est une lecture, sur une adresse que votre session autorise déjà — comme si vous l'ouvriez vous-même.</span></td>
+              </tr>
+              <tr>
+                <td>Domaines optionnels que vous avez autorisés</td>
+                <td class="d">Tenus par le navigateur, pas par l'extension.</td>
+                <td><span class="st ok"><span class="dot"></span>non</span></td>
+              </tr>
+              <tr>
+                <td>Journal local des éléments non reconnus</td>
+                <td class="d">Les 50 derniers, sur votre appareil&nbsp;: nom de la règle et horodatage, jamais de contenu.</td>
+                <td><span class="st ok"><span class="dot"></span>non</span><span class="why">C'est l'outil de diagnostic, consultable dans les options.</span></td>
+              </tr>
+              <tr>
+                <td>Télémétrie d'usage</td>
+                <td class="d">Rien n'est émis par défaut.</td>
+                <td><span class="st fb"><span class="dot"></span>seulement si vous l'autorisez</span><span class="why">Voir ci-dessous&nbsp;: trois conditions doivent être réunies.</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small measure">L'extension ne stocke <strong>aucun jeton d'authentification ni secret</strong>. Elle ne s'authentifie auprès d'aucune API&nbsp;: tout ce qu'elle lit hors de la page passe par une adresse que votre session de navigation autorise déjà.</p>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">télémétrie&nbsp;:</span>
+          <h2>Trois conditions, pas une case à cocher</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Rien ne part tant que les trois ne sont pas réunies. Un seul manquant, et l'extension n'émet rien.</p>
+        </div>
+        <ul class="tick">
+          <li><span class="mk">1</span><b>Votre organisation l'a activée dans sa politique navigateur</b><span class="tx">Poussée par le navigateur lui-même, hors de portée de tout dépôt. Un dépôt ne peut pas s'activer de la télémétrie.</span></li>
+          <li><span class="mk">2</span><b>Elle a déclaré une adresse de collecte en <code>https:</code></b><span class="tx">La sienne. Il n'y a pas d'adresse par défaut, et aucune ne pointe vers l'éditeur de l'extension.</span></li>
+          <li><span class="mk">3</span><b>Vous avez coché la case, sur cet appareil</b><span class="tx">La case affiche l'adresse, et votre accord ne vaut que pour celle-là. Le consentement reste local et <strong>ne se synchronise pas</strong>. Le décocher désarme immédiatement les onglets ouverts.</span></li>
+        </ul>
+        <div class="callout acc">
+          <span class="ct">et si les trois sont réunies</span>
+          <h4>Ce qui part est un agrégat, jamais du texte.</h4>
+          <p>Le dépôt affiché, le mode de la configuration, et des compteurs&nbsp;: étiquettes employées, codes de diagnostic, règles de sélection dégradées. <strong>Aucun texte libre</strong> — une valeur qui n'a pas la forme attendue est abandonnée plutôt qu'envoyée. La requête ne joint ni cookie ni référent, donc l'adresse de la page de revue ne part pas avec elle. Un contrôle le mesure dans un vrai navigateur à chaque exécution.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">le serveur&nbsp;:</span>
+          <h2>Si votre organisation en déploie un, c'est elle le responsable</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Il n'est pas requis pour utiliser l'extension. S'il est déployé, il tourne sur l'infrastructure de votre organisation — jamais sur un service tiers — et y persiste ce dont il a besoin&nbsp;:</p>
+        </div>
+        <ul class="bul measure">
+          <li>Le <strong>journal des exemptions de pull request</strong>&nbsp;: identifiant, action, personne à l'origine, horodatage, et <strong>un motif en texte libre si elle en saisit un</strong> — donc susceptible de contenir des informations personnelles.</li>
+          <li>Des <strong>enregistrements d'évaluation</strong> par PR, qui incluent un <strong>court extrait</strong> — jusqu'à ~80 caractères — du commentaire racine de chaque point bloquant non résolu, avec l'identifiant de son auteur.</li>
+          <li>Des <strong>compteurs agrégés</strong> par dépôt et par PR, indépendants du réglage de télémétrie de l'extension&nbsp;: ce sont deux mécanismes distincts.</li>
+          <li>Un <strong>état opérationnel</strong> courant, nécessaire à son fonctionnement.</li>
+        </ul>
+        <div class="callout blk">
+          <span class="ct">à ne pas se tromper</span>
+          <h4>Cette liste illustre les catégories. Elle n'est pas exhaustive et n'a pas vocation à l'être.</h4>
+          <p>Le code de ce composant évolue, et une organisation qui le déploie en est l'<strong>opérateur au sens du RGPD</strong>. C'est à elle — pas à cette page — de fournir la politique de confidentialité applicable à son instance, avec sa propre destination et sa propre durée de conservation. La rétention du journal d'exemptions est réglable&nbsp;; elle vaut douze mois par défaut.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">ce que l'extension ne fait pas&nbsp;:</span>
+          <h2>Quatre choses, dites au négatif</h2>
+        </div>
+        <ul class="bul measure">
+          <li>Elle n'envoie <strong>aucun contenu</strong> de commentaire, de code ou de diff à un service tiers ni à ses auteurs.</li>
+          <li>Elle ne fait tourner <strong>aucun code distant</strong>&nbsp;: sa politique de sécurité interdit tout script non empaqueté, et aucune dépendance n'est chargée depuis un CDN.</li>
+          <li>Elle ne vend ni ne partage aucune donnée à des fins publicitaires.</li>
+          <li>Elle ne suit pas votre navigation en dehors des pages de revue des plateformes prises en charge.</li>
+        </ul>
+        <p class="small measure">Le code est public et auditable, sous licence Apache-2.0. La justification permission par permission est dans le dépôt, et cette page fait foi comme politique de confidentialité pour les stores.</p>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="cta-in">
+        <div class="stack g8">
+          <h2>Rien de tout cela ne demande de nous faire confiance.</h2>
+          <p class="small" style="color:var(--fg-2)">Tout est vérifiable dans le code, et le paquet publié est contrôlé à chaque version.</p>
+        </div>
+        <div class="hero-btns">
+          <a class="btn btn-p" href={href('install', 'fr')}>Installer l'extension</a>
+          <a class="btn btn-s" href={href('howitworks', 'fr')}>Comment ça marche</a>
+        </div>
+      </div>
+    </section>
+    </div>
+</Base>

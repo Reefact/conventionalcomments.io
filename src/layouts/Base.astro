@@ -1,0 +1,79 @@
+---
+import '../styles/tokens.css';
+import '../styles/base.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { ROUTES, otherLocale, type Locale, type PageKey } from '../i18n/routes';
+import { t } from '../i18n/ui';
+
+interface Props {
+  lang: Locale;
+  page: PageKey;
+  title: string;
+  description: string;
+  /** Une page d'exploitation ne veut ni être indexée ni figurer dans le plan du site. */
+  noindex?: boolean;
+}
+
+const { lang, page, title, description, noindex = false } = Astro.props;
+const ui = t(lang);
+const other = otherLocale(lang);
+const canonical = new URL(ROUTES[page][lang], Astro.site).href;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    {/* Alternats : chaque page se déclare dans les deux langues, et x-default pointe
+        l'anglais — la locale servie à la racine. Sans eux, un site bilingue dont les
+        segments sont traduits ressemble à deux sites qui se dupliquent. */}
+    {!noindex && (
+      <>
+        <link rel="alternate" hreflang="en" href={new URL(ROUTES[page].en, Astro.site).href} />
+        <link rel="alternate" hreflang="fr" href={new URL(ROUTES[page].fr, Astro.site).href} />
+        <link rel="alternate" hreflang="x-default" href={new URL(ROUTES[page].en, Astro.site).href} />
+      </>
+    )}
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    />
+  </head>
+  <body>
+    <a class="skip" href="#content">{ui.skipToContent}</a>
+    <Header lang={lang} page={page} />
+    <main id="content">
+      <slot />
+    </main>
+    <Footer lang={lang} page={page} otherLang={other} />
+  </body>
+</html>
+
+<style>
+  /* Le lien d'évitement : visible seulement au clavier, et jamais sous le contenu. */
+  .skip {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 10;
+    background: var(--bg-surface);
+    color: var(--fg);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+  .skip:focus {
+    left: 12px;
+    top: 12px;
+  }
+</style>

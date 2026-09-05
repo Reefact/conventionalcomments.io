@@ -1,0 +1,80 @@
+---
+import Base from '../../layouts/Base.astro';
+import { href } from '../../i18n/routes';
+import BuildFacts from '../../components/BuildFacts.astro';
+
+const lang = 'fr' as const;
+const page = 'version' as const;
+---
+<Base lang={lang} page={page} noindex
+  title="Version"
+  description="Quelle release est en ligne, depuis quel commit, construite quand.">
+<section class="hband">
+      <div class="in">
+        <div class="stack g18 measure">
+          <span class="eyebrow acc">ce build&nbsp;:</span>
+          <h1 style="font-size:clamp(27px,3.4vw,36px);font-weight:700;letter-spacing:-.03em;line-height:1.06">Dernière release</h1>
+          <p class="lede">Ce qui vous est servi en ce moment, et d'où ça vient. Une liste de déploiements donne des horaires&nbsp;; ceci donne un commit. Les mêmes informations sont servies en JSON sur <code>/version.json</code> — un seul fichier, généré une fois par build, pour que la page et l'endpoint ne puissent pas nommer deux builds différents.</p>
+        </div>
+
+        <BuildFacts lang={lang} />
+        <p class="small measure"><code>release</code> est vide sur tout build qui ne vient pas d'un tag de release — c'est-à-dire tout build de branche. <code>commit</code> n'est vide que là où il n'y avait pas de git à lire. <code>built</code> est toujours une heure.</p>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">ce qu'elle a changé&nbsp;:</span>
+          <h2>5 septembre 2026</h2>
+        </div>
+        <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+          <li>Le site publie ses notes de version, sur <code>/release-notes/v1/</code> — les neuf versions du toolkit, en français et en anglais, avec ce que chacune change pour la personne qui s'en sert plutôt qu'une liste de commits.</li>
+          <li>Le schéma de configuration est servi sur <code>/schema/v1.json</code>. Mettez-le dans la ligne <code>$schema</code> d'un dépôt et votre éditeur complète les clés, les décrit au survol, et souligne une valeur fausse avant que vous ne commitiez.</li>
+        </ul></div>
+        <div class="rel-s"><h4>🙌 Améliorations</h4><ul>
+          <li>Chaque page existe dans les deux langues, avec des routes traduites — <code>/docs/configure/</code> répond à <code>/fr/docs/configuration/</code> — et le sélecteur de langue vous laisse sur la page que vous lisiez au lieu de vous renvoyer à l'accueil.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">releases précédentes&nbsp;:</span>
+          <h2>Ce qui est venu avant</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Les cinq releases publiées juste avant celle-ci.</p>
+        </div>
+
+        <div class="stack g28">
+          <article class="rel">
+            <div class="rel-h"><span class="rel-v" style="font-size:15px">release/2026-09-04T17-30-11Z</span><span class="rel-d">4 septembre 2026</span><span class="rel-tag">sur GitHub ↗</span></div>
+            <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+              <li>La documentation&nbsp;: installation, labels et décorations, configuration, adoption, le serveur, et diagnostic — sept pages en deux langues, chacune écrite depuis les sources du toolkit plutôt que depuis un résumé.</li>
+            </ul></div>
+          </article>
+
+          <article class="rel">
+            <div class="rel-h"><span class="rel-v" style="font-size:15px">release/2026-09-04T08-02-55Z</span><span class="rel-d">4 septembre 2026</span><span class="rel-tag">sur GitHub ↗</span></div>
+            <div class="rel-s"><h4>🙌 Améliorations</h4><ul>
+              <li>La page d'accueil ouvre désormais sur le malentendu qu'elle existe pour régler — « c'est une remarque, ou un reproche&nbsp;? » — au lieu du mécanisme. L'outil arrive en sixième section, à sa place.</li>
+            </ul></div>
+            <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+              <li>La marque du site en en-tête est de nouveau un lien, donc il existe un retour à l'accueil depuis une page de documentation.</li>
+              <li>L'étiquette <code>quibble</code> affichait la mauvaise émoji — un cœur avec les mains au lieu d'une plume. Treize icônes recopiées à la main, une de fausse.</li>
+            </ul></div>
+          </article>
+
+          <article class="rel">
+            <div class="rel-h"><span class="rel-v" style="font-size:15px">release/2026-09-03T11-45-20Z</span><span class="rel-d">3 septembre 2026</span><span class="rel-tag">sur GitHub ↗</span></div>
+            <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+              <li>Première publication&nbsp;: la page d'accueil, comment ça marche, les plateformes supportées, et la confidentialité.</li>
+            </ul></div>
+          </article>
+        </div>
+
+        <p class="small measure"><a href="#">Voir les releases suivantes sur GitHub ↗</a></p>
+      </div>
+    </section>
+    </div>
+</Base>

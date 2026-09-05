@@ -1,0 +1,80 @@
+---
+import Docs from '../../../layouts/Docs.astro';
+import { href } from '../../../i18n/routes';
+
+const lang = 'fr' as const;
+const page = 'install' as const;
+---
+<Docs lang={lang} page={page}
+  title="Installer l'extension"
+  description="Depuis le store de votre navigateur, depuis un zip de release sans rien compiler, ou depuis les sources.">
+<div class="dhead stack g12">
+          <p class="crumb"><b>doc</b> / installation</p>
+          <h1>Installer l'extension</h1>
+          <p class="lede measure">Trois chemins, selon ce que votre poste vous autorise. Le premier prend cinq minutes et ne demande rien d'installé.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>Depuis le store de votre navigateur</h2>
+          <p>La voie normale, et la seule qui se met à jour toute seule.</p>
+          <div class="split">
+            <div class="callout">
+              <span class="ct">chromium</span>
+              <h4>Chrome, Edge, Brave, Vivaldi…</h4>
+              <p>Un clic depuis le Chrome Web Store. Edge et Brave installent directement les extensions du Chrome Web Store.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">firefox</span>
+              <h4>Firefox</h4>
+              <p>Un build séparé, sur Firefox Add-ons. Même code, empaqueté pour le manifeste de Firefox.</p>
+            </div>
+          </div>
+          <p class="small">Rien d'autre à faire. Ouvrez une pull request sur GitHub et la barre apparaît au-dessus du champ de commentaire.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Depuis un zip de release — sans Node, sans Git</h2>
+          <p>Pour un poste verrouillé où vous ne pouvez pas installer de chaîne de compilation. Chaque version publiée embarque un zip prêt à charger, un pour Chromium et un pour Firefox.</p>
+          <ul class="tick">
+            <li><span class="mk">1</span><b>Télécharger et décompresser</b><span class="tx">Depuis la page des releases du dépôt. Prenez le bundle qui correspond à votre navigateur.</span></li>
+            <li><span class="mk">2</span><b>Ouvrir la page des extensions</b><span class="tx"><code>chrome://extensions</code>, puis activer le mode développeur.</span></li>
+            <li><span class="mk">3</span><b>Charger le dossier décompressé</b><span class="tx">« Charger l'extension non empaquetée », puis désignez le dossier.</span></li>
+          </ul>
+          <div class="callout blk">
+            <span class="ct">la chose à savoir</span>
+            <h4>Une extension chargée ainsi ne se met jamais à jour.</h4>
+            <p>Ce chemin sert à essayer, et aux postes où la chaîne de compilation ne peut pas être installée. Ce n'est pas un canal de distribution&nbsp;: vous resterez sur cette version jusqu'à ce que vous refassiez l'opération à la main. Pour une équipe, passez par les stores.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Depuis les sources</h2>
+          <p>Si vous voulez lire ce que vous faites tourner, ou si vous contribuez.</p>
+          <pre class="code">git clone https://github.com/reefact/conventional-comments-toolkit
+cd conventional-comments-toolkit
+
+npm ci
+npm run build:extension     <span class="tk-cm">// → packages/extension/dist-ext</span></pre>
+          <p>Puis chargez <code>dist-ext</code> non empaqueté, exactement comme à l'étape 3 ci-dessus. La variante Firefox est construite en même temps, dans son propre sous-dossier.</p>
+          <p class="small">Node 20 ou plus récent. Le dépôt contient un guide pas à pas Windows/PowerShell, de l'installation de Node au chargement de l'extension.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Au-delà de github.com</h2>
+          <p>Par défaut l'extension ne tourne que sur github.com. Azure DevOps, une instance GitHub Enterprise Server ou un serveur de configuration interne demandent chacun une autorisation que vous accordez vous-même.</p>
+          <ul class="tick">
+            <li><span class="mk">1</span><b>Ouvrir la page de réglages</b><span class="tx">Depuis l'icône de l'extension dans la barre d'outils.</span></li>
+            <li><span class="mk">2</span><b>Ajouter le domaine, et dire de quelle plateforme il s'agit</b><span class="tx">L'extension ne peut pas deviner si <code>devops.acme.interne</code> est une instance Azure DevOps ou GitHub Enterprise — c'est ce marquage qui active le bon adaptateur.</span></li>
+            <li><span class="mk">3</span><b>Confirmer l'autorisation que le navigateur demande</b><span class="tx">C'est le navigateur qui demande, pas l'extension. Vous pouvez la retirer là à tout moment.</span></li>
+          </ul>
+        </section>
+
+        <section class="dsec">
+          <h2>Vérifier que ça marche</h2>
+          <p>Ouvrez n'importe quelle pull request et commencez un commentaire de revue. La rangée d'étiquettes doit apparaître au-dessus du champ, et une pastille en dessous. Tapez <code>?i</code> puis <code>Tab</code>&nbsp;: ça doit se déplier en <code>issue:</code>.</p>
+          <p>Si rien n'apparaît, la page de diagnostic couvre les trois raisons habituelles.</p>
+        </section>
+        <div class="pager"></div>
+      </div>
+    </div>
+</Docs>

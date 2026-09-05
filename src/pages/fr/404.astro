@@ -1,0 +1,20 @@
+---
+import Base from '../../layouts/Base.astro';
+import { href } from '../../i18n/routes';
+const lang = 'fr' as const;
+---
+<Base lang={lang} page="docsindex" noindex title="Page introuvable" description="Cette adresse n'existe pas sur ce site.">
+  <section class="hband">
+    <div class="in">
+      <div class="stack g18 measure">
+        <span class="eyebrow acc">404&nbsp;:</span>
+        <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Cette adresse n'existe pas ici.</h1>
+        <p class="lede">Soit elle n'a jamais existé, soit elle a bougé. Le sommaire de la documentation est le chemin le plus court vers ce que vous cherchiez.</p>
+        <div class="hero-btns">
+          <a class="btn btn-p" href={href('docsindex', lang)}>Documentation</a>
+          <a class="btn btn-s" href={href('home', lang)}>Accueil</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

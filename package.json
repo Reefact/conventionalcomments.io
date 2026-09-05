@@ -2,15 +2,25 @@
   "name": "conventionalcomments.io",
   "private": true,
   "type": "module",
-  "description": "Vitrine de conventional-comments-toolkit",
+  "description": "Le site conventionalcomments.io — vitrine de conventional-comments-toolkit.",
   "license": "Apache-2.0",
   "scripts": {
+    "dev": "node scripts/generate-version.mjs && astro dev",
+    "build": "node scripts/generate-version.mjs && astro build",
+    "preview": "astro preview",
+    "check": "npm run build && node scripts/check-site.mjs && npm run check:schema",
+    "check:site": "node scripts/check-site.mjs",
     "check:schema": "node scripts/check-schema.mjs",
-    "check:schema:toolkit": "node scripts/check-schema.mjs ../conventional-comments-toolkit"
+    "port:mockup": "node scripts/port-mockup.mjs",
+    "deploy": "npm run check && wrangler deploy"
   },
   "devDependencies": {
+    "@astrojs/sitemap": "^3.7.4",
     "ajv": "^8.20.0",
-    "ajv-formats": "^3.0.1"
+    "ajv-formats": "^3.0.1",
+    "astro": "^5.18.2"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  }
 }

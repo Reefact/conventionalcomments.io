@@ -1,0 +1,41 @@
+---
+import Mark from './Mark.astro';
+import { href, otherLocale, DOCS_PAGES, type Locale, type PageKey } from '../i18n/routes';
+import { t } from '../i18n/ui';
+
+interface Props { lang: Locale; page: PageKey }
+const { lang, page } = Astro.props;
+const ui = t(lang);
+const other = otherLocale(lang);
+
+// « doc : » reste l'entrée courante sur n'importe quelle page de documentation — sinon
+// le lecteur perd le repère de la section dès qu'il descend d'un niveau.
+const current = (key: PageKey) =>
+  key === page || (key === 'docsindex' && DOCS_PAGES.includes(page)) ? 'page' : undefined;
+---
+<header class="sheader">
+  <a class="brand" href={href('home', lang)} aria-label={ui.brandAria}>
+    <Mark size={21} />
+    conventionalcomments<span class="dom">.io</span>
+  </a>
+
+  <nav class="snav" aria-label={lang === 'fr' ? 'Principale' : 'Main'}>
+    <a class="navlink" href={href('howitworks', lang)} aria-current={current('howitworks')}>{ui.nav.howitworks}</a>
+    <a class="navlink" href={href('platforms', lang)} aria-current={current('platforms')}>{ui.nav.platforms}</a>
+    <a class="navlink" href={href('docsindex', lang)} aria-current={current('docsindex')}>{ui.nav.docs}</a>
+  </nav>
+
+  <span class="sp"></span>
+
+  <a class="navlink" href="https://github.com/Reefact/conventional-comments-toolkit"
+     rel="noopener noreferrer" target="_blank">{ui.github}</a>
+
+  <span class="lang">
+    <span class="visually-hidden">{ui.langLabel}</span>
+    {lang === 'en'
+      ? <><b>EN</b><span class="sep">/</span><a class="lgb" href={href(page, 'fr')} hreflang="fr">FR</a></>
+      : <><a class="lgb" href={href(page, 'en')} hreflang="en">EN</a><span class="sep">/</span><b>FR</b></>}
+  </span>
+
+  <a class="btn btn-p" href={href('adoption', lang)}>{ui.cta}</a>
+</header>
