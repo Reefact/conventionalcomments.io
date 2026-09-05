@@ -1,0 +1,145 @@
+/* ============================================================================
+   conventionalcomments.io — jetons de design
+   Voir docs/identite-fr.md. Les treize teintes de labels sont reprises
+   verbatim de packages/core/src/config/defaults.ts du dépôt toolkit ;
+   ne pas les redessiner ici.
+
+   Trois états de thème, dans cet ordre :
+     :root                                   palette claire complète
+     @media (prefers-color-scheme: dark)     redéfinition, gardée par
+       :root:not([data-theme="light"])       :not() pour qu'un choix clair gagne
+     :root[data-theme="dark"]                redéfinition, pour que le sélecteur gagne
+   Toute couleur doit être déclarée dans :root avant d'être redéfinie ailleurs.
+   ========================================================================= */
+
+:root {
+  color-scheme: light dark;
+
+  /* --- surfaces ---------------------------------------------------------- */
+  --bg:          #EEF1F5;
+  --bg-surface:  #FFFFFF;
+  --bg-sunken:   #E5EAF1;
+  --bg-code:     #F5F7FA;
+
+  /* --- texte ------------------------------------------------------------- */
+  --fg:          #0B1522;
+  --fg-2:        #29384A;
+  --fg-muted:    #5A6B80;
+  --fg-faint:    #8797AA;
+
+  /* --- filets ------------------------------------------------------------ */
+  --line:        #D3DBE5;
+  --line-soft:   #E2E8EF;
+  --line-strong: #B4C0CE;
+
+  /* --- accent unique ----------------------------------------------------- */
+  --accent:      #1E44C8;
+  --accent-ink:  #16339A;
+  --accent-soft: #E5E9FA;
+
+  /* --- verdicts : les seules teintes autorisées à remplir (§3.1, §3.3) ---- */
+  --pass:        #1F8A4C;
+  --pass-soft:   #E2F3E9;
+  --warn:        #B07600;
+  --warn-soft:   #F8F0DC;
+  --block:       #C93B33;
+  --block-soft:  #FAE7E5;
+
+  /* découpe derrière la pastille de coche de la marque — jamais un blanc dur */
+  --mark-knock:  #FFFFFF;
+
+  /* --- spectre des labels : defaults.ts, identique dans les deux thèmes --- */
+  --l-praise:     #36933B;
+  --l-nitpick:    #76818E;
+  --l-suggestion: #B07600;
+  --l-issue:      #E04E45;
+  --l-todo:       #D95800;
+  --l-question:   #197EF5;
+  --l-thought:    #9368E3;
+  --l-chore:      #A97735;
+  --l-note:       #1F8E96;
+  --l-decision:   #936DD4;
+  --l-typo:       #CC549C;
+  --l-polish:     #0C8E9A;
+  --l-quibble:    #61896C;
+
+  /* --- typographie (§5) --------------------------------------------------- */
+  --font-display: Archivo, "IBM Plex Sans", system-ui, sans-serif;
+  --font-body:    "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --step-h1:   clamp(30px, 4vw, 42px);
+  --step-h2:   clamp(23px, 2.9vw, 31px);
+  --step-h3:   17.5px;
+  --step-lede: 18px;
+  --step-body: 16px;
+  --step-note: 13.5px;
+
+  --track-display: -0.028em;   /* titrage Archivo, resserré */
+  --track-caps:     0.13em;    /* sur-titres mono en capitales */
+
+  /* --- mesure et gouttière ----------------------------------------------- */
+  --measure: 68ch;
+  --rail:    1180px;
+  --radius:  3px;              /* volontairement discret : ce n'est pas un site de cartes */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:          #080E18;
+    --bg-surface:  #0F1926;
+    --bg-sunken:   #0B131F;
+    --bg-code:     #111C2B;
+
+    --fg:          #E8EEF6;
+    --fg-2:        #C3CEDC;
+    --fg-muted:    #93A2B5;
+    --fg-faint:    #6C7E93;
+
+    --line:        #223144;
+    --line-soft:   #1A2636;
+    --line-strong: #34465C;
+
+    --accent:      #7A97FF;
+    --accent-ink:  #A9BEFF;
+    --accent-soft: #16213F;
+
+    --pass:        #45C77C;
+    --pass-soft:   #10261C;
+    --warn:        #D8A02E;
+    --warn-soft:   #26200E;
+    --block:       #FF8078;
+    --block-soft:  #2A1513;
+
+    --mark-knock:  #0F1926;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg:          #080E18;
+  --bg-surface:  #0F1926;
+  --bg-sunken:   #0B131F;
+  --bg-code:     #111C2B;
+
+  --fg:          #E8EEF6;
+  --fg-2:        #C3CEDC;
+  --fg-muted:    #93A2B5;
+  --fg-faint:    #6C7E93;
+
+  --line:        #223144;
+  --line-soft:   #1A2636;
+  --line-strong: #34465C;
+
+  --accent:      #7A97FF;
+  --accent-ink:  #A9BEFF;
+  --accent-soft: #16213F;
+
+  --pass:        #45C77C;
+  --pass-soft:   #10261C;
+  --warn:        #D8A02E;
+  --warn-soft:   #26200E;
+  --block:       #FF8078;
+  --block-soft:  #2A1513;
+
+  --mark-knock:  #0F1926;
+}

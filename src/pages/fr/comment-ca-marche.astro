@@ -1,0 +1,152 @@
+---
+import Base from '../../layouts/Base.astro';
+import { href } from '../../i18n/routes';
+
+const lang = 'fr' as const;
+const page = 'howitworks' as const;
+---
+<Base lang={lang} page={page}
+  title="Comment ça marche"
+  description="Une moitié vous aide à écrire, l'autre vérifie. Ce que fait chaque composant, et pourquoi aucun ne remplace l'autre.">
+<section class="hband">
+      <div class="in">
+        <div class="stack g18 measure">
+          <span class="eyebrow acc">comment ça marche&nbsp;:</span>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Une moitié vous aide à écrire. L'autre vérifie.</h1>
+          <p class="lede">L'extension rend la convention facile — une barre d'outils, des raccourcis, un retour pendant que vous tapez. Le serveur, si vous en déployez un, relit la pull request après coup et publie une vérification. Voici ce que fait chacun, et pourquoi aucun ne remplace l'autre.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">dans l'éditeur&nbsp;:</span>
+          <h2>Ce que l'extension pose sur la page</h2>
+        </div>
+
+        <div class="feat">
+          <div>
+            <h3>Une barre, sur deux rangées</h3>
+            <p>Les boutons d'étiquettes sur la première, les précisions sur la seconde. Jamais mélangées, quelle que soit la largeur — poser une étiquette et la nuancer sont deux gestes différents, et une rangée unique qui passe à la ligne finit par les présenter côte à côte comme s'ils n'en faisaient qu'un.</p>
+            <p>Cliquer une étiquette <strong>insère ou remplace le préfixe</strong> sans détruire ce que vous avez déjà écrit. Recliquer l'enlève. Au survol, la définition et un exemple.</p>
+          </div>
+          <div>
+            <h3>Au clavier, si vous préférez</h3>
+            <p>Tapez <code>/</code> ou <code>:</code> en début de zone et une liste filtrable s'ouvre&nbsp;: <code>↑</code> <code>↓</code> pour naviguer, <code>Entrée</code> ou <code>Tab</code> pour choisir, <code>Échap</code> pour abandonner.</p>
+            <p>Ou dépliez une abréviation avec <code>Tab</code>&nbsp;: <code>?i</code> → <code>issue:</code>, <code>?ib</code> → <code>issue (blocking):</code>. Il existe aussi des raccourcis directs, du genre <code>Alt+I</code>.</p>
+          </div>
+          <div>
+            <h3>Une pastille sous la zone</h3>
+            <p>Conforme, conforme avec avertissements, ou non conforme. Quand plusieurs choses clochent, elle les liste <strong>toutes</strong> — n'en montrer qu'une ferait réapparaître la suivante après chaque correction.</p>
+            <p>La validation attend 150&nbsp;ms après la frappe, et rien ne saute sur la page pendant que vous écrivez.</p>
+          </div>
+          <div>
+            <h3>Des badges sur les commentaires publiés</h3>
+            <p>Les étiquettes déjà postées deviennent des badges, sans rien changer à ce qui est stocké. Un bandeau en tête de pull request compte les points bloquants non résolus et renvoie à chacun.</p>
+            <p>Son décompte vient du résumé publié par le serveur&nbsp;: le bandeau et la vérification comptent donc toujours la même chose.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">une décision qui mérite d'être connue&nbsp;:</span>
+          <h2>Il n'y a pas de bouton « publier quand même ».</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Dans son mode le plus strict, l'extension peut empêcher l'envoi d'un commentaire mal formé. Elle n'offre aucun moyen de passer outre, et c'est délibéré — pour deux raisons.</p>
+        </div>
+        <div class="duo">
+          <div>
+            <span class="tag" style="color:var(--fg-muted)">la première</span>
+            <h3>Il ne contrôlerait rien</h3>
+            <p>Une extension de navigateur se désactive en deux clics. Un bouton de contournement n'ajoute aucune capacité réelle à qui veut passer outre&nbsp;: seulement une cérémonie, un motif à saisir, un journal que personne ne relit, et l'illusion d'un contrôle là où il n'y en a pas.</p>
+          </div>
+          <div>
+            <span class="tag" style="color:var(--accent)">et celle-ci compte plus</span>
+            <h3>Il ferait sortir la justification de la conversation</h3>
+            <p>« On a choisi de ne pas traiter ce point, pour telle raison » est un acte de revue, pas une échappatoire technique. Sa place est un commentaire étiqueté dans le fil, visible de tous et conservé avec la pull request — pas un journal externe.</p>
+          </div>
+        </div>
+        <div class="callout acc">
+          <span class="ct">alors c'est quoi</span>
+          <h4>Un garde-fou, pas un mur.</h4>
+          <p>Il rattrape l'erreur d'inattention, qui est le cas courant. Il n'a jamais prétendu arrêter la personne déterminée. Ça, c'est le rôle du serveur — et le serveur ne tourne dans le navigateur de personne.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">et elle s'abstient quand il le faut&nbsp;:</span>
+          <h2>Quatre conditions avant de bloquer quoi que ce soit</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Le mode strict ne suffit pas à lui seul. Les quatre doivent tenir, sinon l'extension se contente d'afficher ses diagnostics et vous laisse publier.</p>
+        </div>
+        <ul class="tick">
+          <li><span class="mk">1</span><b>Le mode strict est réellement en vigueur</b><span class="tx">Résolu depuis la configuration de votre organisation, jamais supposé.</span></li>
+          <li><span class="mk">2</span><b>La pull request est dans le périmètre</b><span class="tx">Un dépôt qui ne compte qu'à partir d'une date donnée ne bloque pas rétroactivement les PR plus anciennes.</span></li>
+          <li><span class="mk">3</span><b>L'extension et le serveur s'accordent sur les règles</b><span class="tx">Chacun publie une empreinte de la configuration qu'il applique. Si elles diffèrent — un durcissement en cours de propagation —, l'extension cesse de bloquer et le signale.</span></li>
+          <li><span class="mk">4</span><b>Les règles ont pu être lues</b><span class="tx">Si le fichier de configuration n'a pas pu être récupéré, rien n'est refusé. On ne rejette personne au nom d'une règle qu'on n'a pas su lire.</span></li>
+        </ul>
+        <p class="small measure">Les trois dernières ont la même raison d'être&nbsp;: ne jamais prononcer un rejet que la source de vérité n'aurait pas prononcé.</p>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">sur le serveur&nbsp;:</span>
+          <h2>Ce que la vérification mesure vraiment</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Deux choses, et seulement deux.</p>
+        </div>
+        <div class="duo">
+          <div>
+            <span class="tag" style="color:var(--fg-muted)">la première</span>
+            <h3>Les commentaires sont-ils bien formés&nbsp;?</h3>
+            <p>Un commentaire est conforme s'il ne lève aucun diagnostic de niveau erreur. Les avertissements sont comptés et affichés, jamais une cause d'échec. La plupart des équipes laissent ce critère non bloquant.</p>
+          </div>
+          <div>
+            <span class="tag" style="color:var(--accent)">la seconde</span>
+            <h3>Les points bloquants sont-ils traités&nbsp;?</h3>
+            <p>Toute conversation dont le commentaire se résout en bloquant est résolue. Le caractère bloquant est tenace&nbsp;: une conversation qui bloquait continue de bloquer jusqu'à sa résolution, ou jusqu'à ce qu'une personne habilitée acte une <code>decision</code> en disant pourquoi.</p>
+            <p class="guar">C'est celle-là qui empêche la fusion.</p>
+          </div>
+        </div>
+        <div class="check">
+          <div class="cr">
+            <span class="ic" style="background:var(--pass)"></span>
+            <span class="tx"><b>conventional-comments</b> — tous les points bloquants sont résolus<span>Requise · la fusion est autorisée</span></span>
+          </div>
+          <div class="mach">cc/1 core=1.0.0 mode=enforce blocking=0 fmt=ok fp=7f3c…a91</div>
+        </div>
+        <p class="small measure">La dernière ligne est pour les machines&nbsp;: quelle version a jugé, dans quel mode, combien de points bloquants restent, et l'empreinte des règles appliquées. C'est elle qui permet à l'extension de s'apercevoir qu'elle et le serveur n'appliquent plus la même configuration.</p>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">pourquoi ils ne se contredisent jamais&nbsp;:</span>
+          <h2>Les deux exécutent le même code de validation.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Pas « les mêmes règles, tenues synchronisées » — littéralement le même paquet, consommé à l'identique des deux côtés, sans qu'aucune règle de validation existe ailleurs. Un commentaire accepté par l'extension n'est jamais refusé par le serveur, et réciproquement.</p>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Cette bibliothèque ne touche ni au réseau ni à la page&nbsp;: tout ce qu'elle ne peut pas lire elle-même lui est fourni, et tout ce qu'il y a à faire ressort sous forme de liste d'actions. C'est aussi pour ça qu'elle peut tourner dans votre navigateur — et que le <em>playground</em> est possible.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="cta-in">
+        <div class="stack g8">
+          <h2>L'extension suffit pour commencer.</h2>
+          <p class="small" style="color:var(--fg-2)">Le serveur, c'est pour le jour où une équipe décide que la convention doit tenir toute seule.</p>
+        </div>
+        <div class="hero-btns">
+          <a class="btn btn-p" href={href('install', 'fr')}>Installer l'extension</a>
+          <a class="btn btn-s" href={href('server', 'fr')}>Déployer le serveur</a>
+        </div>
+      </div>
+    </section>
+    </div>
+</Base>

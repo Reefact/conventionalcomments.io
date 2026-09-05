@@ -1,0 +1,268 @@
+---
+import Base from '../layouts/Base.astro';
+import { href } from '../i18n/routes';
+
+const lang = 'en' as const;
+const page = 'home' as const;
+---
+<Base lang={lang} page={page}
+  title="Conventional Comments Toolkit"
+  description="Review comments that say what they expect. A browser extension and a server companion that make the Conventional Comments convention hold.">
+<section class="hband">
+      <div class="in">
+        <div class="hero-g">
+          <div class="stack g20">
+            <span class="eyebrow acc">code review:</span>
+            <h1>Is that feedback, or a dig?</h1>
+            <p class="lede measure">In a code review, tone doesn't survive the trip. The same sentence lands as a helping hand or as a jab, depending on the mood of whoever reads it. <strong>Conventional Comments</strong> fixes that in an almost silly way: every comment says what kind of comment it is, before it says anything else.</p>
+            <div class="hero-btns">
+              <a class="btn btn-p" href={href('labels', 'en')}>See the labels</a>
+              <a class="btn btn-s" href={href('install', 'en')}>Install the extension</a>
+            </div>
+            <p class="small"><a href="#why">Why would one word change anything? ↓</a></p>
+          </div>
+
+          <div class="ba">
+            <div class="ba-row">
+              <span class="ba-tag">received</span>
+              <div>
+                <p class="ba-txt">That variable name doesn't mean anything.</p>
+                <p class="ba-note">Flat. No tone of voice, no face. Read on a Friday evening after two days on the pull request, it sounds like: <em>you're sloppy</em>.</p>
+              </div>
+            </div>
+            <div class="ba-row ok">
+              <span class="ba-tag">received</span>
+              <div>
+                <p class="ba-txt mono"><span class="tk-l">nitpick</span> <span class="tk-d">(non-blocking)</span><span class="tk-c">:</span> that variable name doesn't mean anything</p>
+                <p class="ba-note"><b>Exactly the same words.</b> But <code>nitpick</code> is the reviewer saying, themselves: “this is small, I know.” The sting is gone, and nothing was softened to get there.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk" id="why">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">the problem:</span>
+          <h2>A code review is text. Only text.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">No shrug, no half-smile, no “just thinking out loud”. Two people, two screens, often two time zones and sometimes two native languages. Everything that would carry <em>how much a remark matters</em> out loud is gone. Only the words are left.</p>
+        </div>
+
+        <div class="hum">
+          <div>
+            <span class="hum-q">“Am I being told off?”</span>
+            <p>The reviewer was in a hurry, so they wrote short. The author reads coldness where there was only brevity.</p>
+          </div>
+          <div>
+            <span class="hum-q">“Do I have to do this?”</span>
+            <p>“This loop could be simpler.” Requirement, or passing thought? Not knowing, the author rewrites it. Two hours, for nothing.</p>
+          </div>
+          <div>
+            <span class="hum-q">“Am I really that bad?”</span>
+            <p>A junior gets fifteen comments. They don't see fifteen remarks — they see fifteen versions of “you can't do this job”. Twelve were trivia and one actually mattered.</p>
+          </div>
+          <div>
+            <span class="hum-q">“I'd rather say nothing.”</span>
+            <p>A reviewer afraid of bruising someone hedges everything. Now nothing reads as important, and the review is polite and useless.</p>
+          </div>
+        </div>
+
+        <p class="lede measure">Not one of those four misunderstandings comes from a technical disagreement. They all have the same cause: <strong>the reviewer's intent is written down nowhere.</strong></p>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">the convention:</span>
+          <h2>Every comment introduces itself before it speaks.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">A convention published at <a href="https://conventionalcomments.org/">conventionalcomments.org</a>, and it fits on one line: put a word in front of each comment saying what kind of remark it is. Optionally followed, in brackets, by whether it blocks.</p>
+        </div>
+
+        <div class="anno" style="max-width:600px">
+          <pre class="line"><span class="tk-l">what kind</span> <span class="tk-d">(does it block)</span><span class="tk-c">:</span> what you have to say</pre>
+        </div>
+
+        <div class="scroller">
+          <table class="t">
+            <thead><tr><th>What the reviewer writes</th><th>What the author hears</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="m"><span class="tk-l">praise</span><span class="tk-c">:</span> the error handling here reads really well</td>
+                <td class="d">Somebody took the time to notice what went right.</td>
+              </tr>
+              <tr>
+                <td class="m"><span class="tk-l">nitpick</span><span class="tk-c">:</span> this name could be shorter</td>
+                <td class="d">It's small — and the reviewer said so themselves.</td>
+              </tr>
+              <tr>
+                <td class="m"><span class="tk-l">question</span><span class="tk-c">:</span> why a 30&nbsp;s timeout here?</td>
+                <td class="d">I'm being asked, not accused.</td>
+              </tr>
+              <tr>
+                <td class="m"><span class="tk-l">suggestion</span> <span class="tk-d">(non-blocking)</span><span class="tk-c">:</span> we could extract a method</td>
+                <td class="d">An idea, not an instruction. My call.</td>
+              </tr>
+              <tr>
+                <td class="m"><span class="tk-l">issue</span> <span class="tk-d">(blocking)</span><span class="tk-c">:</span> the session token is never invalidated</td>
+                <td class="d"><strong>This one's serious — and at least it says so.</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout acc">
+          <span class="ct">the thing to take away</span>
+          <h4>The label doesn't change what you say. It says how to read it.</h4>
+          <p>That's what separates this from the usual advice about “kindness in review”. Nobody is asking you to round off your sentences, add emoji, or open with a compliment. You write exactly what you were going to write — you just put the word in front that says on what grounds you're saying it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">and here's the clever part:</span>
+          <h2>The effort falls on the reviewer, not on the person receiving it.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">This is the bit you don't see straight away. Picking a label forces you to ask, for one second, <em>what you are actually doing</em> — and that second is often enough to defuse the comment before anyone reads it.</p>
+        </div>
+
+        <div class="eff">
+          <div>
+            <span class="pill" style="--lc:var(--l-nitpick)">🔍 nitpick</span>
+            <p>Typing that word in front of your own remark means admitting “this is small”. The reviewer disarms themselves before being read.</p>
+          </div>
+          <div>
+            <span class="pill" style="--lc:var(--l-praise)">🎉 praise</span>
+            <p>Nobody remembers to say what went well. A button in a toolbar does. It's a silly mechanism, and it changes the temperature of a review.</p>
+          </div>
+          <div>
+            <span class="pill" style="--lc:var(--l-issue)">🔨 issue</span>
+            <p>Marking something blocking means owning it. No more “anyway, I'll let you decide”, which commits nobody and leaves the author alone with the doubt.</p>
+          </div>
+          <div>
+            <span class="pill" style="--lc:var(--l-decision)">🏁 decision</span>
+            <p>Closing a point without acting on it requires writing why. A disagreement never gets shut down in silence.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="split">
+          <div class="stack g14">
+            <span class="eyebrow">the objection:</span>
+            <h2 style="font-size:24px">“This will make reviews toothless.”</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The opposite happens. Without the convention, a reviewer who doesn't want to hurt anyone waters everything down: “I was wondering whether maybe we could possibly…”. Nothing reads as sharp any more, and the real problem hides among the hedges.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">With a label you can be blunt without being unkind. <code>issue (blocking): memory leak in the handler</code> isn't harsh — it's a category, not a verdict on a person. <strong>Directness becomes possible precisely because it's framed.</strong></p>
+          </div>
+          <div class="stack g14">
+            <span class="eyebrow">and the proportion becomes visible:</span>
+            <div class="prop">
+              <div class="prop-row">
+                <span class="pill" style="--lc:var(--l-nitpick)">🔍 nitpick</span><span class="prop-n">12</span>
+              </div>
+              <div class="prop-row">
+                <span class="pill" style="--lc:var(--l-question)">❓ question</span><span class="prop-n">2</span>
+              </div>
+              <div class="prop-row">
+                <span class="pill" style="--lc:var(--l-issue)">🔨 issue</span><span class="prop-n">1</span>
+              </div>
+            </div>
+            <p class="small">The same review, unlabelled, shows up as <strong style="color:var(--fg-2)">“15 comments”</strong>. Nothing more. That bare number is what discourages a junior — not the remarks themselves.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">making it stick:</span>
+          <h2>A good habit is forgotten in three days.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">That's where this tool comes in — and only there. It doesn't teach you manners. It keeps the habit alive once nobody is thinking about it any more.</p>
+        </div>
+
+        <div class="duo">
+          <div>
+            <span class="tag" style="color:var(--fg-muted)">in the browser</span>
+            <h3>An extension that does the typing</h3>
+            <p>A row of buttons above the comment box on GitHub. Type <code>?n</code> and it writes <code>nitpick:</code>. Hover a button and it reminds you what that label is for. Picking the label costs nothing — which is exactly why people are still doing it three weeks in.</p>
+          </div>
+          <div>
+            <span class="tag" style="color:var(--accent)">on your server</span>
+            <h3>A reminder that never gets tired</h3>
+            <p>A small service you host, which re-reads the pull request's comments and flags the ones marked blocking that nobody dealt with. A team can decide to make that a condition for merging.</p>
+            <p class="guar">It isn't a police officer. It's a memo: <strong style="color:var(--fg)">something important doesn't get lost in the thread.</strong></p>
+          </div>
+        </div>
+
+        <p class="small measure">And if your team wants neither a server nor a gate: the extension on its own works fine. The convention works with no tooling at all — the tooling only makes it easy.</p>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="split">
+          <div class="stack g14">
+            <span class="eyebrow">at your own pace:</span>
+            <h2 style="font-size:24px">Nothing blocks anyone until you decide it should.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Three settings. You start on the first one, where the tool only helps. Moving on is a team decision, never an installation default.</p>
+            <a class="btn btn-p" href={href('adoption', 'en')} style="align-self:flex-start">How teams go about it</a>
+          </div>
+          <div class="traj">
+            <div class="step" style="--st:var(--fg-faint)">
+              <span class="sn">assist</span><span class="sw">the default</span>
+              <span class="sd">The extension helps whoever installed it. Nobody is blocked, nothing is measured.</span>
+            </div>
+            <div class="step" style="--st:var(--warn)">
+              <span class="sn">warn</span><span class="sw">to see where you stand</span>
+              <span class="sd">The team can see how it's going, without anything being refused.</span>
+            </div>
+            <div class="step" style="--st:var(--block)">
+              <span class="sn">enforce</span><span class="sw">only if you want it</span>
+              <span class="sd">A forgotten blocking point stops the merge. Reversible in minutes.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="split">
+          <div class="stack g14">
+            <span class="eyebrow">privacy:</span>
+            <h2 style="font-size:24px">Your comments never leave your browser.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">What people write in a review is often more sensitive than the code itself. The extension reads and checks everything locally — nothing is sent anywhere. No telemetry, no account, no token stored. It runs on github.com and nowhere else, unless you grant another domain yourself.</p>
+            <p class="small"><strong style="color:var(--fg-2)">The one exception:</strong> your own settings — language, shortcuts — follow your browser's sync if you have it on. Settings, never content.</p>
+          </div>
+          <div class="stack g12">
+            <span class="eyebrow">where it works:</span>
+            <div class="plat">
+              <div><span class="ph">GitHub</span><span class="pl">github.com<br>Enterprise Cloud · EMU<br>Enterprise Server</span></div>
+              <div><span class="ph">Azure DevOps</span><span class="pl">Services<br>Server (self-hosted)<br><span style="color:var(--fg-faint)">with written-down limits</span></span></div>
+              <div><span class="ph">Browsers</span><span class="pl">Chrome, Edge, Brave<br>Firefox<br>Open source, Apache-2.0</span></div>
+            </div>
+            <a class="btn btn-s" href={href('platforms', 'en')} style="align-self:flex-start">See the detail</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="cta-in">
+        <div class="stack g8">
+          <h2>Start with one word in front of one sentence.</h2>
+          <p class="small" style="color:var(--fg-2)">That's it. Everything else — the extension, the server, the settings — only exists so you keep doing it.</p>
+        </div>
+        <div class="hero-btns">
+          <a class="btn btn-p" href={href('labels', 'en')}>See all 13 labels</a>
+          <a class="btn btn-s" href={href('adoption', 'en')}>Take it to my team</a>
+        </div>
+      </div>
+    </section>
+</Base>

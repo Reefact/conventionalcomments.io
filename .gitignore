@@ -2,3 +2,7 @@ node_modules/
 dist/
 .astro/
 .DS_Store
+
+# Écrit par le build, à chaque build : le commiter laisserait chaque copie sale.
+src/generated/version.json
+public/version.json

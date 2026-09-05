@@ -1,0 +1,25 @@
+---
+import { href, DOCS_PAGES, type Locale, type PageKey } from '../i18n/routes';
+import { t } from '../i18n/ui';
+
+/** Générée, jamais recopiée : sept entrées × deux langues × sept pages sont la
+ *  première source de liens morts d'un site de documentation. */
+interface Props { lang: Locale; page: PageKey }
+const { lang, page } = Astro.props;
+const ui = t(lang);
+---
+<aside class="side">
+  <p class="grp">{ui.docsGroup}</p>
+  <ul>
+    {DOCS_PAGES.map((key) => (
+      <li>
+        <a href={href(key, lang)} aria-current={key === page ? 'page' : undefined}>{ui.docsNav[key]}</a>
+      </li>
+    ))}
+  </ul>
+  <p class="grp">{ui.refGroup}</p>
+  <ul>
+    <li><a href="/schema/v1.json">JSON schema ↗</a></li>
+    <li><a href={href('releasenotes', lang)}>{ui.releaseNotes}</a></li>
+  </ul>
+</aside>

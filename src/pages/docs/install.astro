@@ -1,0 +1,79 @@
+---
+import Docs from '../../layouts/Docs.astro';
+import { href } from '../../i18n/routes';
+
+const lang = 'en' as const;
+const page = 'install' as const;
+---
+<Docs lang={lang} page={page}
+  title="Install the extension"
+  description="From your browser store, from a release zip with no build chain, or from source.">
+<div class="dhead stack g12">
+          <p class="crumb"><b>docs</b> / install</p>
+          <h1>Install the extension</h1>
+          <p class="lede measure">Three ways in, depending on what your machine lets you do. The first takes five minutes and needs nothing installed.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>From your browser's store</h2>
+          <p>The normal route, and the only one that updates itself.</p>
+          <div class="split">
+            <div class="callout">
+              <span class="ct">chromium</span>
+              <h4>Chrome, Edge, Brave, Vivaldi…</h4>
+              <p>One click from the Chrome Web Store. Edge and Brave install Chrome Web Store extensions directly.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">firefox</span>
+              <h4>Firefox</h4>
+              <p>A separate build, on Firefox Add-ons. Same code, packaged for Firefox's manifest.</p>
+            </div>
+          </div>
+          <p class="small">Nothing else to do. Open a pull request on GitHub and the toolbar appears above the comment box.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>From a release zip — no Node, no Git</h2>
+          <p>For a locked-down machine where you can't install a build chain. Every tagged release ships a ready-to-load zip, one for Chromium and one for Firefox.</p>
+          <ul class="tick">
+            <li><span class="mk">1</span><b>Download and unzip</b><span class="tx">From the repository's releases page. Pick the bundle matching your browser.</span></li>
+            <li><span class="mk">2</span><b>Open your browser's extensions page</b><span class="tx"><code>chrome://extensions</code> and turn on Developer mode.</span></li>
+            <li><span class="mk">3</span><b>Load the unpacked folder</b><span class="tx">“Load unpacked”, then pick the folder you just unzipped.</span></li>
+          </ul>
+          <div class="callout blk">
+            <span class="ct">the one thing to know</span>
+            <h4>An extension loaded this way never updates itself.</h4>
+            <p>This route is for trying it out, and for machines where the build chain can't be installed. It is not a distribution channel: you'll be on that version until you repeat the operation by hand. For a team, go through the stores.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>From source</h2>
+          <p>If you want to read what you're running, or you're contributing.</p>
+          <pre class="code">git clone https://github.com/reefact/conventional-comments-toolkit
+cd conventional-comments-toolkit
+
+npm ci
+npm run build:extension     <span class="tk-cm">// → packages/extension/dist-ext</span></pre>
+          <p>Then load <code>dist-ext</code> unpacked, exactly as in step 3 above. The Firefox variant is built alongside it, in its own subfolder.</p>
+          <p class="small">Node 20 or later. There's a step-by-step Windows/PowerShell walkthrough in the repository, from installing Node to loading the extension.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Beyond github.com</h2>
+          <p>Out of the box the extension only runs on github.com. Azure DevOps, a GitHub Enterprise Server instance, or an internal configuration host each need a permission you grant yourself.</p>
+          <ul class="tick">
+            <li><span class="mk">1</span><b>Open the options page</b><span class="tx">From the extension's icon in the toolbar.</span></li>
+            <li><span class="mk">2</span><b>Add the domain, and say which platform it is</b><span class="tx">The extension can't guess whether <code>devops.acme.internal</code> is an Azure DevOps or a GitHub Enterprise instance — tagging it is what activates the right adapter.</span></li>
+            <li><span class="mk">3</span><b>Confirm the permission your browser asks for</b><span class="tx">It's your browser asking, not the extension. You can revoke it there at any time.</span></li>
+          </ul>
+        </section>
+
+        <section class="dsec">
+          <h2>Check that it works</h2>
+          <p>Open any pull request and start a review comment. You should see the label row appear above the box, and a status dot below it. Type <code>?i</code> then <code>Tab</code>: it should expand to <code>issue:</code>.</p>
+          <p>If nothing appears, the troubleshooting page covers the three usual reasons.</p>
+        </section>
+        <div class="pager"></div>
+      </div>
+</Docs>

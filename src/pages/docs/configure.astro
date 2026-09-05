@@ -1,0 +1,80 @@
+---
+import Docs from '../../layouts/Docs.astro';
+import { href } from '../../i18n/routes';
+
+const lang = 'en' as const;
+const page = 'configure' as const;
+---
+<Docs lang={lang} page={page}
+  title="Configure a repository"
+  description="One file on the default branch: the three levels, the keys that matter, and the one that bites.">
+<div class="dhead stack g12">
+          <p class="crumb"><b>docs</b> / configure</p>
+          <h1>Configure a repository</h1>
+          <p class="lede measure">One file, <code>.conventional-comments.json</code>, on the default branch. Everything not in it keeps the product default — you never have to restate the whole thing.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>The smallest useful file</h2>
+          <pre class="code"><span class="tk-k">&#123;</span>
+  <span class="tk-k">"$schema"</span>: <span class="tk-v">"https://conventionalcomments.io/schema/v1.json"</span>,
+  <span class="tk-k">"version"</span>: <span class="tk-v">1</span>,
+  <span class="tk-k">"mode"</span>: <span class="tk-v">"assist"</span>
+<span class="tk-k">&#125;</span></pre>
+          <p>The <code>$schema</code> line is not decoration: your editor fetches it and then completes every key, shows what each one does on hover, and underlines <code>"enforc"</code> before you commit.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Three levels, and how they combine</h2>
+          <p>A repository is never alone. Three sources are resolved together, and the order isn't negotiable.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th>Level</th><th>Who sets it</th><th>What it can do</th></tr></thead>
+              <tbody>
+                <tr><td class="m">floor</td><td class="d">The organization, through deployment — not through a repository file.</td><td class="d">Sets a minimum mode and a list of rules nobody may switch off. A repository can be <em>stricter</em>, never softer.</td></tr>
+                <tr><td class="m">organization</td><td class="d">A shared document, fetched from the URL named in the floor.</td><td class="d">The common baseline. This is the tipping point: change <code>mode</code> here and it applies everywhere, including to pull requests already open.</td></tr>
+                <tr><td class="m">repository</td><td class="d">This file, on the default branch.</td><td class="d">Local adjustments — exempt bots, enable an optional label, silence a diagnostic.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout acc">
+            <span class="ct">the floor has two channels, and both must carry the same value</span>
+            <p style="margin:0">The extension reads the floor from your browser's enterprise policy. The server reads it from its own deployment configuration. A browser channel is <strong>structurally unreadable</strong> by a server that has no browser — so putting the floor only there would mean enforcing it solely through the component that is bypassable by design, which is to say not enforcing it at all. The server publishes a fingerprint of what it applies, which makes any disagreement visible instead of silent.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>The keys worth knowing</h2>
+          <p>There are twenty-five. These are the ones that change behaviour rather than appearance.</p>
+          <div class="scroller">
+            <table class="t wide">
+              <thead><tr><th>Key</th><th>Default</th><th>What it decides</th></tr></thead>
+              <tbody>
+                <tr><td class="m">mode</td><td class="m d">assist</td><td class="d"><code>off</code> · <code>assist</code> · <code>warn</code> · <code>enforce</code>. Read the adoption guide before going past <code>warn</code>.</td></tr>
+                <tr><td class="m">formatSeverity</td><td class="m d">warn</td><td class="d">Whether badly formed comments can fail the check. Most teams leave this alone: only unresolved blocking points should stop a merge.</td></tr>
+                <tr><td class="m">resolverOverrideGroup</td><td class="m d">empty</td><td class="d">Who may override a resolution and record a <code>decision</code>. <strong>A hard prerequisite for <code>enforce</code></strong> — empty means both release valves are shut.</td></tr>
+                <tr><td class="m">exemptUsers</td><td class="m d">empty</td><td class="d">Authors never validated. Compared against the platform login, case-insensitively.</td></tr>
+                <tr><td class="m">toolCommands</td><td class="m d">empty</td><td class="d">Comments addressed to a bot. See the warning below.</td></tr>
+                <tr><td class="m">labels</td><td class="m d">13 labels</td><td class="d">Per-label overrides. List only what you change.</td></tr>
+                <tr><td class="m">severities</td><td class="m d">product</td><td class="d">Re-level or silence any diagnostic, one by one.</td></tr>
+                <tr><td class="m">coreMinVersion</td><td class="m d">1.0.0</td><td class="d">The lever for requiring a version across an organization. Not the fingerprint — that one only reports disagreement.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout blk">
+            <span class="ct">the one that bites</span>
+            <h4><code>toolCommands</code> is empty by default, and it did not used to be.</h4>
+            <p>Slash commands like <code>/rebase</code> used to be recognised through a built-in list. That list is gone. In strict mode a bare <code>/rebase</code> is now refused like any other comment until the repository declares it. Adding <code>"/*"</code> restores the exemption for every slash command; bot handles are declared one by one, exactly, as <code>"@dependabot"</code>.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Two behaviours that surprise people once</h2>
+          <ul class="bul">
+            <li><strong>An unknown key is ignored with a warning, not rejected.</strong> But a <em>known</em> key holding an impossible value invalidates the whole document — nothing can be concluded from it, so nothing is applied.</li>
+            <li><strong><code>configUrl</code> set in a repository file is ignored.</strong> The organization's configuration address comes exclusively from the floor channel; letting a repository point it elsewhere would let a repository choose its own rules.</li>
+          </ul>
+        </section>
+        <div class="pager"></div>
+      </div>
+</Docs>

@@ -1,0 +1,113 @@
+---
+import Base from '../layouts/Base.astro';
+import { href } from '../i18n/routes';
+
+const lang = 'en' as const;
+const page = 'platforms' as const;
+---
+<Base lang={lang} page={page}
+  title="Supported platforms"
+  description="GitHub and Azure DevOps, hosted and self-hosted, in mainstream browsers. What works today and what is still to come.">
+<section class="hband">
+      <div class="in">
+        <div class="stack g18 measure">
+          <span class="eyebrow acc">compatibility:</span>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Supported platforms</h1>
+          <p class="lede">The extension works in mainstream browsers, on code review platforms both hosted and self-hosted.</p>
+        </div>
+
+        <div class="avail">
+          <div class="av-card">
+            <span class="av-tag ok">available</span>
+            <h3>GitHub</h3>
+            <ul class="av-list">
+              <li>github.com</li>
+              <li>Enterprise Cloud</li>
+              <li>Enterprise Managed Users</li>
+              <li>Enterprise Server <span class="av-note">self-hosted</span></li>
+            </ul>
+          </div>
+          <div class="av-card">
+            <span class="av-tag ok">available</span>
+            <h3>Azure DevOps</h3>
+            <ul class="av-list">
+              <li>Services</li>
+              <li>Server <span class="av-note">self-hosted</span></li>
+            </ul>
+          </div>
+          <div class="av-card">
+            <span class="av-tag ok">available</span>
+            <h3>Browsers</h3>
+            <ul class="av-list">
+              <li>Chrome, Edge, Brave <span class="av-note">and other Chromium browsers</span></li>
+              <li>Firefox <span class="av-note">separate build</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">not yet:</span>
+          <h2>Other platforms</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The convention itself works anywhere — it's a way of writing a comment. What isn't built yet is the tooling: the toolbar, the validation, the check.</p>
+        </div>
+        <div class="avail">
+          <div class="av-card soon">
+            <span class="av-tag">to come</span>
+            <h3>GitLab</h3>
+            <p class="av-p">Merge requests, self-managed and gitlab.com.</p>
+          </div>
+          <div class="av-card soon">
+            <span class="av-tag">to come</span>
+            <h3>Bitbucket</h3>
+            <p class="av-p">Cloud and Data Center.</p>
+          </div>
+          <div class="av-card soon">
+            <span class="av-tag">tell us</span>
+            <h3>Something else?</h3>
+            <p class="av-p">Open an issue on the repository saying which platform and roughly how many people it would serve. That's what decides the order.</p>
+          </div>
+        </div>
+        <p class="small measure">No dates are promised. A platform appears above only once it actually works.</p>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="split">
+          <div class="stack g14">
+            <span class="eyebrow">what you need:</span>
+            <h2 style="font-size:24px">The extension alone needs nothing.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Install it from your browser's store and it works on the spot: the toolbar, the shortcuts, the live feedback. No account, no server, no configuration.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The check on the pull request is the part that needs a server — a small service you host, once, for the whole organization. Only a team that wants the convention to become a merge condition needs it.</p>
+            <div class="hero-btns">
+              <a class="btn btn-p" href={href('install', 'en')}>Install the extension</a>
+              <a class="btn btn-s" href={href('adoption', 'en')}>The server, and when it's worth it</a>
+            </div>
+          </div>
+          <div class="stack g14">
+            <span class="eyebrow">and where it looks:</span>
+            <h2 style="font-size:24px">github.com, and nowhere else by default.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">No “all sites” permission. One declared domain. Azure DevOps, a self-hosted GitHub, an internal host — each needs its own permission, which your browser asks you for and you grant, or don't.</p>
+            <p class="small">Two permissions in total: one to remember your preferences, one to work inside the page. No account, no token stored. The extension can't load code from anywhere else — locked technically, and re-verified on every release.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="cta-in">
+        <div class="stack g8">
+          <h2>If your platform is on the list, you can start today.</h2>
+          <p class="small" style="color:var(--fg-2)">Nothing blocks anyone until you decide it should.</p>
+        </div>
+        <div class="hero-btns">
+          <a class="btn btn-p" href={href('install', 'en')}>Install the extension</a>
+          <a class="btn btn-s" href={href('labels', 'en')}>See the labels</a>
+        </div>
+      </div>
+    </section>
+</Base>

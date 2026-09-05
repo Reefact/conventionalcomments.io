@@ -1,0 +1,99 @@
+---
+import Docs from '../../../layouts/Docs.astro';
+import { href } from '../../../i18n/routes';
+
+const lang = 'fr' as const;
+const page = 'server' as const;
+---
+<Docs lang={lang} page={page}
+  title="Déployer le serveur"
+  description="Docker, persistance, stockage, les variables qui comptent, et rendre la vérification obligatoire.">
+<div class="dhead stack g12">
+          <p class="crumb"><b>doc</b> / le serveur</p>
+          <h1>Déployer le serveur</h1>
+          <p class="lede measure">Un petit service, que vous hébergez, une fois pour toute l'organisation. Il relit les pull requests et publie la vérification. Rien là-dedans n'est du SaaS&nbsp;: il tourne sur votre infrastructure et ne parle à aucun tiers.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>Démarrage rapide</h2>
+          <pre class="code">docker build -t cct-server .
+
+docker run -d --name cct-server \
+  -p 8080:8080 \
+  -v cct-data:/data \
+  -e CCT_ADMIN_TOKEN=<span class="tk-v">'un-secret-long'</span> \
+  -e CCT_GITHUB_TOKEN=<span class="tk-v">'ghp_…'</span> \
+  -e CCT_GITHUB_WEBHOOK_SECRET=<span class="tk-v">'un-autre-secret'</span> \
+  -e CCT_GITHUB_REPOS=<span class="tk-v">'mon-org/depot-un,mon-org/depot-deux'</span> \
+  cct-server</pre>
+          <p>Sans Docker&nbsp;: <code>npm ci &amp;&amp; npm run build</code>, puis <code>CCT_… npm run server</code>. Le service expose <code>GET /healthz</code>, et l'image embarque la sonde correspondante.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Persistance — à lire avant le premier démarrage</h2>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th>Façon de monter</th><th>Ce qui se passe</th></tr></thead>
+              <tbody>
+                <tr><td class="m">volume nommé<br><span class="av-note">-v cct-data:/data</span></td><td class="d"><strong>Recommandé.</strong> L'état appartient au volume et survit à tout, y compris à la recréation du conteneur lors d'une montée de version.</td></tr>
+                <tr><td class="m">bind mount<br><span class="av-note">-v /srv/cct:/data</span></td><td class="d">Le répertoire hôte doit être inscriptible par l'utilisateur du conteneur, dont l'UID est <strong>figé à 10001</strong>. Faites <code>chown -R 10001 /srv/cct</code> d'abord — sinon le service <strong>refuse de démarrer</strong>. Une sonde d'écriture tourne au boot&nbsp;: il ne tourne jamais sans persister.</td></tr>
+                <tr><td class="m">sans volume</td><td class="d">Docker crée un volume anonyme par conteneur. L'état survit aux redémarrages mais est <strong>perdu à chaque mise à jour d'image</strong>. Pour les démonstrations seulement.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Stockage</h2>
+          <p>Trois implémentations, une variable.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th><code>CCT_STORAGE</code></th><th>Pour quoi</th></tr></thead>
+              <tbody>
+                <tr><td class="m">memory</td><td class="d">Essais et démonstrations — tout est perdu à l'arrêt.</td></tr>
+                <tr><td class="m">file <span class="av-note">défaut</span></td><td class="d">Déploiement simple mono-processus. JSON, écrit de façon atomique.</td></tr>
+                <tr><td class="m">sqlite</td><td class="d">Une vraie base en un fichier, sans dépendance supplémentaire — le SQLite de Node. Node 22.13 ou plus récent.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Les variables qui comptent</h2>
+          <div class="scroller">
+            <table class="t wide">
+              <thead><tr><th>Variable</th><th>Obligatoire</th><th>Rôle</th></tr></thead>
+              <tbody>
+                <tr><td class="m">CCT_ADMIN_TOKEN</td><td class="m" style="color:var(--block)">oui</td><td class="d">Jeton du point d'entrée d'administration — invalidation de cache, exemptions.</td></tr>
+                <tr><td class="m">CCT_GITHUB_TOKEN</td><td class="m d">si GitHub</td><td class="d">Jeton d'API. Les portées sont documentées dans le dépôt&nbsp;; donnez-lui le minimum qui fonctionne.</td></tr>
+                <tr><td class="m">CCT_GITHUB_WEBHOOK_SECRET</td><td class="m d">si GitHub</td><td class="d">Secret HMAC de signature des webhooks.</td></tr>
+                <tr><td class="m">CCT_GITHUB_API_BASE</td><td class="m d">non</td><td class="d">À pointer vers <code>https://&#123;ghes&#125;/api/v3</code> pour Enterprise Server.</td></tr>
+                <tr><td class="m">CCT_AZDO_ORG_URL<br>CCT_AZDO_PROJECT<br>CCT_AZDO_TOKEN</td><td class="m d">si Azure DevOps</td><td class="d">URL d'organisation ou de collection Server, projet, et un jeton d'accès personnel.</td></tr>
+                <tr><td class="m">CCT_FLOOR_FILE</td><td class="m d">non</td><td class="d">Le plancher d'organisation. Relu à chaque évaluation&nbsp;; illisible au démarrage = refus de démarrer, corrompu en cours de route = le dernier contenu valide continue de s'appliquer.</td></tr>
+                <tr><td class="m">CCT_EXEMPTION_LOG_RETENTION_MONTHS</td><td class="m d">non</td><td class="d">Douze par défaut. <code>0</code> vaut illimité — une décision explicite, ce journal étant nominatif.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Rendre la vérification obligatoire</h2>
+          <p>Déployer le serveur publie un statut. Ça ne bloque rien tant que vous ne l'avez pas dit — et c'est un réglage de protection de branche, pas un réglage de ce produit.</p>
+          <div class="split">
+            <div class="callout">
+              <span class="ct">github</span>
+              <h4>Deux cases, pas une</h4>
+              <p><em>Require status checks to pass</em> sur <code>conventional-comments</code>, <strong>et</strong> <em>Do not allow bypassing the above settings</em>. Sans la seconde, les administrateurs passent outre et la garantie ne vaut plus rien.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">azure devops</span>
+              <h4>Block, pas Warn</h4>
+              <p>Une policy de branche <em>Status checks</em> sur <code>conventional-comments/compliance</code>, réglée sur <strong>Block</strong>. Laissée sur <em>Warn</em>, elle affiche et laisse passer la complétion.</p>
+            </div>
+          </div>
+          <p class="small">Ne faites ça qu'une fois les conditions d'adoption réunies. Activer sans marche arrière écrite, c'est ainsi qu'une bonne idée devient un incident.</p>
+        </section>
+        <div class="pager"></div>
+      </div>
+    </div>
+</Docs>

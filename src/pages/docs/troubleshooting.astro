@@ -1,0 +1,67 @@
+---
+import Docs from '../../layouts/Docs.astro';
+import { href } from '../../i18n/routes';
+
+const lang = 'en' as const;
+const page = 'troubleshooting' as const;
+---
+<Docs lang={lang} page={page}
+  title="Troubleshooting"
+  description="Seven symptoms, what causes each one, and whether there is anything to do about it.">
+<div class="dhead stack g12">
+          <p class="crumb"><b>docs</b> / troubleshooting</p>
+          <h1>When something looks wrong</h1>
+          <p class="lede measure">Most of what surprises people is deliberate. Each case below says what you're seeing, why it happens, and whether there's anything to do about it.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>The toolbar doesn't appear</h2>
+          <ul class="tick">
+            <li><span class="mk n">·</span><b>You're not on github.com</b><span class="tx">By default the extension only runs there. Azure DevOps and self-hosted instances need a permission you grant on the options page, and a tag saying which platform it is.</span></li>
+            <li><span class="mk n">·</span><b>The page changed under it</b><span class="tx">When the platform's markup moves, the extension disables the affected area rather than writing into an element it may have misidentified. The options page keeps a log of the last fifty times that happened — rule name and timestamp, never content.</span></li>
+            <li><span class="mk n">·</span><b>The mode is <code>off</code></b><span class="tx">Your organization or repository can switch it off entirely.</span></li>
+          </ul>
+        </section>
+
+        <section class="dsec">
+          <h2>“Configuration unread” banner</h2>
+          <p>The extension could not fetch <code>.conventional-comments.json</code>, so it assists without knowing your rules and never blocks a send. That last part is the point: you don't reject someone in the name of a rule you couldn't read.</p>
+          <div class="callout">
+            <span class="ct">what it does not mean</span>
+            <p style="margin:0">A repository with <strong>no configuration file at all</strong> is a nominal case, not a degradation — you get the product defaults and no banner. The banner means there was something to read and it couldn't be read. On a public repository, or a private one with an open session, it should not appear at all; signed out, it says something true.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>“Configuration out of step with the server”</h2>
+          <p>The extension and the server publish a fingerprint of the configuration each applies. When they differ, the extension <strong>stops blocking sends</strong> and says so.</p>
+          <p>It's normally transient: a tightening propagates, and a pull request already open is judged on the configuration pinned when it was first evaluated. If it persists, the two components are running different versions of the shared library — <code>coreMinVersion</code> is the lever for that, not the fingerprint.</p>
+        </section>
+
+        <section class="dsec">
+          <h2><code>/rebase</code> is being rejected</h2>
+          <p>Expected, and the most common surprise after an upgrade. Slash commands used to be exempt through a built-in list; that list is gone and <code>toolCommands</code> is empty by default.</p>
+          <pre class="code"><span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>]</pre>
+          <p><code>"/*"</code> restores recognition of every slash command. Bot handles are declared exactly, one by one — the match is on the whole first token, so <code>@codex review</code> is a command and <code>@codexplains why</code> is not.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>A bot's comments fail the check</h2>
+          <p>Add its login to <code>exemptUsers</code>. The comparison is against the platform login, case-insensitively — never the display name.</p>
+          <p class="small">Platform-generated entries — timeline events, branch updates, system notices — are exempt structurally and don't need listing. Same for a review approved with <strong>no text at all</strong>: an empty body is always exempt, because otherwise the most ordinary gesture in review would fail on every approval, with no way to fix it — you don't edit someone else's review.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>The check is grey, not red or green</h2>
+          <p>A neutral status means the server could not read the current state for longer than its grace period, and it says so rather than guessing. It keeps its last verdict for that period first; only past it does the status go neutral.</p>
+          <p>Look at the platform token first — expired, or short on scopes — then at the webhook secret.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>A blocking point can't be closed</h2>
+          <p>Only the comment's author, or a member of the designated group, may resolve a blocking thread. If nobody can, the group is empty — and designating it is a prerequisite for strict mode precisely so this situation cannot happen.</p>
+          <p>The other way out is a <code>decision</code> reply saying why the point won't be addressed, in at least twenty characters. It's recorded in the thread, never silent.</p>
+        </section>
+        <div class="pager"></div>
+      </div>
+</Docs>

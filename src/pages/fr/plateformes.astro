@@ -1,0 +1,115 @@
+---
+import Base from '../../layouts/Base.astro';
+import { href } from '../../i18n/routes';
+
+const lang = 'fr' as const;
+const page = 'platforms' as const;
+---
+<Base lang={lang} page={page}
+  title="Plateformes supportées"
+  description="GitHub et Azure DevOps, hébergés comme auto-hébergés, dans les navigateurs courants. Ce qui marche aujourd'hui et ce qui est à venir.">
+<section class="hband">
+      <div class="in">
+        <div class="stack g18 measure">
+          <span class="eyebrow acc">compatibilité&nbsp;:</span>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Plateformes supportées</h1>
+          <p class="lede">L'extension fonctionne dans les navigateurs courants, sur des plateformes de revue de code hébergées comme auto-hébergées.</p>
+        </div>
+
+        <div class="avail">
+          <div class="av-card">
+            <span class="av-tag ok">disponible</span>
+            <h3>GitHub</h3>
+            <ul class="av-list">
+              <li>github.com</li>
+              <li>Enterprise Cloud</li>
+              <li>Enterprise Managed Users</li>
+              <li>Enterprise Server <span class="av-note">auto-hébergé</span></li>
+            </ul>
+          </div>
+          <div class="av-card">
+            <span class="av-tag ok">disponible</span>
+            <h3>Azure DevOps</h3>
+            <ul class="av-list">
+              <li>Services</li>
+              <li>Server <span class="av-note">auto-hébergé</span></li>
+            </ul>
+          </div>
+          <div class="av-card">
+            <span class="av-tag ok">disponible</span>
+            <h3>Navigateurs</h3>
+            <ul class="av-list">
+              <li>Chrome, Edge, Brave <span class="av-note">et les autres Chromium</span></li>
+              <li>Firefox <span class="av-note">build séparé</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">pas encore&nbsp;:</span>
+          <h2>Les autres plateformes</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">La convention, elle, marche partout — c'est une façon d'écrire un commentaire. Ce qui n'existe pas encore, c'est l'outillage&nbsp;: la barre d'étiquettes, la validation, la vérification.</p>
+        </div>
+        <div class="avail">
+          <div class="av-card soon">
+            <span class="av-tag">à venir</span>
+            <h3>GitLab</h3>
+            <p class="av-p">Merge requests, self-managed et gitlab.com.</p>
+          </div>
+          <div class="av-card soon">
+            <span class="av-tag">à venir</span>
+            <h3>Bitbucket</h3>
+            <p class="av-p">Cloud et Data Center.</p>
+          </div>
+          <div class="av-card soon">
+            <span class="av-tag">dites-le nous</span>
+            <h3>Autre chose&nbsp;?</h3>
+            <p class="av-p">Ouvrez une issue sur le dépôt en disant quelle plateforme, et pour combien de personnes. C'est ce qui décide de l'ordre.</p>
+          </div>
+        </div>
+        <p class="small measure">Aucune date n'est promise. Une plateforme n'apparaît au-dessus qu'une fois qu'elle marche vraiment.</p>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="split">
+          <div class="stack g14">
+            <span class="eyebrow">ce qu'il vous faut&nbsp;:</span>
+            <h2 style="font-size:24px">L'extension seule ne demande rien.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Vous l'installez depuis le store de votre navigateur et elle marche tout de suite&nbsp;: la barre, les raccourcis, le retour en direct. Aucun compte, aucun serveur, aucune configuration.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">C'est la vérification sur la pull request qui demande un serveur — un petit service à héberger une fois pour toute l'organisation. Seule une équipe qui veut faire de la convention une condition de fusion en a besoin.</p>
+            <div class="hero-btns">
+              <a class="btn btn-p" href={href('install', 'fr')}>Installer l'extension</a>
+              <a class="btn btn-s" href={href('adoption', 'fr')}>Le serveur, et quand il vaut le coup</a>
+            </div>
+          </div>
+          <div class="stack g14">
+            <span class="eyebrow">et où elle regarde&nbsp;:</span>
+            <h2 style="font-size:24px">github.com, et nulle part ailleurs par défaut.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Aucune permission « tous les sites ». Un seul domaine déclaré. Azure DevOps, un GitHub auto-hébergé, un serveur interne&nbsp;: chacun demande son autorisation, que le navigateur vous présente et que vous accordez — ou non.</p>
+            <p class="small">Deux permissions en tout&nbsp;: une pour retenir vos préférences, une pour agir dans la page. Aucun compte, aucun jeton stocké. L'extension ne peut charger aucun code venu d'ailleurs — verrouillé techniquement, et revérifié à chaque publication.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="cta-in">
+        <div class="stack g8">
+          <h2>Si votre plateforme est dans la liste, vous pouvez commencer aujourd'hui.</h2>
+          <p class="small" style="color:var(--fg-2)">Rien ne bloque personne tant que vous ne l'avez pas décidé.</p>
+        </div>
+        <div class="hero-btns">
+          <a class="btn btn-p" href={href('install', 'fr')}>Installer l'extension</a>
+          <a class="btn btn-s" href={href('labels', 'fr')}>Voir les étiquettes</a>
+        </div>
+      </div>
+    </section>
+
+    </div>
+</Base>

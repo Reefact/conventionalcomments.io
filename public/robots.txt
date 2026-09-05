@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# La page d'exploitation n'a rien à faire dans un index : elle décrit un build, pas un
+# sujet. Elle porte aussi un meta robots noindex — ceci n'est que la première barrière.
+Disallow: /version/
+Disallow: /fr/version/
+
+Sitemap: https://conventionalcomments.io/sitemap-index.xml

@@ -1,0 +1,172 @@
+---
+import Docs from '../../../layouts/Docs.astro';
+import { href } from '../../../i18n/routes';
+
+const lang = 'fr' as const;
+const page = 'labels' as const;
+---
+<Docs lang={lang} page={page}
+  title="Labels et décorations"
+  description="Les treize étiquettes, les précisions, la règle qui décide si un commentaire bloque, et les quinze diagnostics.">
+<div class="dhead stack g12">
+          <p class="crumb"><b>doc</b> / labels et décorations</p>
+          <h1>Labels et décorations</h1>
+          <p class="lede measure">Treize étiquettes, trois précisions, et une règle qui décide si un commentaire bloque la fusion. Cette page détaille les trois.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>Comment un commentaire s'écrit</h2>
+          <p>La première ligne porte l'étiquette. Tout ce qui vient après une ligne vide est de la discussion libre&nbsp;: elle n'est jamais analysée, écrivez-y ce que vous voulez.</p>
+          <div class="anno">
+            <pre class="line"><span class="tk-l">label</span> <span class="tk-d">[décorations]</span><span class="tk-c">:</span> sujet
+
+<span class="tk-k">[discussion]</span></pre>
+            <div class="legend">
+              <i style="color:var(--accent)">■ l'étiquette — obligatoire, en minuscules</i>
+              <i>■ les précisions — facultatives, entre parenthèses</i>
+              <i style="color:var(--block)">■ le pivot</i>
+            </div>
+          </div>
+          <div class="callout">
+            <span class="ct">le deux-points de la grammaire n'est pas celui de la typographie</span>
+            <p style="margin:0">En français, le deux-points de la prose demande une espace avant&nbsp;: <em>« plateformes&nbsp;: »</em>. Celui d'un commentaire n'en veut <strong>jamais</strong>&nbsp;: <code>issue: sujet</code> se lit, <code>issue : sujet</code> ne se lit plus. C'est aussi pourquoi les noms d'étiquettes restent en anglais partout — ce sont des mots-clés, pas du texte à traduire.</p>
+          </div>
+          <p class="small">Une majuscule de trop n'est pas une faute grave&nbsp;: <code>Issue:</code> déclenche un simple avertissement, avec un bouton pour corriger.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Les treize étiquettes</h2>
+          <p>Dix sont actives d'emblée. Trois — <code>typo</code>, <code>polish</code>, <code>quibble</code> — sont livrées éteintes&nbsp;: ce sont des nuances de <code>todo</code>, <code>suggestion</code> et <code>nitpick</code>, à allumer si votre équipe les veut.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead>
+                <tr><th>Étiquette</th><th>Ce qu'elle veut dire</th><th>Bloque&nbsp;?</th><th>Raccourci</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-praise)">🎉 praise</span></td><td class="d">Souligne un point positif.</td><td class="m d">selon la précision</td><td class="m">?pr</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-nitpick)">🔍 nitpick</span></td><td class="d">Préférence triviale, sans enjeu réel.</td><td class="m"><span class="deco nb">jamais</span></td><td class="m">?ni</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-suggestion)">💡 suggestion</span></td><td class="d">Proposition d'amélioration argumentée.</td><td class="m d">selon la précision</td><td class="m">?su</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-issue)">🔨 issue</span></td><td class="d">Problème identifié. Idéalement accompagné d'une suggestion.</td><td class="m"><span class="deco b">oui</span></td><td class="m">?i · ?ib</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-todo)">📌 todo</span></td><td class="d">Changement petit mais nécessaire.</td><td class="m"><span class="deco b">oui</span></td><td class="m">?to</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-question)">❓ question</span></td><td class="d">Demande de clarification sur un point incertain.</td><td class="m d">selon la précision</td><td class="m">?que</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-thought)">💭 thought</span></td><td class="d">Idée surgie pendant la revue, sans demande d'action.</td><td class="m"><span class="deco nb">jamais</span></td><td class="m">?th</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-chore)">🧹 chore</span></td><td class="d">Tâche annexe à réaliser avant acceptation.</td><td class="m"><span class="deco b">oui</span></td><td class="m">?ch</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-note)">📝 note</span></td><td class="d">Information à porter à connaissance.</td><td class="m"><span class="deco nb">jamais</span></td><td class="m">?no</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-decision)">🏁 decision</span></td><td class="d">Acte le choix de <em>ne pas</em> traiter un point soulevé, en énonçant pourquoi.</td><td class="m"><span class="deco nb">jamais</span></td><td class="m">?de</td></tr>
+                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-typo)">🔤 typo</span></td><td class="d">Faute de frappe.</td><td class="m d">éteinte</td><td class="m">?ty</td></tr>
+                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-polish)">✨ polish</span></td><td class="d">Amélioration de finition.</td><td class="m d">éteinte</td><td class="m">?po</td></tr>
+                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-quibble)">🪶 quibble</span></td><td class="d">Point de détail discutable.</td><td class="m d">éteinte</td><td class="m">?qui</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small">Couleurs et icônes sont purement décoratives&nbsp;: elles n'entrent dans aucun calcul, donc elles ne peuvent jamais changer un verdict — et aucun administrateur ne peut vous les imposer.</p>
+        </section>
+
+        <section class="dsec">
+          <h2><code style="font-size:.9em">decision</code> — l'étiquette que ce toolkit ajoute</h2>
+          <p>Elle ne figure pas dans la convention d'origine. Elle existe parce que bloquer sans porte de sortie est un piège&nbsp;: si le relecteur qui a posé un point bloquant part en congé, la pull request reste coincée et personne ne peut rien y faire.</p>
+          <div class="split">
+            <div class="callout">
+              <span class="ct">elle est lue là où plus rien ne l'est</span>
+              <h4>La seule étiquette vérifiée dans une réponse</h4>
+              <p>Par défaut, les réponses à l'intérieur d'une conversation ne sont pas vérifiées. Une réponse qui commence par <code>decision:</code> l'est quand même — sinon la porte de sortie ne marcherait que dans les dépôts qui vérifient déjà les réponses.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">et il faut vraiment dire pourquoi</span>
+              <h4>Trop court, c'est une erreur — pas un avertissement</h4>
+              <p>Une <code>decision</code> doit faire au moins 20 caractères, et c'est la <em>seule</em> longueur imposée dans tout le produit. Refermer un point bloquant demande donc une phrase, pas un mot. « wontfix » ne passe pas.</p>
+            </div>
+          </div>
+          <pre class="code"><span class="tk-l">decision</span><span class="tk-c">:</span> hors périmètre pour cette PR, dette suivie en PROJ-142
+
+Acté avec l'équipe plateforme le 3 septembre : la réécriture du cache
+arrive au T4 et ce handler disparaît avec elle.</pre>
+          <p class="small">Tout le monde ne peut pas en écrire une&nbsp;: un groupe désigné à l'avance en a seul le droit. Nommer ce groupe est une condition pour activer le blocage — sans lui, les deux portes de sortie se ferment en même temps.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Les précisions entre parenthèses</h2>
+          <p>Une précision nuance l'étiquette. Trois d'entre elles changent le verdict. Toutes les autres sont libres&nbsp;: elles parlent aux humains et n'entrent dans aucun calcul.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th>Précision</th><th>Effet</th><th>Ce que ça veut dire</th></tr></thead>
+              <tbody>
+                <tr><td class="m"><span class="deco b">blocking</span></td><td class="m" style="color:var(--block)">bloquant</td><td class="d">Doit être résolu avant que l'objet de la revue ne soit accepté.</td></tr>
+                <tr><td class="m"><span class="deco nb">non-blocking</span></td><td class="m" style="color:var(--pass)">non bloquant</td><td class="d">Ne doit pas empêcher l'acceptation.</td></tr>
+                <tr><td class="m"><span class="deco nb">if-minor</span></td><td class="m" style="color:var(--pass)">non bloquant</td><td class="d">À traiter seulement si le changement s'avère trivial. L'auteur décide.</td></tr>
+                <tr><td class="m"><span class="deco">security</span> <span class="deco">test</span> <span class="deco">ux</span></td><td class="m d">aucun</td><td class="d">Précisions libres. Affichées et comptées, jamais prises en compte dans le verdict. Chaque organisation définit les siennes.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small"><code>suggestion</code> et <code>question</code> écrits sans aucune précision déclenchent un avertissement&nbsp;: ce sont les deux seules étiquettes dont on ne peut vraiment pas deviner si elles bloquent.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Bloquant ou pas&nbsp;: comment ça se décide</h2>
+          <p>Cinq règles, dans l'ordre. La première qui s'applique tranche. Il n'y a rien d'autre&nbsp;: aucune heuristique, aucune exception cachée.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th>#</th><th>Condition</th><th>Résultat</th><th>Diagnostic</th></tr></thead>
+              <tbody>
+                <tr><td class="m num">1</td><td class="d">Le label est <code>alwaysNonBlocking</code>, et pourtant une décoration force le blocage</td><td class="m">le défaut du label s'applique</td><td class="m" style="color:var(--block)">E-CONFLICT</td></tr>
+                <tr><td class="m num">2</td><td class="d">Une décoration force le blocage <em>et</em> une autre force le non-blocage</td><td class="m">le défaut du label s'applique</td><td class="m" style="color:var(--block)">E-CONFLICT</td></tr>
+                <tr><td class="m num">3</td><td class="d">Une décoration force le blocage</td><td class="m" style="color:var(--block)">bloquant</td><td class="m d">—</td></tr>
+                <tr><td class="m num">4</td><td class="d">Une décoration force le non-blocage</td><td class="m" style="color:var(--pass)">non bloquant</td><td class="m d">—</td></tr>
+                <tr><td class="m num">5</td><td class="d">Aucune décoration forçante</td><td class="m">le <code>blockingByDefault</code> du label</td><td class="m d">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout">
+            <span class="ct">pourquoi un conflit produit quand même un verdict</span>
+            <p style="margin:0">Les deux premières lignes signalent une erreur, mais elles répondent quand même. Un commentaire qui se contredit reçoit malgré tout un verdict, celui de son étiquette. Sinon la conversation resterait dans un état indéterminé, et la pull request serait bloquée pour une raison sur laquelle personne ne peut agir.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Diagnostics</h2>
+          <p>Quinze messages possibles. Une <strong>erreur</strong> rend le commentaire non conforme, et ne bloque la fusion que si le dépôt l'a explicitement demandé. Un <strong>avertissement</strong> est compté et affiché, jamais bloquant. Chaque message peut être requalifié, ou éteint, dépôt par dépôt.</p>
+          <div class="split">
+            <div class="scroller">
+              <table class="t">
+                <thead><tr><th style="color:var(--block)">erreur</th><th>levée quand</th></tr></thead>
+                <tbody>
+                  <tr><td class="m">E-NO-LABEL</td><td class="d">Aucune ligne de préfixe.</td></tr>
+                  <tr><td class="m">E-MALFORMED-PREFIX</td><td class="d">Un préfixe qui s'analyse presque, mais pas tout à fait.</td></tr>
+                  <tr><td class="m">E-UNKNOWN-LABEL</td><td class="d">Label non activé sur ce dépôt.</td></tr>
+                  <tr><td class="m">E-EMPTY-SUBJECT</td><td class="d">Label et deux-points, puis rien.</td></tr>
+                  <tr><td class="m">E-DECORATION-SYNTAX</td><td class="d">Parenthèses ou séparateurs malformés.</td></tr>
+                  <tr><td class="m">E-UNKNOWN-DECORATION</td><td class="d">Inconnue, et les décorations libres sont désactivées.</td></tr>
+                  <tr><td class="m">E-CONFLICT</td><td class="d">Règle de précédence 1 ou 2.</td></tr>
+                  <tr><td class="m">E-DECISION-SUBJECT</td><td class="d">Une <code>decision</code> qui ne dit pas pourquoi.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="scroller">
+              <table class="t">
+                <thead><tr><th style="color:var(--warn)">avertissement</th><th>levé quand</th></tr></thead>
+                <tbody>
+                  <tr><td class="m">W-CASE</td><td class="d">Mauvaise casse. Livre une correction.</td></tr>
+                  <tr><td class="m">W-DECORATION-STYLE</td><td class="d">Espacement ou ordre à revoir. Livre une correction.</td></tr>
+                  <tr><td class="m">W-SUBJECT-TOO-SHORT</td><td class="d">Moins de 5 caractères.</td></tr>
+                  <tr><td class="m">W-SUBJECT-TOO-LONG</td><td class="d">Plus de 120 caractères.</td></tr>
+                  <tr><td class="m">W-MISSING-DECORATION</td><td class="d"><code>suggestion</code> ou <code>question</code>, sans décoration.</td></tr>
+                  <tr><td class="m">W-NO-DISCUSSION</td><td class="d">Un commentaire bloquant sans discussion.</td></tr>
+                  <tr><td class="m">W-NOT-BLOCKABLE</td><td class="d">Bloquant, dans une zone qui ne peut pas porter cet état.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="callout acc">
+            <span class="ct">calibrage</span>
+            <h4>Un sujet trop court reste un simple avertissement, et c'est voulu.</h4>
+            <p>Le seuil est à cinq caractères, et ce ne sera jamais une erreur. Sanctionner ça durement pousserait les gens à contourner la règle au lieu de l'appliquer. Une contrainte qui s'acharne sur les détails perd sa légitimité sur l'essentiel.</p>
+          </div>
+        </section>
+
+        <div class="pager">
+          <a class="pgl" href={href('howitworks', 'fr')}><span class="dir">← précédent</span><span class="ttl">Comment ça marche</span></a>
+          <a class="pgl" href={href('adoption', 'fr')} style="text-align:right"><span class="dir">suivant →</span><span class="ttl">Adoption</span></a>
+        </div>
+      </div>
+    </div>
+</Docs>

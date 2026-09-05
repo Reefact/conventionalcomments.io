@@ -1,0 +1,166 @@
+---
+import Base from '../../layouts/Base.astro';
+import { href } from '../../i18n/routes';
+
+const lang = 'en' as const;
+const page = 'releasenotes' as const;
+---
+<Base lang={lang} page={page}
+  title="Release notes — Toolkit 1.x"
+  description="What changed for you, release by release, written for the person who uses it.">
+<div class="docs rn">
+      <aside class="rn-side">
+        <p class="grp">release line:</p>
+        <div class="rn-line">
+          <span class="rn-ln">Toolkit 1.x</span>
+          <span class="rn-lv">1.0.0-beta.9</span>
+          <span class="rn-ld">September 4, 2026 · 9 releases</span>
+        </div>
+        <p class="grp">on this page:</p>
+        <ul class="rn-jump">
+          <li><a href="#v1-0-0-beta-9" class="cur">1.0.0-beta.9</a></li>
+          <li><a href="#v1-0-0-beta-8">1.0.0-beta.8</a></li>
+          <li><a href="#v1-0-0-beta-7">1.0.0-beta.7</a></li>
+          <li><a href="#v1-0-0-beta-6">1.0.0-beta.6</a></li>
+          <li><a href="#v1-0-0-beta-5">1.0.0-beta.5</a></li>
+          <li><a href="#v1-0-0-beta-4">1.0.0-beta.4</a></li>
+          <li><a href="#v1-0-0-beta-3">1.0.0-beta.3</a></li>
+          <li><a href="#v1-0-0-beta-2">1.0.0-beta.2</a></li>
+          <li><a href="#v1-0-0-beta-1">1.0.0-beta.1</a></li>
+        </ul>
+        <p class="grp">also:</p>
+        <ul>
+          <li><a href={'https://github.com/Reefact/conventional-comments-toolkit/blob/main/CHANGELOG.md'} rel="noopener noreferrer" target="_blank">Full changelog ↗</a></li>
+          <li><a href={href('docsindex', 'en')}>Documentation</a></li>
+        </ul>
+      </aside>
+
+      <div class="dmain">
+        <div class="dhead stack g12">
+          <p class="crumb"><b>release notes</b> / toolkit 1.x</p>
+          <h1>Release notes</h1>
+          <p class="lede measure">What changed for you, release by release — written for the person who uses it, not derived from commit messages. For the full record, with every constraint and edge case, see the changelog.</p>
+          <div class="callout">
+            <span class="ct">worth knowing before you read on</span>
+            <p style="margin:0">The extension starts in <code>assist</code> mode: it helps and it flags, it never blocks a submission. The source of truth for conformance stays the server companion.</p>
+          </div>
+        </div>
+
+        <h2 class="rn-major">Version 1</h2>
+
+        <article class="rel" id="v1-0-0-beta-9">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.9</span><span class="rel-m">beta</span><span class="rel-d">September 4, 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">The extension no longer gets in the way of a pull request's own description, no longer goes quiet on a page that starts out empty, and finally says why when it cannot read your configuration.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li>When the configuration cannot be read, the options page now shows <strong>why</strong> — <code>HTTP 429</code>, a <code>TypeError</code>, a 404 that cannot be told from a refusal — together with the level it came from, instead of the bare word <code>unreachable</code>. The reason stays on your machine.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li><strong>A pull request's own description is no longer treated as a review comment.</strong> The convention says nothing about it, yet the label toolbar was drawn on it — and under <code>enforce</code> the submit guard applied to its Update button, so a description without a <code>label:</code> prefix could not be saved at all.</li>
+            <li><strong>The “Configuration unread” banner no longer appears on every repository.</strong> Every configuration read was failing before it left the browser, so the extension always fell back to its degraded state.</li>
+            <li><strong>A page that had nothing to show no longer stops watching after five seconds.</strong> On <em>Files changed</em> with no thread yet, the first comment posted afterwards got neither badge nor banner until a full reload.</li>
+            <li><strong>A missing page is no longer read as a hidden one while you are signed in.</strong> Two independent signals must now agree before a 404 means an unreadable configuration.</li>
+            <li><strong>The selector degradation journal is usable again.</strong> Visiting a single closed pull request filled all fifty lines with one entry and evicted every real degradation.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-8">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.8</span><span class="rel-m">beta</span><span class="rel-d">September 4, 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">Published comments read like titles — badges, then the subject in bold on the same line — and three ways a comment could silently lose its badges are closed.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li>A published comment's subject is now shown <strong>in bold on the badge line</strong>, to the right of the badges. Where the subject cannot be delimited safely, the previous layout is kept rather than risking a wrong cut.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li>Editing a comment no longer strips its badges. The platform rewrites the rendered body on an update, and nothing brought them back until you reloaded.</li>
+            <li>The structured prefix is re-hidden when the platform restores it on its own.</li>
+            <li>Leaving a pull request, or switching to <code>mode: off</code>, no longer leaves part of a comment invisible — an extension that declares itself inactive went on concealing text you had written.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changed</h4><ul>
+            <li>The composer toolbar now stacks <strong>two rows</strong> — labels, then decorations — so a narrow window can no longer put a label button next to a decoration segment as if they were one kind of control.</li>
+            <li>Label buttons no longer show their icon; badges on published comments still do. The buttons share one row's width, where an icon costs every other button.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-7">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.7</span><span class="rel-m">beta</span><span class="rel-d">September 3, 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">The structured prefix disappears from a published comment — the badges already say it — except everywhere saying it twice was the safer answer.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li><code>issue (blocking):</code> no longer appears in a published comment. On screen only — the stored comment is untouched, and reopening the edit form shows it in full.</li>
+            <li>Where the badges would not say the same thing, the text stays: a decoration the configuration rejects, a case defect the tool exists to flag, decorations folded into a <code>+N</code> badge.</li>
+            <li>A line that merely looks like a prefix — in a code block, a quote, a list, a heading, a table — is left alone.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changed</h4><ul>
+            <li>Every default label now has an icon and a colour, contrast-checked against WCAG 1.4.11.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-6">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.6</span><span class="rel-m">beta</span><span class="rel-d">September 3, 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">Decorations get badges of their own, and the whole display follows a configuration change while you watch.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li>Each decoration now gets its own badge beside the label: red where it forces blocking, green where it forces non-blocking, dashed where the decoration is declared nowhere.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li>Changing the configuration now refreshes what is already on screen, including on a tab left open on a pull request.</li>
+            <li><strong>A comment box you already had open follows that change too</strong>, including whether it blocks your submission — an organisation switching from <code>enforce</code> to <code>off</code> left you blocked until you reopened the box.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-5">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.5</span><span class="rel-m">beta</span><span class="rel-d">September 2, 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">Repository configuration is readable again on private repositories.</p>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li>The read follows a redirect the browser refuses to authenticate; credentials are now dropped only on that hop, so the file stays readable without asking you for any host permission.</li>
+            <li>A configuration file unreadable for want of a session is no longer mistaken for a missing one — which silently applied the wrong configuration.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-4">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.4</span><span class="rel-m">beta</span><span class="rel-d">September 1, 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">The decoration selector says what your comment carries, not what you last clicked.</p>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li>A decoration you removed by editing the text, or one that left with a label the configuration disabled, no longer stays lit in the toolbar.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-3">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.3</span><span class="rel-m">beta</span><span class="rel-d">September 1, 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">Two permissions dropped from the manifest, telemetry that exists only if you ask for it, and enough to submit to the stores.</p>
+          <div class="rel-s"><h4>🔧 Changed</h4><ul>
+            <li><strong><code>activeTab</code> and the permanent host permission on <code>github.com</code> are gone.</strong> Hosts are granted on demand — the extension asks for what it needs, when it needs it.</li>
+            <li>The pull request banner is a summary, not a merge barrier. The verdict belongs to the platform's check, already red and already blocking; replaying it here devalued both.</li>
+          </ul></div>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li>Optional telemetry, off until you turn it on, bound to the address you consented to and configured by your organization's policy rather than by a repository file.</li>
+            <li>The version shown in <code>chrome://extensions</code> now distinguishes pre-releases.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li><strong>On GitHub Enterprise Server and self-hosted Azure DevOps Server, granting the host permission finally gives you the extension.</strong> The platform each host serves is now recorded with it.</li>
+            <li><strong>An organization configuration hosted off your platform is readable again.</strong> It never had been: the page's CORS policy blocked it whatever permission was granted.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-2">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.2</span><span class="rel-m">beta</span><span class="rel-d">August 24, 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">Bot and tool comments stop being flagged, and the toolbar stops touching the edge.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li><strong>A tool command is no longer flagged as a malformed comment.</strong> A slash command, or a bot mention you list in <code>toolCommands</code>, is exempt — <code>/rebase</code> and <code>@dependabot recreate</code> pass through intact.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li>The toolbar and the feedback align with the comment box's text instead of touching its border.</li>
+            <li>A label's colour now paints the active button's border rather than its background: that colour comes from your configuration, and using it as a fill dropped contrast to 1.54 where 4.5 is required.</li>
+            <li>Toolbar buttons are spaced again — a CSS comment closed one character early was silently swallowing the rule that spaced them.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-1">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.1</span><span class="rel-m">beta</span><span class="rel-d">August 24, 2026</span><span class="rel-tag">tag ↗</span></div>
+          <p class="rel-sum">First installable release.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li>The extension for GitHub and Azure DevOps: a toolbar above the comment box, keyboard quick input, live feedback while typing, and a submit guard in <code>enforce</code> mode.</li>
+            <li>The server companion, self-hostable, authoritative on conformance and on blocking a pull request's completion.</li>
+            <li>Chromium and Firefox archives published on every tag, loadable without Node or npm.</li>
+          </ul></div>
+        </article>
+      </div>
+    </div>
+</Base>

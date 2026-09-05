@@ -1,0 +1,270 @@
+---
+import Base from '../../layouts/Base.astro';
+import { href } from '../../i18n/routes';
+
+const lang = 'fr' as const;
+const page = 'home' as const;
+---
+<Base lang={lang} page={page}
+  title="Conventional Comments Toolkit"
+  description="Des commentaires de revue qui disent ce qu'ils attendent. Une extension et un serveur pour que la convention Conventional Comments tienne.">
+<section class="hband">
+      <div class="in">
+        <div class="hero-g">
+          <div class="stack g20">
+            <span class="eyebrow acc">revue de code&nbsp;:</span>
+            <h1>C'est une remarque, ou un reproche&nbsp;?</h1>
+            <p class="lede measure">En revue de code, le ton ne s'écrit pas. La même phrase peut être un coup de main ou une pique, selon l'humeur de celui qui la lit. <strong>Conventional Comments</strong> règle ça d'une façon presque bête&nbsp;: chaque commentaire dit d'abord ce qu'il est.</p>
+            <div class="hero-btns">
+              <a class="btn btn-p" href={href('labels', 'fr')}>Voir les étiquettes</a>
+              <a class="btn btn-s" href={href('install', 'fr')}>Installer l'extension</a>
+            </div>
+            <p class="small"><a href="#pourquoi">Pourquoi une simple étiquette change quoi que ce soit ↓</a></p>
+          </div>
+
+          <div class="ba">
+            <div class="ba-row">
+              <span class="ba-tag">reçu</span>
+              <div>
+                <p class="ba-txt">Ce nom de variable ne veut rien dire.</p>
+                <p class="ba-note">Sec. Sans intonation, sans visage. Lu un vendredi soir après deux jours passés sur la PR, ça s'entend comme&nbsp;: <em>tu bâcles</em>.</p>
+              </div>
+            </div>
+            <div class="ba-row ok">
+              <span class="ba-tag">reçu</span>
+              <div>
+                <p class="ba-txt mono"><span class="tk-l">nitpick</span> <span class="tk-d">(non-blocking)</span><span class="tk-c">:</span> ce nom de variable ne veut rien dire</p>
+                <p class="ba-note"><b>Exactement les mêmes mots.</b> Mais <code>nitpick</code>, c'est le relecteur qui dit lui-même&nbsp;: « c'est un détail, je sais ». Le reproche disparaît sans que rien n'ait été édulcoré.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk" id="pourquoi">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">le problème&nbsp;:</span>
+          <h2>Une revue de code, c'est du texte. Rien que du texte.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Pas de haussement d'épaules, pas de sourire en coin, pas de « je dis ça, je dis rien ». Deux personnes, deux écrans, souvent deux fuseaux horaires et parfois deux langues maternelles. Tout ce qui, à l'oral, dirait <em>l'importance</em> d'une remarque a disparu — il ne reste que les mots.</p>
+        </div>
+
+        <div class="hum">
+          <div>
+            <span class="hum-q">« Il m'engueule&nbsp;? »</span>
+            <p>Le relecteur était pressé, il a écrit court. L'auteur lit de la froideur là où il n'y avait que de la concision.</p>
+          </div>
+          <div>
+            <span class="hum-q">« Je dois le faire, ou pas&nbsp;? »</span>
+            <p>« On pourrait simplifier cette boucle. » L'auteur ne sait pas si c'est une exigence ou une pensée en l'air. Dans le doute, il refait. Deux heures pour rien.</p>
+          </div>
+          <div>
+            <span class="hum-q">« Je suis si mauvais que ça&nbsp;? »</span>
+            <p>Un junior reçoit quinze commentaires. Il ne voit pas quinze remarques&nbsp;: il voit quinze fois « tu ne sais pas faire ». Alors que douze sont des détails et un seul compte vraiment.</p>
+          </div>
+          <div>
+            <span class="hum-q">« Je n'ose plus rien dire. »</span>
+            <p>Le relecteur qui a peur de blesser noie tout dans le conditionnel. Plus personne ne sait ce qui est important. La revue devient polie et inutile.</p>
+          </div>
+        </div>
+
+        <p class="lede measure">Aucun de ces quatre malentendus ne vient d'un désaccord technique. Ils ont tous la même cause&nbsp;: <strong>l'intention du relecteur n'est écrite nulle part.</strong></p>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">la convention&nbsp;:</span>
+          <h2>Chaque commentaire s'annonce avant de parler.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Une convention publiée sur <a href="https://conventionalcomments.org/">conventionalcomments.org</a>, qui tient en une ligne&nbsp;: on met devant chaque commentaire un mot qui dit de quel genre de remarque il s'agit. Éventuellement suivi, entre parenthèses, de « ça bloque » ou « ça ne bloque pas ».</p>
+        </div>
+
+        <div class="anno" style="max-width:600px">
+          <pre class="line"><span class="tk-l">de quel genre</span> <span class="tk-d">(est-ce que ça bloque)</span><span class="tk-c">:</span> ce que vous avez à dire</pre>
+        </div>
+
+        <div class="scroller">
+          <table class="t">
+            <thead><tr><th>Ce que le relecteur écrit</th><th>Ce que l'auteur entend</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="m"><span class="tk-l">praise</span><span class="tk-c">:</span> la gestion d'erreur est très lisible</td>
+                <td class="d">Quelqu'un a pris le temps de remarquer ce qui va bien.</td>
+              </tr>
+              <tr>
+                <td class="m"><span class="tk-l">nitpick</span><span class="tk-c">:</span> ce nom pourrait être plus court</td>
+                <td class="d">C'est un détail — et c'est le relecteur lui-même qui le dit.</td>
+              </tr>
+              <tr>
+                <td class="m"><span class="tk-l">question</span><span class="tk-c">:</span> pourquoi un timeout à 30&nbsp;s&nbsp;?</td>
+                <td class="d">On me demande. On ne me reproche rien.</td>
+              </tr>
+              <tr>
+                <td class="m"><span class="tk-l">suggestion</span> <span class="tk-d">(non-blocking)</span><span class="tk-c">:</span> on pourrait extraire une méthode</td>
+                <td class="d">Une idée, pas une consigne. Je fais si je veux.</td>
+              </tr>
+              <tr>
+                <td class="m"><span class="tk-l">issue</span> <span class="tk-d">(blocking)</span><span class="tk-c">:</span> le jeton de session n'est jamais invalidé</td>
+                <td class="d"><strong>Là c'est sérieux — et au moins, c'est dit clairement.</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout acc">
+          <span class="ct">ce qu'il faut retenir</span>
+          <h4>L'étiquette ne change pas ce que vous dites. Elle dit comment le lire.</h4>
+          <p>C'est toute la différence avec les conseils habituels sur la « bienveillance en revue ». On ne vous demande pas d'arrondir vos phrases, d'ajouter des émojis ou de commencer par un compliment. Vous écrivez exactement ce que vous auriez écrit&nbsp;: vous ajoutez juste, devant, le mot qui dit à quel titre vous le dites.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">et c'est là que c'est malin&nbsp;:</span>
+          <h2>L'effort est demandé au relecteur, pas à celui qui reçoit.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">C'est le point qu'on ne voit pas tout de suite. Choisir une étiquette oblige à se demander, une seconde, <em>ce qu'on est réellement en train de faire</em> — et cette seconde-là suffit souvent à désamorcer le commentaire avant même qu'il soit lu.</p>
+        </div>
+
+        <div class="eff">
+          <div>
+            <span class="pill" style="--lc:var(--l-nitpick)">🔍 nitpick</span>
+            <p>Écrire ce mot devant sa propre remarque, c'est admettre soi-même&nbsp;: « c'est un détail ». Le relecteur se désarme avant d'être lu.</p>
+          </div>
+          <div>
+            <span class="pill" style="--lc:var(--l-praise)">🎉 praise</span>
+            <p>Personne ne pense spontanément à dire ce qui va bien. Un bouton dans la barre d'outils, si. C'est bête, et ça change l'ambiance d'une revue.</p>
+          </div>
+          <div>
+            <span class="pill" style="--lc:var(--l-issue)">🔨 issue</span>
+            <p>Marquer un point comme bloquant, c'est l'assumer. Fini le « bon, je te laisse voir » qui n'engage personne et laisse l'auteur seul avec le doute.</p>
+          </div>
+          <div>
+            <span class="pill" style="--lc:var(--l-decision)">🏁 decision</span>
+            <p>Refermer un point sans le traiter demande d'écrire pourquoi. On ne clôt jamais un désaccord en silence.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="split">
+          <div class="stack g14">
+            <span class="eyebrow">l'objection&nbsp;:</span>
+            <h2 style="font-size:24px">« Ça va rendre les revues molles. »</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">C'est l'inverse qui se produit. Sans convention, le relecteur qui ne veut blesser personne dilue&nbsp;: « je me demandais si éventuellement on ne pourrait pas peut-être… ». Résultat, plus rien n'est net, et le vrai problème passe inaperçu au milieu des précautions.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Avec l'étiquette, on peut être direct sans être blessant. <code>issue (blocking): fuite mémoire sur le handler</code> n'a rien de brutal&nbsp;: c'est une catégorie, pas un jugement sur la personne. <strong>La franchise devient possible parce qu'elle est cadrée.</strong></p>
+          </div>
+          <div class="stack g14">
+            <span class="eyebrow">et la proportion devient visible&nbsp;:</span>
+            <div class="prop">
+              <div class="prop-row">
+                <span class="pill" style="--lc:var(--l-nitpick)">🔍 nitpick</span><span class="prop-n">12</span>
+              </div>
+              <div class="prop-row">
+                <span class="pill" style="--lc:var(--l-question)">❓ question</span><span class="prop-n">2</span>
+              </div>
+              <div class="prop-row">
+                <span class="pill" style="--lc:var(--l-issue)">🔨 issue</span><span class="prop-n">1</span>
+              </div>
+            </div>
+            <p class="small">La même revue, sans étiquettes, s'affiche&nbsp;: <strong style="color:var(--fg-2)">« 15 commentaires »</strong>. Rien de plus. C'est ce chiffre nu qui décourage un junior — pas les remarques elles-mêmes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">et pour que ça dure&nbsp;:</span>
+          <h2>Une bonne habitude s'oublie en trois jours.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">C'est là que cet outil intervient — et seulement là. Il ne vous apprend pas à être poli&nbsp;: il fait en sorte que l'habitude tienne quand plus personne n'y pense.</p>
+        </div>
+
+        <div class="duo">
+          <div>
+            <span class="tag" style="color:var(--fg-muted)">dans le navigateur</span>
+            <h3>Une extension qui vous mâche le travail</h3>
+            <p>Une rangée de boutons au-dessus du champ de commentaire, sur GitHub. Vous tapez <code>?n</code>, elle écrit <code>nitpick:</code>. Vous survolez un bouton, elle rappelle à quoi il sert. Choisir l'étiquette ne coûte plus rien&nbsp;: c'est ce qui fait qu'on continue à le faire au bout de trois semaines.</p>
+          </div>
+          <div>
+            <span class="tag" style="color:var(--accent)">sur votre serveur</span>
+            <h3>Un rappel qui ne se fatigue pas</h3>
+            <p>Un petit service, à héberger, qui relit les commentaires de la pull request et signale ceux qui étaient marqués bloquants et que personne n'a traités. Une équipe peut décider d'en faire une condition pour fusionner.</p>
+            <p class="guar">Ce n'est pas une police. C'est un pense-bête&nbsp;: <strong style="color:var(--fg)">un point important ne se perd pas dans le fil.</strong></p>
+          </div>
+        </div>
+
+        <p class="small measure">Et si votre équipe ne veut ni serveur ni contrainte&nbsp;: l'extension seule fonctionne très bien. La convention marche même sans outil — l'outil ne fait que la rendre facile.</p>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="split">
+          <div class="stack g14">
+            <span class="eyebrow">à votre rythme&nbsp;:</span>
+            <h2 style="font-size:24px">Rien ne bloque personne tant que vous ne l'avez pas décidé.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Trois réglages. On commence par le premier, où l'outil se contente d'aider. Passer aux suivants est une décision d'équipe, jamais un défaut d'installation.</p>
+            <a class="btn btn-p" href={href('adoption', 'fr')} style="align-self:flex-start">Comment on s'y prend</a>
+          </div>
+          <div class="traj">
+            <div class="step" style="--st:var(--fg-faint)">
+              <span class="sn">assist</span><span class="sw">par défaut</span>
+              <span class="sd">L'extension aide ceux qui l'ont installée. Personne n'est bloqué, rien n'est mesuré.</span>
+            </div>
+            <div class="step" style="--st:var(--warn)">
+              <span class="sn">warn</span><span class="sw">pour se rendre compte</span>
+              <span class="sd">L'équipe voit où elle en est, sans que rien ne soit refusé.</span>
+            </div>
+            <div class="step" style="--st:var(--block)">
+              <span class="sn">enforce</span><span class="sw">si vous le voulez</span>
+              <span class="sd">Un point bloquant oublié empêche la fusion. Réversible en quelques minutes.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="split">
+          <div class="stack g14">
+            <span class="eyebrow">confidentialité&nbsp;:</span>
+            <h2 style="font-size:24px">Vos commentaires ne quittent jamais votre navigateur.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Ce que vous écrivez en revue est souvent plus sensible que le code lui-même. L'extension lit et vérifie tout en local&nbsp;: rien n'est envoyé nulle part. Aucune télémétrie, aucun compte, aucun jeton stocké. Elle ne tourne que sur github.com, sauf si vous autorisez vous-même un autre domaine.</p>
+            <p class="small"><strong style="color:var(--fg-2)">La seule exception&nbsp;:</strong> vos propres réglages — langue, raccourcis — suivent la synchronisation de votre navigateur si vous l'avez activée. Des réglages, jamais du contenu.</p>
+          </div>
+          <div class="stack g12">
+            <span class="eyebrow">où ça marche&nbsp;:</span>
+            <div class="plat">
+              <div><span class="ph">GitHub</span><span class="pl">github.com<br>Enterprise Cloud · EMU<br>Enterprise Server</span></div>
+              <div><span class="ph">Azure DevOps</span><span class="pl">Services<br>Server (auto-hébergé)<br><span style="color:var(--fg-faint)">avec des limites écrites</span></span></div>
+              <div><span class="ph">Navigateurs</span><span class="pl">Chrome, Edge, Brave<br>Firefox<br>Open source, Apache-2.0</span></div>
+            </div>
+            <a class="btn btn-s" href={href('platforms', 'fr')} style="align-self:flex-start">Voir le détail</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="cta-in">
+        <div class="stack g8">
+          <h2>Commencez par une étiquette devant une phrase.</h2>
+          <p class="small" style="color:var(--fg-2)">C'est tout. Le reste — l'extension, le serveur, les réglages — ne sert qu'à ce que vous continuiez.</p>
+        </div>
+        <div class="hero-btns">
+          <a class="btn btn-p" href={href('labels', 'fr')}>Voir les 13 étiquettes</a>
+          <a class="btn btn-s" href={href('adoption', 'fr')}>En parler à mon équipe</a>
+        </div>
+      </div>
+    </section>
+
+    </div>
+</Base>

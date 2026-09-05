@@ -1,0 +1,38 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+
+  "name": "conventionalcomments-io",
+  "compatibility_date": "2026-07-01",
+
+  // Le site répond sur conventionalcomments.io et nulle part ailleurs. Laissé à sa
+  // valeur par défaut, ce déploiement répondrait aussi sur
+  // conventionalcomments-io.<sous-domaine>.workers.dev — les mêmes octets sous un
+  // second nom d'hôte, que les moteurs indexent et que des liens finissent par viser.
+  //
+  // Coût réel : un premier déploiement n'a aucun nom d'hôte tant que le domaine n'est
+  // pas rattaché.
+  "workers_dev": false,
+
+  // PAS de "main" : aucune requête n'invoque de script.
+  //
+  // Une requête servie comme asset statique est gratuite et non mesurée ; une requête
+  // qui invoque un script compte dans le quota du plan, et épuiser ce quota répond 429.
+  // Tant que le site n'a rien à calculer — et il n'a rien à calculer — la différence
+  // entre un script et pas de script est la différence entre un site qui se dégrade et
+  // un site qui tombe.
+  //
+  // Ajouter un script un jour (une mesure d'audience, par exemple) demande de le
+  // confiner à un chemin exact via "run_worker_first", faute de quoi tout le site
+  // repasse devant le quota.
+  "assets": {
+    "directory": "./dist/",
+
+    // Sert le 404.html le plus proche pour une requête qui ne correspond à aucun asset.
+    // « Le plus proche » est ce qui compte ici : /fr/... retombe sur /fr/404.html et
+    // reçoit une page française, le reste sur /404.html.
+    //
+    // Surtout pas "single-page-application", qui répondrait 200 avec l'accueil pour
+    // toute adresse fautive — invisible pour un visiteur, poison pour un moteur.
+    "not_found_handling": "404-page"
+  }
+}
