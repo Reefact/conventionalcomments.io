@@ -169,6 +169,51 @@ for (const lang of LOCALES) {
 }
 ok(`une 404 par langue (${LOCALES.join(', ')}), en fichier`);
 
+// ————— 9. Aucune ressource tierce n'est chargée par le navigateur —————
+// La page confidentialité écrit « aucune dépendance n'est chargée depuis un CDN ». C'était
+// faux du site lui-même, qui prenait ses polices chez Google : chaque visite envoyait à un
+// tiers l'IP du lecteur et l'URL qu'il lisait. Le contrôle porte sur les SOUS-RESSOURCES —
+// ce que le navigateur va chercher tout seul — et pas sur les liens `<a>`, qui ont le droit
+// de mener chez GitHub ou sur la spécification.
+const FETCHING_REL = /^(stylesheet|preload|preconnect|dns-prefetch|prefetch|modulepreload|icon|apple-touch-icon|manifest)$/i;
+const thirdParty = [];
+for (const file of walkAll(DIST)) {
+  const rel = relative(DIST, file);
+  if (/\.(html|css)$/.test(rel) === false) continue;
+  const text = readFileSync(file, 'utf8');
+
+  if (rel.endsWith('.html')) {
+    for (const tag of text.matchAll(/<link\b[^>]*>/g)) {
+      const r = tag[0].match(/\brel="([^"]*)"/)?.[1] ?? '';
+      const h = tag[0].match(/\bhref="(https?:\/\/[^"]*)"/)?.[1];
+      if (h && r.split(/\s+/).some((x) => FETCHING_REL.test(x))) thirdParty.push(`${rel} — <link rel="${r}"> ${h}`);
+    }
+    for (const m of text.matchAll(/\b(?:src|srcset|data)="(https?:\/\/[^"]*)"/g))
+      thirdParty.push(`${rel} — ${m[1]}`);
+  }
+  for (const m of text.matchAll(/url\(\s*['"]?(https?:\/\/[^)'"]+)/g)) thirdParty.push(`${rel} — url(${m[1]})`);
+  for (const m of text.matchAll(/@import\s+(?:url\()?['"](https?:\/\/[^'"]+)/g)) thirdParty.push(`${rel} — @import ${m[1]}`);
+}
+if (thirdParty.length) for (const t of new Set(thirdParty)) fail(`ressource tierce : ${t}`);
+else ok('aucune sous-ressource tierce — le navigateur ne parle qu’à ce site');
+
+// ————— 10. Toute classe employée a une règle —————
+// Ce contrôle vient d'en trouver cinq, muettes depuis les maquettes : `.why` n'ayant
+// aucune règle, la pastille et son explication se collaient — « nonNi écrits, ni
+// envoyés » — et personne ne l'avait vu parce que rien ne casse : le HTML est valide, le
+// CSS compile, la page s'affiche. On lit le CSS DE dist/, qui contient aussi les styles
+// scopés des composants Astro.
+const allCss = walkAll(DIST).filter((f) => f.endsWith('.css')).map((f) => readFileSync(f, 'utf8')).join('\n');
+const usedClasses = new Set();
+for (const file of pages)
+  for (const m of readFileSync(file, 'utf8').matchAll(/class="([^"]+)"/g))
+    for (const c of m[1].split(/\s+/)) if (c) usedClasses.add(c);
+const orphans = [...usedClasses]
+  .filter((c) => !new RegExp(`\\.${c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\w-])`).test(allCss))
+  .sort();
+if (orphans.length) fail(`classe(s) sans règle : ${orphans.join(', ')}`);
+else ok(`${usedClasses.size} classes employées, toutes stylées`);
+
 if (failures.length) {
   console.error('\n' + failures.map((f) => `  ✗ ${f}`).join('\n'));
   console.error(`\n${failures.length} problème(s).`);

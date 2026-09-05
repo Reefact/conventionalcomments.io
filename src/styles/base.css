@@ -63,7 +63,7 @@ code { font-family:var(--font-mono); }
 .small { font-size:13.5px; line-height:1.55; color:var(--fg-muted); }
 .stack { display:flex; flex-direction:column; }
 .g6{gap:6px}.g8{gap:8px}.g10{gap:10px}.g12{gap:12px}.g14{gap:14px}.g16{gap:16px}
-.g20{gap:20px}.g24{gap:24px}.g28{gap:28px}.g36{gap:36px}
+.g18{gap:18px}.g20{gap:20px}.g24{gap:24px}.g28{gap:28px}.g36{gap:36px}
 .measure { max-width:var(--measure); }
 
 .pill { display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono);
@@ -75,6 +75,24 @@ code { font-family:var(--font-mono); }
         border:1px solid var(--line); color:var(--fg-muted); white-space:nowrap; }
 .deco.b { border-color:var(--block); color:var(--block); }
 .deco.nb { border-color:var(--pass); color:var(--pass); }
+
+/* Pastille d'état d'un tableau : « non », « synchronisé ». Même idiome que .deco —
+   la couleur cerne, elle ne remplit pas (identite-fr.md §3.1) — plus un point qui
+   reprend la couleur du texte. .ok dit que rien ne sort, .fb qu'il y a une réserve. */
+.st { display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono);
+      font-size:11px; letter-spacing:.03em; padding:1px 8px 2px; border-radius:2px;
+      border:1px solid var(--line); color:var(--fg-muted); white-space:nowrap; }
+.st.ok { border-color:var(--pass); color:var(--pass); }
+.st.fb { border-color:var(--warn); color:var(--warn); }
+
+/* L'explication qui suit la pastille. Sans règle, les deux <span> se collaient :
+   « nonNi écrits, ni envoyés ». */
+.why { display:block; margin-top:6px; color:var(--fg-muted); font-size:12.5px;
+       line-height:1.5; }
+
+/* Un tableau dont chaque cellule porte une phrase, et non une valeur : la hauteur de
+   ligne serrée de .t y devient illisible. */
+table.t.wide th, table.t.wide td { padding:13px 16px; line-height:1.55; }
 
 .verdict { display:inline-flex; align-items:center; gap:8px; padding:5px 13px 6px;
            border-radius:var(--radius); font-family:var(--font-mono); font-size:12.5px; font-weight:500; }

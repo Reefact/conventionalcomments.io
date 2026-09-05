@@ -211,8 +211,10 @@ mise en ligne.
 
 ## 5. Typographie
 
-Trois voix, parce que le produit en distingue trois. Les trois familles sont sur Google
-Fonts.
+Trois voix, parce que le produit en distingue trois. Les trois familles sont libres
+(SIL Open Font License) et **servies par le site lui-même**, jamais par un CDN : une
+page qui promet qu'aucune dépendance n'est chargée depuis un CDN ne peut pas faire
+partir une requête vers Google à chaque visite. Détail dans `src/styles/fonts.css`.
 
 | Rôle                        | Famille            | Emploi                                              |
 | --------------------------- | ------------------ | ---------------------------------------------------- |
