@@ -24,7 +24,7 @@ npm run check    # build + tous les contrôles ci-dessous
 | `npm run dev` | Estampille le build, puis sert le site en développement |
 | `npm run build` | Estampille le build, puis produit `dist/` (28 pages) |
 | `npm run check` | `build`, puis les invariants du site et du schéma |
-| `npm run check:site` | Les cinq invariants, sur le HTML réellement produit |
+| `npm run check:site` | Les sept invariants, sur ce qui est réellement produit |
 | `npm run check:schema` | Le schéma JSON contre ses gabarits ; `-- <chemin-du-toolkit>` le compare à la source |
 | `npm run deploy` | `check`, puis `wrangler deploy` |
 
@@ -38,6 +38,7 @@ src/components/         Mark, Header, Footer, DocsSidebar, BuildFacts
 src/pages/              26 pages : 13 en anglais à la racine, 13 en français sous fr/
 src/styles/             tokens.css (les jetons, trois états de thème) et base.css
 public/schema/v1.json   Le schéma de configuration, servi à /schema/v1.json
+public/_headers         CORS et cache pour le schéma (lu par Cloudflare, jamais servi)
 scripts/                Estampille, portage des maquettes, contrôles
 ```
 
@@ -57,6 +58,9 @@ qui compile ne dit rien d'un lien qui ne mène nulle part.
 3. …ni par le plan du site.
 4. Toute page indexable déclare ses alternats `hreflang` (`en`, `fr`, `x-default`).
 5. `/version` et `/version.json` nomment le même build.
+6. `/schema/v1.json` est servi, parse, et son `$id` nomme l'adresse à laquelle il est servi.
+7. Aucun `.md`, `.mjs` ou `.ts` dans `dist/` — `public/` est copié tel quel, et une note de
+   maintenance qu'on y dépose se retrouve en ligne sans que personne ne l'ait décidé.
 
 ## L'estampille de build
 
@@ -83,7 +87,7 @@ requête : il n'en demande donc aucun.
 `public/schema/v1.json` — servi à `https://conventionalcomments.io/schema/v1.json`, il donne
 l'autocomplétion et la validation dans l'éditeur à tout dépôt qui configure le toolkit.
 Transcrit de `packages/core/src/config/schema.ts`, et tenu en accord avec lui par
-`npm run check:schema -- <chemin-du-toolkit>`. Détails : [`public/schema/README.md`](./public/schema/README.md).
+`npm run check:schema -- <chemin-du-toolkit>`. Détails : [`docs/schema-fr.md`](./docs/schema-fr.md).
 
 ## Conception
 
@@ -91,6 +95,7 @@ Transcrit de `packages/core/src/config/schema.ts`, et tenu en accord avec lui pa
 | --- | --- |
 | [`docs/identite-fr.md`](./docs/identite-fr.md) | Positionnement, marque, les quatre règles, palette, typographie, composants, voix |
 | [`docs/decoupage-pages-fr.md`](./docs/decoupage-pages-fr.md) | Les routes, le bilinguisme, la navigation, ce qui reste à trancher |
+| [`docs/schema-fr.md`](./docs/schema-fr.md) | Le schéma : statut, écarts assumés, ce qu'il reste à faire côté toolkit |
 | [`docs/tokens.css`](./docs/tokens.css) | Jetons de design, trois états de thème |
 | [`docs/mockups/`](./docs/mockups/) | Les treize pages maquettées, bilingues — la source de la prose |
 

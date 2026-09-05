@@ -4,8 +4,19 @@
 par défaut pour configurer
 [conventional-comments-toolkit](https://github.com/Reefact/conventional-comments-toolkit).
 
-Servi tel quel par Astro à **`https://conventionalcomments.io/schema/v1.json`** — tout ce
-qui est dans `public/` est copié à la racine du site.
+Le fichier vit dans `public/schema/v1.json` et Astro copie `public/` à la racine du site :
+il est donc servi tel quel à **`https://conventionalcomments.io/schema/v1.json`**.
+
+Ce document, lui, est resté dans `docs/`. Il y a été déplacé après avoir passé un temps
+dans `public/schema/`, d'où il était **servi publiquement** : une note de maintenance en
+ligne, sur une URL que personne n'avait décidé de publier. `scripts/check-site.mjs` refuse
+désormais tout `.md`, `.mjs` ou `.ts` dans `dist/`, pour que ça ne se reproduise pas.
+
+`public/_headers` donne au schéma les deux en-têtes dont il a besoin :
+`Access-Control-Allow-Origin: *`, sans quoi un éditeur qui tourne dans un navigateur voit
+sa requête refusée et perd l'autocomplétion sans dire pourquoi, et un `Cache-Control` d'une
+heure au lieu de la revalidation à chaque ouverture de fichier que Cloudflare applique par
+défaut.
 
 ## Statut : provisoire
 
@@ -51,7 +62,7 @@ jamais.
 **Une transcription de [`packages/core/src/config/schema.ts`](https://github.com/Reefact/conventional-comments-toolkit/blob/main/packages/core/src/config/schema.ts), qui reste la source de vérité.**
 Ce fichier-là est du code impératif — une boucle et un `switch` sur chaque clé — dont on ne
 peut pas émettre du JSON Schema mécaniquement. La transcription est donc à la main, et
-c'est [`scripts/check-schema.mjs`](../../scripts/check-schema.mjs) qui l'empêche de mentir :
+c'est [`scripts/check-schema.mjs`](../scripts/check-schema.mjs) qui l'empêche de mentir :
 
 ```sh
 npm run check:schema -- ../conventional-comments-toolkit
@@ -85,8 +96,10 @@ dépôt seul.
 
 ## Avant de mettre en ligne
 
-Le `$schema` du toolkit pointe aujourd'hui vers `conventional-comments-toolkit.dev`, et **le
-fichier n'a jamais existé** — ni là ni ailleurs. Faire pointer les dépôts ici demande de
+Le `$schema` du toolkit pointe aujourd'hui vers `conventional-comments-toolkit.dev`. Le
+domaine ne répond pas : une requête vers lui échoue exactement comme vers un domaine
+inventé, là où `conventionalcomments.org` répond 200 par le même chemin. Et le dépôt du
+toolkit ne contient aucun fichier de schéma. Faire pointer les dépôts ici demande de
 changer la chaîne à deux endroits du dépôt toolkit :
 
 - `.conventional-comments.example.json`, ligne 2
