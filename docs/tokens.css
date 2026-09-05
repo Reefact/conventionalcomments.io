@@ -47,6 +47,10 @@
 
   /* découpe derrière la pastille de coche de la marque — jamais un blanc dur */
   --mark-knock:  #FFFFFF;
+  /* Le texte POSÉ SUR --accent. Sans lui, le bouton principal héritait de --fg :
+     2,37:1 sur le bleu, quand 4,5:1 est le seuil. Le seul endroit du site où une
+     couleur remplit — d’où un jeton dédié plutôt qu’un blanc en dur. */
+  --on-accent:   #FFFFFF;
 
   /* --- spectre des labels : defaults.ts, identique dans les deux thèmes --- */
   --l-praise:     #36933B;
@@ -80,7 +84,7 @@
 
   /* --- mesure et gouttière ----------------------------------------------- */
   --measure: 68ch;
-  --rail:    1180px;
+  --rail:    1120px;
   --radius:  3px;              /* volontairement discret : ce n'est pas un site de cartes */
 }
 
@@ -112,6 +116,8 @@
     --block-soft:  #2A1513;
 
     --mark-knock:  #0F1926;
+  --on-accent:   #08101F;
+    --on-accent:   #08101F;
   }
 }
 
