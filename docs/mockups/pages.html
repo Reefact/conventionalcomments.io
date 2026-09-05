@@ -89,7 +89,7 @@ code { font-family:var(--font-mono); }
    ======================================================================== */
 .sheader { display:flex; align-items:center; gap:22px; flex-wrap:wrap;
            padding:14px 26px; border-bottom:1px solid var(--line-soft); }
-.brand { display:inline-flex; align-items:center; gap:9px; font-family:var(--font-display);
+.brand { background:none; border:0; padding:0; cursor:pointer; display:inline-flex; align-items:center; gap:9px; font-family:var(--font-display);
          font-weight:700; letter-spacing:-.026em; font-size:15.5px; color:var(--fg); }
 .brand .dom { color:var(--fg-faint); font-weight:500; }
 .snav { display:flex; gap:18px; flex-wrap:wrap; }
@@ -353,13 +353,27 @@ ul.bul code { font-size:13px; color:var(--fg-2); }
            font-size:14.5px; color:var(--fg-2); }
 .av-note { color:var(--fg-faint); font-size:12.5px; }
 .av-p { font-size:14px; color:var(--fg-muted); line-height:1.55; }
+
+/* --- how it works : quatre encarts --- */
+.feat { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1px;
+        background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+.feat > div { background:var(--bg-surface); padding:22px 24px; display:flex; flex-direction:column; gap:10px; }
+.feat h3 { font-size:17px; font-weight:600; letter-spacing:-.014em; }
+.feat p { font-size:14px; color:var(--fg-muted); line-height:1.55; }
+/* --- sommaire de doc : les parcours --- */
+.paths { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; }
+.path { text-align:left; background:var(--bg-surface); border:1px solid var(--line); border-radius:var(--radius);
+        padding:16px 18px; cursor:pointer; display:flex; flex-direction:column; gap:6px; font-family:var(--font-body); }
+.path:hover { border-color:var(--accent); }
+.pn { font-size:15.5px; font-weight:600; color:var(--accent); letter-spacing:-.012em; }
+.pd { font-size:13.5px; color:var(--fg-muted); line-height:1.5; }
 </style>
 
 <p class="mock-note">
-  <b>maquette —</b> quatre pages, deux langues
-  <b>·</b> accueil · plateformes · labels · adoption
-  <b>·</b> navigation, barre latérale et sélecteur <span style="color:var(--fg-muted)">EN / FR</span> actifs
-  <b>·</b> la barre d'adresse suit la route traduite et son alternat <span style="color:var(--fg-muted)">hreflang</span>
+  <b>maquette —</b> onze pages, deux langues
+  <b>·</b> vitrine : accueil · comment ça marche · plateformes · confidentialité
+  <b>·</b> doc : sommaire · installation · labels · configuration · adoption · serveur · diagnostic
+  <b>·</b> navigation, barre latérale, pagination et sélecteur <span style="color:var(--fg-muted)">EN / FR</span> actifs
 </p>
 
 <div class="frame">
@@ -370,7 +384,7 @@ ul.bul code { font-size:13px; color:var(--fg-2); }
 
   <!-- ================= EN-TÊTE ================= -->
   <header class="sheader">
-    <span class="brand">
+    <button class="brand" data-goto="home" aria-label="Accueil">
       <svg width="21" height="21" viewBox="0 0 48 48" aria-hidden="true">
         <path d="M6 13a7 7 0 0 1 7-7h22a7 7 0 0 1 7 7v13a7 7 0 0 1-7 7H23l-8 8v-8h-2a7 7 0 0 1-7-7V13Z" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round"/>
         <path d="M19 15.5 15 20l4 4.5" fill="none" stroke="var(--accent)" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -380,11 +394,11 @@ ul.bul code { font-size:13px; color:var(--fg-2); }
         <path d="m33.6 35.7 2.9 2.9 5.3-5.7" fill="none" stroke="var(--pass)" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       conventionalcomments<span class="dom">.io</span>
-    </span>
+    </button>
     <nav class="snav">
-      <button class="navlink" data-goto="home"><span class="loc" data-loc="en">how&nbsp;it&nbsp;works:</span><span class="loc" data-loc="fr" hidden>comment&nbsp;ça&nbsp;marche&nbsp;:</span></button>
+      <button class="navlink" data-goto="howitworks"><span class="loc" data-loc="en">how&nbsp;it&nbsp;works:</span><span class="loc" data-loc="fr" hidden>comment&nbsp;ça&nbsp;marche&nbsp;:</span></button>
       <button class="navlink" data-goto="platforms"><span class="loc" data-loc="en">platforms:</span><span class="loc" data-loc="fr" hidden>plateformes&nbsp;:</span></button>
-      <button class="navlink" data-goto="labels"><span class="loc" data-loc="en">docs:</span><span class="loc" data-loc="fr" hidden>doc&nbsp;:</span></button>
+      <button class="navlink" data-goto="docsindex"><span class="loc" data-loc="en">docs:</span><span class="loc" data-loc="fr" hidden>doc&nbsp;:</span></button>
     </nav>
     <span class="sp"></span>
     <span class="navlink" style="cursor:default">github&nbsp;↗</span>
@@ -1145,16 +1159,16 @@ ul.bul code { font-size:13px; color:var(--fg-2); }
   <main data-page="labels" hidden>
     <div class="loc" data-loc="en">
     <div class="docs">
-      <aside class="side">
+            <aside class="side">
         <p class="grp">docs:</p>
         <ul>
-          <li><button>Overview</button></li>
-          <li><button>Install</button></li>
+          <li><button data-goto="docsindex">Overview</button></li>
+          <li><button data-goto="install">Install</button></li>
           <li><button data-goto="labels" aria-current="page">Labels &amp; decorations</button></li>
-          <li><button>Configure</button></li>
+          <li><button data-goto="configure">Configure</button></li>
           <li><button data-goto="adoption">Adoption</button></li>
-          <li><button>Server companion</button></li>
-          <li><button>Troubleshooting</button></li>
+          <li><button data-goto="server">The server</button></li>
+          <li><button data-goto="troubleshooting">Troubleshooting</button></li>
         </ul>
         <p class="grp">reference:</p>
         <ul>
@@ -1316,7 +1330,7 @@ and this handler is deleted with it.</div>
         </section>
 
         <div class="pager">
-          <button class="pgl" data-goto="home"><span class="dir">← previous</span><span class="ttl">How it works</span></button>
+          <button class="pgl" data-goto="howitworks"><span class="dir">← previous</span><span class="ttl">How it works</span></button>
           <button class="pgl" data-goto="adoption" style="text-align:right"><span class="dir">next →</span><span class="ttl">Adoption</span></button>
         </div>
       </div>
@@ -1324,16 +1338,16 @@ and this handler is deleted with it.</div>
     </div>
     <div class="loc" data-loc="fr" hidden>
     <div class="docs">
-      <aside class="side">
+            <aside class="side">
         <p class="grp">doc&nbsp;:</p>
         <ul>
-          <li><button>Vue d'ensemble</button></li>
-          <li><button>Installation</button></li>
+          <li><button data-goto="docsindex">Vue d'ensemble</button></li>
+          <li><button data-goto="install">Installation</button></li>
           <li><button data-goto="labels" aria-current="page">Labels et décorations</button></li>
-          <li><button>Configuration</button></li>
+          <li><button data-goto="configure">Configuration</button></li>
           <li><button data-goto="adoption">Adoption</button></li>
-          <li><button>Le serveur</button></li>
-          <li><button>Diagnostic</button></li>
+          <li><button data-goto="server">Le serveur</button></li>
+          <li><button data-goto="troubleshooting">Diagnostic</button></li>
         </ul>
         <p class="grp">référence&nbsp;:</p>
         <ul>
@@ -1499,7 +1513,7 @@ arrive au T4 et ce handler disparaît avec elle.</div>
         </section>
 
         <div class="pager">
-          <button class="pgl" data-goto="home"><span class="dir">← précédent</span><span class="ttl">Comment ça marche</span></button>
+          <button class="pgl" data-goto="howitworks"><span class="dir">← précédent</span><span class="ttl">Comment ça marche</span></button>
           <button class="pgl" data-goto="adoption" style="text-align:right"><span class="dir">suivant →</span><span class="ttl">Adoption</span></button>
         </div>
       </div>
@@ -1513,16 +1527,16 @@ arrive au T4 et ce handler disparaît avec elle.</div>
   <main data-page="adoption" hidden>
     <div class="loc" data-loc="en">
     <div class="docs">
-      <aside class="side">
+            <aside class="side">
         <p class="grp">docs:</p>
         <ul>
-          <li><button>Overview</button></li>
-          <li><button>Install</button></li>
+          <li><button data-goto="docsindex">Overview</button></li>
+          <li><button data-goto="install">Install</button></li>
           <li><button data-goto="labels">Labels &amp; decorations</button></li>
-          <li><button>Configure</button></li>
+          <li><button data-goto="configure">Configure</button></li>
           <li><button data-goto="adoption" aria-current="page">Adoption</button></li>
-          <li><button>Server companion</button></li>
-          <li><button>Troubleshooting</button></li>
+          <li><button data-goto="server">The server</button></li>
+          <li><button data-goto="troubleshooting">Troubleshooting</button></li>
         </ul>
         <p class="grp">reference:</p>
         <ul>
@@ -1633,16 +1647,16 @@ arrive au T4 et ce handler disparaît avec elle.</div>
     </div>
     <div class="loc" data-loc="fr" hidden>
     <div class="docs">
-      <aside class="side">
+            <aside class="side">
         <p class="grp">doc&nbsp;:</p>
         <ul>
-          <li><button>Vue d'ensemble</button></li>
-          <li><button>Installation</button></li>
+          <li><button data-goto="docsindex">Vue d'ensemble</button></li>
+          <li><button data-goto="install">Installation</button></li>
           <li><button data-goto="labels">Labels et décorations</button></li>
-          <li><button>Configuration</button></li>
+          <li><button data-goto="configure">Configuration</button></li>
           <li><button data-goto="adoption" aria-current="page">Adoption</button></li>
-          <li><button>Le serveur</button></li>
-          <li><button>Diagnostic</button></li>
+          <li><button data-goto="server">Le serveur</button></li>
+          <li><button data-goto="troubleshooting">Diagnostic</button></li>
         </ul>
         <p class="grp">référence&nbsp;:</p>
         <ul>
@@ -1746,28 +1760,1477 @@ arrive au T4 et ce handler disparaît avec elle.</div>
 
         <div class="pager">
           <button class="pgl" data-goto="labels"><span class="dir">← précédent</span><span class="ttl">Labels et décorations</span></button>
-          <button class="pgl" style="text-align:right"><span class="dir">suivant →</span><span class="ttl">Le serveur</span></button>
+          <button class="pgl" data-goto="server" style="text-align:right"><span class="dir">suivant →</span><span class="ttl">Le serveur</span></button>
         </div>
       </div>
     </div>
     </div>
   </main>
 
+  <main data-page="docsindex" hidden>
+    <div class="loc" data-loc="en">
+    <div class="docs">
+      <aside class="side">
+        <p class="grp">docs:</p>
+        <ul>
+          <li><button data-goto="docsindex" aria-current="page">Overview</button></li>
+          <li><button data-goto="install">Install</button></li>
+          <li><button data-goto="labels">Labels &amp; decorations</button></li>
+          <li><button data-goto="configure">Configure</button></li>
+          <li><button data-goto="adoption">Adoption</button></li>
+          <li><button data-goto="server">The server</button></li>
+          <li><button data-goto="troubleshooting">Troubleshooting</button></li>
+        </ul>
+        <p class="grp">reference:</p>
+        <ul>
+          <li><button>JSON schema ↗</button></li>
+          <li><button>Changelog ↗</button></li>
+        </ul>
+      </aside>
+      <div class="dmain">
+        <div class="dhead stack g12">
+          <p class="crumb"><b>docs</b></p>
+          <h1>Documentation</h1>
+          <p class="lede measure">Three paths. Pick the one that matches where you are, not the order the menu happens to be in.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>I'm trying it out</h2>
+          <p>You want to see what it does, on your own pull requests, without asking anyone's permission.</p>
+          <div class="paths">
+            <button class="path" data-goto="install"><span class="pn">Install the extension</span><span class="pd">From your browser's store, or from a release zip if your machine can't build anything. Five minutes.</span></button>
+            <button class="path" data-goto="labels"><span class="pn">Labels &amp; decorations</span><span class="pd">The thirteen labels, what each one says, and the rule that decides whether a comment blocks.</span></button>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>I'm setting it up for a repository</h2>
+          <p>The team is convinced and you want everyone on the same rules.</p>
+          <div class="paths">
+            <button class="path" data-goto="configure"><span class="pn">Configure</span><span class="pd">One file on the default branch. Which keys matter, which ones bite, and how three levels of configuration combine.</span></button>
+            <button class="path" data-goto="adoption"><span class="pn">Adoption</span><span class="pd">assist → warn → enforce. What each step buys you, and how to get back out in minutes.</span></button>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>I'm deploying it for the organization</h2>
+          <p>You want the convention to hold without depending on who installed what.</p>
+          <div class="paths">
+            <button class="path" data-goto="server"><span class="pn">The server</span><span class="pd">Docker, environment variables, storage, wiring the platforms, and making the check required.</span></button>
+            <button class="path" data-goto="troubleshooting"><span class="pn">Troubleshooting</span><span class="pd">The banners, the neutral statuses, and the two or three things that surprise everyone once.</span></button>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Reference</h2>
+          <p>Machine-readable, and stable.</p>
+          <ul class="bul">
+            <li><strong>The configuration schema</strong> at <code>conventionalcomments.io/schema/v1.json</code> — put it in your file's <code>$schema</code> and your editor completes the keys and underlines mistakes.</li>
+            <li><strong>The convention itself</strong> lives at <a href="https://conventionalcomments.org/">conventionalcomments.org</a>. This site is tooling for it, and doesn't speak for it.</li>
+            <li><strong>The source</strong>, Apache-2.0, with the normative specification and every acceptance criterion.</li>
+          </ul>
+        </section>
+        <div class="pager"></div>
+      </div>
+    </div>
+    </div>
+    <div class="loc" data-loc="fr" hidden>
+    <div class="docs">
+      <aside class="side">
+        <p class="grp">doc&nbsp;:</p>
+        <ul>
+          <li><button data-goto="docsindex" aria-current="page">Vue d'ensemble</button></li>
+          <li><button data-goto="install">Installation</button></li>
+          <li><button data-goto="labels">Labels et décorations</button></li>
+          <li><button data-goto="configure">Configuration</button></li>
+          <li><button data-goto="adoption">Adoption</button></li>
+          <li><button data-goto="server">Le serveur</button></li>
+          <li><button data-goto="troubleshooting">Diagnostic</button></li>
+        </ul>
+        <p class="grp">référence&nbsp;:</p>
+        <ul>
+          <li><button>Schéma JSON ↗</button></li>
+          <li><button>Journal des versions ↗</button></li>
+        </ul>
+      </aside>
+      <div class="dmain">
+        <div class="dhead stack g12">
+          <p class="crumb"><b>doc</b></p>
+          <h1>Documentation</h1>
+          <p class="lede measure">Trois parcours. Prenez celui qui correspond à où vous en êtes, pas l'ordre du menu.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>J'essaie</h2>
+          <p>Vous voulez voir ce que ça donne, sur vos propres pull requests, sans demander la permission à personne.</p>
+          <div class="paths">
+            <button class="path" data-goto="install"><span class="pn">Installer l'extension</span><span class="pd">Depuis le store de votre navigateur, ou depuis un zip de release si votre poste ne peut rien compiler. Cinq minutes.</span></button>
+            <button class="path" data-goto="labels"><span class="pn">Labels et décorations</span><span class="pd">Les treize étiquettes, ce que chacune dit, et la règle qui décide si un commentaire bloque.</span></button>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Je configure un dépôt</h2>
+          <p>L'équipe est convaincue et vous voulez que tout le monde soit sur les mêmes règles.</p>
+          <div class="paths">
+            <button class="path" data-goto="configure"><span class="pn">Configuration</span><span class="pd">Un fichier sur la branche par défaut. Quelles clés comptent, lesquelles piègent, et comment trois niveaux se combinent.</span></button>
+            <button class="path" data-goto="adoption"><span class="pn">Adoption</span><span class="pd">assist → warn → enforce. Ce que chaque étape vous apporte, et comment revenir en arrière en quelques minutes.</span></button>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Je déploie pour l'organisation</h2>
+          <p>Vous voulez que la convention tienne sans dépendre de qui a installé quoi.</p>
+          <div class="paths">
+            <button class="path" data-goto="server"><span class="pn">Le serveur</span><span class="pd">Docker, variables d'environnement, stockage, branchement des plateformes, et déclaration de la vérification obligatoire.</span></button>
+            <button class="path" data-goto="troubleshooting"><span class="pn">Diagnostic</span><span class="pd">Les bandeaux, les statuts neutres, et les deux ou trois choses qui surprennent tout le monde une fois.</span></button>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Référence</h2>
+          <p>Lisible par une machine, et stable.</p>
+          <ul class="bul">
+            <li><strong>Le schéma de configuration</strong> sur <code>conventionalcomments.io/schema/v1.json</code> — mettez-le dans le <code>$schema</code> de votre fichier et votre éditeur complète les clés et souligne les fautes.</li>
+            <li><strong>La convention elle-même</strong> vit sur <a href="https://conventionalcomments.org/">conventionalcomments.org</a>. Ce site en est l'outillage, et ne parle pas en son nom.</li>
+            <li><strong>Le code source</strong>, sous Apache-2.0, avec la spécification normative et tous les critères d'acceptation.</li>
+          </ul>
+        </section>
+        <div class="pager"></div>
+      </div>
+    </div>
+    </div>
+  </main>
+  <main data-page="install" hidden>
+    <div class="loc" data-loc="en">
+    <div class="docs">
+      <aside class="side">
+        <p class="grp">docs:</p>
+        <ul>
+          <li><button data-goto="docsindex">Overview</button></li>
+          <li><button data-goto="install" aria-current="page">Install</button></li>
+          <li><button data-goto="labels">Labels &amp; decorations</button></li>
+          <li><button data-goto="configure">Configure</button></li>
+          <li><button data-goto="adoption">Adoption</button></li>
+          <li><button data-goto="server">The server</button></li>
+          <li><button data-goto="troubleshooting">Troubleshooting</button></li>
+        </ul>
+        <p class="grp">reference:</p>
+        <ul>
+          <li><button>JSON schema ↗</button></li>
+          <li><button>Changelog ↗</button></li>
+        </ul>
+      </aside>
+      <div class="dmain">
+        <div class="dhead stack g12">
+          <p class="crumb"><b>docs</b> / install</p>
+          <h1>Install the extension</h1>
+          <p class="lede measure">Three ways in, depending on what your machine lets you do. The first takes five minutes and needs nothing installed.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>From your browser's store</h2>
+          <p>The normal route, and the only one that updates itself.</p>
+          <div class="split">
+            <div class="callout">
+              <span class="ct">chromium</span>
+              <h4>Chrome, Edge, Brave, Vivaldi…</h4>
+              <p>One click from the Chrome Web Store. Edge and Brave install Chrome Web Store extensions directly.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">firefox</span>
+              <h4>Firefox</h4>
+              <p>A separate build, on Firefox Add-ons. Same code, packaged for Firefox's manifest.</p>
+            </div>
+          </div>
+          <p class="small">Nothing else to do. Open a pull request on GitHub and the toolbar appears above the comment box.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>From a release zip — no Node, no Git</h2>
+          <p>For a locked-down machine where you can't install a build chain. Every tagged release ships a ready-to-load zip, one for Chromium and one for Firefox.</p>
+          <ul class="tick">
+            <li><span class="mk">1</span><b>Download and unzip</b><span class="tx">From the repository's releases page. Pick the bundle matching your browser.</span></li>
+            <li><span class="mk">2</span><b>Open your browser's extensions page</b><span class="tx"><code>chrome://extensions</code> and turn on Developer mode.</span></li>
+            <li><span class="mk">3</span><b>Load the unpacked folder</b><span class="tx">“Load unpacked”, then pick the folder you just unzipped.</span></li>
+          </ul>
+          <div class="callout blk">
+            <span class="ct">the one thing to know</span>
+            <h4>An extension loaded this way never updates itself.</h4>
+            <p>This route is for trying it out, and for machines where the build chain can't be installed. It is not a distribution channel: you'll be on that version until you repeat the operation by hand. For a team, go through the stores.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>From source</h2>
+          <p>If you want to read what you're running, or you're contributing.</p>
+          <div class="code">git clone https://github.com/reefact/conventional-comments-toolkit
+cd conventional-comments-toolkit
+
+npm ci
+npm run build:extension     <span class="tk-cm">// → packages/extension/dist-ext</span></div>
+          <p>Then load <code>dist-ext</code> unpacked, exactly as in step 3 above. The Firefox variant is built alongside it, in its own subfolder.</p>
+          <p class="small">Node 20 or later. There's a step-by-step Windows/PowerShell walkthrough in the repository, from installing Node to loading the extension.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Beyond github.com</h2>
+          <p>Out of the box the extension only runs on github.com. Azure DevOps, a GitHub Enterprise Server instance, or an internal configuration host each need a permission you grant yourself.</p>
+          <ul class="tick">
+            <li><span class="mk">1</span><b>Open the options page</b><span class="tx">From the extension's icon in the toolbar.</span></li>
+            <li><span class="mk">2</span><b>Add the domain, and say which platform it is</b><span class="tx">The extension can't guess whether <code>devops.acme.internal</code> is an Azure DevOps or a GitHub Enterprise instance — tagging it is what activates the right adapter.</span></li>
+            <li><span class="mk">3</span><b>Confirm the permission your browser asks for</b><span class="tx">It's your browser asking, not the extension. You can revoke it there at any time.</span></li>
+          </ul>
+        </section>
+
+        <section class="dsec">
+          <h2>Check that it works</h2>
+          <p>Open any pull request and start a review comment. You should see the label row appear above the box, and a status dot below it. Type <code>?i</code> then <code>Tab</code>: it should expand to <code>issue:</code>.</p>
+          <p>If nothing appears, the troubleshooting page covers the three usual reasons.</p>
+        </section>
+        <div class="pager"></div>
+      </div>
+    </div>
+    </div>
+    <div class="loc" data-loc="fr" hidden>
+    <div class="docs">
+      <aside class="side">
+        <p class="grp">doc&nbsp;:</p>
+        <ul>
+          <li><button data-goto="docsindex">Vue d'ensemble</button></li>
+          <li><button data-goto="install" aria-current="page">Installation</button></li>
+          <li><button data-goto="labels">Labels et décorations</button></li>
+          <li><button data-goto="configure">Configuration</button></li>
+          <li><button data-goto="adoption">Adoption</button></li>
+          <li><button data-goto="server">Le serveur</button></li>
+          <li><button data-goto="troubleshooting">Diagnostic</button></li>
+        </ul>
+        <p class="grp">référence&nbsp;:</p>
+        <ul>
+          <li><button>Schéma JSON ↗</button></li>
+          <li><button>Journal des versions ↗</button></li>
+        </ul>
+      </aside>
+      <div class="dmain">
+        <div class="dhead stack g12">
+          <p class="crumb"><b>doc</b> / installation</p>
+          <h1>Installer l'extension</h1>
+          <p class="lede measure">Trois chemins, selon ce que votre poste vous autorise. Le premier prend cinq minutes et ne demande rien d'installé.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>Depuis le store de votre navigateur</h2>
+          <p>La voie normale, et la seule qui se met à jour toute seule.</p>
+          <div class="split">
+            <div class="callout">
+              <span class="ct">chromium</span>
+              <h4>Chrome, Edge, Brave, Vivaldi…</h4>
+              <p>Un clic depuis le Chrome Web Store. Edge et Brave installent directement les extensions du Chrome Web Store.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">firefox</span>
+              <h4>Firefox</h4>
+              <p>Un build séparé, sur Firefox Add-ons. Même code, empaqueté pour le manifeste de Firefox.</p>
+            </div>
+          </div>
+          <p class="small">Rien d'autre à faire. Ouvrez une pull request sur GitHub et la barre apparaît au-dessus du champ de commentaire.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Depuis un zip de release — sans Node, sans Git</h2>
+          <p>Pour un poste verrouillé où vous ne pouvez pas installer de chaîne de compilation. Chaque version publiée embarque un zip prêt à charger, un pour Chromium et un pour Firefox.</p>
+          <ul class="tick">
+            <li><span class="mk">1</span><b>Télécharger et décompresser</b><span class="tx">Depuis la page des releases du dépôt. Prenez le bundle qui correspond à votre navigateur.</span></li>
+            <li><span class="mk">2</span><b>Ouvrir la page des extensions</b><span class="tx"><code>chrome://extensions</code>, puis activer le mode développeur.</span></li>
+            <li><span class="mk">3</span><b>Charger le dossier décompressé</b><span class="tx">« Charger l'extension non empaquetée », puis désignez le dossier.</span></li>
+          </ul>
+          <div class="callout blk">
+            <span class="ct">la chose à savoir</span>
+            <h4>Une extension chargée ainsi ne se met jamais à jour.</h4>
+            <p>Ce chemin sert à essayer, et aux postes où la chaîne de compilation ne peut pas être installée. Ce n'est pas un canal de distribution&nbsp;: vous resterez sur cette version jusqu'à ce que vous refassiez l'opération à la main. Pour une équipe, passez par les stores.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Depuis les sources</h2>
+          <p>Si vous voulez lire ce que vous faites tourner, ou si vous contribuez.</p>
+          <div class="code">git clone https://github.com/reefact/conventional-comments-toolkit
+cd conventional-comments-toolkit
+
+npm ci
+npm run build:extension     <span class="tk-cm">// → packages/extension/dist-ext</span></div>
+          <p>Puis chargez <code>dist-ext</code> non empaqueté, exactement comme à l'étape 3 ci-dessus. La variante Firefox est construite en même temps, dans son propre sous-dossier.</p>
+          <p class="small">Node 20 ou plus récent. Le dépôt contient un guide pas à pas Windows/PowerShell, de l'installation de Node au chargement de l'extension.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Au-delà de github.com</h2>
+          <p>Par défaut l'extension ne tourne que sur github.com. Azure DevOps, une instance GitHub Enterprise Server ou un serveur de configuration interne demandent chacun une autorisation que vous accordez vous-même.</p>
+          <ul class="tick">
+            <li><span class="mk">1</span><b>Ouvrir la page de réglages</b><span class="tx">Depuis l'icône de l'extension dans la barre d'outils.</span></li>
+            <li><span class="mk">2</span><b>Ajouter le domaine, et dire de quelle plateforme il s'agit</b><span class="tx">L'extension ne peut pas deviner si <code>devops.acme.interne</code> est une instance Azure DevOps ou GitHub Enterprise — c'est ce marquage qui active le bon adaptateur.</span></li>
+            <li><span class="mk">3</span><b>Confirmer l'autorisation que le navigateur demande</b><span class="tx">C'est le navigateur qui demande, pas l'extension. Vous pouvez la retirer là à tout moment.</span></li>
+          </ul>
+        </section>
+
+        <section class="dsec">
+          <h2>Vérifier que ça marche</h2>
+          <p>Ouvrez n'importe quelle pull request et commencez un commentaire de revue. La rangée d'étiquettes doit apparaître au-dessus du champ, et une pastille en dessous. Tapez <code>?i</code> puis <code>Tab</code>&nbsp;: ça doit se déplier en <code>issue:</code>.</p>
+          <p>Si rien n'apparaît, la page de diagnostic couvre les trois raisons habituelles.</p>
+        </section>
+        <div class="pager"></div>
+      </div>
+    </div>
+    </div>
+  </main>
+  <main data-page="configure" hidden>
+    <div class="loc" data-loc="en">
+    <div class="docs">
+      <aside class="side">
+        <p class="grp">docs:</p>
+        <ul>
+          <li><button data-goto="docsindex">Overview</button></li>
+          <li><button data-goto="install">Install</button></li>
+          <li><button data-goto="labels">Labels &amp; decorations</button></li>
+          <li><button data-goto="configure" aria-current="page">Configure</button></li>
+          <li><button data-goto="adoption">Adoption</button></li>
+          <li><button data-goto="server">The server</button></li>
+          <li><button data-goto="troubleshooting">Troubleshooting</button></li>
+        </ul>
+        <p class="grp">reference:</p>
+        <ul>
+          <li><button>JSON schema ↗</button></li>
+          <li><button>Changelog ↗</button></li>
+        </ul>
+      </aside>
+      <div class="dmain">
+        <div class="dhead stack g12">
+          <p class="crumb"><b>docs</b> / configure</p>
+          <h1>Configure a repository</h1>
+          <p class="lede measure">One file, <code>.conventional-comments.json</code>, on the default branch. Everything not in it keeps the product default — you never have to restate the whole thing.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>The smallest useful file</h2>
+          <div class="code"><span class="tk-k">{</span>
+  <span class="tk-k">"$schema"</span>: <span class="tk-v">"https://conventionalcomments.io/schema/v1.json"</span>,
+  <span class="tk-k">"version"</span>: <span class="tk-v">1</span>,
+  <span class="tk-k">"mode"</span>: <span class="tk-v">"assist"</span>
+<span class="tk-k">}</span></div>
+          <p>The <code>$schema</code> line is not decoration: your editor fetches it and then completes every key, shows what each one does on hover, and underlines <code>"enforc"</code> before you commit.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Three levels, and how they combine</h2>
+          <p>A repository is never alone. Three sources are resolved together, and the order isn't negotiable.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th>Level</th><th>Who sets it</th><th>What it can do</th></tr></thead>
+              <tbody>
+                <tr><td class="m">floor</td><td class="d">The organization, through deployment — not through a repository file.</td><td class="d">Sets a minimum mode and a list of rules nobody may switch off. A repository can be <em>stricter</em>, never softer.</td></tr>
+                <tr><td class="m">organization</td><td class="d">A shared document, fetched from the URL named in the floor.</td><td class="d">The common baseline. This is the tipping point: change <code>mode</code> here and it applies everywhere, including to pull requests already open.</td></tr>
+                <tr><td class="m">repository</td><td class="d">This file, on the default branch.</td><td class="d">Local adjustments — exempt bots, enable an optional label, silence a diagnostic.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout acc">
+            <span class="ct">the floor has two channels, and both must carry the same value</span>
+            <p style="margin:0">The extension reads the floor from your browser's enterprise policy. The server reads it from its own deployment configuration. A browser channel is <strong>structurally unreadable</strong> by a server that has no browser — so putting the floor only there would mean enforcing it solely through the component that is bypassable by design, which is to say not enforcing it at all. The server publishes a fingerprint of what it applies, which makes any disagreement visible instead of silent.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>The keys worth knowing</h2>
+          <p>There are twenty-five. These are the ones that change behaviour rather than appearance.</p>
+          <div class="scroller">
+            <table class="t wide">
+              <thead><tr><th>Key</th><th>Default</th><th>What it decides</th></tr></thead>
+              <tbody>
+                <tr><td class="m">mode</td><td class="m d">assist</td><td class="d"><code>off</code> · <code>assist</code> · <code>warn</code> · <code>enforce</code>. Read the adoption guide before going past <code>warn</code>.</td></tr>
+                <tr><td class="m">formatSeverity</td><td class="m d">warn</td><td class="d">Whether badly formed comments can fail the check. Most teams leave this alone: only unresolved blocking points should stop a merge.</td></tr>
+                <tr><td class="m">resolverOverrideGroup</td><td class="m d">empty</td><td class="d">Who may override a resolution and record a <code>decision</code>. <strong>A hard prerequisite for <code>enforce</code></strong> — empty means both release valves are shut.</td></tr>
+                <tr><td class="m">exemptUsers</td><td class="m d">empty</td><td class="d">Authors never validated. Compared against the platform login, case-insensitively.</td></tr>
+                <tr><td class="m">toolCommands</td><td class="m d">empty</td><td class="d">Comments addressed to a bot. See the warning below.</td></tr>
+                <tr><td class="m">labels</td><td class="m d">13 labels</td><td class="d">Per-label overrides. List only what you change.</td></tr>
+                <tr><td class="m">severities</td><td class="m d">product</td><td class="d">Re-level or silence any diagnostic, one by one.</td></tr>
+                <tr><td class="m">coreMinVersion</td><td class="m d">1.0.0</td><td class="d">The lever for requiring a version across an organization. Not the fingerprint — that one only reports disagreement.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout blk">
+            <span class="ct">the one that bites</span>
+            <h4><code>toolCommands</code> is empty by default, and it did not used to be.</h4>
+            <p>Slash commands like <code>/rebase</code> used to be recognised through a built-in list. That list is gone. In strict mode a bare <code>/rebase</code> is now refused like any other comment until the repository declares it. Adding <code>"/*"</code> restores the exemption for every slash command; bot handles are declared one by one, exactly, as <code>"@dependabot"</code>.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Two behaviours that surprise people once</h2>
+          <ul class="bul">
+            <li><strong>An unknown key is ignored with a warning, not rejected.</strong> But a <em>known</em> key holding an impossible value invalidates the whole document — nothing can be concluded from it, so nothing is applied.</li>
+            <li><strong><code>configUrl</code> set in a repository file is ignored.</strong> The organization's configuration address comes exclusively from the floor channel; letting a repository point it elsewhere would let a repository choose its own rules.</li>
+          </ul>
+        </section>
+        <div class="pager"></div>
+      </div>
+    </div>
+    </div>
+    <div class="loc" data-loc="fr" hidden>
+    <div class="docs">
+      <aside class="side">
+        <p class="grp">doc&nbsp;:</p>
+        <ul>
+          <li><button data-goto="docsindex">Vue d'ensemble</button></li>
+          <li><button data-goto="install">Installation</button></li>
+          <li><button data-goto="labels">Labels et décorations</button></li>
+          <li><button data-goto="configure" aria-current="page">Configuration</button></li>
+          <li><button data-goto="adoption">Adoption</button></li>
+          <li><button data-goto="server">Le serveur</button></li>
+          <li><button data-goto="troubleshooting">Diagnostic</button></li>
+        </ul>
+        <p class="grp">référence&nbsp;:</p>
+        <ul>
+          <li><button>Schéma JSON ↗</button></li>
+          <li><button>Journal des versions ↗</button></li>
+        </ul>
+      </aside>
+      <div class="dmain">
+        <div class="dhead stack g12">
+          <p class="crumb"><b>doc</b> / configuration</p>
+          <h1>Configurer un dépôt</h1>
+          <p class="lede measure">Un fichier, <code>.conventional-comments.json</code>, sur la branche par défaut. Tout ce qui n'y est pas garde la valeur du produit — vous n'avez jamais à tout réécrire.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>Le plus petit fichier utile</h2>
+          <div class="code"><span class="tk-k">{</span>
+  <span class="tk-k">"$schema"</span>: <span class="tk-v">"https://conventionalcomments.io/schema/v1.json"</span>,
+  <span class="tk-k">"version"</span>: <span class="tk-v">1</span>,
+  <span class="tk-k">"mode"</span>: <span class="tk-v">"assist"</span>
+<span class="tk-k">}</span></div>
+          <p>La ligne <code>$schema</code> n'est pas décorative&nbsp;: votre éditeur va la chercher, puis complète chaque clé, affiche au survol ce qu'elle fait, et souligne <code>"enforc"</code> avant que vous ne commitiez.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Trois niveaux, et comment ils se combinent</h2>
+          <p>Un dépôt n'est jamais seul. Trois sources se résolvent ensemble, et l'ordre ne se négocie pas.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th>Niveau</th><th>Qui le pose</th><th>Ce qu'il peut faire</th></tr></thead>
+              <tbody>
+                <tr><td class="m">plancher</td><td class="d">L'organisation, par le déploiement — pas par un fichier de dépôt.</td><td class="d">Fixe un mode minimum et une liste de règles que personne ne peut éteindre. Un dépôt peut être <em>plus strict</em>, jamais plus souple.</td></tr>
+                <tr><td class="m">organisation</td><td class="d">Un document partagé, lu à l'adresse que le plancher désigne.</td><td class="d">La base commune. C'est le point de bascule&nbsp;: changer <code>mode</code> ici s'applique partout, y compris aux pull requests déjà ouvertes.</td></tr>
+                <tr><td class="m">dépôt</td><td class="d">Ce fichier, sur la branche par défaut.</td><td class="d">Les ajustements locaux — exempter des robots, activer une étiquette optionnelle, éteindre un diagnostic.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout acc">
+            <span class="ct">le plancher a deux canaux, et les deux doivent porter la même valeur</span>
+            <p style="margin:0">L'extension lit le plancher dans la politique d'entreprise de votre navigateur. Le serveur le lit dans sa propre configuration de déploiement. Un canal de navigateur est <strong>structurellement illisible</strong> par un serveur qui n'a pas de navigateur — n'y mettre le plancher que là reviendrait à ne le faire appliquer que par le composant explicitement contournable, c'est-à-dire à ne pas l'appliquer du tout. Le serveur publie une empreinte de ce qu'il applique, ce qui rend tout désaccord visible plutôt que silencieux.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Les clés qui comptent</h2>
+          <p>Il y en a vingt-cinq. Voici celles qui changent le comportement, pas l'apparence.</p>
+          <div class="scroller">
+            <table class="t wide">
+              <thead><tr><th>Clé</th><th>Défaut</th><th>Ce qu'elle décide</th></tr></thead>
+              <tbody>
+                <tr><td class="m">mode</td><td class="m d">assist</td><td class="d"><code>off</code> · <code>assist</code> · <code>warn</code> · <code>enforce</code>. Lisez le guide d'adoption avant de dépasser <code>warn</code>.</td></tr>
+                <tr><td class="m">formatSeverity</td><td class="m d">warn</td><td class="d">Si un commentaire mal formé peut faire échouer la vérification. La plupart des équipes n'y touchent pas&nbsp;: seuls les points bloquants non résolus devraient arrêter une fusion.</td></tr>
+                <tr><td class="m">resolverOverrideGroup</td><td class="m d">vide</td><td class="d">Qui peut passer outre une résolution et acter une <code>decision</code>. <strong>Condition dure pour <code>enforce</code></strong> — vide, les deux portes de sortie sont fermées.</td></tr>
+                <tr><td class="m">exemptUsers</td><td class="m d">vide</td><td class="d">Auteurs jamais validés. Comparés à l'identifiant de la plateforme, sans tenir compte de la casse.</td></tr>
+                <tr><td class="m">toolCommands</td><td class="m d">vide</td><td class="d">Commentaires adressés à un robot. Voir l'avertissement ci-dessous.</td></tr>
+                <tr><td class="m">labels</td><td class="m d">13 étiquettes</td><td class="d">Surcharges par étiquette. Ne listez que ce que vous changez.</td></tr>
+                <tr><td class="m">severities</td><td class="m d">produit</td><td class="d">Requalifier ou éteindre n'importe quel diagnostic, un par un.</td></tr>
+                <tr><td class="m">coreMinVersion</td><td class="m d">1.0.0</td><td class="d">Le levier pour imposer une version dans toute une organisation. Pas l'empreinte&nbsp;: celle-ci ne fait que signaler un désaccord.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout blk">
+            <span class="ct">celle qui piège</span>
+            <h4><code>toolCommands</code> est vide par défaut, et ça n'a pas toujours été le cas.</h4>
+            <p>Les commandes comme <code>/rebase</code> étaient autrefois reconnues par une liste intégrée. Cette liste a disparu. En mode strict, un <code>/rebase</code> nu est désormais refusé comme n'importe quel commentaire tant que le dépôt ne l'a pas déclaré. Ajouter <code>"/*"</code> rétablit l'exemption pour toutes les commandes slash&nbsp;; les handles de robots se déclarent un par un, exactement, sous la forme <code>"@dependabot"</code>.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Deux comportements qui surprennent une fois</h2>
+          <ul class="bul">
+            <li><strong>Une clé inconnue est ignorée avec un avertissement, pas rejetée.</strong> Mais une clé <em>connue</em> portant une valeur impossible invalide le document entier — on ne peut rien en conclure, donc rien n'est appliqué.</li>
+            <li><strong><code>configUrl</code> posé dans un fichier de dépôt est ignoré.</strong> L'adresse de la configuration d'organisation vient exclusivement du canal du plancher&nbsp;; laisser un dépôt la pointer ailleurs reviendrait à le laisser choisir ses propres règles.</li>
+          </ul>
+        </section>
+        <div class="pager"></div>
+      </div>
+    </div>
+    </div>
+  </main>
+  <main data-page="server" hidden>
+    <div class="loc" data-loc="en">
+    <div class="docs">
+      <aside class="side">
+        <p class="grp">docs:</p>
+        <ul>
+          <li><button data-goto="docsindex">Overview</button></li>
+          <li><button data-goto="install">Install</button></li>
+          <li><button data-goto="labels">Labels &amp; decorations</button></li>
+          <li><button data-goto="configure">Configure</button></li>
+          <li><button data-goto="adoption">Adoption</button></li>
+          <li><button data-goto="server" aria-current="page">The server</button></li>
+          <li><button data-goto="troubleshooting">Troubleshooting</button></li>
+        </ul>
+        <p class="grp">reference:</p>
+        <ul>
+          <li><button>JSON schema ↗</button></li>
+          <li><button>Changelog ↗</button></li>
+        </ul>
+      </aside>
+      <div class="dmain">
+        <div class="dhead stack g12">
+          <p class="crumb"><b>docs</b> / the server</p>
+          <h1>Deploy the server</h1>
+          <p class="lede measure">One small service, hosted by you, once for the whole organization. It re-reads pull requests and publishes the check. Nothing about it is a SaaS: it runs on your infrastructure and talks to no third party.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>Quick start</h2>
+          <div class="code">docker build -t cct-server .
+
+docker run -d --name cct-server \
+  -p 8080:8080 \
+  -v cct-data:/data \
+  -e CCT_ADMIN_TOKEN=<span class="tk-v">'a-long-secret'</span> \
+  -e CCT_GITHUB_TOKEN=<span class="tk-v">'ghp_…'</span> \
+  -e CCT_GITHUB_WEBHOOK_SECRET=<span class="tk-v">'another-secret'</span> \
+  -e CCT_GITHUB_REPOS=<span class="tk-v">'my-org/repo-one,my-org/repo-two'</span> \
+  cct-server</div>
+          <p>Without Docker: <code>npm ci &amp;&amp; npm run build</code>, then <code>CCT_… npm run server</code>. The service exposes <code>GET /healthz</code>, and the image ships the matching healthcheck.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Persistence — read this before the first start</h2>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th>How you mount it</th><th>What happens</th></tr></thead>
+              <tbody>
+                <tr><td class="m">named volume<br><span class="av-note">-v cct-data:/data</span></td><td class="d"><strong>Recommended.</strong> State belongs to the volume and survives everything, including recreating the container on an upgrade.</td></tr>
+                <tr><td class="m">bind mount<br><span class="av-note">-v /srv/cct:/data</span></td><td class="d">The host directory must be writable by the container's user, whose UID is <strong>fixed at 10001</strong>. Run <code>chown -R 10001 /srv/cct</code> first — otherwise the service <strong>refuses to start</strong>. A write probe runs at boot: it never runs without persisting.</td></tr>
+                <tr><td class="m">no volume</td><td class="d">Docker creates an anonymous volume per container. State survives restarts but is <strong>lost on every image update</strong>. Demos only.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Storage</h2>
+          <p>Three backends, one variable.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th><code>CCT_STORAGE</code></th><th>For what</th></tr></thead>
+              <tbody>
+                <tr><td class="m">memory</td><td class="d">Trials and demos — everything is lost on stop.</td></tr>
+                <tr><td class="m">file <span class="av-note">default</span></td><td class="d">Simple single-process deployment. JSON, written atomically.</td></tr>
+                <tr><td class="m">sqlite</td><td class="d">A real database in one file, with no extra dependency — Node's own SQLite. Node 22.13 or later.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>The variables that matter</h2>
+          <div class="scroller">
+            <table class="t wide">
+              <thead><tr><th>Variable</th><th>Required</th><th>Role</th></tr></thead>
+              <tbody>
+                <tr><td class="m">CCT_ADMIN_TOKEN</td><td class="m" style="color:var(--block)">yes</td><td class="d">Bearer token for the admin endpoint — cache invalidation, exemptions.</td></tr>
+                <tr><td class="m">CCT_GITHUB_TOKEN</td><td class="m d">if GitHub</td><td class="d">API token. Scopes are documented in the repository; give it the least that works.</td></tr>
+                <tr><td class="m">CCT_GITHUB_WEBHOOK_SECRET</td><td class="m d">if GitHub</td><td class="d">HMAC secret for webhook signatures.</td></tr>
+                <tr><td class="m">CCT_GITHUB_API_BASE</td><td class="m d">no</td><td class="d">Point it at <code>https://{ghes}/api/v3</code> for Enterprise Server.</td></tr>
+                <tr><td class="m">CCT_AZDO_ORG_URL<br>CCT_AZDO_PROJECT<br>CCT_AZDO_TOKEN</td><td class="m d">if Azure DevOps</td><td class="d">Organization URL or Server collection, project, and a personal access token.</td></tr>
+                <tr><td class="m">CCT_FLOOR_FILE</td><td class="m d">no</td><td class="d">The organization floor. Re-read on every evaluation; unreadable at boot is a refusal to start, corrupted later means the last valid content keeps applying.</td></tr>
+                <tr><td class="m">CCT_EXEMPTION_LOG_RETENTION_MONTHS</td><td class="m d">no</td><td class="d">Twelve by default. <code>0</code> means unlimited — an explicit decision, since that log is nominative.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Making the check required</h2>
+          <p>Deploying the server publishes a status. It doesn't block anything until you say so — and that is a branch protection setting, not a setting of this product.</p>
+          <div class="split">
+            <div class="callout">
+              <span class="ct">github</span>
+              <h4>Two boxes, not one</h4>
+              <p><em>Require status checks to pass</em> on <code>conventional-comments</code>, <strong>and</strong> <em>Do not allow bypassing the above settings</em>. Without the second, administrators can merge past it and the guarantee is worth nothing.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">azure devops</span>
+              <h4>Block, not Warn</h4>
+              <p>A <em>Status checks</em> branch policy on <code>conventional-comments/compliance</code>, set to <strong>Block</strong>. Left on <em>Warn</em> it displays and lets the completion through.</p>
+            </div>
+          </div>
+          <p class="small">Do this only once the adoption prerequisites hold. Turning it on without a written way back out is how a good idea becomes an incident.</p>
+        </section>
+        <div class="pager"></div>
+      </div>
+    </div>
+    </div>
+    <div class="loc" data-loc="fr" hidden>
+    <div class="docs">
+      <aside class="side">
+        <p class="grp">doc&nbsp;:</p>
+        <ul>
+          <li><button data-goto="docsindex">Vue d'ensemble</button></li>
+          <li><button data-goto="install">Installation</button></li>
+          <li><button data-goto="labels">Labels et décorations</button></li>
+          <li><button data-goto="configure">Configuration</button></li>
+          <li><button data-goto="adoption">Adoption</button></li>
+          <li><button data-goto="server" aria-current="page">Le serveur</button></li>
+          <li><button data-goto="troubleshooting">Diagnostic</button></li>
+        </ul>
+        <p class="grp">référence&nbsp;:</p>
+        <ul>
+          <li><button>Schéma JSON ↗</button></li>
+          <li><button>Journal des versions ↗</button></li>
+        </ul>
+      </aside>
+      <div class="dmain">
+        <div class="dhead stack g12">
+          <p class="crumb"><b>doc</b> / le serveur</p>
+          <h1>Déployer le serveur</h1>
+          <p class="lede measure">Un petit service, que vous hébergez, une fois pour toute l'organisation. Il relit les pull requests et publie la vérification. Rien là-dedans n'est du SaaS&nbsp;: il tourne sur votre infrastructure et ne parle à aucun tiers.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>Démarrage rapide</h2>
+          <div class="code">docker build -t cct-server .
+
+docker run -d --name cct-server \
+  -p 8080:8080 \
+  -v cct-data:/data \
+  -e CCT_ADMIN_TOKEN=<span class="tk-v">'un-secret-long'</span> \
+  -e CCT_GITHUB_TOKEN=<span class="tk-v">'ghp_…'</span> \
+  -e CCT_GITHUB_WEBHOOK_SECRET=<span class="tk-v">'un-autre-secret'</span> \
+  -e CCT_GITHUB_REPOS=<span class="tk-v">'mon-org/depot-un,mon-org/depot-deux'</span> \
+  cct-server</div>
+          <p>Sans Docker&nbsp;: <code>npm ci &amp;&amp; npm run build</code>, puis <code>CCT_… npm run server</code>. Le service expose <code>GET /healthz</code>, et l'image embarque la sonde correspondante.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Persistance — à lire avant le premier démarrage</h2>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th>Façon de monter</th><th>Ce qui se passe</th></tr></thead>
+              <tbody>
+                <tr><td class="m">volume nommé<br><span class="av-note">-v cct-data:/data</span></td><td class="d"><strong>Recommandé.</strong> L'état appartient au volume et survit à tout, y compris à la recréation du conteneur lors d'une montée de version.</td></tr>
+                <tr><td class="m">bind mount<br><span class="av-note">-v /srv/cct:/data</span></td><td class="d">Le répertoire hôte doit être inscriptible par l'utilisateur du conteneur, dont l'UID est <strong>figé à 10001</strong>. Faites <code>chown -R 10001 /srv/cct</code> d'abord — sinon le service <strong>refuse de démarrer</strong>. Une sonde d'écriture tourne au boot&nbsp;: il ne tourne jamais sans persister.</td></tr>
+                <tr><td class="m">sans volume</td><td class="d">Docker crée un volume anonyme par conteneur. L'état survit aux redémarrages mais est <strong>perdu à chaque mise à jour d'image</strong>. Pour les démonstrations seulement.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Stockage</h2>
+          <p>Trois implémentations, une variable.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th><code>CCT_STORAGE</code></th><th>Pour quoi</th></tr></thead>
+              <tbody>
+                <tr><td class="m">memory</td><td class="d">Essais et démonstrations — tout est perdu à l'arrêt.</td></tr>
+                <tr><td class="m">file <span class="av-note">défaut</span></td><td class="d">Déploiement simple mono-processus. JSON, écrit de façon atomique.</td></tr>
+                <tr><td class="m">sqlite</td><td class="d">Une vraie base en un fichier, sans dépendance supplémentaire — le SQLite de Node. Node 22.13 ou plus récent.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Les variables qui comptent</h2>
+          <div class="scroller">
+            <table class="t wide">
+              <thead><tr><th>Variable</th><th>Obligatoire</th><th>Rôle</th></tr></thead>
+              <tbody>
+                <tr><td class="m">CCT_ADMIN_TOKEN</td><td class="m" style="color:var(--block)">oui</td><td class="d">Jeton du point d'entrée d'administration — invalidation de cache, exemptions.</td></tr>
+                <tr><td class="m">CCT_GITHUB_TOKEN</td><td class="m d">si GitHub</td><td class="d">Jeton d'API. Les portées sont documentées dans le dépôt&nbsp;; donnez-lui le minimum qui fonctionne.</td></tr>
+                <tr><td class="m">CCT_GITHUB_WEBHOOK_SECRET</td><td class="m d">si GitHub</td><td class="d">Secret HMAC de signature des webhooks.</td></tr>
+                <tr><td class="m">CCT_GITHUB_API_BASE</td><td class="m d">non</td><td class="d">À pointer vers <code>https://{ghes}/api/v3</code> pour Enterprise Server.</td></tr>
+                <tr><td class="m">CCT_AZDO_ORG_URL<br>CCT_AZDO_PROJECT<br>CCT_AZDO_TOKEN</td><td class="m d">si Azure DevOps</td><td class="d">URL d'organisation ou de collection Server, projet, et un jeton d'accès personnel.</td></tr>
+                <tr><td class="m">CCT_FLOOR_FILE</td><td class="m d">non</td><td class="d">Le plancher d'organisation. Relu à chaque évaluation&nbsp;; illisible au démarrage = refus de démarrer, corrompu en cours de route = le dernier contenu valide continue de s'appliquer.</td></tr>
+                <tr><td class="m">CCT_EXEMPTION_LOG_RETENTION_MONTHS</td><td class="m d">non</td><td class="d">Douze par défaut. <code>0</code> vaut illimité — une décision explicite, ce journal étant nominatif.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Rendre la vérification obligatoire</h2>
+          <p>Déployer le serveur publie un statut. Ça ne bloque rien tant que vous ne l'avez pas dit — et c'est un réglage de protection de branche, pas un réglage de ce produit.</p>
+          <div class="split">
+            <div class="callout">
+              <span class="ct">github</span>
+              <h4>Deux cases, pas une</h4>
+              <p><em>Require status checks to pass</em> sur <code>conventional-comments</code>, <strong>et</strong> <em>Do not allow bypassing the above settings</em>. Sans la seconde, les administrateurs passent outre et la garantie ne vaut plus rien.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">azure devops</span>
+              <h4>Block, pas Warn</h4>
+              <p>Une policy de branche <em>Status checks</em> sur <code>conventional-comments/compliance</code>, réglée sur <strong>Block</strong>. Laissée sur <em>Warn</em>, elle affiche et laisse passer la complétion.</p>
+            </div>
+          </div>
+          <p class="small">Ne faites ça qu'une fois les conditions d'adoption réunies. Activer sans marche arrière écrite, c'est ainsi qu'une bonne idée devient un incident.</p>
+        </section>
+        <div class="pager"></div>
+      </div>
+    </div>
+    </div>
+  </main>
+  <main data-page="troubleshooting" hidden>
+    <div class="loc" data-loc="en">
+    <div class="docs">
+      <aside class="side">
+        <p class="grp">docs:</p>
+        <ul>
+          <li><button data-goto="docsindex">Overview</button></li>
+          <li><button data-goto="install">Install</button></li>
+          <li><button data-goto="labels">Labels &amp; decorations</button></li>
+          <li><button data-goto="configure">Configure</button></li>
+          <li><button data-goto="adoption">Adoption</button></li>
+          <li><button data-goto="server">The server</button></li>
+          <li><button data-goto="troubleshooting" aria-current="page">Troubleshooting</button></li>
+        </ul>
+        <p class="grp">reference:</p>
+        <ul>
+          <li><button>JSON schema ↗</button></li>
+          <li><button>Changelog ↗</button></li>
+        </ul>
+      </aside>
+      <div class="dmain">
+        <div class="dhead stack g12">
+          <p class="crumb"><b>docs</b> / troubleshooting</p>
+          <h1>When something looks wrong</h1>
+          <p class="lede measure">Most of what surprises people is deliberate. Each case below says what you're seeing, why it happens, and whether there's anything to do about it.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>The toolbar doesn't appear</h2>
+          <ul class="tick">
+            <li><span class="mk n">·</span><b>You're not on github.com</b><span class="tx">By default the extension only runs there. Azure DevOps and self-hosted instances need a permission you grant on the options page, and a tag saying which platform it is.</span></li>
+            <li><span class="mk n">·</span><b>The page changed under it</b><span class="tx">When the platform's markup moves, the extension disables the affected area rather than writing into an element it may have misidentified. The options page keeps a log of the last fifty times that happened — rule name and timestamp, never content.</span></li>
+            <li><span class="mk n">·</span><b>The mode is <code>off</code></b><span class="tx">Your organization or repository can switch it off entirely.</span></li>
+          </ul>
+        </section>
+
+        <section class="dsec">
+          <h2>“Configuration unread” banner</h2>
+          <p>The extension could not fetch <code>.conventional-comments.json</code>, so it assists without knowing your rules and never blocks a send. That last part is the point: you don't reject someone in the name of a rule you couldn't read.</p>
+          <div class="callout">
+            <span class="ct">what it does not mean</span>
+            <p style="margin:0">A repository with <strong>no configuration file at all</strong> is a nominal case, not a degradation — you get the product defaults and no banner. The banner means there was something to read and it couldn't be read. On a public repository, or a private one with an open session, it should not appear at all; signed out, it says something true.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>“Configuration out of step with the server”</h2>
+          <p>The extension and the server publish a fingerprint of the configuration each applies. When they differ, the extension <strong>stops blocking sends</strong> and says so.</p>
+          <p>It's normally transient: a tightening propagates, and a pull request already open is judged on the configuration pinned when it was first evaluated. If it persists, the two components are running different versions of the shared library — <code>coreMinVersion</code> is the lever for that, not the fingerprint.</p>
+        </section>
+
+        <section class="dsec">
+          <h2><code>/rebase</code> is being rejected</h2>
+          <p>Expected, and the most common surprise after an upgrade. Slash commands used to be exempt through a built-in list; that list is gone and <code>toolCommands</code> is empty by default.</p>
+          <div class="code"><span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>]</div>
+          <p><code>"/*"</code> restores recognition of every slash command. Bot handles are declared exactly, one by one — the match is on the whole first token, so <code>@codex review</code> is a command and <code>@codexplains why</code> is not.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>A bot's comments fail the check</h2>
+          <p>Add its login to <code>exemptUsers</code>. The comparison is against the platform login, case-insensitively — never the display name.</p>
+          <p class="small">Platform-generated entries — timeline events, branch updates, system notices — are exempt structurally and don't need listing. Same for a review approved with <strong>no text at all</strong>: an empty body is always exempt, because otherwise the most ordinary gesture in review would fail on every approval, with no way to fix it — you don't edit someone else's review.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>The check is grey, not red or green</h2>
+          <p>A neutral status means the server could not read the current state for longer than its grace period, and it says so rather than guessing. It keeps its last verdict for that period first; only past it does the status go neutral.</p>
+          <p>Look at the platform token first — expired, or short on scopes — then at the webhook secret.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>A blocking point can't be closed</h2>
+          <p>Only the comment's author, or a member of the designated group, may resolve a blocking thread. If nobody can, the group is empty — and designating it is a prerequisite for strict mode precisely so this situation cannot happen.</p>
+          <p>The other way out is a <code>decision</code> reply saying why the point won't be addressed, in at least twenty characters. It's recorded in the thread, never silent.</p>
+        </section>
+        <div class="pager"></div>
+      </div>
+    </div>
+    </div>
+    <div class="loc" data-loc="fr" hidden>
+    <div class="docs">
+      <aside class="side">
+        <p class="grp">doc&nbsp;:</p>
+        <ul>
+          <li><button data-goto="docsindex">Vue d'ensemble</button></li>
+          <li><button data-goto="install">Installation</button></li>
+          <li><button data-goto="labels">Labels et décorations</button></li>
+          <li><button data-goto="configure">Configuration</button></li>
+          <li><button data-goto="adoption">Adoption</button></li>
+          <li><button data-goto="server">Le serveur</button></li>
+          <li><button data-goto="troubleshooting" aria-current="page">Diagnostic</button></li>
+        </ul>
+        <p class="grp">référence&nbsp;:</p>
+        <ul>
+          <li><button>Schéma JSON ↗</button></li>
+          <li><button>Journal des versions ↗</button></li>
+        </ul>
+      </aside>
+      <div class="dmain">
+        <div class="dhead stack g12">
+          <p class="crumb"><b>doc</b> / diagnostic</p>
+          <h1>Quand quelque chose cloche</h1>
+          <p class="lede measure">L'essentiel de ce qui surprend est délibéré. Chaque cas ci-dessous dit ce que vous voyez, pourquoi, et s'il y a quelque chose à faire.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>La barre n'apparaît pas</h2>
+          <ul class="tick">
+            <li><span class="mk n">·</span><b>Vous n'êtes pas sur github.com</b><span class="tx">Par défaut l'extension ne tourne que là. Azure DevOps et les instances auto-hébergées demandent une autorisation à accorder dans les réglages, et un marquage disant de quelle plateforme il s'agit.</span></li>
+            <li><span class="mk n">·</span><b>La page a changé sous elle</b><span class="tx">Quand le balisage de la plateforme bouge, l'extension éteint la zone concernée plutôt que d'écrire dans un élément qu'elle a peut-être mal identifié. Les réglages gardent le journal des cinquante dernières fois — nom de la règle et horodatage, jamais de contenu.</span></li>
+            <li><span class="mk n">·</span><b>Le mode est <code>off</code></b><span class="tx">Votre organisation ou votre dépôt peut l'éteindre complètement.</span></li>
+          </ul>
+        </section>
+
+        <section class="dsec">
+          <h2>Bandeau « configuration non lue »</h2>
+          <p>L'extension n'a pas pu récupérer <code>.conventional-comments.json</code>&nbsp;: elle assiste sans connaître vos règles et ne bloque jamais un envoi. C'est tout l'intérêt&nbsp;: on ne rejette personne au nom d'une règle qu'on n'a pas su lire.</p>
+          <div class="callout">
+            <span class="ct">ce que ça ne veut pas dire</span>
+            <p style="margin:0">Un dépôt <strong>sans aucun fichier de configuration</strong> est un cas nominal, pas une dégradation — vous avez les valeurs du produit et aucun bandeau. Le bandeau signifie qu'il y avait quelque chose à lire et que la lecture a échoué. Sur un dépôt public, ou privé avec une session ouverte, il ne devrait pas apparaître&nbsp;; déconnecté, il dit quelque chose de vrai.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>« Configuration décalée par rapport au serveur »</h2>
+          <p>L'extension et le serveur publient chacun une empreinte de la configuration qu'ils appliquent. Quand elles diffèrent, l'extension <strong>cesse de bloquer les envois</strong> et le signale.</p>
+          <p>C'est normalement passager&nbsp;: un durcissement se propage, et une pull request déjà ouverte est jugée sur la configuration épinglée lors de sa première évaluation. Si ça dure, les deux composants tournent sur des versions différentes de la bibliothèque partagée — le levier pour ça est <code>coreMinVersion</code>, pas l'empreinte.</p>
+        </section>
+
+        <section class="dsec">
+          <h2><code>/rebase</code> se fait refuser</h2>
+          <p>C'est attendu, et c'est la surprise la plus fréquente après une montée de version. Les commandes slash étaient exemptées par une liste intégrée&nbsp;; cette liste a disparu et <code>toolCommands</code> est vide par défaut.</p>
+          <div class="code"><span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>]</div>
+          <p><code>"/*"</code> rétablit la reconnaissance de toutes les commandes slash. Les handles de robots se déclarent exactement, un par un — la comparaison porte sur le premier jeton entier, donc <code>@codex review</code> est une commande et <code>@codexplique pourquoi</code> n'en est pas une.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Les commentaires d'un robot font échouer la vérification</h2>
+          <p>Ajoutez son identifiant à <code>exemptUsers</code>. La comparaison porte sur l'identifiant de la plateforme, sans tenir compte de la casse — jamais sur le nom affiché.</p>
+          <p class="small">Les entrées générées par la plateforme — événements de timeline, mises à jour de branche, notifications système — sont exemptées structurellement et n'ont pas à être listées. De même pour une revue approuvée <strong>sans aucun texte</strong>&nbsp;: un corps vide est toujours exempté, sans quoi le geste le plus ordinaire d'une revue échouerait à chaque approbation, sans correction possible — on n'édite pas la revue d'un tiers.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>La vérification est grise, ni rouge ni verte</h2>
+          <p>Un statut neutre signifie que le serveur n'a pas pu lire l'état courant au-delà de son délai de grâce, et qu'il le dit plutôt que de deviner. Il conserve d'abord son dernier verdict pendant ce délai&nbsp;; le statut ne devient neutre qu'ensuite.</p>
+          <p>Regardez d'abord le jeton de la plateforme — expiré, ou aux portées insuffisantes — puis le secret des webhooks.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Un point bloquant ne peut pas être refermé</h2>
+          <p>Seul l'auteur du commentaire, ou un membre du groupe désigné, peut résoudre un fil bloquant. Si personne ne le peut, c'est que le groupe est vide — et le désigner est une condition du mode strict précisément pour que cette situation n'arrive pas.</p>
+          <p>L'autre issue est une réponse <code>decision</code> disant pourquoi le point ne sera pas traité, en au moins vingt caractères. Elle est inscrite dans le fil, jamais silencieuse.</p>
+        </section>
+        <div class="pager"></div>
+      </div>
+    </div>
+    </div>
+  </main>
+  <main data-page="howitworks" hidden>
+    <div class="loc" data-loc="en">
+    <section class="hband">
+      <div class="in">
+        <div class="stack g18 measure">
+          <span class="eyebrow acc">how it works:</span>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">One half helps you write. The other half checks.</h1>
+          <p class="lede">The extension makes the convention easy — a toolbar, keyboard expansions, feedback as you type. The server, if you deploy one, re-reads the pull request afterwards and publishes a check. This page is what each of them actually does, and why neither replaces the other.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">in the editor:</span>
+          <h2>What the extension puts on the page</h2>
+        </div>
+
+        <div class="feat">
+          <div>
+            <h3>A toolbar, in two rows</h3>
+            <p>Label buttons on the first row, decoration controls on the second. Never mixed, whatever the width — a label and a decoration are two different gestures, and a single wrapping strip eventually puts them side by side as if they were one.</p>
+            <p>Clicking a label <strong>inserts or replaces the prefix</strong> without destroying what you already typed. Click it again to remove it. Hover for the definition and an example.</p>
+          </div>
+          <div>
+            <h3>Keyboard, if you prefer</h3>
+            <p>Type <code>/</code> or <code>:</code> at the start of the box and a filterable list opens: <code>↑</code> <code>↓</code> to move, <code>Enter</code> or <code>Tab</code> to pick, <code>Esc</code> to drop it.</p>
+            <p>Or expand an abbreviation with <code>Tab</code>: <code>?i</code> → <code>issue:</code>, <code>?ib</code> → <code>issue (blocking):</code>. Direct shortcuts too, like <code>Alt+I</code>.</p>
+          </div>
+          <div>
+            <h3>A status dot under the box</h3>
+            <p>Compliant, compliant with warnings, or not compliant. When several things are wrong it lists <strong>all</strong> of them — showing one at a time would just make the next appear after each fix.</p>
+            <p>Validation is debounced at 150&nbsp;ms, and nothing on the page jumps while you type.</p>
+          </div>
+          <div>
+            <h3>Badges on published comments</h3>
+            <p>Labels already posted are rendered as badges, without touching what's stored. A banner at the top of the pull request counts the unresolved blocking threads and links to each one.</p>
+            <p>Its count comes from the server's published summary, so the banner and the check always agree.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">a decision worth knowing:</span>
+          <h2>There is no “publish anyway” button.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">In its strictest mode the extension can stop you sending a malformed comment. It offers no way to override that, and that's deliberate — for two reasons.</p>
+        </div>
+        <div class="duo">
+          <div>
+            <span class="tag" style="color:var(--fg-muted)">first</span>
+            <h3>It would control nothing</h3>
+            <p>A browser extension is disabled in two clicks. A bypass button adds no real capability to anyone determined to bypass — only a ceremony, a reason to type, a log nobody reads, and the illusion of control where there is none.</p>
+          </div>
+          <div>
+            <span class="tag" style="color:var(--accent)">and this one matters more</span>
+            <h3>It would move the justification out of the conversation</h3>
+            <p>“We chose not to address this, for this reason” is a review act, not a technical escape hatch. Its place is a labelled comment in the thread, visible to everyone and kept with the pull request — not an external log.</p>
+          </div>
+        </div>
+        <div class="callout acc">
+          <span class="ct">so what is it, then</span>
+          <h4>A guardrail, not a wall.</h4>
+          <p>It catches the slip of attention, which is the common case. It never pretended to stop the determined person. That's the server's job — and the server doesn't run in anyone's browser.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">and it holds back when it should:</span>
+          <h2>Four conditions before it blocks anything</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Strict mode isn't enough on its own. All four have to hold, or the extension simply shows its diagnostics and lets you publish.</p>
+        </div>
+        <ul class="tick">
+          <li><span class="mk">1</span><b>The strict mode is actually in effect</b><span class="tx">Resolved from your organization's configuration, not assumed.</span></li>
+          <li><span class="mk">2</span><b>The pull request is within scope</b><span class="tx">A repository configured to start counting from a given date doesn't retroactively block older pull requests.</span></li>
+          <li><span class="mk">3</span><b>The extension and the server agree on the rules</b><span class="tx">Each publishes a fingerprint of the configuration it applies. If they differ — a tightening still propagating — the extension stops blocking and says so.</span></li>
+          <li><span class="mk">4</span><b>The rules could actually be read</b><span class="tx">If the configuration file couldn't be fetched, nothing is refused. You don't reject someone in the name of a rule you couldn't read.</span></li>
+        </ul>
+        <p class="small measure">The last three exist for the same reason: never issue a rejection the source of truth wouldn't have issued.</p>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">on the server:</span>
+          <h2>What the check actually measures</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Two things, and only two.</p>
+        </div>
+        <div class="duo">
+          <div>
+            <span class="tag" style="color:var(--fg-muted)">first</span>
+            <h3>Are the comments well formed?</h3>
+            <p>A comment is compliant when it raises no error-level diagnostic. Warnings are counted and shown, never a cause of failure. Most teams leave this one non-blocking.</p>
+          </div>
+          <div>
+            <span class="tag" style="color:var(--accent)">second</span>
+            <h3>Are the blocking points handled?</h3>
+            <p>Every thread whose comment resolves to blocking is resolved. Blocking-ness is sticky: a thread that was blocking stays blocking until it's resolved, or until someone authorised records a <code>decision</code> saying why.</p>
+            <p class="guar">This is the one that stops the merge.</p>
+          </div>
+        </div>
+        <div class="check">
+          <div class="cr">
+            <span class="ic" style="background:var(--pass)"></span>
+            <span class="tx"><b>conventional-comments</b> — all blocking comments resolved<span>Required · merging is allowed</span></span>
+          </div>
+          <div class="mach">cc/1 core=1.0.0 mode=enforce blocking=0 fmt=ok fp=7f3c…a91</div>
+        </div>
+        <p class="small measure">The last line is for machines: which version judged, in which mode, how many blocking points are left, and the fingerprint of the rules applied. It's what lets the extension notice that it and the server are no longer applying the same configuration.</p>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">why they never contradict each other:</span>
+          <h2>Both run the same validation code.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Not “the same rules, kept in sync” — literally the same package, consumed identically on both sides, with no validation rule existing anywhere outside it. A comment the extension accepts is never rejected by the server, and the other way round.</p>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">That library touches no network and no page: everything it can't read itself is handed to it, and everything to be done comes back out as a list of actions. It's also why it can run in your browser — which is what makes the <em>playground</em> possible.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="cta-in">
+        <div class="stack g8">
+          <h2>The extension is enough to start.</h2>
+          <p class="small" style="color:var(--fg-2)">The server is for the day a team decides the convention should hold on its own.</p>
+        </div>
+        <div class="hero-btns">
+          <button class="btn btn-p" data-goto="install">Install the extension</button>
+          <button class="btn btn-s" data-goto="server">Deploy the server</button>
+        </div>
+      </div>
+    </section>
+    </div>
+    <div class="loc" data-loc="fr" hidden>
+    <section class="hband">
+      <div class="in">
+        <div class="stack g18 measure">
+          <span class="eyebrow acc">comment ça marche&nbsp;:</span>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Une moitié vous aide à écrire. L'autre vérifie.</h1>
+          <p class="lede">L'extension rend la convention facile — une barre d'outils, des raccourcis, un retour pendant que vous tapez. Le serveur, si vous en déployez un, relit la pull request après coup et publie une vérification. Voici ce que fait chacun, et pourquoi aucun ne remplace l'autre.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">dans l'éditeur&nbsp;:</span>
+          <h2>Ce que l'extension pose sur la page</h2>
+        </div>
+
+        <div class="feat">
+          <div>
+            <h3>Une barre, sur deux rangées</h3>
+            <p>Les boutons d'étiquettes sur la première, les précisions sur la seconde. Jamais mélangées, quelle que soit la largeur — poser une étiquette et la nuancer sont deux gestes différents, et une rangée unique qui passe à la ligne finit par les présenter côte à côte comme s'ils n'en faisaient qu'un.</p>
+            <p>Cliquer une étiquette <strong>insère ou remplace le préfixe</strong> sans détruire ce que vous avez déjà écrit. Recliquer l'enlève. Au survol, la définition et un exemple.</p>
+          </div>
+          <div>
+            <h3>Au clavier, si vous préférez</h3>
+            <p>Tapez <code>/</code> ou <code>:</code> en début de zone et une liste filtrable s'ouvre&nbsp;: <code>↑</code> <code>↓</code> pour naviguer, <code>Entrée</code> ou <code>Tab</code> pour choisir, <code>Échap</code> pour abandonner.</p>
+            <p>Ou dépliez une abréviation avec <code>Tab</code>&nbsp;: <code>?i</code> → <code>issue:</code>, <code>?ib</code> → <code>issue (blocking):</code>. Il existe aussi des raccourcis directs, du genre <code>Alt+I</code>.</p>
+          </div>
+          <div>
+            <h3>Une pastille sous la zone</h3>
+            <p>Conforme, conforme avec avertissements, ou non conforme. Quand plusieurs choses clochent, elle les liste <strong>toutes</strong> — n'en montrer qu'une ferait réapparaître la suivante après chaque correction.</p>
+            <p>La validation attend 150&nbsp;ms après la frappe, et rien ne saute sur la page pendant que vous écrivez.</p>
+          </div>
+          <div>
+            <h3>Des badges sur les commentaires publiés</h3>
+            <p>Les étiquettes déjà postées deviennent des badges, sans rien changer à ce qui est stocké. Un bandeau en tête de pull request compte les points bloquants non résolus et renvoie à chacun.</p>
+            <p>Son décompte vient du résumé publié par le serveur&nbsp;: le bandeau et la vérification comptent donc toujours la même chose.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">une décision qui mérite d'être connue&nbsp;:</span>
+          <h2>Il n'y a pas de bouton « publier quand même ».</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Dans son mode le plus strict, l'extension peut empêcher l'envoi d'un commentaire mal formé. Elle n'offre aucun moyen de passer outre, et c'est délibéré — pour deux raisons.</p>
+        </div>
+        <div class="duo">
+          <div>
+            <span class="tag" style="color:var(--fg-muted)">la première</span>
+            <h3>Il ne contrôlerait rien</h3>
+            <p>Une extension de navigateur se désactive en deux clics. Un bouton de contournement n'ajoute aucune capacité réelle à qui veut passer outre&nbsp;: seulement une cérémonie, un motif à saisir, un journal que personne ne relit, et l'illusion d'un contrôle là où il n'y en a pas.</p>
+          </div>
+          <div>
+            <span class="tag" style="color:var(--accent)">et celle-ci compte plus</span>
+            <h3>Il ferait sortir la justification de la conversation</h3>
+            <p>« On a choisi de ne pas traiter ce point, pour telle raison » est un acte de revue, pas une échappatoire technique. Sa place est un commentaire étiqueté dans le fil, visible de tous et conservé avec la pull request — pas un journal externe.</p>
+          </div>
+        </div>
+        <div class="callout acc">
+          <span class="ct">alors c'est quoi</span>
+          <h4>Un garde-fou, pas un mur.</h4>
+          <p>Il rattrape l'erreur d'inattention, qui est le cas courant. Il n'a jamais prétendu arrêter la personne déterminée. Ça, c'est le rôle du serveur — et le serveur ne tourne dans le navigateur de personne.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">et elle s'abstient quand il le faut&nbsp;:</span>
+          <h2>Quatre conditions avant de bloquer quoi que ce soit</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Le mode strict ne suffit pas à lui seul. Les quatre doivent tenir, sinon l'extension se contente d'afficher ses diagnostics et vous laisse publier.</p>
+        </div>
+        <ul class="tick">
+          <li><span class="mk">1</span><b>Le mode strict est réellement en vigueur</b><span class="tx">Résolu depuis la configuration de votre organisation, jamais supposé.</span></li>
+          <li><span class="mk">2</span><b>La pull request est dans le périmètre</b><span class="tx">Un dépôt qui ne compte qu'à partir d'une date donnée ne bloque pas rétroactivement les PR plus anciennes.</span></li>
+          <li><span class="mk">3</span><b>L'extension et le serveur s'accordent sur les règles</b><span class="tx">Chacun publie une empreinte de la configuration qu'il applique. Si elles diffèrent — un durcissement en cours de propagation —, l'extension cesse de bloquer et le signale.</span></li>
+          <li><span class="mk">4</span><b>Les règles ont pu être lues</b><span class="tx">Si le fichier de configuration n'a pas pu être récupéré, rien n'est refusé. On ne rejette personne au nom d'une règle qu'on n'a pas su lire.</span></li>
+        </ul>
+        <p class="small measure">Les trois dernières ont la même raison d'être&nbsp;: ne jamais prononcer un rejet que la source de vérité n'aurait pas prononcé.</p>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">sur le serveur&nbsp;:</span>
+          <h2>Ce que la vérification mesure vraiment</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Deux choses, et seulement deux.</p>
+        </div>
+        <div class="duo">
+          <div>
+            <span class="tag" style="color:var(--fg-muted)">la première</span>
+            <h3>Les commentaires sont-ils bien formés&nbsp;?</h3>
+            <p>Un commentaire est conforme s'il ne lève aucun diagnostic de niveau erreur. Les avertissements sont comptés et affichés, jamais une cause d'échec. La plupart des équipes laissent ce critère non bloquant.</p>
+          </div>
+          <div>
+            <span class="tag" style="color:var(--accent)">la seconde</span>
+            <h3>Les points bloquants sont-ils traités&nbsp;?</h3>
+            <p>Toute conversation dont le commentaire se résout en bloquant est résolue. Le caractère bloquant est tenace&nbsp;: une conversation qui bloquait continue de bloquer jusqu'à sa résolution, ou jusqu'à ce qu'une personne habilitée acte une <code>decision</code> en disant pourquoi.</p>
+            <p class="guar">C'est celle-là qui empêche la fusion.</p>
+          </div>
+        </div>
+        <div class="check">
+          <div class="cr">
+            <span class="ic" style="background:var(--pass)"></span>
+            <span class="tx"><b>conventional-comments</b> — tous les points bloquants sont résolus<span>Requise · la fusion est autorisée</span></span>
+          </div>
+          <div class="mach">cc/1 core=1.0.0 mode=enforce blocking=0 fmt=ok fp=7f3c…a91</div>
+        </div>
+        <p class="small measure">La dernière ligne est pour les machines&nbsp;: quelle version a jugé, dans quel mode, combien de points bloquants restent, et l'empreinte des règles appliquées. C'est elle qui permet à l'extension de s'apercevoir qu'elle et le serveur n'appliquent plus la même configuration.</p>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">pourquoi ils ne se contredisent jamais&nbsp;:</span>
+          <h2>Les deux exécutent le même code de validation.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Pas « les mêmes règles, tenues synchronisées » — littéralement le même paquet, consommé à l'identique des deux côtés, sans qu'aucune règle de validation existe ailleurs. Un commentaire accepté par l'extension n'est jamais refusé par le serveur, et réciproquement.</p>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Cette bibliothèque ne touche ni au réseau ni à la page&nbsp;: tout ce qu'elle ne peut pas lire elle-même lui est fourni, et tout ce qu'il y a à faire ressort sous forme de liste d'actions. C'est aussi pour ça qu'elle peut tourner dans votre navigateur — et que le <em>playground</em> est possible.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="cta-in">
+        <div class="stack g8">
+          <h2>L'extension suffit pour commencer.</h2>
+          <p class="small" style="color:var(--fg-2)">Le serveur, c'est pour le jour où une équipe décide que la convention doit tenir toute seule.</p>
+        </div>
+        <div class="hero-btns">
+          <button class="btn btn-p" data-goto="install">Installer l'extension</button>
+          <button class="btn btn-s" data-goto="server">Déployer le serveur</button>
+        </div>
+      </div>
+    </section>
+    </div>
+  </main>
+  <main data-page="privacy" hidden>
+    <div class="loc" data-loc="en">
+    <section class="hband">
+      <div class="in">
+        <div class="stack g18 measure">
+          <span class="eyebrow acc">privacy:</span>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">What you write in a review goes nowhere.</h1>
+          <p class="lede">A review comment is often more sensitive than the code — it says what you think of someone's work. <strong>The extension does not collect, store on a remote server, or transmit any code, comment or diff content.</strong> This page says exactly what lives where.</p>
+        </div>
+        <div class="callout">
+          <span class="ct">scope</span>
+          <p style="margin:0">What follows covers the <strong>browser extension</strong>, the part distributed through the stores. The <strong>server</strong> is a separate, optional component, hosted and operated by your organization: it has its own persistence, described further down.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">the extension, line by line:</span>
+          <h2>What lives where</h2>
+        </div>
+        <div class="scroller">
+          <table class="t wide">
+            <thead><tr><th>Data</th><th>Where it lives</th><th>Does it leave the browser?</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Your comments, the code, the diffs</strong></td>
+                <td class="d">In the page, in the platform's own editor.</td>
+                <td><span class="st ok"><span class="dot"></span>never</span></td>
+              </tr>
+              <tr>
+                <td>Interface language and direct shortcuts</td>
+                <td class="d"><code>chrome.storage.sync</code></td>
+                <td><span class="st fb"><span class="dot"></span>synced</span><span class="why">By your browser's own sync, if you have it on — not by any server of ours. Those two preferences, nothing else.</span></td>
+              </tr>
+              <tr>
+                <td>Your login, and those of the comment authors on screen</td>
+                <td class="d">Tab memory, read from the page.</td>
+                <td><span class="st ok"><span class="dot"></span>no</span><span class="why">Neither written nor sent. Gone when the tab closes.</span></td>
+              </tr>
+              <tr>
+                <td>The displayed repository's configuration</td>
+                <td class="d">Fetched from the file with your session cookies; kept in memory per tab.</td>
+                <td><span class="st ok"><span class="dot"></span>no</span><span class="why">It's a read, on an address your session already allows — as if you opened it yourself.</span></td>
+              </tr>
+              <tr>
+                <td>Optional domains you granted</td>
+                <td class="d">Held by the browser, not by the extension.</td>
+                <td><span class="st ok"><span class="dot"></span>no</span></td>
+              </tr>
+              <tr>
+                <td>Local log of unrecognised page elements</td>
+                <td class="d">The last 50, on your device: rule name and timestamp, never content.</td>
+                <td><span class="st ok"><span class="dot"></span>no</span><span class="why">It's the diagnostic tool, readable from the options page.</span></td>
+              </tr>
+              <tr>
+                <td>Usage telemetry</td>
+                <td class="d">Nothing is emitted by default.</td>
+                <td><span class="st fb"><span class="dot"></span>only if you allow it</span><span class="why">See below: three conditions have to hold.</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small measure">The extension stores <strong>no authentication token and no secret</strong>. It authenticates against no API: everything it reads outside the page goes through an address your browsing session already allows.</p>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">telemetry:</span>
+          <h2>Three conditions, not a checkbox</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Nothing leaves until all three hold. Miss one, and the extension emits nothing.</p>
+        </div>
+        <ul class="tick">
+          <li><span class="mk">1</span><b>Your organization enabled it in its browser policy</b><span class="tx">Pushed by the browser itself, out of reach of any repository. A repository cannot switch telemetry on for you.</span></li>
+          <li><span class="mk">2</span><b>It declared an <code>https:</code> collection address</b><span class="tx">Its own. There is no default address, and none points anywhere near the extension's authors.</span></li>
+          <li><span class="mk">3</span><b>You ticked the box, on this device</b><span class="tx">The box shows the address, and your consent covers only that one. It stays local and <strong>does not sync</strong>. Unticking it disarms open tabs immediately.</span></li>
+        </ul>
+        <div class="callout acc">
+          <span class="ct">and if all three hold</span>
+          <h4>What leaves is an aggregate, never text.</h4>
+          <p>The repository on screen, the configuration mode, and counters: labels used, diagnostic codes, degraded selector rules. <strong>No free text</strong> — a value that isn't of the expected shape is dropped rather than sent. The request carries neither cookie nor referrer, so the review page's address doesn't travel with it. A check measures that in a real browser on every run.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">the server:</span>
+          <h2>If your organization deploys one, your organization is the controller</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">It isn't required to use the extension. When deployed, it runs on your organization's own infrastructure — never on a third-party service — and persists what it needs:</p>
+        </div>
+        <ul class="bul measure">
+          <li>The <strong>pull request exemption log</strong>: identifier, action, who asked, timestamp, and <strong>a free-text reason if they typed one</strong> — so it may contain personal information.</li>
+          <li><strong>Evaluation records</strong> per pull request, including a <strong>short excerpt</strong> — up to ~80 characters — of the root comment of each unresolved blocking thread, with its author's identifier.</li>
+          <li><strong>Aggregate counters</strong> per repository and per pull request, independent of the extension's telemetry setting: they are two separate mechanisms.</li>
+          <li>Current <strong>operational state</strong> needed for it to work.</li>
+        </ul>
+        <div class="callout blk">
+          <span class="ct">don't misread this</span>
+          <h4>That list illustrates the categories. It is not exhaustive, and isn't meant to be.</h4>
+          <p>This component's code evolves, and an organization that deploys it is the <strong>data controller</strong> under GDPR or its local equivalent. It — not this page — has to provide the privacy policy that applies to its instance, with its own purpose and retention. Exemption log retention is configurable; it defaults to twelve months.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">what the extension does not do:</span>
+          <h2>Four things, stated in the negative</h2>
+        </div>
+        <ul class="bul measure">
+          <li>It sends <strong>no comment, code or diff content</strong> to any third party or to its authors.</li>
+          <li>It runs <strong>no remote code</strong>: its security policy forbids any script not shipped inside it, and no dependency is loaded from a CDN.</li>
+          <li>It neither sells nor shares any data for advertising.</li>
+          <li>It does not track your browsing outside the review pages of supported platforms.</li>
+        </ul>
+        <p class="small measure">The code is public and auditable under Apache-2.0. The permission-by-permission justification lives in the repository, and this page stands as the privacy policy for the stores.</p>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="cta-in">
+        <div class="stack g8">
+          <h2>None of this asks you to take our word for it.</h2>
+          <p class="small" style="color:var(--fg-2)">It's all verifiable in the code, and the published bundle is checked on every release.</p>
+        </div>
+        <div class="hero-btns">
+          <button class="btn btn-p" data-goto="install">Install the extension</button>
+          <button class="btn btn-s" data-goto="howitworks">How it works</button>
+        </div>
+      </div>
+    </section>
+    </div>
+    <div class="loc" data-loc="fr" hidden>
+    <section class="hband">
+      <div class="in">
+        <div class="stack g18 measure">
+          <span class="eyebrow acc">confidentialité&nbsp;:</span>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Ce que vous écrivez en revue ne part nulle part.</h1>
+          <p class="lede">Un commentaire de revue est souvent plus sensible que le code&nbsp;: il dit ce qu'on pense du travail de quelqu'un. <strong>L'extension ne collecte, ne stocke sur un serveur distant, ni ne transmet aucun contenu de code, de commentaire ou de diff.</strong> Cette page dit exactement ce qui vit où.</p>
+        </div>
+        <div class="callout">
+          <span class="ct">périmètre</span>
+          <p style="margin:0">Ce qui suit couvre l'<strong>extension navigateur</strong>, celle qui est distribuée sur les stores. Le <strong>serveur</strong> est un composant distinct, optionnel, hébergé et exploité par votre organisation&nbsp;: il a sa propre surface de persistance, décrite plus bas.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">l'extension, ligne par ligne&nbsp;:</span>
+          <h2>Ce qui vit où</h2>
+        </div>
+        <div class="scroller">
+          <table class="t wide">
+            <thead><tr><th>Donnée</th><th>Où elle vit</th><th>Sort du navigateur&nbsp;?</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Le contenu de vos commentaires, du code, des diffs</strong></td>
+                <td class="d">Dans la page, dans l'éditeur natif de la plateforme.</td>
+                <td><span class="st ok"><span class="dot"></span>jamais</span></td>
+              </tr>
+              <tr>
+                <td>Langue d'interface et raccourcis directs</td>
+                <td class="d"><code>chrome.storage.sync</code></td>
+                <td><span class="st fb"><span class="dot"></span>synchronisé</span><span class="why">Par le mécanisme natif de votre navigateur, si vous l'avez activé — pas par un serveur de l'extension. Ces deux préférences, rien d'autre.</span></td>
+              </tr>
+              <tr>
+                <td>Votre identifiant, et ceux des auteurs des commentaires affichés</td>
+                <td class="d">Mémoire vive de l'onglet, lus dans la page.</td>
+                <td><span class="st ok"><span class="dot"></span>non</span><span class="why">Ni écrits, ni envoyés. Ils disparaissent à la fermeture de l'onglet.</span></td>
+              </tr>
+              <tr>
+                <td>La configuration du dépôt affiché</td>
+                <td class="d">Lue par une requête vers le fichier, avec vos cookies de session ; gardée en mémoire par onglet.</td>
+                <td><span class="st ok"><span class="dot"></span>non</span><span class="why">C'est une lecture, sur une adresse que votre session autorise déjà — comme si vous l'ouvriez vous-même.</span></td>
+              </tr>
+              <tr>
+                <td>Domaines optionnels que vous avez autorisés</td>
+                <td class="d">Tenus par le navigateur, pas par l'extension.</td>
+                <td><span class="st ok"><span class="dot"></span>non</span></td>
+              </tr>
+              <tr>
+                <td>Journal local des éléments non reconnus</td>
+                <td class="d">Les 50 derniers, sur votre appareil&nbsp;: nom de la règle et horodatage, jamais de contenu.</td>
+                <td><span class="st ok"><span class="dot"></span>non</span><span class="why">C'est l'outil de diagnostic, consultable dans les options.</span></td>
+              </tr>
+              <tr>
+                <td>Télémétrie d'usage</td>
+                <td class="d">Rien n'est émis par défaut.</td>
+                <td><span class="st fb"><span class="dot"></span>seulement si vous l'autorisez</span><span class="why">Voir ci-dessous&nbsp;: trois conditions doivent être réunies.</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small measure">L'extension ne stocke <strong>aucun jeton d'authentification ni secret</strong>. Elle ne s'authentifie auprès d'aucune API&nbsp;: tout ce qu'elle lit hors de la page passe par une adresse que votre session de navigation autorise déjà.</p>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">télémétrie&nbsp;:</span>
+          <h2>Trois conditions, pas une case à cocher</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Rien ne part tant que les trois ne sont pas réunies. Un seul manquant, et l'extension n'émet rien.</p>
+        </div>
+        <ul class="tick">
+          <li><span class="mk">1</span><b>Votre organisation l'a activée dans sa politique navigateur</b><span class="tx">Poussée par le navigateur lui-même, hors de portée de tout dépôt. Un dépôt ne peut pas s'activer de la télémétrie.</span></li>
+          <li><span class="mk">2</span><b>Elle a déclaré une adresse de collecte en <code>https:</code></b><span class="tx">La sienne. Il n'y a pas d'adresse par défaut, et aucune ne pointe vers l'éditeur de l'extension.</span></li>
+          <li><span class="mk">3</span><b>Vous avez coché la case, sur cet appareil</b><span class="tx">La case affiche l'adresse, et votre accord ne vaut que pour celle-là. Le consentement reste local et <strong>ne se synchronise pas</strong>. Le décocher désarme immédiatement les onglets ouverts.</span></li>
+        </ul>
+        <div class="callout acc">
+          <span class="ct">et si les trois sont réunies</span>
+          <h4>Ce qui part est un agrégat, jamais du texte.</h4>
+          <p>Le dépôt affiché, le mode de la configuration, et des compteurs&nbsp;: étiquettes employées, codes de diagnostic, règles de sélection dégradées. <strong>Aucun texte libre</strong> — une valeur qui n'a pas la forme attendue est abandonnée plutôt qu'envoyée. La requête ne joint ni cookie ni référent, donc l'adresse de la page de revue ne part pas avec elle. Un contrôle le mesure dans un vrai navigateur à chaque exécution.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">le serveur&nbsp;:</span>
+          <h2>Si votre organisation en déploie un, c'est elle le responsable</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Il n'est pas requis pour utiliser l'extension. S'il est déployé, il tourne sur l'infrastructure de votre organisation — jamais sur un service tiers — et y persiste ce dont il a besoin&nbsp;:</p>
+        </div>
+        <ul class="bul measure">
+          <li>Le <strong>journal des exemptions de pull request</strong>&nbsp;: identifiant, action, personne à l'origine, horodatage, et <strong>un motif en texte libre si elle en saisit un</strong> — donc susceptible de contenir des informations personnelles.</li>
+          <li>Des <strong>enregistrements d'évaluation</strong> par PR, qui incluent un <strong>court extrait</strong> — jusqu'à ~80 caractères — du commentaire racine de chaque point bloquant non résolu, avec l'identifiant de son auteur.</li>
+          <li>Des <strong>compteurs agrégés</strong> par dépôt et par PR, indépendants du réglage de télémétrie de l'extension&nbsp;: ce sont deux mécanismes distincts.</li>
+          <li>Un <strong>état opérationnel</strong> courant, nécessaire à son fonctionnement.</li>
+        </ul>
+        <div class="callout blk">
+          <span class="ct">à ne pas se tromper</span>
+          <h4>Cette liste illustre les catégories. Elle n'est pas exhaustive et n'a pas vocation à l'être.</h4>
+          <p>Le code de ce composant évolue, et une organisation qui le déploie en est l'<strong>opérateur au sens du RGPD</strong>. C'est à elle — pas à cette page — de fournir la politique de confidentialité applicable à son instance, avec sa propre destination et sa propre durée de conservation. La rétention du journal d'exemptions est réglable&nbsp;; elle vaut douze mois par défaut.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">ce que l'extension ne fait pas&nbsp;:</span>
+          <h2>Quatre choses, dites au négatif</h2>
+        </div>
+        <ul class="bul measure">
+          <li>Elle n'envoie <strong>aucun contenu</strong> de commentaire, de code ou de diff à un service tiers ni à ses auteurs.</li>
+          <li>Elle ne fait tourner <strong>aucun code distant</strong>&nbsp;: sa politique de sécurité interdit tout script non empaqueté, et aucune dépendance n'est chargée depuis un CDN.</li>
+          <li>Elle ne vend ni ne partage aucune donnée à des fins publicitaires.</li>
+          <li>Elle ne suit pas votre navigation en dehors des pages de revue des plateformes prises en charge.</li>
+        </ul>
+        <p class="small measure">Le code est public et auditable, sous licence Apache-2.0. La justification permission par permission est dans le dépôt, et cette page fait foi comme politique de confidentialité pour les stores.</p>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="cta-in">
+        <div class="stack g8">
+          <h2>Rien de tout cela ne demande de nous faire confiance.</h2>
+          <p class="small" style="color:var(--fg-2)">Tout est vérifiable dans le code, et le paquet publié est contrôlé à chaque version.</p>
+        </div>
+        <div class="hero-btns">
+          <button class="btn btn-p" data-goto="install">Installer l'extension</button>
+          <button class="btn btn-s" data-goto="howitworks">Comment ça marche</button>
+        </div>
+      </div>
+    </section>
+    </div>
+  </main>
+
   <!-- ================= PIED ================= -->
   <footer class="sfooter">
     <p class="ind"><span class="loc" data-loc="en">Independent tooling. The specification lives on <a href="https://conventionalcomments.org/">conventionalcomments.org</a>; this site does not speak for it.</span><span class="loc" data-loc="fr" hidden>Outillage indépendant. La spécification vit sur <a href="https://conventionalcomments.org/">conventionalcomments.org</a>&nbsp;; ce site ne parle pas en son nom.</span></p>
-    <p class="meta"><span>Apache-2.0</span><span>Reefact</span><span>github.com/reefact/conventional-comments-toolkit</span><span>/schema/v1.json</span><span>EN / FR</span></p>
+    <p class="meta"><button class="navlink" data-goto="privacy" style="font-size:11.5px"><span class="loc" data-loc="en">privacy</span><span class="loc" data-loc="fr" hidden>confidentialité</span></button><span>Apache-2.0</span><span>Reefact</span><span>github.com/reefact/conventional-comments-toolkit</span><span>/schema/v1.json</span><span>EN / FR</span></p>
   </footer>
 </div>
 
 <script>
 (function () {
   var ROUTES = {
-    home:      { en: '/',                fr: '/fr/' },
-    platforms: { en: '/platforms/',      fr: '/fr/plateformes/' },
-    labels:    { en: '/docs/labels/',    fr: '/fr/docs/labels/' },
-    adoption:  { en: '/docs/adoption/',  fr: '/fr/docs/adoption/' }
+    home:            { en: '/',                     fr: '/fr/' },
+    howitworks:      { en: '/how-it-works/',        fr: '/fr/comment-ca-marche/' },
+    platforms:       { en: '/platforms/',           fr: '/fr/plateformes/' },
+    privacy:         { en: '/privacy/',             fr: '/fr/confidentialite/' },
+    docsindex:       { en: '/docs/',                fr: '/fr/docs/' },
+    install:         { en: '/docs/install/',        fr: '/fr/docs/installation/' },
+    labels:          { en: '/docs/labels/',         fr: '/fr/docs/labels/' },
+    configure:       { en: '/docs/configure/',      fr: '/fr/docs/configuration/' },
+    adoption:        { en: '/docs/adoption/',       fr: '/fr/docs/adoption/' },
+    server:          { en: '/docs/server/',         fr: '/fr/docs/serveur/' },
+    troubleshooting: { en: '/docs/troubleshooting/',fr: '/fr/docs/diagnostic/' }
   };
+  var DOCS = ['docsindex','install','labels','configure','adoption','server','troubleshooting'];
   var pages = document.querySelectorAll('[data-page]');
   var path  = document.getElementById('url-path');
   var alt   = document.getElementById('url-alt');
@@ -1788,7 +3251,7 @@ arrive au T4 et ce handler disparaît avec elle.</div>
     });
     document.querySelectorAll('.snav .navlink').forEach(function (b) {
       var t = b.getAttribute('data-goto');
-      if (t === page || (page === 'adoption' && t === 'labels')) b.setAttribute('aria-current', 'page');
+      if (t === page || (t === 'docsindex' && DOCS.indexOf(page) >= 0)) b.setAttribute('aria-current', 'page');
       else b.removeAttribute('aria-current');
     });
     if (scroll) frame.scrollIntoView({ block: 'start', behavior: 'smooth' });

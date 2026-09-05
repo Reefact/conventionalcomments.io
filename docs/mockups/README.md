@@ -1,17 +1,24 @@
 # Maquettes
 
-`pages.html` — quatre pages complètes du site, **en anglais et en français**, dans un
-seul fichier autonome :
+`pages.html` — **le site complet**, onze pages en anglais et en français, dans un seul
+fichier autonome :
 
 | Route maquettée | Ce qu'elle éprouve |
 | --- | --- |
-| `/` | Le récit d'accueil, humain d'abord : le ton qui ne s'écrit pas, les quatre malentendus, l'effort demandé au relecteur, la proportion visible — l'outil n'arrive qu'en sixième section |
+| `/` | Le récit d'accueil, humain d'abord : le ton qui ne s'écrit pas, les quatre malentendus, l'effort demandé au relecteur — l'outil n'arrive qu'en sixième section |
+| `/how-it-works/` | Les deux moitiés : la barre à deux rangées, la saisie rapide, l'absence assumée de bouton de contournement, les quatre conditions du blocage, les deux critères |
 | `/platforms/` | La disponibilité, et rien d'autre : ce qui marche, ce qui est à venir, ce qu'il faut pour démarrer |
-| `/docs/labels/` | La densité de référence : 13 labels, décorations, table de précédence, 15 codes de diagnostic |
+| `/privacy/` | Ce qui vit où, les trois conditions de la télémétrie, et le fait que l'organisation qui déploie le serveur en est l'opérateur |
+| `/docs/` | Trois parcours nommés — j'essaie, je configure, je déploie — plutôt qu'une liste de liens |
+| `/docs/install/` | Store, zip de release, sources ; et l'avertissement qu'un zip ne se met jamais à jour |
+| `/docs/labels/` | La densité de référence : 13 étiquettes, précisions, règle de précédence, 15 diagnostics |
+| `/docs/configure/` | Le plus petit fichier utile, les trois niveaux, les clés qui comptent, et le piège `toolCommands` |
 | `/docs/adoption/` | La page opérationnelle : séquence, prérequis, retour arrière, indicateurs |
+| `/docs/server/` | Docker, persistance, stockage, variables, et déclarer la vérification obligatoire |
+| `/docs/troubleshooting/` | Sept symptômes, leur cause, et s'il y a quelque chose à faire |
 
-La navigation d'en-tête, la barre latérale de documentation, les liens de pagination et le
-**sélecteur EN / FR** sont actifs. Le sélecteur conserve la page courante ; la barre
+La marque, la navigation d'en-tête, la barre latérale de documentation, les cartes de
+parcours, les liens de pagination et le **sélecteur EN / FR** sont actifs. Le sélecteur conserve la page courante ; la barre
 d'adresse suit la route traduite et affiche l'alternat `hreflang` de l'autre langue.
 
 ## Statut
@@ -45,8 +52,10 @@ npx http-server docs/mockups -o /pages.html
   [`conventional-comments-toolkit`](https://github.com/Reefact/conventional-comments-toolkit).
   Une valeur qui change là-bas est fausse ici.
 - **Trois blocs sont des composants, pas des sections** : le badge de label (`.pill`), le
-  verdict (`.verdict`), et le check de conformité (`.check`). Ils réapparaissent sur les
-  quatre pages et doivent devenir des composants Astro avant tout le reste.
+  verdict (`.verdict`), et la vérification (`.check`). Ils réapparaissent partout et doivent
+  devenir des composants Astro avant tout le reste. **La barre latérale de documentation
+  est générée** dans la maquette (sept entrées × deux langues × sept pages) : la recopier à
+  la main en Astro serait la première source de liens morts.
 - **Le cadre de maquette** (`.mock-note`, `.frame`, `.urlbar`) et le script de navigation
   en pied de fichier ne se portent pas : ils simulent le navigateur et le routeur.
 
