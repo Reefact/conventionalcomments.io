@@ -11,30 +11,52 @@ Ce document est la version opposable ; l'artifact est la version regardable.
 ## 1. Positionnement
 
 Le site est la vitrine de [`Reefact/conventional-comments-toolkit`](https://github.com/Reefact/conventional-comments-toolkit).
-Il s'adresse en priorité au **tech lead** qui doit décider si Conventional Comments
-devient une contrainte tenue dans son organisation — pas au développeur curieux, qui
-arrive par l'extension et repart avec.
+Il vise le **tech lead** qui décide pour son équipe — mais l'argument qui le convainc n'est
+pas celui qu'on croit.
 
-**La tension à porter, pas à lisser.** Le produit est asymétrique et son README le dit
-sans détour : l'extension *assiste* et se contourne **par construction** ; le compagnon
-serveur *tranche* et publie un check obligatoire. C'est cette asymétrie qui distingue le
-toolkit d'un énième linter de commentaires. Le site doit l'exposer, pas la simplifier en
-« un outil qui aide à écrire de meilleurs commentaires ».
+**Le sujet est humain avant d'être procédural.** Ce qui abîme une revue de code, ce n'est
+pas l'absence de format : c'est que *le ton ne s'écrit pas*. « Ce nom de variable ne veut
+rien dire » n'a pas d'intonation, pas de visage, pas de haussement d'épaules. Lu un
+vendredi soir après deux jours sur la PR, ça s'entend comme un reproche. Quatre
+malentendus reviennent sans cesse, et aucun ne vient d'un désaccord technique :
+
+> « Il m'engueule ? » · « Je dois le faire, ou pas ? » · « Je suis si mauvais que ça ? » ·
+> « Je n'ose plus rien dire. »
+
+**Ce que la convention règle.** Elle ne demande pas d'arrondir ses phrases. Elle demande
+d'écrire devant chaque commentaire le mot qui dit à quel titre on le dit. D'où la formule
+qui tient lieu de thèse au site :
+
+> **L'étiquette ne change pas ce que vous dites. Elle dit comment le lire.**
+
+**Le point qu'on ne voit pas tout de suite, et qui mérite sa propre section.** L'effort est
+demandé au **relecteur**, pas à celui qui reçoit. Écrire `nitpick:` devant sa propre
+remarque, c'est admettre soi-même que c'est un détail : le relecteur se désarme avant
+d'être lu. Écrire `praise:` demande de s'arrêter trois secondes sur ce qui va bien, ce que
+personne ne fait spontanément. C'est pour ça que la convention adoucit les revues **sans
+les édulcorer** — et c'est l'argument le plus fort du site.
 
 **Phrase d'accueil.**
 
-> « Ce commentaire bloque la PR, ou pas ? »
-> *Personne ne devrait avoir à le deviner. Conventional Comments place une étiquette devant
-> chaque commentaire de revue, pour qu'il dise ce qu'il attend. Ce toolkit fait en sorte
-> qu'elle soit vraiment suivie.*
+> « C'est une remarque, ou un reproche ? »
+> *En revue de code, le ton ne s'écrit pas. La même phrase peut être un coup de main ou une
+> pique, selon l'humeur de celui qui la lit. Conventional Comments règle ça d'une façon
+> presque bête : chaque commentaire dit d'abord ce qu'il est.*
 
-Version anglaise : *“Does this comment block the merge, or not?”*
+Version anglaise : *“Is that feedback, or a dig?”*
 
-**Pourquoi pas « la convention ne tient pas toute seule ».** C'était la première version, et
-elle ouvrait sur la thèse du produit. Elle suppose qu'on sait déjà ce qu'est la convention,
-ce qu'est un commentaire bloquant, et pourquoi ça devrait « tenir » — autrement dit, elle
-parle à quelqu'un qui a lu la spécification. La phrase retenue part de l'expérience du
-lecteur, pas de l'argumentaire du produit.
+**Deux versions écartées, et pourquoi.**
+
+| Version | Ce qui n'allait pas |
+| --- | --- |
+| « La convention ne tient pas toute seule. » | Ouvre sur la thèse du produit. Suppose qu'on sait déjà ce qu'est la convention. Parle à quelqu'un qui a lu la spécification. |
+| « Ce commentaire bloque la PR, ou pas ? » | Correcte et compréhensible, mais procédurale : elle réduit le sujet à une question de fusion. Le lecteur n'a pas mal parce qu'une PR est bloquée ; il a mal parce qu'il croit qu'on lui en veut. |
+
+**L'asymétrie extension / serveur reste vraie, mais elle n'est plus la thèse.** Elle arrive
+en sixième section, sous un titre qui dit à quoi elle sert : *une bonne habitude s'oublie
+en trois jours*. Le serveur y est présenté comme **un pense-bête qui ne se fatigue pas**,
+jamais comme une police — l'accueil doit donner envie d'essayer la convention, pas peur de
+l'outil.
 
 ### 1.1 Filiation `.org` / `.io`
 
@@ -233,7 +255,20 @@ commercial. Trois arbitrages, à appliquer aux deux langues.
 
 ---
 
-### 7.1 Écrire pour quelqu'un qui ne connaît pas
+### 7.1 Parler de la revue, pas du pipeline
+
+Le sujet du site est une relation entre deux personnes. Le vocabulaire suit : on parle de
+ce que l'auteur **entend**, pas de ce que le validateur **calcule**. « Ce que l'auteur
+entend » plutôt que « verdict ». « Un point important ne se perd pas » plutôt que
+« critère 2 ». Le vocabulaire de contrainte — obligatoire, refusé, bloqué — n'apparaît
+qu'à partir de la section adoption, et toujours après avoir dit que c'est un choix
+d'équipe.
+
+Corollaire : **ne jamais donner de leçon de savoir-vivre.** Le site ne dit pas d'être
+bienveillant, ne suggère pas d'émojis, ne recommande pas de commencer par un compliment.
+Il montre la même phrase avec et sans étiquette, et laisse le lecteur constater.
+
+### 7.2 Écrire pour quelqu'un qui ne connaît pas
 
 Le premier écran ne suppose jamais la convention connue. Trois règles, tirées d'un ratage
 réel de la première maquette :
@@ -248,7 +283,7 @@ réel de la première maquette :
   « compagnon serveur », « décoration », « zone » : chacun se dit d'abord en français
   courant, et ne prend son nom exact qu'en page de référence.
 
-### 7.2 Le français s'écrit, il ne se traduit pas
+### 7.3 Le français s'écrit, il ne se traduit pas
 
 La version française de la première maquette était un mot-à-mot, et ça se voyait :
 « l'extension assiste dans l'éditeur » (assiste **quoi** ?), « publie un statut
