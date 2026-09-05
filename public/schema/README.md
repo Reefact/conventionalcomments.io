@@ -7,6 +7,26 @@ par défaut pour configurer
 Servi tel quel par Astro à **`https://conventionalcomments.io/schema/v1.json`** — tout ce
 qui est dans `public/` est copié à la racine du site.
 
+## Statut : provisoire
+
+**Ce fichier est un bouche-trou.** La cible est de le produire depuis le dépôt du toolkit
+au moment du build, pas de le maintenir à la main ici. Il existe pour trois raisons :
+donner tout de suite l'assistance dans l'éditeur, fixer l'URL publique avant que des dépôts
+ne commencent à s'y référer, et servir de cible de comparaison au script de contrôle.
+
+Ne l'éditez pas en comptant que ça survive. Une clé qui manque se corrige **dans le
+toolkit**, et se répercute ici.
+
+Deux façons de faire la bascule, quand elle viendra :
+
+| Approche | Ce que ça implique |
+| --- | --- |
+| Le toolkit publie le schéma | Il devient un artefact de release, le site le récupère à la version épinglée. C'est le plus propre : le dépôt qui détient la vérité détient aussi le fichier. |
+| Le site le génère au build | Le toolkit est un submodule ou une dépendance npm, un script émet le JSON depuis `schema.ts`. Demande de rendre `schema.ts` déclaratif, ou d'y ajouter une table décrivant chaque clé. |
+
+Dans les deux cas, `scripts/check-schema.mjs` reste utile — il devient la vérification que
+la génération n'a rien perdu.
+
 ## À quoi ça sert
 
 Un dépôt met cette URL en première ligne de sa configuration :
