@@ -1,0 +1,342 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://conventionalcomments.io/schema/v1.json",
+  "title": "Conventional Comments Toolkit — repository configuration",
+  "description": "Schema for .conventional-comments.json, read from a repository's default branch by conventional-comments-toolkit. Transcribed from packages/core/src/config/schema.ts; the validator in that file remains authoritative. Unknown keys are ignored with a warning at runtime — this schema flags them so you see them while editing.",
+  "type": "object",
+  "additionalProperties": false,
+
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "URL of this schema. Editors use it for completion and validation.",
+      "default": "https://conventionalcomments.io/schema/v1.json"
+    },
+
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1,
+      "default": 1,
+      "description": "Configuration schema version. A document declaring a version above the one a component supports is not applied: the component falls back to assist mode, or to the floor if the floor is stricter. Highest version supported today: 1."
+    },
+
+    "mode": {
+      "enum": ["off", "assist", "warn", "enforce"],
+      "default": "assist",
+      "description": "off — nothing happens. assist — the extension helps and diagnoses, the server publishes nothing. warn — same for the reviewer, but the server publishes a status that never fails, whose summary shows non-compliance. enforce — the check can fail and, if declared required, blocks the merge. Read the adoption guide before going past warn: enforce has five prerequisites."
+    },
+
+    "formatSeverity": {
+      "enum": ["warn", "error"],
+      "default": "warn",
+      "description": "Whether comment format compliance (criterion 1) can fail the check. With \"warn\", a badly formed comment is reported but never blocks; only unresolved blocking threads do."
+    },
+
+    "labels": {
+      "type": "array",
+      "description": "Per-label overrides. Only the keys you list are overridden; every other label keeps its product default. Thirteen labels exist; ten are enabled by default.",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Label identifier, always in English — it is a grammar token, not translatable text.",
+            "examples": [
+              "praise", "nitpick", "suggestion", "issue", "todo", "question",
+              "thought", "chore", "note", "decision", "typo", "polish", "quibble"
+            ]
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether the label may be used in this repository. typo, polish and quibble ship disabled."
+          },
+          "blockingByDefault": {
+            "type": "boolean",
+            "description": "Whether a comment carrying this label blocks when no decoration forces otherwise. True by default for issue, todo and chore."
+          },
+          "alwaysNonBlocking": {
+            "type": "boolean",
+            "description": "Whether the label can never block. A (blocking) decoration on such a label raises E-CONFLICT, and the verdict falls back to blockingByDefault."
+          },
+          "icon": {
+            "type": "string",
+            "description": "Emoji shown on the badge. Purely cosmetic: excluded from the configuration fingerprint, so it can never make two components disagree."
+          },
+          "color": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$",
+            "description": "Badge border colour, as #rrggbb. It only ever touches border-color, never a background at rest — so the applicable contrast criterion is WCAG 2.1 SC 1.4.11 (3:1 for a UI component boundary), not the 4.5:1 required of text. Cosmetic, and excluded from the fingerprint."
+          },
+          "aliases": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Alternative spellings accepted for this label, rewritten to the canonical form with a one-click fix."
+          }
+        }
+      }
+    },
+
+    "decorations": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The words allowed in parentheses after a label.",
+      "properties": {
+        "allowFree": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether decorations outside the known list are accepted. They are rendered and counted, and never affect the verdict. Set false to raise E-UNKNOWN-DECORATION on anything unlisted."
+        },
+        "known": {
+          "type": "array",
+          "description": "Decorations whose effect on the verdict is defined.",
+          "items": {
+            "type": "object",
+            "required": ["id"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "examples": ["blocking", "non-blocking", "if-minor", "security", "test", "ux"]
+              },
+              "forces": {
+                "enum": ["blocking", "non-blocking", null],
+                "default": null,
+                "description": "blocking — the comment blocks. non-blocking — it does not. null — no effect on the verdict; the decoration carries meaning for humans only."
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "severities": {
+      "type": "object",
+      "description": "Re-level or silence individual diagnostics. Errors make a comment non-compliant; warnings are counted and shown, never a cause of failure. Codes not listed here keep their product severity, and an unrecognised code is accepted without complaint.",
+      "additionalProperties": { "$ref": "#/definitions/severity" },
+      "properties": {
+        "E-NO-LABEL":            { "$ref": "#/definitions/severity", "description": "No prefix line at all." },
+        "E-MALFORMED-PREFIX":    { "$ref": "#/definitions/severity", "description": "A prefix that nearly parses, but does not." },
+        "E-UNKNOWN-LABEL":       { "$ref": "#/definitions/severity", "description": "Label not enabled in this repository." },
+        "E-EMPTY-SUBJECT":       { "$ref": "#/definitions/severity", "description": "Label and colon, then nothing." },
+        "E-DECORATION-SYNTAX":   { "$ref": "#/definitions/severity", "description": "Parentheses or separators malformed." },
+        "E-UNKNOWN-DECORATION":  { "$ref": "#/definitions/severity", "description": "Unknown decoration while decorations.allowFree is false." },
+        "E-CONFLICT":            { "$ref": "#/definitions/severity", "description": "Contradictory blocking intent (precedence rules 1 and 2)." },
+        "E-DECISION-SUBJECT":    { "$ref": "#/definitions/severity", "description": "A decision reply shorter than rules.minDecisionSubjectLength." },
+        "W-CASE":                { "$ref": "#/definitions/severity", "description": "Wrong casing. Ships a one-click fix." },
+        "W-DECORATION-STYLE":    { "$ref": "#/definitions/severity", "description": "Spacing or ordering off. Ships a one-click fix." },
+        "W-SUBJECT-TOO-SHORT":   { "$ref": "#/definitions/severity", "description": "Shorter than rules.minSubjectLength. Deliberately a warning at a low threshold." },
+        "W-SUBJECT-TOO-LONG":    { "$ref": "#/definitions/severity", "description": "Longer than rules.maxSubjectLength." },
+        "W-MISSING-DECORATION":  { "$ref": "#/definitions/severity", "description": "suggestion or question written with no decoration — the two labels whose blocking intent cannot be guessed." },
+        "W-NO-DISCUSSION":       { "$ref": "#/definitions/severity", "description": "A blocking comment with no discussion under it." },
+        "W-NOT-BLOCKABLE":       { "$ref": "#/definitions/severity", "description": "A blocking comment in a place that cannot carry that state." }
+      }
+    },
+
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Which parts of a pull request are validated.",
+      "properties": {
+        "validateReplies": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether replies inside a thread are validated. Even when false, a reply whose resolved label is decision is still read — otherwise the release valve would only work in repositories that had opted into validating replies."
+        },
+        "validateReviewSummary": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether a review's overall body is validated. An empty body is exempt regardless: an Approve with no text must never fail."
+        }
+      }
+    },
+
+    "rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Subject length thresholds, in characters.",
+      "properties": {
+        "minSubjectLength": {
+          "type": "integer", "minimum": 0, "default": 5,
+          "description": "Below this, W-SUBJECT-TOO-SHORT. Deliberately a warning and a low threshold: making it blocking pushes people to work around the rule rather than apply it."
+        },
+        "maxSubjectLength": {
+          "type": "integer", "minimum": 0, "default": 120,
+          "description": "Above this, W-SUBJECT-TOO-LONG."
+        },
+        "minDecisionSubjectLength": {
+          "type": "integer", "minimum": 0, "default": 20,
+          "description": "Minimum length of a decision reply, and the only length threshold that applies to it. Below it, E-DECISION-SUBJECT — an error, not a warning: closing a blocking point requires a sentence saying why."
+        }
+      }
+    },
+
+    "exemptUsers": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Authors whose comments are never validated, compared against the platform login, case-insensitively — never the display name.",
+      "examples": [["dependabot[bot]", "github-actions[bot]"]]
+    },
+
+    "allowlistPatterns": {
+      "type": "array",
+      "maxItems": 50,
+      "items": { "type": "string", "maxLength": 256 },
+      "default": [],
+      "description": "Regular expressions matched against the whole trimmed comment body. A match exempts the comment. Beyond the bounds this schema can express (50 patterns, 256 characters), an entry is also rejected at runtime if it is not a valid regular expression, or if it contains a nested quantifier — the shape behind most known ReDoS.",
+      "examples": [["^LGTM$"]]
+    },
+
+    "toolCommands": {
+      "type": "array",
+      "default": [],
+      "description": "Comments addressed to a bot rather than to a human. EMPTY BY DEFAULT: slash commands used to be exempted through a built-in list, and that list is gone — in enforce mode a bare /rebase is now rejected like any other comment until the repository declares it here. Each entry is compared literally, never interpreted as a pattern.",
+      "items": {
+        "oneOf": [
+          { "const": "/*", "description": "Sentinel enabling generic recognition of any slash command at the start of a body." },
+          { "type": "string", "pattern": "^@[A-Za-z0-9_-]+$", "description": "An exact bot handle. Matched on the whole first token, case-insensitively." }
+        ]
+      },
+      "examples": [["/*", "@dependabot", "@renovate", "@coderabbitai"]]
+    },
+
+    "resolverOverrideGroup": {
+      "description": "The group whose members may override a resolution and record a decision. Designating it is a hard prerequisite for enforce: with an empty group both release valves are inert at once, and a blocking point whose author is unavailable holds the pull request with no recourse. Accepts a single group or a list.",
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "examples": ["acme/tech-leads", ["acme/tech-leads", "acme/security"]]
+    },
+
+    "overrideLabel": {
+      "type": "string",
+      "minLength": 1,
+      "default": "cc-override",
+      "description": "Name of the platform label that marks a pull request as exempt."
+    },
+
+    "activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Installation scope.",
+      "properties": {
+        "activatedAt": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "default": null,
+          "description": "ISO 8601 instant from which pull requests are evaluated, or null for no cut-off. Anything Date.parse accepts is taken."
+        }
+      }
+    },
+
+    "configUrl": {
+      "type": ["string", "null"],
+      "default": null,
+      "description": "URL of the organization configuration document. ONLY MEANINGFUL AT ORGANIZATION LEVEL: set in a repository file it is ignored and reported, because the organization URL comes exclusively from the floor channel."
+    },
+
+    "coreMinVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "default": "1.0.0",
+      "description": "Minimum core/ version required to apply this document. A component running an older major does not apply it: it falls back to assist mode, or to the floor if stricter. This — not the configuration fingerprint — is the lever for requiring a core/ version across an organization."
+    },
+
+    "configCacheTtlSeconds": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 3600,
+      "description": "How long a resolved configuration is cached. A relaxation of mode does not wait for this: the organization document is probed separately and invalidates the whole cache as soon as a softer mode is observed."
+    },
+
+    "badgeStyle": {
+      "type": "string",
+      "minLength": 1,
+      "default": "pill",
+      "description": "Badge shape. Two values are styled: \"pill\" and \"flat\". Any other string is accepted but renders unstyled. Cosmetic, and excluded from the configuration fingerprint.",
+      "examples": ["pill", "flat"]
+    },
+
+    "shortcuts": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Keyboard expansions in the comment editor.",
+      "properties": {
+        "abbreviations": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "description": "Maps an abbreviation to the text it expands to. Defaults use as many letters as needed to be unambiguous: ?i, ?ib, ?ni, ?no, ?que, ?qui…",
+          "examples": [{ "?i": "issue: ", "?ib": "issue (blocking): " }]
+        }
+      }
+    },
+
+    "docUrl": {
+      "type": "string",
+      "minLength": 1,
+      "default": "https://conventionalcomments.org/",
+      "description": "Where the check's summary and the extension link for an explanation of the convention."
+    },
+
+    "server": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Server companion tuning. Ignored by the extension.",
+      "properties": {
+        "coalesceWindowSeconds": {
+          "type": "integer", "minimum": 0, "default": 10,
+          "description": "Window over which triggers for the same pull request are merged into one evaluation."
+        },
+        "gracePeriodSeconds": {
+          "type": "integer", "minimum": 0, "default": 900,
+          "description": "How long the server keeps its last verdict when it cannot read the current state, before publishing a neutral grace-expired status."
+        },
+        "reconcileIntervalSeconds": {
+          "type": "integer", "minimum": 0, "default": 900,
+          "description": "How often the server re-checks pull requests on its own. On Azure DevOps this must be 60 or below in enforce mode until an event channel is established, or the server emits a config-warning."
+        },
+        "statusTargetUrl": {
+          "type": ["string", "null"], "default": null,
+          "description": "Where the published status links. Required on platforms that render no status body."
+        }
+      }
+    },
+
+    "exemptionLog": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Where governed exemptions are recorded, so they are auditable rather than silent.",
+      "properties": {
+        "endpoint": { "type": ["string", "null"], "default": null }
+      }
+    },
+
+    "language": {
+      "type": ["string", "null"],
+      "default": null,
+      "description": "Language of descriptions and messages. Anything not starting with fr resolves to en. Label identifiers stay in English regardless — they are grammar tokens, not text.",
+      "examples": ["fr", "en"]
+    },
+
+    "telemetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Disabled by default. No comment, code or diff content is ever sent, whatever this is set to.",
+      "properties": {
+        "enabled": { "type": "boolean", "default": false },
+        "endpoint": { "type": ["string", "null"], "default": null }
+      }
+    }
+  },
+
+  "definitions": {
+    "severity": {
+      "enum": ["off", "warn", "error"],
+      "description": "off — the diagnostic is not raised. warn — reported, never blocking. error — makes the comment non-compliant."
+    }
+  }
+}

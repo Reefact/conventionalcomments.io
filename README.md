@@ -16,6 +16,13 @@ Site statique **Astro**, hébergé sur **Cloudflare**. Bilingue anglais (racine)
 Conception. Aucun code applicatif pour l'instant — l'identité et le découpage en pages
 sont arrêtés, l'implémentation Astro reste à faire.
 
+## Schéma de configuration
+
+`public/schema/v1.json` — servi à `https://conventionalcomments.io/schema/v1.json`, il donne
+l'autocomplétion et la validation dans l'éditeur à tout dépôt qui configure le toolkit.
+Transcrit de `packages/core/src/config/schema.ts`, et tenu en accord avec lui par
+`npm run check:schema -- <chemin-du-toolkit>`. Détails : [`public/schema/README.md`](./public/schema/README.md).
+
 ## Conception
 
 | Document | Contenu |
