@@ -23,11 +23,18 @@ toolkit d'un énième linter de commentaires. Le site doit l'exposer, pas la sim
 
 **Phrase d'accueil.**
 
-> « La convention ne tient pas toute seule. »
-> *Le toolkit l'assiste dans l'éditeur, et la vérifie sur le serveur. Un fil bloquant non
-> résolu empêche la fusion — que l'extension soit installée ou non.*
+> « Ce commentaire bloque la PR, ou pas ? »
+> *Personne ne devrait avoir à le deviner. Conventional Comments place une étiquette devant
+> chaque commentaire de revue, pour qu'il dise ce qu'il attend. Ce toolkit fait en sorte
+> qu'elle soit vraiment suivie.*
 
-Version anglaise : *“A convention doesn't hold on its own.”*
+Version anglaise : *“Does this comment block the merge, or not?”*
+
+**Pourquoi pas « la convention ne tient pas toute seule ».** C'était la première version, et
+elle ouvrait sur la thèse du produit. Elle suppose qu'on sait déjà ce qu'est la convention,
+ce qu'est un commentaire bloquant, et pourquoi ça devrait « tenir » — autrement dit, elle
+parle à quelqu'un qui a lu la spécification. La phrase retenue part de l'expérience du
+lecteur, pas de l'argumentaire du produit.
 
 ### 1.1 Filiation `.org` / `.io`
 
@@ -225,6 +232,35 @@ commercial. Trois arbitrages, à appliquer aux deux langues.
 | « Vos données sont en sécurité. » | « Aucun contenu de commentaire, de code ou de diff ne quitte le navigateur. Les préférences, elles, se synchronisent si Chrome Sync est actif. » | Formule creuse — et le dépôt a déjà corrigé une version trop absolue de cette phrase. |
 
 ---
+
+### 7.1 Écrire pour quelqu'un qui ne connaît pas
+
+Le premier écran ne suppose jamais la convention connue. Trois règles, tirées d'un ratage
+réel de la première maquette :
+
+- **Nommer le sujet avant d'argumenter.** Une page qui ouvre sur « l'extension assiste, le
+  serveur vérifie » décrit les pièces d'une chose qu'elle n'a jamais présentée. Le lecteur
+  ne sait ni ce qu'est Conventional Comments, ni pourquoi il devrait s'en soucier.
+- **Montrer avant de définir.** Un commentaire ambigu, puis le même commentaire étiqueté :
+  personne n'a besoin qu'on lui explique la différence. C'est le rôle du bloc avant/après
+  du premier écran.
+- **Aucun terme de spécification en première lecture.** « fil bloquant », « critère 2 »,
+  « compagnon serveur », « décoration », « zone » : chacun se dit d'abord en français
+  courant, et ne prend son nom exact qu'en page de référence.
+
+### 7.2 Le français s'écrit, il ne se traduit pas
+
+La version française de la première maquette était un mot-à-mot, et ça se voyait :
+« l'extension assiste dans l'éditeur » (assiste **quoi** ?), « publie un statut
+obligatoire » (c'est la *vérification* qui est requise, pas le statut), « compagnon
+serveur » (calque de *server companion*, qui ne veut rien dire).
+
+- **Le vocabulaire est celui de l'interface, pas celui de la spécification.** GitHub dit
+  *conversation* et *vérification* en français — pas « fil » ni « check ».
+- **La phrase française n'a pas le rythme de l'anglaise.** Une subordonnée anglaise devient
+  souvent deux phrases en français. Traduire la structure produit des phrases sans sujet.
+- **On écrit d'abord la langue qui doit convaincre**, puis on écrit l'autre — on ne la
+  traduit pas. Aucune des deux n'est la source.
 
 ## 8. Bilinguisme
 
