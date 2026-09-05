@@ -314,6 +314,20 @@ ul.bul code { font-size:13px; color:var(--fg-2); }
 .why { display:block; margin-top:6px; font-size:12px; line-height:1.45; color:var(--fg-muted); }
 .why code { font-size:11.5px; }
 table.t.wide { min-width:800px; }
+
+/* --- comparaison avant / après (accueil) --- */
+.ba { display:flex; flex-direction:column; border:1px solid var(--line);
+      border-radius:var(--radius); overflow:hidden; background:var(--bg-surface); }
+.ba-row { display:grid; grid-template-columns:58px minmax(0,1fr); gap:14px; padding:17px 18px; align-items:start; }
+.ba-row + .ba-row { border-top:1px solid var(--line); }
+.ba-row.ok { background:var(--bg-code); }
+.ba-tag { font-family:var(--font-mono); font-size:10.5px; letter-spacing:.09em;
+          text-transform:uppercase; color:var(--fg-faint); padding-top:4px; }
+.ba-row.ok .ba-tag { color:var(--pass); }
+.ba-txt { font-size:15px; line-height:1.5; color:var(--fg); }
+.ba-txt.mono { font-family:var(--font-mono); font-size:13.5px; line-height:1.55; }
+.ba-note { margin-top:8px; font-size:12.5px; color:var(--fg-muted); line-height:1.45; }
+.ba-note b { color:var(--fg-2); font-weight:600; }
 </style>
 
 <p class="mock-note">
@@ -343,7 +357,7 @@ table.t.wide { min-width:800px; }
       conventionalcomments<span class="dom">.io</span>
     </span>
     <nav class="snav">
-      <button class="navlink" data-goto="home"><span class="loc" data-loc="en">how&nbsp;it&nbsp;holds:</span><span class="loc" data-loc="fr" hidden>comment&nbsp;ça&nbsp;tient&nbsp;:</span></button>
+      <button class="navlink" data-goto="home"><span class="loc" data-loc="en">how&nbsp;it&nbsp;works:</span><span class="loc" data-loc="fr" hidden>comment&nbsp;ça&nbsp;marche&nbsp;:</span></button>
       <button class="navlink" data-goto="platforms"><span class="loc" data-loc="en">platforms:</span><span class="loc" data-loc="fr" hidden>plateformes&nbsp;:</span></button>
       <button class="navlink" data-goto="labels"><span class="loc" data-loc="en">docs:</span><span class="loc" data-loc="fr" hidden>doc&nbsp;:</span></button>
     </nav>
@@ -363,32 +377,143 @@ table.t.wide { min-width:800px; }
       <div class="in">
         <div class="hero-g">
           <div class="stack g20">
-            <span class="eyebrow acc">enforce:</span>
-            <h1>A convention doesn't hold on its own.</h1>
-            <p class="lede measure">The extension assists in the editor. The server companion re-checks every comment afterwards and publishes a required status. An unresolved blocking thread stops the merge — whether or not the extension is installed.</p>
+            <span class="eyebrow acc">code review:</span>
+            <h1>Does this comment block the merge, or not?</h1>
+            <p class="lede measure">Nobody should have to guess. <strong>Conventional Comments</strong> is a convention that puts a label in front of every review comment, so it says what it expects. This toolkit makes sure the convention is actually followed — while you type, and again before the merge.</p>
             <div class="hero-btns">
               <button class="btn btn-p" data-goto="adoption">Adopt it in your team</button>
               <button class="btn btn-s">Install the extension</button>
             </div>
-            <p class="small">Independent tooling. The specification lives on <a href="https://conventionalcomments.org/">conventionalcomments.org</a>.</p>
+            <p class="small"><a href="#what-is-it">New to this? Start with what the convention is ↓</a></p>
           </div>
 
+          <div class="ba">
+            <div class="ba-row">
+              <span class="ba-tag">without</span>
+              <div>
+                <p class="ba-txt">You could pull this out into its own method.</p>
+                <p class="ba-note">The author guesses. Blocker, or passing thought? They ask, or they guess wrong, or the pull request sits for two days.</p>
+              </div>
+            </div>
+            <div class="ba-row ok">
+              <span class="ba-tag">with</span>
+              <div>
+                <p class="ba-txt mono"><span class="tk-l">suggestion</span> <span class="tk-d">(non-blocking)</span><span class="tk-c">:</span> pull this out into its own method</p>
+                <p class="ba-note"><b>Not a blocker.</b> Everyone knows where they stand — and a machine can read it too.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk" id="what-is-it">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">first things first:</span>
+          <h2>What Conventional Comments is</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">A convention published at <a href="https://conventionalcomments.org/">conventionalcomments.org</a>. It fits in one line: every review comment starts with a label, and optionally a word in parentheses saying whether it blocks.</p>
+        </div>
+
+        <div class="anno" style="max-width:640px">
+          <div class="line"><span class="tk-l">label</span> <span class="tk-d">(decoration)</span><span class="tk-c">:</span> what you want to say</div>
+          <div class="legend">
+            <i style="color:var(--accent)">■ what kind of comment this is</i>
+            <i>■ does it block? optional</i>
+          </div>
+        </div>
+
+        <div class="scroller">
+          <table class="t">
+            <thead><tr><th>Written like this</th><th>The author reads</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="m"><span class="tk-l">praise</span><span class="tk-c">:</span> this test covers the edge case nicely</td>
+                <td class="d">Nothing to do. Somebody noticed.</td>
+              </tr>
+              <tr>
+                <td class="m"><span class="tk-l">question</span><span class="tk-c">:</span> why a 30&nbsp;s timeout here?</td>
+                <td class="d">Answer it. No code change implied.</td>
+              </tr>
+              <tr>
+                <td class="m"><span class="tk-l">suggestion</span> <span class="tk-d">(non-blocking)</span><span class="tk-c">:</span> extract a method</td>
+                <td class="d">Your call. It won't hold up the merge.</td>
+              </tr>
+              <tr>
+                <td class="m"><span class="tk-l">issue</span> <span class="tk-d">(blocking)</span><span class="tk-c">:</span> the session token is never invalidated</td>
+                <td class="d"><strong>Fix this before merging.</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="lede measure">Three seconds of extra typing per comment. In exchange, the author knows what to handle and in what order — and stops reading tone to guess intent.</p>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">the problem:</span>
+          <h2>Conventions are adopted in five minutes and forgotten in three days.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Two weeks in, half the team is back to writing prose. Nothing flags it, so nobody notices — until a pull request stalls again over a comment no one could read.</p>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">A browser extension alone doesn't fix that either. It can stop someone clicking a button. It cannot stop a comment posted through the API, from a CLI, from an IDE, from another browser, or from a laptop that never installed it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">what this toolkit does:</span>
+          <h2>One half helps. The other half decides.</h2>
+        </div>
+
+        <div class="duo">
+          <div>
+            <span class="tag" style="color:var(--fg-muted)">in the browser</span>
+            <h3>An extension</h3>
+            <p>Adds a row of label buttons above the comment box on GitHub. Type <code>?i</code> and it writes <code>issue:</code> for you. It flags a badly formed comment as you write, and offers the fix.</p>
+            <p class="guar">Convenient. <strong style="color:var(--fg)">Anyone can turn it off — that's expected.</strong></p>
+          </div>
+          <div>
+            <span class="tag" style="color:var(--accent)">on your server</span>
+            <h3>A small service you host</h3>
+            <p>Re-reads every comment on the pull request, counts the ones marked blocking that nobody has resolved yet, and posts a <strong>check</strong> on the pull request — the same kind of line GitHub shows for your tests.</p>
+            <p class="guar">Mark that check required, and <strong style="color:var(--fg)">the pull request can't be merged</strong> while one is left.</p>
+          </div>
+        </div>
+
+        <div class="callout acc">
+          <span class="ct">why both</span>
+          <h4>The extension makes the convention easy. The server is what makes it true.</h4>
+          <p>Neither alone is enough: help without verification gets forgotten, and verification without help is just a gate people resent. Both run the exact same validation code, so a comment the extension accepts is never rejected by the server — and the other way round.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="split">
+          <div class="stack g14">
+            <span class="eyebrow">on a real pull request:</span>
+            <h2 style="font-size:24px">It looks like any other check.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">GitHub lists a row of checks at the bottom of every pull request — tests, linters, builds. The toolkit adds one more. Red while a blocking comment is unresolved, green once they're all handled.</p>
+            <p class="small">Handled means one of three things: the reviewer resolved the conversation, the author fixed it and the reviewer agreed, or someone with the authority to do so recorded a <code>decision</code> saying why it won't be addressed. That last one is logged, not silent.</p>
+          </div>
           <div class="stack g10">
-            <span class="eyebrow">on a pull request:</span>
             <div class="check">
               <div class="cr">
                 <span class="ic" style="background:var(--block)"></span>
-                <span class="tx"><b>conventional-comments</b> — 2 blocking threads unresolved<span>Required · merging is blocked</span></span>
+                <span class="tx"><b>conventional-comments</b> — 2 blocking comments unresolved<span>Required · merging is blocked</span></span>
               </div>
-              <div class="mach">cc/1 core=1.0.0 mode=enforce blocking=2 fmt=ok fp=7f3c…a91</div>
             </div>
-            <p class="small" style="padding-left:2px">↓ the author resolves both threads</p>
+            <p class="small" style="padding-left:2px">↓ both get handled</p>
             <div class="check">
               <div class="cr">
                 <span class="ic" style="background:var(--pass)"></span>
-                <span class="tx"><b>conventional-comments</b> — all blocking threads resolved<span>Required · judged in <code style="font-size:11.5px">enforce</code> by core/ 1.0.0</span></span>
+                <span class="tx"><b>conventional-comments</b> — all blocking comments resolved<span>Required · merging is allowed</span></span>
               </div>
-              <div class="mach">cc/1 core=1.0.0 mode=enforce blocking=0 fmt=ok fp=7f3c…a91</div>
             </div>
           </div>
         </div>
@@ -396,149 +521,50 @@ table.t.wide { min-width:800px; }
     </section>
 
     <section class="hband sunk">
-      <div class="in">
-        <div class="stack g14 measure">
-          <span class="eyebrow">the gap:</span>
-          <h2>An extension can stop a click. It cannot stop an API call.</h2>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">A browser extension acts client-side only. It cannot stop a comment published through the REST or GraphQL API, a CLI, an IDE, another browser, or a machine that simply doesn't have it installed. Any tool that pretends otherwise is selling you a habit, not a guarantee.</p>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">So the toolkit ships two components, with responsibilities stated rather than blurred.</p>
-        </div>
-
-        <div class="duo">
-          <div>
-            <span class="tag" style="color:var(--fg-muted)">component A</span>
-            <h3>Browser extension</h3>
-            <p>Authoring assistance and real-time validation while a reviewer writes. A label toolbar, keyboard shortcuts, immediate feedback, and a send guard.</p>
-            <p class="guar">Convenience and prevention. <strong style="color:var(--fg)">Bypassable by construction.</strong></p>
-          </div>
-          <div>
-            <span class="tag" style="color:var(--accent)">component B</span>
-            <h3>Server companion</h3>
-            <p>Re-reads every comment after the fact, computes “blocking threads resolved”, and publishes a required status check — so a pull request can't be completed with an unresolved blocking comment.</p>
-            <p class="guar">Source of truth. <strong style="color:var(--fg)">Not bypassable.</strong></p>
-          </div>
-        </div>
-
-        <div class="callout acc measure" style="max-width:none">
-          <span class="ct">the design rule that ties them</span>
-          <h4>A comment judged compliant by the extension is always judged compliant by the server — and conversely.</h4>
-          <p>Both components consume the same <code>core/</code> package and resolve the same three configuration levels. Parity isn't a promise made in a README; it's what's left when no validation rule exists outside one shared library. When the two do drift — a restrictive change still propagating — the extension notices the fingerprint mismatch, says so, and <em>stops blocking</em>. It never issues a rejection the source of truth wouldn't have issued.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="hband">
-      <div class="in">
-        <div class="stack g14 measure">
-          <span class="eyebrow">what the check actually measures:</span>
-          <h2>Two criteria, and only two.</h2>
-        </div>
-        <div class="duo">
-          <div>
-            <span class="tag" style="color:var(--fg-muted)">criterion 1</span>
-            <h3>Format compliance</h3>
-            <p>Every comment subject to validation parses as <code>label [decorations]: subject</code>. A comment is <strong>compliant</strong> when it produces no <code>error</code>-severity diagnostic. Warnings are counted, reported — and never a cause of failure.</p>
-            <p class="guar">Gates only when <code>formatSeverity: "error"</code>.</p>
-          </div>
-          <div>
-            <span class="tag" style="color:var(--accent)">criterion 2</span>
-            <h3>Blocking threads resolved</h3>
-            <p>Every thread whose comment resolves to blocking is resolved. Blocking-ness is monotonic: a thread that was blocking stays blocking until it's resolved, or until someone with authority records a <code>decision</code>.</p>
-            <p class="guar">This is the criterion that stops the merge.</p>
-          </div>
-        </div>
-        <p class="small measure">Empty review bodies are exempt — an <em>Approve</em> without text would otherwise fail on every approval, with no way to fix it, since you don't edit someone else's review. So are system-generated entries, tool commands, and the authors listed in <code>exemptUsers</code>.</p>
-      </div>
-    </section>
-
-    <section class="hband sunk">
-      <div class="in">
-        <div class="stack g14 measure">
-          <span class="eyebrow">authoring:</span>
-          <h2>What a reviewer actually types</h2>
-          <p class="lede">Three keystrokes, not a form. The extension inserts the label, the badge appears, and the comment is validated as it's written.</p>
-        </div>
-        <div class="split">
-          <div class="stack g12">
-            <div class="anno">
-              <div class="line"><span class="tk-k">?i</span>  <span class="tk-cm">→ expands to:</span>
-<span class="tk-l">issue</span> <span class="tk-d">(blocking, security)</span><span class="tk-c">:</span> the session token is never invalidated
-
-The handler keeps the reference after expiry;
-it has to be dropped from the cache too.</div>
-              <div class="legend">
-                <i style="color:var(--accent)">■ label</i>
-                <i>■ decorations</i>
-                <i style="color:var(--block)">■ the pivot</i>
-                <i>■ subject, then discussion</i>
-              </div>
-            </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-              <span class="pill" style="--lc:var(--l-issue)">🔨 issue</span>
-              <span class="deco b">blocking</span>
-              <span class="deco">security</span>
-              <span class="verdict pass"><span class="dot"></span>compliant</span>
-            </div>
-          </div>
-          <div class="stack g12">
-            <p class="small">Parsed, on both sides, by the same library:</p>
-            <div class="code"><span class="tk-k">{</span>
-  <span class="tk-k">"label"</span>: <span class="tk-v">"issue"</span>,
-  <span class="tk-k">"decorations"</span>: [<span class="tk-v">"blocking"</span>, <span class="tk-v">"security"</span>],
-  <span class="tk-k">"subject"</span>: <span class="tk-v">"the session token is never…"</span>,
-  <span class="tk-k">"discussion"</span>: <span class="tk-v">"The handler keeps the refer…"</span>,
-  <span class="tk-k">"blocking"</span>: <span class="tk-v">true</span>
-<span class="tk-k">}</span></div>
-            <p class="small">A comment stops being prose and becomes a record the pipeline can act on. That's the whole point of the convention — and the reason a status check is possible at all.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="hband">
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">adoption:</span>
-          <h2>You do not switch this on.</h2>
-          <p class="lede">Three modes, in order. Each one is a measurement step before the next becomes defensible.</p>
+          <h2>You don't switch the blocking on day one.</h2>
+          <p class="lede">Three settings, in order. Each one earns the next.</p>
         </div>
         <div class="traj">
           <div class="step" style="--st:var(--fg-faint)">
-            <span class="sn">assist</span><span class="sw">~2 weeks · default</span>
-            <span class="sd">The extension helps and diagnoses. The server publishes nothing at all. Nobody is blocked, nobody is measured.</span>
+            <span class="sn">assist</span><span class="sw">~2 weeks · the default</span>
+            <span class="sd">The extension helps whoever installed it. The server posts nothing. Nobody is blocked, nothing is measured. People get used to the labels.</span>
           </div>
           <div class="step" style="--st:var(--warn)">
-            <span class="sn">warn</span><span class="sw">2–4 weeks · the measurement step</span>
-            <span class="sd">Identical for the reviewer. The server now publishes a status that never fails, whose summary makes non-compliance visible. This is where you get numbers.</span>
+            <span class="sn">warn</span><span class="sw">2–4 weeks · the measuring step</span>
+            <span class="sd">The check appears, but always green. Its summary shows what wouldn't have passed. You finally have a number instead of an impression.</span>
           </div>
           <div class="step" style="--st:var(--block)">
-            <span class="sn">enforce</span><span class="sw">pilot repository first</span>
-            <span class="sd">The check becomes required. Five prerequisites must hold first — including a written rollback procedure with a named owner.</span>
+            <span class="sn">enforce</span><span class="sw">one pilot repository first</span>
+            <span class="sd">The check becomes required and can actually fail. Five conditions have to hold first — including a written way back out, with someone named to do it.</span>
           </div>
         </div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
           <button class="btn btn-p" data-goto="adoption">Read the adoption guide</button>
-          <span class="small">Prerequisites, rollback, and what <code>warn</code> measures.</span>
+          <span class="small">The conditions, the rollback, and what <code>warn</code> measures.</span>
         </div>
       </div>
     </section>
 
-    <section class="hband sunk">
+    <section class="hband">
       <div class="in">
         <div class="split">
           <div class="stack g14">
             <span class="eyebrow">privacy:</span>
-            <h2 style="font-size:24px">No comment, code, or diff content ever leaves your browser.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Parsing and validation run locally, in <code>core/</code>, which performs no I/O. No telemetry by default. No authentication token stored. No <code>&lt;all_urls&gt;</code> permission — domains beyond GitHub are requested on demand, with your explicit confirmation.</p>
-            <p class="small"><strong style="color:var(--fg-2)">The exception, stated:</strong> your own preferences — interface language, direct shortcuts — sync through <code>chrome.storage.sync</code> when Chrome Sync is on. That's settings, never content.</p>
+            <h2 style="font-size:24px">Your code and comments never leave your browser.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The extension reads and checks comments locally — nothing is sent anywhere. No telemetry by default. No login, no token stored. It runs on github.com and nowhere else unless you grant another domain yourself.</p>
+            <p class="small"><strong style="color:var(--fg-2)">The one exception, stated plainly:</strong> your own settings — interface language, shortcuts — sync through your browser's own sync if you have it on. Settings, never content.</p>
           </div>
           <div class="stack g12">
-            <span class="eyebrow">platforms:</span>
+            <span class="eyebrow">where it runs:</span>
             <div class="plat">
               <div><span class="ph">GitHub</span><span class="pl">github.com<br>Enterprise Cloud · EMU<br>Enterprise Server</span></div>
-              <div><span class="ph">Azure DevOps</span><span class="pl">Services<br>Server (self-hosted)<br><span style="color:var(--fg-faint)">two open prerequisites</span></span></div>
-              <div><span class="ph">Browsers</span><span class="pl">Chromium (MV3)<br>Firefox<br>Apache-2.0, no remote code</span></div>
+              <div><span class="ph">Azure DevOps</span><span class="pl">Services<br>Server (self-hosted)<br><span style="color:var(--fg-faint)">with documented limits</span></span></div>
+              <div><span class="ph">Browsers</span><span class="pl">Chrome, Edge, Brave<br>Firefox<br>Open source, Apache-2.0</span></div>
             </div>
+            <button class="btn btn-s" data-goto="platforms" style="align-self:flex-start">See what works where</button>
           </div>
         </div>
       </div>
@@ -547,15 +573,16 @@ it has to be dropped from the cache too.</div>
     <section class="cta-band">
       <div class="cta-in">
         <div class="stack g8">
-          <h2>Start in <code style="font-family:var(--font-mono);font-size:.85em">assist</code>. Decide in <code style="font-family:var(--font-mono);font-size:.85em">warn</code>.</h2>
-          <p class="small" style="color:var(--fg-2)">Nothing is required until you make it required.</p>
+          <h2>Start with the labels. Decide about the gate later.</h2>
+          <p class="small" style="color:var(--fg-2)">Nothing blocks anyone until you decide it should.</p>
         </div>
         <div class="hero-btns">
           <button class="btn btn-p" data-goto="adoption">Adopt it in your team</button>
-          <button class="btn btn-s" data-goto="labels">Browse the labels</button>
+          <button class="btn btn-s" data-goto="labels">See all 13 labels</button>
         </div>
       </div>
     </section>
+
     </div>
     <div class="loc" data-loc="fr" hidden>
 
@@ -563,34 +590,87 @@ it has to be dropped from the cache too.</div>
       <div class="in">
         <div class="hero-g">
           <div class="stack g20">
-            <span class="eyebrow acc">enforce&nbsp;:</span>
-            <h1>La convention ne tient pas toute seule.</h1>
-            <p class="lede measure">L'extension assiste dans l'éditeur. Le compagnon serveur revérifie chaque commentaire après coup et publie un statut obligatoire. Un fil bloquant non résolu empêche la fusion — que l'extension soit installée ou non.</p>
+            <span class="eyebrow acc">revue de code&nbsp;:</span>
+            <h1>Ce commentaire bloque la PR, ou pas&nbsp;?</h1>
+            <p class="lede measure">Personne ne devrait avoir à le deviner. <strong>Conventional Comments</strong> est une convention qui place une étiquette devant chaque commentaire de revue, pour qu'il dise ce qu'il attend. Ce toolkit fait en sorte qu'elle soit vraiment suivie — pendant que vous écrivez, puis une seconde fois avant la fusion.</p>
             <div class="hero-btns">
               <button class="btn btn-p" data-goto="adoption">Adoptez-le dans votre équipe</button>
               <button class="btn btn-s">Installer l'extension</button>
             </div>
-            <p class="small">Outillage indépendant. La spécification vit sur <a href="https://conventionalcomments.org/">conventionalcomments.org</a>.</p>
+            <p class="small"><a href="#what-is-it">Vous ne connaissez pas&nbsp;? Commencez par la convention ↓</a></p>
           </div>
 
-          <div class="stack g10">
-            <span class="eyebrow">sur une pull request&nbsp;:</span>
-            <div class="check">
-              <div class="cr">
-                <span class="ic" style="background:var(--block)"></span>
-                <span class="tx"><b>conventional-comments</b> — 2 fils bloquants non résolus<span>Requis · la fusion est refusée</span></span>
+          <div class="ba">
+            <div class="ba-row">
+              <span class="ba-tag">sans</span>
+              <div>
+                <p class="ba-txt">Tu pourrais sortir ça dans une méthode à part.</p>
+                <p class="ba-note">L'auteur devine. Point bloquant, ou remarque en passant&nbsp;? Il demande, ou il se trompe, ou la PR attend deux jours.</p>
               </div>
-              <div class="mach">cc/1 core=1.0.0 mode=enforce blocking=2 fmt=ok fp=7f3c…a91</div>
             </div>
-            <p class="small" style="padding-left:2px">↓ l'auteur résout les deux fils</p>
-            <div class="check">
-              <div class="cr">
-                <span class="ic" style="background:var(--pass)"></span>
-                <span class="tx"><b>conventional-comments</b> — tous les fils bloquants sont résolus<span>Requis · jugée en <code style="font-size:11.5px">enforce</code> par core/ 1.0.0</span></span>
+            <div class="ba-row ok">
+              <span class="ba-tag">avec</span>
+              <div>
+                <p class="ba-txt mono"><span class="tk-l">suggestion</span> <span class="tk-d">(non-blocking)</span><span class="tk-c">:</span> sortir ça dans une méthode à part</p>
+                <p class="ba-note"><b>Ce n'est pas bloquant.</b> Tout le monde sait à quoi s'en tenir — et une machine sait le lire aussi.</p>
               </div>
-              <div class="mach">cc/1 core=1.0.0 mode=enforce blocking=0 fmt=ok fp=7f3c…a91</div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hband sunk" id="what-is-it">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">d'abord l'essentiel&nbsp;:</span>
+          <h2>Conventional Comments, c'est quoi</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Une convention publiée sur <a href="https://conventionalcomments.org/">conventionalcomments.org</a>. Elle tient en une ligne&nbsp;: chaque commentaire de revue commence par une étiquette, éventuellement suivie d'un mot entre parenthèses qui dit s'il bloque.</p>
+        </div>
+
+        <div class="anno" style="max-width:640px">
+          <div class="line"><span class="tk-l">étiquette</span> <span class="tk-d">(précision)</span><span class="tk-c">:</span> ce que vous avez à dire</div>
+          <div class="legend">
+            <i style="color:var(--accent)">■ de quel genre de commentaire il s'agit</i>
+            <i>■ est-ce que ça bloque&nbsp;? facultatif</i>
+          </div>
+        </div>
+
+        <div class="scroller">
+          <table class="t">
+            <thead><tr><th>Écrit comme ça</th><th>L'auteur comprend</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="m"><span class="tk-l">praise</span><span class="tk-c">:</span> ce test couvre bien le cas limite</td>
+                <td class="d">Rien à faire. Quelqu'un a remarqué.</td>
+              </tr>
+              <tr>
+                <td class="m"><span class="tk-l">question</span><span class="tk-c">:</span> pourquoi un timeout à 30&nbsp;s ici&nbsp;?</td>
+                <td class="d">Répondre. Aucune modification demandée.</td>
+              </tr>
+              <tr>
+                <td class="m"><span class="tk-l">suggestion</span> <span class="tk-d">(non-blocking)</span><span class="tk-c">:</span> extraire une méthode</td>
+                <td class="d">Comme vous voulez. Ça ne retiendra pas la fusion.</td>
+              </tr>
+              <tr>
+                <td class="m"><span class="tk-l">issue</span> <span class="tk-d">(blocking)</span><span class="tk-c">:</span> le jeton de session n'est jamais invalidé</td>
+                <td class="d"><strong>À corriger avant de fusionner.</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="lede measure">Trois secondes de frappe en plus par commentaire. En échange, l'auteur sait quoi traiter et dans quel ordre — au lieu d'interpréter le ton pour deviner l'intention.</p>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">le problème&nbsp;:</span>
+          <h2>Une convention s'adopte en cinq minutes et s'oublie en trois jours.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Au bout de deux semaines, la moitié de l'équipe est revenue à la prose. Rien ne le signale, donc personne ne s'en aperçoit — jusqu'à la prochaine PR qui traîne à cause d'un commentaire que personne n'a su lire.</p>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Une extension de navigateur seule n'y suffit pas non plus. Elle peut empêcher un clic. Elle ne peut rien contre un commentaire posté par l'API, depuis une ligne de commande, depuis un IDE, depuis un autre navigateur, ou depuis un poste où personne ne l'a installée.</p>
         </div>
       </div>
     </section>
@@ -598,148 +678,106 @@ it has to be dropped from the cache too.</div>
     <section class="hband sunk">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">l'écart&nbsp;:</span>
-          <h2>Une extension peut empêcher un clic. Elle ne peut rien contre un appel d'API.</h2>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Une extension de navigateur agit côté client uniquement. Elle ne peut pas empêcher la publication d'un commentaire par l'API REST ou GraphQL, par une CLI, par un IDE, par un autre navigateur, ni depuis un poste qui ne l'a tout simplement pas installée. Tout outil qui prétend le contraire vous vend une habitude, pas une garantie.</p>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Le toolkit livre donc deux composants, avec des responsabilités énoncées plutôt que floutées.</p>
+          <span class="eyebrow">ce que fait cet outil&nbsp;:</span>
+          <h2>Une moitié aide. L'autre tranche.</h2>
         </div>
 
         <div class="duo">
           <div>
-            <span class="tag" style="color:var(--fg-muted)">composant A</span>
-            <h3>Extension navigateur</h3>
-            <p>Assistance à la rédaction et validation en temps réel pendant qu'un relecteur écrit. Barre de labels, raccourcis clavier, retour immédiat, garde à l'envoi.</p>
-            <p class="guar">Confort et prévention. <strong style="color:var(--fg)">Contournable par construction.</strong></p>
+            <span class="tag" style="color:var(--fg-muted)">dans le navigateur</span>
+            <h3>Une extension</h3>
+            <p>Elle ajoute une rangée de boutons d'étiquettes au-dessus du champ de commentaire, sur GitHub. Vous tapez <code>?i</code>, elle écrit <code>issue:</code> à votre place. Elle signale un commentaire mal formé pendant que vous l'écrivez, et propose la correction.</p>
+            <p class="guar">Pratique. <strong style="color:var(--fg)">N'importe qui peut la désactiver — c'est prévu.</strong></p>
           </div>
           <div>
-            <span class="tag" style="color:var(--accent)">composant B</span>
-            <h3>Compagnon serveur</h3>
-            <p>Relit chaque commentaire après coup, calcule « fils bloquants résolus », et publie un check obligatoire — de sorte qu'une pull request ne peut pas être complétée avec un commentaire bloquant non résolu.</p>
-            <p class="guar">Vérité de référence. <strong style="color:var(--fg)">Non contournable.</strong></p>
+            <span class="tag" style="color:var(--accent)">sur votre serveur</span>
+            <h3>Un petit service que vous hébergez</h3>
+            <p>Il relit tous les commentaires de la pull request, compte ceux marqués bloquants que personne n'a encore traités, et publie une <strong>vérification</strong> sur la PR — le même genre de ligne que GitHub affiche pour vos tests.</p>
+            <p class="guar">Déclarez cette vérification obligatoire, et <strong style="color:var(--fg)">la PR ne peut plus être fusionnée</strong> tant qu'il en reste un.</p>
           </div>
         </div>
 
         <div class="callout acc">
-          <span class="ct">la règle de conception qui les lie</span>
-          <h4>Un commentaire jugé conforme par l'extension est toujours jugé conforme par le serveur — et réciproquement.</h4>
-          <p>Les deux composants consomment le même paquet <code>core/</code> et résolvent les mêmes trois niveaux de configuration. La parité n'est pas une promesse de README&nbsp;; c'est ce qui reste quand aucune règle de validation n'existe hors d'une bibliothèque partagée. Quand les deux divergent malgré tout — une modification restrictive encore en cours de propagation —, l'extension constate l'écart d'empreinte, le signale, et <em>cesse de bloquer</em>. Elle ne prononce jamais un rejet que la source de vérité n'aurait pas prononcé.</p>
+          <span class="ct">pourquoi les deux</span>
+          <h4>L'extension rend la convention facile. C'est le serveur qui la rend vraie.</h4>
+          <p>Aucune des deux ne suffit&nbsp;: l'aide sans vérification finit par s'oublier, et la vérification sans aide n'est qu'une barrière qu'on subit. Les deux exécutent exactement le même code de validation&nbsp;: un commentaire accepté par l'extension n'est jamais refusé par le serveur, et réciproquement.</p>
         </div>
       </div>
     </section>
 
     <section class="hband">
       <div class="in">
-        <div class="stack g14 measure">
-          <span class="eyebrow">ce que le check mesure vraiment&nbsp;:</span>
-          <h2>Deux critères, et seulement deux.</h2>
-        </div>
-        <div class="duo">
-          <div>
-            <span class="tag" style="color:var(--fg-muted)">critère 1</span>
-            <h3>Conformité de format</h3>
-            <p>Chaque commentaire soumis à validation se lit <code>label [décorations]: sujet</code>. Un commentaire est <strong>conforme</strong> lorsqu'il ne produit aucun diagnostic de sévérité <code>error</code>. Les avertissements sont comptés et rapportés — jamais une cause d'échec.</p>
-            <p class="guar">Ne bloque que si <code>formatSeverity: "error"</code>.</p>
+        <div class="split">
+          <div class="stack g14">
+            <span class="eyebrow">sur une vraie pull request&nbsp;:</span>
+            <h2 style="font-size:24px">Ça ressemble à n'importe quelle autre vérification.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">GitHub affiche une liste de vérifications en bas de chaque pull request — tests, linters, builds. Le toolkit en ajoute une. Rouge tant qu'un commentaire bloquant n'est pas traité, verte une fois qu'ils le sont tous.</p>
+            <p class="small">Traité veut dire l'une de trois choses&nbsp;: le relecteur a marqué la conversation comme résolue, l'auteur a corrigé et le relecteur a validé, ou une personne habilitée a inscrit une <code>decision</code> expliquant pourquoi le point ne sera pas traité. Cette dernière est tracée, jamais silencieuse.</p>
           </div>
-          <div>
-            <span class="tag" style="color:var(--accent)">critère 2</span>
-            <h3>Fils bloquants résolus</h3>
-            <p>Chaque fil dont le commentaire se résout en bloquant est résolu. Le caractère bloquant est monotone&nbsp;: un fil qui bloquait continue de bloquer jusqu'à sa résolution, ou jusqu'à ce qu'une personne habilitée acte une <code>decision</code>.</p>
-            <p class="guar">C'est ce critère qui empêche la fusion.</p>
+          <div class="stack g10">
+            <div class="check">
+              <div class="cr">
+                <span class="ic" style="background:var(--block)"></span>
+                <span class="tx"><b>conventional-comments</b> — 2 commentaires bloquants non traités<span>Requise · la fusion est refusée</span></span>
+              </div>
+            </div>
+            <p class="small" style="padding-left:2px">↓ les deux sont traités</p>
+            <div class="check">
+              <div class="cr">
+                <span class="ic" style="background:var(--pass)"></span>
+                <span class="tx"><b>conventional-comments</b> — tous les commentaires bloquants sont résolus<span>Requise · la fusion est autorisée</span></span>
+              </div>
+            </div>
           </div>
         </div>
-        <p class="small measure">Les corps de revue vides sont exemptés — sans quoi un <em>Approve</em> sans texte échouerait à chaque approbation, sans correction possible, puisqu'on n'édite pas la revue d'un tiers. Le sont aussi les entrées générées par la plateforme, les commandes outils, et les auteurs listés dans <code>exemptUsers</code>.</p>
       </div>
     </section>
 
     <section class="hband sunk">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">rédaction&nbsp;:</span>
-          <h2>Ce qu'un relecteur tape vraiment</h2>
-          <p class="lede">Trois frappes, pas un formulaire. L'extension insère le label, le badge apparaît, et le commentaire est validé à mesure qu'il s'écrit.</p>
-        </div>
-        <div class="split">
-          <div class="stack g12">
-            <div class="anno">
-              <div class="line"><span class="tk-k">?i</span>  <span class="tk-cm">→ se déplie en :</span>
-<span class="tk-l">issue</span> <span class="tk-d">(blocking, security)</span><span class="tk-c">:</span> le jeton de session n'est jamais invalidé
-
-Le handler garde la référence après expiration ;
-il faut aussi la retirer du cache.</div>
-              <div class="legend">
-                <i style="color:var(--accent)">■ label</i>
-                <i>■ décorations</i>
-                <i style="color:var(--block)">■ le pivot</i>
-                <i>■ sujet, puis discussion</i>
-              </div>
-            </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-              <span class="pill" style="--lc:var(--l-issue)">🔨 issue</span>
-              <span class="deco b">blocking</span>
-              <span class="deco">security</span>
-              <span class="verdict pass"><span class="dot"></span>conforme</span>
-            </div>
-            <p class="small">Le préfixe reste en anglais dans les deux versions du site&nbsp;: <code>issue</code> est un jeton de grammaire, pas du texte. Seules les descriptions et les infobulles sont traduites.</p>
-          </div>
-          <div class="stack g12">
-            <p class="small">Analysé, des deux côtés, par la même bibliothèque&nbsp;:</p>
-            <div class="code"><span class="tk-k">{</span>
-  <span class="tk-k">"label"</span>: <span class="tk-v">"issue"</span>,
-  <span class="tk-k">"decorations"</span>: [<span class="tk-v">"blocking"</span>, <span class="tk-v">"security"</span>],
-  <span class="tk-k">"subject"</span>: <span class="tk-v">"le jeton de session n'est ja…"</span>,
-  <span class="tk-k">"discussion"</span>: <span class="tk-v">"Le handler garde la référen…"</span>,
-  <span class="tk-k">"blocking"</span>: <span class="tk-v">true</span>
-<span class="tk-k">}</span></div>
-            <p class="small">Un commentaire cesse d'être de la prose et devient un enregistrement sur lequel la chaîne peut agir. C'est tout l'objet de la convention — et la raison pour laquelle un statut de conformité est possible.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="hband">
-      <div class="in">
-        <div class="stack g14 measure">
           <span class="eyebrow">adoption&nbsp;:</span>
-          <h2>On n'active pas ça d'un coup.</h2>
-          <p class="lede">Trois modes, dans l'ordre. Chacun est une étape de mesure avant que le suivant devienne défendable.</p>
+          <h2>On n'active pas le blocage le premier jour.</h2>
+          <p class="lede">Trois réglages, dans l'ordre. Chacun justifie le suivant.</p>
         </div>
         <div class="traj">
           <div class="step" style="--st:var(--fg-faint)">
             <span class="sn">assist</span><span class="sw">~2 semaines · par défaut</span>
-            <span class="sd">L'extension aide et diagnostique. Le serveur ne publie rien du tout. Personne n'est bloqué, personne n'est mesuré.</span>
+            <span class="sd">L'extension aide ceux qui l'ont installée. Le serveur ne publie rien. Personne n'est bloqué, rien n'est mesuré. L'équipe s'habitue aux étiquettes.</span>
           </div>
           <div class="step" style="--st:var(--warn)">
             <span class="sn">warn</span><span class="sw">2–4 semaines · l'étape de mesure</span>
-            <span class="sd">Identique côté relecteur. Le serveur publie un statut qui n'échoue jamais, dont le résumé rend la non-conformité visible. C'est ici qu'on obtient des chiffres.</span>
+            <span class="sd">La vérification apparaît, mais toujours verte. Son résumé montre ce qui n'aurait pas passé. Vous avez enfin un chiffre au lieu d'une impression.</span>
           </div>
           <div class="step" style="--st:var(--block)">
-            <span class="sn">enforce</span><span class="sw">dépôt pilote d'abord</span>
-            <span class="sd">Le check devient obligatoire. Cinq prérequis doivent tenir avant — dont une procédure de retour arrière écrite, avec son exécutant désigné.</span>
+            <span class="sn">enforce</span><span class="sw">un dépôt pilote d'abord</span>
+            <span class="sd">La vérification devient obligatoire et peut réellement échouer. Cinq conditions doivent tenir avant — dont une marche arrière écrite, avec quelqu'un de nommé pour l'exécuter.</span>
           </div>
         </div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
           <button class="btn btn-p" data-goto="adoption">Lire le guide d'adoption</button>
-          <span class="small">Prérequis, retour arrière, et ce que <code>warn</code> mesure.</span>
+          <span class="small">Les conditions, la marche arrière, et ce que <code>warn</code> mesure.</span>
         </div>
       </div>
     </section>
 
-    <section class="hband sunk">
+    <section class="hband">
       <div class="in">
         <div class="split">
           <div class="stack g14">
             <span class="eyebrow">confidentialité&nbsp;:</span>
-            <h2 style="font-size:24px">Aucun contenu de commentaire, de code ou de diff ne quitte votre navigateur.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">L'analyse et la validation tournent localement, dans <code>core/</code>, qui ne fait aucune entrée-sortie. Aucune télémétrie par défaut. Aucun token d'authentification stocké. Aucune permission <code>&lt;all_urls&gt;</code> — les domaines au-delà de GitHub sont demandés à la volée, avec votre confirmation explicite.</p>
-            <p class="small"><strong style="color:var(--fg-2)">L'exception, énoncée&nbsp;:</strong> vos propres préférences — langue d'interface, raccourcis directs — se synchronisent via <code>chrome.storage.sync</code> si Chrome&nbsp;Sync est actif. Ce sont des réglages, jamais du contenu.</p>
+            <h2 style="font-size:24px">Votre code et vos commentaires ne quittent jamais votre navigateur.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">L'extension lit et vérifie les commentaires en local — rien n'est envoyé nulle part. Aucune télémétrie par défaut. Aucun compte, aucun jeton stocké. Elle ne tourne que sur github.com, et nulle part ailleurs sans que vous autorisiez vous-même le domaine.</p>
+            <p class="small"><strong style="color:var(--fg-2)">La seule exception, dite franchement&nbsp;:</strong> vos propres réglages — langue d'interface, raccourcis — se synchronisent par la synchronisation de votre navigateur si vous l'avez activée. Des réglages, jamais du contenu.</p>
           </div>
           <div class="stack g12">
-            <span class="eyebrow">plateformes&nbsp;:</span>
+            <span class="eyebrow">où ça tourne&nbsp;:</span>
             <div class="plat">
               <div><span class="ph">GitHub</span><span class="pl">github.com<br>Enterprise Cloud · EMU<br>Enterprise Server</span></div>
-              <div><span class="ph">Azure DevOps</span><span class="pl">Services<br>Server (auto-hébergé)<br><span style="color:var(--fg-faint)">deux prérequis ouverts</span></span></div>
-              <div><span class="ph">Navigateurs</span><span class="pl">Chromium (MV3)<br>Firefox<br>Apache-2.0, aucun code distant</span></div>
+              <div><span class="ph">Azure DevOps</span><span class="pl">Services<br>Server (auto-hébergé)<br><span style="color:var(--fg-faint)">avec des limites documentées</span></span></div>
+              <div><span class="ph">Navigateurs</span><span class="pl">Chrome, Edge, Brave<br>Firefox<br>Open source, Apache-2.0</span></div>
             </div>
+            <button class="btn btn-s" data-goto="platforms" style="align-self:flex-start">Voir ce qui marche où</button>
           </div>
         </div>
       </div>
@@ -748,12 +786,12 @@ il faut aussi la retirer du cache.</div>
     <section class="cta-band">
       <div class="cta-in">
         <div class="stack g8">
-          <h2>Commencez en <code style="font-family:var(--font-mono);font-size:.85em">assist</code>. Décidez en <code style="font-family:var(--font-mono);font-size:.85em">warn</code>.</h2>
-          <p class="small" style="color:var(--fg-2)">Rien n'est obligatoire tant que vous ne l'avez pas rendu obligatoire.</p>
+          <h2>Commencez par les étiquettes. La barrière, vous déciderez plus tard.</h2>
+          <p class="small" style="color:var(--fg-2)">Rien ne bloque personne tant que vous n'avez pas décidé que ça devait bloquer.</p>
         </div>
         <div class="hero-btns">
           <button class="btn btn-p" data-goto="adoption">Adoptez-le dans votre équipe</button>
-          <button class="btn btn-s" data-goto="labels">Parcourir les labels</button>
+          <button class="btn btn-s" data-goto="labels">Voir les 13 étiquettes</button>
         </div>
       </div>
     </section>
@@ -824,7 +862,7 @@ il faut aussi la retirer du cache.</div>
               </tr>
               <tr>
                 <td>Required status check on the pull request</td>
-                <td><span class="st ok"><span class="dot"></span>established</span><span class="why">Check run.</span></td>
+                <td><span class="st ok"><span class="dot"></span>established</span><span class="why">GitHub le fournit nativement.</span></td>
                 <td><span class="st ok"><span class="dot"></span>established</span><span class="why">PR Status, referenced as <code>conventional-comments/compliance</code>.</span></td>
               </tr>
               <tr>
@@ -938,7 +976,7 @@ il faut aussi la retirer du cache.</div>
         <div class="stack g18 measure">
           <span class="eyebrow acc">plateformes&nbsp;:</span>
           <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Là où ça tourne — et là où ça tourne sur un repli.</h1>
-          <p class="lede">Deux plateformes, six éditions, deux navigateurs. Une partie est démontrée. Une autre repose sur une hypothèse qu'on n'a pas pu établir sur une instance réelle et authentifiée — et chacune de celles-là est livrée avec un repli déjà écrit dans le code. Cette page dit laquelle est laquelle.</p>
+          <p class="lede">Deux plateformes, six éditions, deux navigateurs. Une partie a été vérifiée pour de vrai. Le reste repose sur des suppositions qu'on n'a pas pu confirmer sur une instance réelle — chacune ayant sa solution de repli, déjà écrite. Cette page dit ce qui relève de l'une et de l'autre.</p>
         </div>
 
         <div class="plat">
@@ -954,13 +992,13 @@ il faut aussi la retirer du cache.</div>
         <div class="stack g14 measure">
           <span class="eyebrow">la matrice&nbsp;:</span>
           <h2>Capacité par plateforme</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Trois états, et on se sert des trois. Une ligne verte est démontrée. Une ligne ambre signifie que l'hypothèse est ouverte et qu'un repli documenté la porte. Une ligne rouge signifie que la règle ne tourne pas du tout sur cette plateforme.</p>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Trois états, et on se sert des trois. <strong>Vert</strong>&nbsp;: c'est vérifié sur la plateforme. <strong>Ambre</strong>&nbsp;: on n'a pas pu le vérifier, et une solution de repli prend le relais — ça marche, mais autrement. <strong>Rouge</strong>&nbsp;: la règle n'existe pas du tout sur cette plateforme, et il faut le savoir avant de choisir.</p>
         </div>
 
         <div class="legend-row">
-          <span class="st ok"><span class="dot"></span>établi</span>
-          <span class="st fb"><span class="dot"></span>sur repli</span>
-          <span class="st no"><span class="dot"></span>non appliqué</span>
+          <span class="st ok"><span class="dot"></span>vérifié</span>
+          <span class="st fb"><span class="dot"></span>repli en place</span>
+          <span class="st no"><span class="dot"></span>règle inactive</span>
         </div>
 
         <div class="scroller">
@@ -968,53 +1006,53 @@ il faut aussi la retirer du cache.</div>
             <thead><tr><th>Capacité</th><th>GitHub</th><th>Azure DevOps</th></tr></thead>
             <tbody>
               <tr>
-                <td>Barre de labels, raccourcis, insertion du préfixe</td>
-                <td><span class="st ok"><span class="dot"></span>établi</span></td>
-                <td><span class="st fb"><span class="dot"></span>sur repli</span><span class="why">Type d'éditeur non confirmé sur une instance réelle&nbsp;; <code>writeToTextField()</code> couvre aussi bien un textarea qu'un éditeur riche.</span></td>
+                <td>Barre d'étiquettes, raccourcis, insertion automatique</td>
+                <td><span class="st ok"><span class="dot"></span>vérifié</span></td>
+                <td><span class="st fb"><span class="dot"></span>repli en place</span><span class="why">On n'a pas pu confirmer quel éditeur Azure DevOps utilise vraiment. L'extension gère les deux cas possibles.</span></td>
               </tr>
               <tr>
-                <td>Validation en temps réel et garde à l'envoi</td>
-                <td><span class="st ok"><span class="dot"></span>établi</span></td>
-                <td><span class="st ok"><span class="dot"></span>établi</span></td>
+                <td>Vérification pendant la frappe, et blocage de l'envoi</td>
+                <td><span class="st ok"><span class="dot"></span>vérifié</span></td>
+                <td><span class="st ok"><span class="dot"></span>vérifié</span></td>
               </tr>
               <tr>
                 <td>Lecture de <code>.conventional-comments.json</code> dans le dépôt</td>
-                <td><span class="st ok"><span class="dot"></span>établi</span></td>
-                <td><span class="st fb"><span class="dot"></span>sur repli</span><span class="why">Route de lecture non confirmée. Un échec renvoie <code>unreachable</code>&nbsp;: l'extension assiste sans bloquer, et le dit.</span></td>
+                <td><span class="st ok"><span class="dot"></span>vérifié</span></td>
+                <td><span class="st fb"><span class="dot"></span>repli en place</span><span class="why">On n'a pas pu confirmer par quelle adresse lire le fichier. En cas d'échec, l'extension continue d'aider sans rien bloquer, et affiche pourquoi.</span></td>
               </tr>
               <tr>
-                <td>Bloc de suggestion natif compté comme label implicite</td>
-                <td><span class="st ok"><span class="dot"></span>établi</span></td>
-                <td><span class="st fb"><span class="dot"></span>sur repli</span><span class="why">Info string inconnue, donc pas d'étage implicite. Un <code>suggestion:</code> explicite reste accepté.</span></td>
+                <td>Le bloc « suggestion » natif compte comme une étiquette</td>
+                <td><span class="st ok"><span class="dot"></span>vérifié</span></td>
+                <td><span class="st fb"><span class="dot"></span>repli en place</span><span class="why">Le marqueur exact nous est inconnu, donc pas de reconnaissance automatique. Écrire <code>suggestion:</code> à la main marche toujours.</span></td>
               </tr>
               <tr>
-                <td>Statut de conformité obligatoire sur la pull request</td>
-                <td><span class="st ok"><span class="dot"></span>établi</span><span class="why">Check run.</span></td>
-                <td><span class="st ok"><span class="dot"></span>établi</span><span class="why">PR Status, référencé par <code>conventional-comments/compliance</code>.</span></td>
+                <td>La vérification obligatoire sur la pull request</td>
+                <td><span class="st ok"><span class="dot"></span>vérifié</span><span class="why">GitHub le fournit nativement.</span></td>
+                <td><span class="st ok"><span class="dot"></span>vérifié</span><span class="why">PR Status, référencé par <code>conventional-comments/compliance</code>.</span></td>
               </tr>
               <tr>
-                <td>Résolution gouvernée — qui a le droit de résoudre un fil bloquant</td>
-                <td><span class="st ok"><span class="dot"></span>établi</span><span class="why"><code>resolvedBy</code> est exposé.</span></td>
-                <td><span class="st no"><span class="dot"></span>non appliqué</span><span class="why"><code>resolvedBy</code> n'est pas exposé — demande ouverte de longue date. Les résolutions sont acceptées, et chaque évaluation porte <code>resolution-unattributed</code>.</span></td>
+                <td>Qui a le droit de refermer un point bloquant</td>
+                <td><span class="st ok"><span class="dot"></span>vérifié</span><span class="why">GitHub dit qui a refermé quoi.</span></td>
+                <td><span class="st no"><span class="dot"></span>règle inactive</span><span class="why">La plateforme ne dit pas qui a refermé quoi. N'importe qui peut donc refermer n'importe quel point&nbsp;; la vérification le signale à chaque fois.</span></td>
               </tr>
               <tr>
-                <td>Exemption de pull request gouvernée</td>
-                <td><span class="st ok"><span class="dot"></span>établi</span><span class="why">La provenance des étiquettes est disponible.</span></td>
-                <td><span class="st fb"><span class="dot"></span>sur repli</span><span class="why">La provenance n'est pas exposée par l'API documentée. Le chemin du §6.3.2 est implémenté de bout en bout&nbsp;: point d'entrée d'administration, exemption persistée, étiquette posée par le serveur.</span></td>
+                <td>Exempter une pull request, de façon tracée</td>
+                <td><span class="st ok"><span class="dot"></span>vérifié</span><span class="why">On sait qui a posé l'étiquette.</span></td>
+                <td><span class="st fb"><span class="dot"></span>repli en place</span><span class="why">Impossible de savoir qui a posé l'étiquette d'exemption. On passe donc par le serveur, qui la pose lui-même et garde la trace de qui l'a demandée.</span></td>
               </tr>
               <tr>
-                <td>Latence de détection sous 60&nbsp;s</td>
-                <td><span class="st ok"><span class="dot"></span>établi</span><span class="why">Voie événementielle.</span></td>
-                <td><span class="st fb"><span class="dot"></span>sur repli</span><span class="why">Régler <code>reconcileIntervalSeconds</code> à 60 ou moins. Au-delà, en <code>enforce</code>, le serveur émet un <code>config-warning</code>.</span></td>
+                <td>Réaction en moins d'une minute</td>
+                <td><span class="st ok"><span class="dot"></span>vérifié</span><span class="why">GitHub prévient tout de suite.</span></td>
+                <td><span class="st fb"><span class="dot"></span>repli en place</span><span class="why">Le serveur doit repasser voir tout seul au moins une fois par minute. Au-delà, il vous avertit.</span></td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div class="callout blk">
-          <span class="ct">la seule chose qui ne fonctionne pas sur azure devops</span>
-          <h4>L'attribution des résolutions, et donc la règle de gouvernance du §6.1.</h4>
-          <p>La plateforme ne dit pas qui a résolu un fil. La règle voulant que seul l'auteur du commentaire — ou un membre du <code>resolverOverrideGroup</code> — puisse le résoudre n'y est donc pas applicable. Les résolutions sont honorées, et le statut porte <code>resolution-unattributed</code> à chaque évaluation, pour que personne n'ait à le découvrir par un ticket de support. C'est écrit ici parce qu'un responsable qui arbitre entre deux plateformes mérite de le savoir avant d'adopter, pas après.</p>
+          <span class="ct">le seul point qui ne marche pas sur azure devops</span>
+          <h4>On ne peut pas savoir qui a refermé un point bloquant.</h4>
+          <p>Azure DevOps ne dit pas qui a marqué une conversation comme résolue. Impossible, donc, d'appliquer la règle qui réserve ce droit à l'auteur du commentaire ou au groupe habilité&nbsp;: sur cette plateforme, n'importe qui peut refermer n'importe quel point bloquant. Les résolutions sont acceptées quand même, et la vérification le signale à chaque évaluation — pour que personne ne le découvre par un ticket de support. C'est écrit ici parce que si vous arbitrez entre deux plateformes, vous méritez de le savoir avant, pas après.</p>
         </div>
       </div>
     </section>
@@ -1025,8 +1063,8 @@ il faut aussi la retirer du cache.</div>
           <div class="stack g14">
             <span class="eyebrow">permissions&nbsp;:</span>
             <h2 style="font-size:24px">Par défaut, elle tourne sur github.com et nulle part ailleurs.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Aucun <code>&lt;all_urls&gt;</code> dans les permissions requises, et un seul motif de script de contenu. Azure DevOps, une instance GitHub Enterprise Server, un hôte de configuration d'entreprise&nbsp;: chacun est une permission d'hôte <em>optionnelle</em>, demandée à la volée et accordée par vous, puis étiquetée avec sa plateforme sur la page de réglages.</p>
-            <p class="small">Deux permissions requises en tout&nbsp;: <code>storage</code> pour vos propres préférences, et <code>scripting</code>. Aucun token d'authentification n'est stocké. La CSP de l'extension est <code>script-src 'self'</code> — aucun code distant ne peut être chargé, ce que le workflow d'empaquetage vérifie à chaque poussée.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Aucune permission « tous les sites », et un seul domaine déclaré. Azure DevOps, une instance GitHub Enterprise Server, un serveur de configuration interne&nbsp;: chacun demande une autorisation séparée, que le navigateur vous présente et que vous accordez — ou non.</p>
+            <p class="small">Deux permissions en tout&nbsp;: une pour retenir vos préférences, une pour s'insérer dans la page. Aucun identifiant, aucun jeton stocké. L'extension ne peut charger aucun code venu d'ailleurs — c'est verrouillé techniquement, et revérifié à chaque publication.</p>
           </div>
           <div class="stack g10">
             <span class="eyebrow">manifest.json&nbsp;:</span>
@@ -1050,13 +1088,13 @@ il faut aussi la retirer du cache.</div>
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">enterprise server&nbsp;:</span>
-          <h2>Un point ouvert, et un mode de défaillance choisi exprès</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Quelles générations de DOM GitHub Enterprise Server viser reste à arrêter. Les sélecteurs sont écrits en chaînes avec repli, et couverts par un smoke test multi-versions.</p>
+          <h2>Un point encore ouvert, et une panne choisie exprès</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Quelles versions de GitHub Enterprise Server viser exactement reste à décider. En attendant, l'extension essaie plusieurs repères successifs dans la page, et un test couvre plusieurs versions.</p>
         </div>
         <div class="callout acc">
-          <span class="ct">quand un sélecteur cesse de correspondre</span>
-          <h4>L'extension éteint sa propre zone. Elle ne touche jamais à une page qu'elle ne comprend plus.</h4>
-          <p>La dégradation de sélecteur est un comportement voulu, pas un accident&nbsp;: quand le DOM de la plateforme bouge sous elle, la zone concernée se tait et la raison est signalée, plutôt que l'extension n'écrive dans un élément qu'elle a mal identifié. Vous perdez l'assistance sur cette zone. Vous ne perdez jamais l'usage de GitHub — et le compagnon serveur continue de juger, puisqu'il n'a jamais dépendu du DOM.</p>
+          <span class="ct">quand github change sa page</span>
+          <h4>L'extension se met en veille. Elle ne touche jamais à une page qu'elle ne reconnaît plus.</h4>
+          <p>C'est voulu, pas accidentel. Quand GitHub change sa page sous l'extension, celle-ci préfère se taire et le dire, plutôt que d'écrire dans un élément qu'elle a mal identifié. Vous perdez l'assistance à cet endroit-là. Vous ne perdez jamais l'usage de GitHub — et le serveur, lui, continue de vérifier&nbsp;: il n'a jamais eu besoin de la page.</p>
         </div>
       </div>
     </section>
@@ -1069,24 +1107,24 @@ il faut aussi la retirer du cache.</div>
         </div>
         <div class="scroller">
           <table class="t">
-            <thead><tr><th>Contrôle</th><th>Question à laquelle il répond</th><th>Quand</th></tr></thead>
+            <thead><tr><th>Contrôle</th><th>La question qu'il tranche</th><th>Quand</th></tr></thead>
             <tbody>
-              <tr><td class="m">browser&#8209;smoke</td><td class="d">La stratégie d'écriture programmatique tient-elle encore dans un Chromium <em>actuel</em> — la seule chose qu'un DOM simulé ne peut pas nous dire&nbsp;?</td><td class="m d">chaque jour, 04:17&nbsp;UTC</td></tr>
-              <tr><td class="m">mv3&#8209;smoke</td><td class="d">L'extension empaquetée se charge-t-elle vraiment dans un Chromium réel&nbsp;?</td><td class="m d">chaque jour</td></tr>
-              <tr><td class="m">sondes&nbsp;CORS</td><td class="d">Qu'un script de contenu a-t-il le droit de lire, et qu'est-ce qui exige le relais par le service worker&nbsp;?</td><td class="m d">chaque jour</td></tr>
-              <tr><td class="m">extension&#8209;package</td><td class="d">Le bundle reste-t-il exempt de code distant, et les deux manifestes restent-ils chargeables&nbsp;?</td><td class="m d">chaque poussée sur <code>packages/</code></td></tr>
-              <tr><td class="m" style="color:var(--fg-faint)">smoke&nbsp;sélecteurs</td><td class="d"><strong style="color:var(--fg-2)">Pas joué en CI.</strong> Vérifier les sélecteurs contre les <em>vraies</em> plateformes exige des sessions authentifiées. Le harnais existe et sort proprement tant qu'aucune capture de DOM ne lui est fournie — plutôt que d'annoncer une assurance qu'il n'a pas.</td><td class="m d">manuel</td></tr>
+              <tr><td class="m">browser&#8209;smoke</td><td class="d">La façon dont l'extension écrit dans le champ marche-t-elle encore dans un Chrome <em>d'aujourd'hui</em>&nbsp;? C'est la seule chose qu'un test simulé ne peut pas dire.</td><td class="m d">chaque jour, 04:17&nbsp;UTC</td></tr>
+              <tr><td class="m">mv3&#8209;smoke</td><td class="d">L'extension telle qu'elle est publiée se charge-t-elle vraiment dans un navigateur&nbsp;?</td><td class="m d">chaque jour</td></tr>
+              <tr><td class="m">sondes&nbsp;CORS</td><td class="d">Que l'extension a-t-elle vraiment le droit de lire depuis la page, et qu'est-ce qui doit passer par un autre chemin&nbsp;?</td><td class="m d">chaque jour</td></tr>
+              <tr><td class="m">extension&#8209;package</td><td class="d">Le paquet publié reste-t-il exempt de code venu d'ailleurs, et se charge-t-il dans les deux navigateurs&nbsp;?</td><td class="m d">chaque poussée sur <code>packages/</code></td></tr>
+              <tr><td class="m" style="color:var(--fg-faint)">smoke&nbsp;sélecteurs</td><td class="d"><strong style="color:var(--fg-2)">Jamais lancé automatiquement.</strong> Vérifier les repères sur les <em>vraies</em> plateformes demande d'être connecté à un vrai compte. L'outil existe, mais tant qu'on ne lui fournit pas de pages réelles, il se tait au lieu d'annoncer une garantie qu'il n'a pas.</td><td class="m d">manuel</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="small measure">C'est cette dernière ligne, la ligne honnête. Une coche verte sur un test qui n'atteint pas ce qu'il prétend vérifier est pire que pas de test du tout, parce que quelqu'un va la croire.</p>
+        <p class="small measure">C'est la dernière ligne qui compte le plus. Une coche verte sur un test incapable d'atteindre ce qu'il prétend vérifier est pire que pas de test du tout&nbsp;: quelqu'un finira par la croire.</p>
       </div>
     </section>
 
     <section class="cta-band">
       <div class="cta-in">
         <div class="stack g8">
-          <h2>Sur GitHub aujourd'hui. Sur Azure DevOps avec ses replis nommés.</h2>
+          <h2>GitHub aujourd'hui. Azure DevOps, avec ses limites écrites noir sur blanc.</h2>
           <p class="small" style="color:var(--fg-2)">Commencez en <code style="font-family:var(--font-mono);font-size:.9em">assist</code> — rien n'est obligatoire tant que vous ne l'avez pas rendu obligatoire.</p>
         </div>
         <div class="hero-btns">
@@ -1276,7 +1314,7 @@ and this handler is deleted with it.</div>
         </section>
 
         <div class="pager">
-          <button class="pgl" data-goto="home"><span class="dir">← previous</span><span class="ttl">How it holds</span></button>
+          <button class="pgl" data-goto="home"><span class="dir">← previous</span><span class="ttl">How it works</span></button>
           <button class="pgl" data-goto="adoption" style="text-align:right"><span class="dir">next →</span><span class="ttl">Adoption</span></button>
         </div>
       </div>
@@ -1292,7 +1330,7 @@ and this handler is deleted with it.</div>
           <li><button data-goto="labels" aria-current="page">Labels et décorations</button></li>
           <li><button>Configuration</button></li>
           <li><button data-goto="adoption">Adoption</button></li>
-          <li><button>Compagnon serveur</button></li>
+          <li><button>Le serveur</button></li>
           <li><button>Diagnostic</button></li>
         </ul>
         <p class="grp">référence&nbsp;:</p>
@@ -1306,99 +1344,99 @@ and this handler is deleted with it.</div>
         <div class="dhead stack g12">
           <p class="crumb"><b>doc</b> / labels et décorations</p>
           <h1>Labels et décorations</h1>
-          <p class="lede measure">Treize labels, trois décorations connues, et une table de précédence qui décide si un commentaire empêche une fusion. Cette page est la référence pour les trois.</p>
+          <p class="lede measure">Treize étiquettes, trois précisions, et une règle qui décide si un commentaire bloque la fusion. Cette page détaille les trois.</p>
         </div>
 
         <section class="dsec">
-          <h2>La grammaire</h2>
-          <p>Tout commentaire validé commence par une ligne de préfixe. Tout ce qui suit la première ligne vide est de la discussion, et n'est jamais analysé.</p>
+          <h2>Comment un commentaire s'écrit</h2>
+          <p>La première ligne porte l'étiquette. Tout ce qui vient après une ligne vide est de la discussion libre&nbsp;: elle n'est jamais analysée, écrivez-y ce que vous voulez.</p>
           <div class="anno">
             <div class="line"><span class="tk-l">label</span> <span class="tk-d">[décorations]</span><span class="tk-c">:</span> sujet
 
 <span class="tk-k">[discussion]</span></div>
             <div class="legend">
-              <i style="color:var(--accent)">■ label — obligatoire, en minuscules</i>
-              <i>■ décorations — facultatives, séparées par des virgules, entre parenthèses</i>
+              <i style="color:var(--accent)">■ l'étiquette — obligatoire, en minuscules</i>
+              <i>■ les précisions — facultatives, entre parenthèses</i>
               <i style="color:var(--block)">■ le pivot</i>
             </div>
           </div>
           <div class="callout">
             <span class="ct">le deux-points de la grammaire n'est pas celui de la typographie</span>
-            <p style="margin:0">En français, un deux-points de prose prend une espace insécable&nbsp;: <em>« plateformes&nbsp;: »</em>. Celui de la grammaire n'en prend <strong>jamais</strong> — <code>issue: sujet</code> est un jeton, et <code>issue : sujet</code> ne passe pas le parseur. Les identifiants de labels restent d'ailleurs en anglais dans les deux versions du site&nbsp;; seules les descriptions et les infobulles sont traduites.</p>
+            <p style="margin:0">En français, le deux-points de la prose demande une espace avant&nbsp;: <em>« plateformes&nbsp;: »</em>. Celui d'un commentaire n'en veut <strong>jamais</strong>&nbsp;: <code>issue: sujet</code> se lit, <code>issue : sujet</code> ne se lit plus. C'est aussi pourquoi les noms d'étiquettes restent en anglais partout — ce sont des mots-clés, pas du texte à traduire.</p>
           </div>
-          <p class="small">La casse est corrigée plutôt que rejetée&nbsp;: <code>Issue:</code> lève <code>W-CASE</code>, un avertissement livré avec sa correction en un clic.</p>
+          <p class="small">Une majuscule de trop n'est pas une faute grave&nbsp;: <code>Issue:</code> déclenche un simple avertissement, avec un bouton pour corriger.</p>
         </section>
 
         <section class="dsec">
-          <h2>Les treize labels</h2>
-          <p>Dix sont actifs par défaut. Trois — <code>typo</code>, <code>polish</code>, <code>quibble</code> — sont livrés désactivés&nbsp;: ce sont des variantes expressives de <code>todo</code>, <code>suggestion</code> et <code>nitpick</code>, qu'un dépôt active s'il les veut.</p>
+          <h2>Les treize étiquettes</h2>
+          <p>Dix sont actives d'emblée. Trois — <code>typo</code>, <code>polish</code>, <code>quibble</code> — sont livrées éteintes&nbsp;: ce sont des nuances de <code>todo</code>, <code>suggestion</code> et <code>nitpick</code>, à allumer si votre équipe les veut.</p>
           <div class="scroller">
             <table class="t">
               <thead>
-                <tr><th>Label</th><th>Ce qu'il dit</th><th>Bloquant</th><th>Touche</th></tr>
+                <tr><th>Étiquette</th><th>Ce qu'elle veut dire</th><th>Bloque&nbsp;?</th><th>Raccourci</th></tr>
               </thead>
               <tbody>
-                <tr><td class="m"><span class="pill" style="--lc:var(--l-praise)">🎉 praise</span></td><td class="d">Souligne un point positif.</td><td class="m d">par décoration</td><td class="m">?pr</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-praise)">🎉 praise</span></td><td class="d">Souligne un point positif.</td><td class="m d">selon la précision</td><td class="m">?pr</td></tr>
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-nitpick)">🔍 nitpick</span></td><td class="d">Préférence triviale, sans enjeu réel.</td><td class="m"><span class="deco nb">jamais</span></td><td class="m">?ni</td></tr>
-                <tr><td class="m"><span class="pill" style="--lc:var(--l-suggestion)">💡 suggestion</span></td><td class="d">Proposition d'amélioration argumentée.</td><td class="m d">par décoration</td><td class="m">?su</td></tr>
-                <tr><td class="m"><span class="pill" style="--lc:var(--l-issue)">🔨 issue</span></td><td class="d">Problème identifié. Idéalement accompagné d'une suggestion.</td><td class="m"><span class="deco b">par défaut</span></td><td class="m">?i · ?ib</td></tr>
-                <tr><td class="m"><span class="pill" style="--lc:var(--l-todo)">📌 todo</span></td><td class="d">Changement petit mais nécessaire.</td><td class="m"><span class="deco b">par défaut</span></td><td class="m">?to</td></tr>
-                <tr><td class="m"><span class="pill" style="--lc:var(--l-question)">❓ question</span></td><td class="d">Demande de clarification sur un point incertain.</td><td class="m d">par décoration</td><td class="m">?que</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-suggestion)">💡 suggestion</span></td><td class="d">Proposition d'amélioration argumentée.</td><td class="m d">selon la précision</td><td class="m">?su</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-issue)">🔨 issue</span></td><td class="d">Problème identifié. Idéalement accompagné d'une suggestion.</td><td class="m"><span class="deco b">oui</span></td><td class="m">?i · ?ib</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-todo)">📌 todo</span></td><td class="d">Changement petit mais nécessaire.</td><td class="m"><span class="deco b">oui</span></td><td class="m">?to</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-question)">❓ question</span></td><td class="d">Demande de clarification sur un point incertain.</td><td class="m d">selon la précision</td><td class="m">?que</td></tr>
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-thought)">💭 thought</span></td><td class="d">Idée surgie pendant la revue, sans demande d'action.</td><td class="m"><span class="deco nb">jamais</span></td><td class="m">?th</td></tr>
-                <tr><td class="m"><span class="pill" style="--lc:var(--l-chore)">🧹 chore</span></td><td class="d">Tâche annexe à réaliser avant acceptation.</td><td class="m"><span class="deco b">par défaut</span></td><td class="m">?ch</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-chore)">🧹 chore</span></td><td class="d">Tâche annexe à réaliser avant acceptation.</td><td class="m"><span class="deco b">oui</span></td><td class="m">?ch</td></tr>
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-note)">📝 note</span></td><td class="d">Information à porter à connaissance.</td><td class="m"><span class="deco nb">jamais</span></td><td class="m">?no</td></tr>
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-decision)">🏁 decision</span></td><td class="d">Acte le choix de <em>ne pas</em> traiter un point soulevé, en énonçant pourquoi.</td><td class="m"><span class="deco nb">jamais</span></td><td class="m">?de</td></tr>
-                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-typo)">🔤 typo</span></td><td class="d">Faute de frappe.</td><td class="m d">désactivé</td><td class="m">?ty</td></tr>
-                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-polish)">✨ polish</span></td><td class="d">Amélioration de finition.</td><td class="m d">désactivé</td><td class="m">?po</td></tr>
-                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-quibble)">🫶 quibble</span></td><td class="d">Point de détail discutable.</td><td class="m d">désactivé</td><td class="m">?qui</td></tr>
+                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-typo)">🔤 typo</span></td><td class="d">Faute de frappe.</td><td class="m d">éteinte</td><td class="m">?ty</td></tr>
+                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-polish)">✨ polish</span></td><td class="d">Amélioration de finition.</td><td class="m d">éteinte</td><td class="m">?po</td></tr>
+                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-quibble)">🫶 quibble</span></td><td class="d">Point de détail discutable.</td><td class="m d">éteinte</td><td class="m">?qui</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="small">Couleurs et icônes sont cosmétiques par construction&nbsp;: elles sont exclues de l'empreinte de configuration et du plancher d'entreprise, donc elles ne peuvent jamais faire diverger deux verdicts, ni être verrouillées par un administrateur.</p>
+          <p class="small">Couleurs et icônes sont purement décoratives&nbsp;: elles n'entrent dans aucun calcul, donc elles ne peuvent jamais changer un verdict — et aucun administrateur ne peut vous les imposer.</p>
         </section>
 
         <section class="dsec">
-          <h2><code style="font-size:.9em">decision</code> — le label que ce toolkit ajoute</h2>
-          <p><code>decision</code> ne figure pas dans la spécification d'origine. Il existe parce qu'<code>enforce</code> sans soupape est un piège&nbsp;: un fil bloquant dont l'auteur est parti en congé retiendrait une pull request indéfiniment, sans recours.</p>
+          <h2><code style="font-size:.9em">decision</code> — l'étiquette que ce toolkit ajoute</h2>
+          <p>Elle ne figure pas dans la convention d'origine. Elle existe parce que bloquer sans porte de sortie est un piège&nbsp;: si le relecteur qui a posé un point bloquant part en congé, la pull request reste coincée et personne ne peut rien y faire.</p>
           <div class="split">
             <div class="callout">
-              <span class="ct">il est jugé là où rien d'autre ne l'est</span>
-              <h4>Le seul label lu dans une zone non validée</h4>
-              <p>Les réponses de fil ne sont pas validées par défaut (<code>validateReplies: false</code>). Une réponse dont le label résolu est <code>decision</code> est reprise malgré tout — sans quoi la soupape ne fonctionnerait que sur les dépôts ayant déjà choisi de valider les réponses.</p>
+              <span class="ct">elle est lue là où plus rien ne l'est</span>
+              <h4>La seule étiquette vérifiée dans une réponse</h4>
+              <p>Par défaut, les réponses à l'intérieur d'une conversation ne sont pas vérifiées. Une réponse qui commence par <code>decision:</code> l'est quand même — sinon la porte de sortie ne marcherait que dans les dépôts qui vérifient déjà les réponses.</p>
             </div>
             <div class="callout">
-              <span class="ct">et il doit être justifié, au long</span>
-              <h4><code>E-DECISION-SUBJECT</code>, une erreur — pas un avertissement</h4>
-              <p>Une réponse <code>decision</code> doit atteindre <code>minDecisionSubjectLength</code> — 20 caractères par défaut — et c'est le <em>seul</em> seuil de longueur qui lui soit appliqué. Refermer un fil bloquant vous coûte une phrase disant pourquoi. « wontfix » ne passe pas la barre.</p>
+              <span class="ct">et il faut vraiment dire pourquoi</span>
+              <h4>Trop court, c'est une erreur — pas un avertissement</h4>
+              <p>Une <code>decision</code> doit faire au moins 20 caractères, et c'est la <em>seule</em> longueur imposée dans tout le produit. Refermer un point bloquant demande donc une phrase, pas un mot. « wontfix » ne passe pas.</p>
             </div>
           </div>
           <div class="code"><span class="tk-l">decision</span><span class="tk-c">:</span> hors périmètre pour cette PR, dette suivie en PROJ-142
 
 Acté avec l'équipe plateforme le 3 septembre : la réécriture du cache
 arrive au T4 et ce handler disparaît avec elle.</div>
-          <p class="small">Qui peut en acter une est gouverné, pas ouvert&nbsp;: <code>resolverOverrideGroup</code> nomme le groupe dont les membres peuvent passer outre une résolution. Le désigner est un prérequis dur à <code>enforce</code> — un groupe vide rend les deux soupapes inertes en même temps.</p>
+          <p class="small">Tout le monde ne peut pas en écrire une&nbsp;: un groupe désigné à l'avance en a seul le droit. Nommer ce groupe est une condition pour activer le blocage — sans lui, les deux portes de sortie se ferment en même temps.</p>
         </section>
 
         <section class="dsec">
-          <h2>Décorations</h2>
-          <p>Une décoration qualifie un label. Trois sont connues du produit&nbsp;; les décorations libres sont autorisées par défaut et portent du sens pour les humains sans changer le verdict.</p>
+          <h2>Les précisions entre parenthèses</h2>
+          <p>Une précision nuance l'étiquette. Trois d'entre elles changent le verdict. Toutes les autres sont libres&nbsp;: elles parlent aux humains et n'entrent dans aucun calcul.</p>
           <div class="scroller">
             <table class="t">
-              <thead><tr><th>Décoration</th><th>Force</th><th>Sens</th></tr></thead>
+              <thead><tr><th>Précision</th><th>Effet</th><th>Ce que ça veut dire</th></tr></thead>
               <tbody>
                 <tr><td class="m"><span class="deco b">blocking</span></td><td class="m" style="color:var(--block)">bloquant</td><td class="d">Doit être résolu avant que l'objet de la revue ne soit accepté.</td></tr>
                 <tr><td class="m"><span class="deco nb">non-blocking</span></td><td class="m" style="color:var(--pass)">non bloquant</td><td class="d">Ne doit pas empêcher l'acceptation.</td></tr>
                 <tr><td class="m"><span class="deco nb">if-minor</span></td><td class="m" style="color:var(--pass)">non bloquant</td><td class="d">À traiter seulement si le changement s'avère trivial. L'auteur décide.</td></tr>
-                <tr><td class="m"><span class="deco">security</span> <span class="deco">test</span> <span class="deco">ux</span></td><td class="m d">rien</td><td class="d">Décorations libres. Rendues, comptées, indexées — jamais une entrée du verdict. Une organisation définit les siennes.</td></tr>
+                <tr><td class="m"><span class="deco">security</span> <span class="deco">test</span> <span class="deco">ux</span></td><td class="m d">aucun</td><td class="d">Précisions libres. Affichées et comptées, jamais prises en compte dans le verdict. Chaque organisation définit les siennes.</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="small"><code>suggestion</code> et <code>question</code> écrits sans aucune décoration lèvent <code>W-MISSING-DECORATION</code>&nbsp;: ce sont les deux labels dont un lecteur ne peut réellement pas deviner l'intention bloquante.</p>
+          <p class="small"><code>suggestion</code> et <code>question</code> écrits sans aucune précision déclenchent un avertissement&nbsp;: ce sont les deux seules étiquettes dont on ne peut vraiment pas deviner si elles bloquent.</p>
         </section>
 
         <section class="dsec">
-          <h2>Précédence — comment le caractère bloquant se résout</h2>
-          <p>Cinq règles, évaluées dans l'ordre. La première qui correspond décide. Cette table est tout&nbsp;; il n'y a pas d'autre entrée.</p>
+          <h2>Bloquant ou pas&nbsp;: comment ça se décide</h2>
+          <p>Cinq règles, dans l'ordre. La première qui s'applique tranche. Il n'y a rien d'autre&nbsp;: aucune heuristique, aucune exception cachée.</p>
           <div class="scroller">
             <table class="t">
               <thead><tr><th>#</th><th>Condition</th><th>Résultat</th><th>Diagnostic</th></tr></thead>
@@ -1413,13 +1451,13 @@ arrive au T4 et ce handler disparaît avec elle.</div>
           </div>
           <div class="callout">
             <span class="ct">pourquoi un conflit produit quand même un verdict</span>
-            <p style="margin:0">Les règles 1 et 2 lèvent une erreur, mais elles ne refusent pas de répondre. Un commentaire contradictoire se résout quand même — sur le défaut du label — parce que laisser un fil dans un état bloquant indéfini rendrait le critère 2 insoluble, et la pull request non fusionnable pour une raison sur laquelle personne ne peut agir.</p>
+            <p style="margin:0">Les deux premières lignes signalent une erreur, mais elles répondent quand même. Un commentaire qui se contredit reçoit malgré tout un verdict, celui de son étiquette. Sinon la conversation resterait dans un état indéterminé, et la pull request serait bloquée pour une raison sur laquelle personne ne peut agir.</p>
           </div>
         </section>
 
         <section class="dsec">
           <h2>Diagnostics</h2>
-          <p>Quinze codes. Les <strong>erreurs</strong> rendent un commentaire non conforme, et ne bloquent une fusion que si le dépôt règle <code>formatSeverity: "error"</code>. Les <strong>avertissements</strong> sont comptés et affichés, jamais une cause d'échec. N'importe quel code peut être requalifié — ou éteint — par dépôt via <code>severities</code>.</p>
+          <p>Quinze messages possibles. Une <strong>erreur</strong> rend le commentaire non conforme, et ne bloque la fusion que si le dépôt l'a explicitement demandé. Un <strong>avertissement</strong> est compté et affiché, jamais bloquant. Chaque message peut être requalifié, ou éteint, dépôt par dépôt.</p>
           <div class="split">
             <div class="scroller">
               <table class="t">
@@ -1453,13 +1491,13 @@ arrive au T4 et ce handler disparaît avec elle.</div>
           </div>
           <div class="callout acc">
             <span class="ct">calibrage</span>
-            <h4>Un sujet trop court est un avertissement à dessein, et à seuil bas.</h4>
-            <p>Cinq caractères, et jamais une erreur. Un sujet trop court n'est pas un défaut grave, et le rendre bloquant pousse à contourner la règle plutôt qu'à l'appliquer. Une contrainte qui punit les petites choses perd l'argument sur les grandes.</p>
+            <h4>Un sujet trop court reste un simple avertissement, et c'est voulu.</h4>
+            <p>Le seuil est à cinq caractères, et ce ne sera jamais une erreur. Sanctionner ça durement pousserait les gens à contourner la règle au lieu de l'appliquer. Une contrainte qui s'acharne sur les détails perd sa légitimité sur l'essentiel.</p>
           </div>
         </section>
 
         <div class="pager">
-          <button class="pgl" data-goto="home"><span class="dir">← précédent</span><span class="ttl">Comment ça tient</span></button>
+          <button class="pgl" data-goto="home"><span class="dir">← précédent</span><span class="ttl">Comment ça marche</span></button>
           <button class="pgl" data-goto="adoption" style="text-align:right"><span class="dir">suivant →</span><span class="ttl">Adoption</span></button>
         </div>
       </div>
@@ -1601,7 +1639,7 @@ arrive au T4 et ce handler disparaît avec elle.</div>
           <li><button data-goto="labels">Labels et décorations</button></li>
           <li><button>Configuration</button></li>
           <li><button data-goto="adoption" aria-current="page">Adoption</button></li>
-          <li><button>Compagnon serveur</button></li>
+          <li><button>Le serveur</button></li>
           <li><button>Diagnostic</button></li>
         </ul>
         <p class="grp">référence&nbsp;:</p>
@@ -1615,7 +1653,7 @@ arrive au T4 et ce handler disparaît avec elle.</div>
         <div class="dhead stack g12">
           <p class="crumb"><b>doc</b> / adoption</p>
           <h1>Adoption&nbsp;: assist → warn → enforce</h1>
-          <p class="lede measure">Faire de la convention une condition de fusion est une décision d'exploitation, pas un drapeau de configuration. Cette page est la séquence, les prérequis, et la sortie de secours.</p>
+          <p class="lede measure">Transformer la convention en condition de fusion, ça se décide&nbsp;: ça ne se coche pas. Voici dans quel ordre procéder, ce qu'il faut avoir en place avant, et comment revenir en arrière si ça se passe mal.</p>
         </div>
 
         <section class="dsec">
@@ -1628,27 +1666,27 @@ arrive au T4 et ce handler disparaît avec elle.</div>
           </div>
           <div class="scroller">
             <table class="t">
-              <thead><tr><th>Mode</th><th>L'extension</th><th>Le serveur publie</th><th>Effet sur une PR</th></tr></thead>
+              <thead><tr><th>Réglage</th><th>Ce que fait l'extension</th><th>Ce que publie le serveur</th><th>Effet sur une PR</th></tr></thead>
               <tbody>
                 <tr><td class="m">off</td><td class="d">Rien.</td><td class="d">Rien.</td><td class="d">Aucun.</td></tr>
-                <tr><td class="m">assist</td><td class="d">Assiste et diagnostique. Ne bloque jamais.</td><td class="d">Rien.</td><td class="d">Aucun.</td></tr>
-                <tr><td class="m" style="color:var(--warn)">warn</td><td class="d">Identique à <code>assist</code>.</td><td class="d">Un statut qui n'échoue jamais, dont le résumé montre la non-conformité.</td><td class="d">Visible, jamais bloquant.</td></tr>
-                <tr><td class="m" style="color:var(--block)">enforce</td><td class="d">Bloque l'envoi d'un commentaire non conforme.</td><td class="d">Un statut obligatoire qui échoue sur un fil bloquant non résolu.</td><td class="d">Fusion refusée.</td></tr>
+                <tr><td class="m">assist</td><td class="d">Aide à écrire, signale les erreurs. Ne bloque jamais.</td><td class="d">Rien.</td><td class="d">Aucun.</td></tr>
+                <tr><td class="m" style="color:var(--warn)">warn</td><td class="d">Identique à <code>assist</code>.</td><td class="d">Une vérification toujours verte, dont le détail liste ce qui n'allait pas.</td><td class="d">Visible, jamais bloquant.</td></tr>
+                <tr><td class="m" style="color:var(--block)">enforce</td><td class="d">Bloque l'envoi d'un commentaire non conforme.</td><td class="d">Une vérification qui échoue s'il reste un commentaire bloquant non traité.</td><td class="d">Fusion refusée.</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="small"><code>assist</code> et <code>warn</code> sont <em>identiques</em> pour le relecteur. Ce qui les sépare est entièrement côté serveur — et c'est précisément ce qui fait de <code>warn</code> une étape de mesure pure, sans changement du quotidien de quiconque venant fausser les chiffres.</p>
+          <p class="small">Pour la personne qui écrit une revue, <code>assist</code> et <code>warn</code> sont exactement pareils&nbsp;: tout se joue côté serveur. C'est ce qui fait de <code>warn</code> une bonne étape de mesure — rien ne change dans le quotidien de l'équipe, donc rien ne vient fausser les chiffres.</p>
         </section>
 
         <section class="dsec">
           <h2>Prérequis à <code style="font-size:.9em">enforce</code></h2>
           <p>Trois valent partout. Deux s'ajoutent sur Azure DevOps.</p>
           <ul class="tick">
-            <li><span class="mk">1</span><b><code>resolverOverrideGroup</code> est désigné</b><span class="tx">Sans groupe habilité, les deux soupapes sont inertes en même temps — ni <code>decision</code>, ni exemption de PR — et un fil dont l'auteur est indisponible bloque la pull request sans recours. Le serveur émet un <code>config-warning</code> à chaque évaluation d'un dépôt en <code>enforce</code> dont le groupe résolu est vide.</span></li>
+            <li><span class="mk">1</span><b><code>resolverOverrideGroup</code> est désigné</b><span class="tx">Sans ce groupe, les deux portes de sortie sont fermées&nbsp;: ni <code>decision</code>, ni exemption de pull request. Un point bloquant dont l'auteur est absent immobilise alors la PR, sans recours. Le serveur vous avertit à chaque évaluation tant que le groupe est vide.</span></li>
             <li><span class="mk">2</span><b>La procédure de retour arrière est écrite, et son exécutant est désigné</b><span class="tx">Pas « quelqu'un s'en occupera ». Une personne nommée, avec accès au canal de configuration d'organisation et au point d'entrée d'administration du serveur. Voir plus bas.</span></li>
-            <li><span class="mk">3</span><b>Le check est déclaré obligatoire, et le contournement est interdit</b><span class="tx">GitHub&nbsp;: <em>Require status checks to pass</em> sur <code>conventional-comments</code>, plus <em>Do not allow bypassing the above settings</em>. Azure DevOps&nbsp;: une policy de branche <em>Status checks</em> sur <code>conventional-comments/compliance</code>, réglée sur <em>Block</em> plutôt que <em>Warn</em>. Sans la seconde moitié, la garantie ne tient pas pour les administrateurs.</span></li>
-            <li><span class="mk n">4</span><b>Azure DevOps — la provenance des étiquettes est établie, ou le repli est en place</b><span class="tx">Le repli d'exemption est implémenté de bout en bout&nbsp;: point d'entrée d'administration, exemption active persistée, étiquette posée par le serveur. Tant qu'aucune source de provenance n'existe, c'est le repli que vous faites tourner.</span></li>
-            <li><span class="mk n">5</span><b>Azure DevOps — la latence de détection respecte la cible de 60&nbsp;s</b><span class="tx">Soit une voie événementielle est établie, soit <code>reconcileIntervalSeconds</code> est réglé à 60 ou moins. Le serveur émet un <code>config-warning</code> si l'intervalle dépasse 60&nbsp;s en <code>enforce</code>.</span></li>
+            <li><span class="mk">3</span><b>Le check est déclaré obligatoire, et le contournement est interdit</b><span class="tx">GitHub&nbsp;: <em>Require status checks to pass</em> sur <code>conventional-comments</code>, plus <em>Do not allow bypassing the above settings</em>. Azure DevOps&nbsp;: une policy de branche <em>Status checks</em> sur <code>conventional-comments/compliance</code>, réglée sur <em>Block</em> plutôt que <em>Warn</em>. Sans la seconde option, les administrateurs peuvent passer outre — et la garantie ne vaut plus rien.</span></li>
+            <li><span class="mk n">4</span><b>Azure DevOps — la provenance des étiquettes est établie, ou le repli est en place</b><span class="tx">La solution de repli existe et fonctionne de bout en bout. Mais tant qu'Azure DevOps ne dit pas qui a posé une étiquette, c'est elle qui tourne, et pas le mécanisme normal. Sachez-le avant, pas après.</span></li>
+            <li><span class="mk n">5</span><b>Azure DevOps — la latence de détection respecte la cible de 60&nbsp;s</b><span class="tx">Sans notification en temps réel, le serveur doit repasser voir de lui-même au moins toutes les 60 secondes. Au-delà, il vous avertit&nbsp;: une PR resterait bloquée plus d'une minute après avoir été réglée.</span></li>
           </ul>
         </section>
 
@@ -1657,37 +1695,37 @@ arrive au T4 et ce handler disparaît avec elle.</div>
           <div class="callout blk">
             <span class="ct">la seule chose à ne pas rater</span>
             <h4>Le repli est <code>warn</code>. Ce n'est pas <code>off</code>, et ce n'est pas <code>assist</code>.</h4>
-            <p>En <code>warn</code>, le serveur continue de publier un statut qui n'échoue jamais — ce qui débloque toutes les pull requests <em>immédiatement, sans toucher à la protection de branche</em>. <code>assist</code> et <code>off</code> ne publient rien du tout&nbsp;: y redescendre depuis <code>enforce</code> laisse un check obligatoire sans statut, et bloque toutes les pull requests de l'organisation jusqu'à ce que la protection soit retirée dépôt par dépôt. Attraper <code>off</code> pendant un incident, c'est ainsi qu'un retour arrière devient un second incident.</p>
+            <p>En <code>warn</code>, le serveur publie encore une vérification, mais toujours verte&nbsp;: toutes les pull requests repartent <em>tout de suite</em>, sans toucher à la protection de branche. <code>assist</code> et <code>off</code>, eux, ne publient plus rien du tout. Vous vous retrouvez alors avec une vérification déclarée obligatoire qui n'arrive jamais — et c'est <em>toute</em> l'organisation qui se bloque, jusqu'à ce que quelqu'un retire la protection dépôt par dépôt. En pleine panne, choisir <code>off</code> transforme le retour arrière en deuxième incident.</p>
           </div>
           <ul class="tick">
-            <li><span class="mk">1</span><b>Passer <code>mode</code> à <code>warn</code> dans la configuration d'organisation</b><span class="tx">Un assouplissement est une modification élargissante&nbsp;: il s'applique aux pull requests déjà ouvertes sans attendre leur fermeture.</span></li>
-            <li><span class="mk">2</span><b>Attendre — l'invalidation du cache est automatique</b><span class="tx">Le document d'organisation est sondé toutes les 60&nbsp;s, en contournant le cache&nbsp;; tout le cache de configuration est invalidé dès que le mode observé est plus doux que le précédent. <code>POST /admin/cache/invalidate</code> force l'effet à la seconde si vous ne voulez pas attendre.</span></li>
-            <li><span class="mk">3</span><b>Vérifier qu'un statut <code>warn</code> vert réapparaît sur une PR témoin</b><span class="tx">Confirmer sur une vraie PR, pas dans la configuration.</span></li>
+            <li><span class="mk">1</span><b>Passer <code>mode</code> à <code>warn</code> dans la configuration d'organisation</b><span class="tx">Assouplir prend effet tout de suite, y compris sur les pull requests déjà ouvertes. Pas besoin d'attendre qu'elles se ferment.</span></li>
+            <li><span class="mk">2</span><b>Attendre — l'invalidation du cache est automatique</b><span class="tx">La configuration est relue toutes les 60 secondes. Dès qu'un réglage plus doux est détecté, tout le cache est vidé sans que vous ayez rien à faire. Si 60 secondes c'est encore trop long, un appel à <code>POST /admin/cache/invalidate</code> force l'effet immédiatement.</span></li>
+            <li><span class="mk">3</span><b>Vérifier qu'un statut <code>warn</code> vert réapparaît sur une PR témoin</b><span class="tx">Vérifiez sur une vraie pull request, pas dans le fichier de configuration.</span></li>
           </ul>
-          <p class="small">La cible que fixe la spécification&nbsp;: un retour arrière complet sur l'ensemble des dépôts, en quelques minutes, sans intervention par dépôt. Si votre procédure a besoin d'une boucle sur les dépôts, ce n'est pas la procédure.</p>
+          <p class="small">L'objectif&nbsp;: revenir en arrière sur tous les dépôts en quelques minutes, sans avoir à intervenir dépôt par dépôt. Si votre procédure demande d'en faire le tour, ce n'est pas la bonne.</p>
         </section>
 
         <section class="dsec">
           <h2>Ce que <code style="font-size:.9em">warn</code> mesure</h2>
-          <p>Six indicateurs. Les deux premiers décident si <code>enforce</code> est défendable&nbsp;; le dernier est le signal d'abus.</p>
+          <p>Six chiffres. Les deux premiers disent si le blocage est défendable&nbsp;; le dernier dit si on le contourne.</p>
           <div class="scroller">
             <table class="t">
-              <thead><tr><th>Indicateur</th><th>Se lit comme</th></tr></thead>
+              <thead><tr><th>Indicateur</th><th>Ce que ça vous dit</th></tr></thead>
               <tbody>
-                <tr><td class="m">complianceRate</td><td class="d">Part des commentaires humains sans diagnostic de sévérité <code>error</code>. Le chiffre sur lequel <code>enforce</code> repose.</td></tr>
-                <tr><td class="m">warningRate</td><td class="d">Part n'ayant que des avertissements. Élevé et stable ne pose aucun problème — ils ne bloquent jamais.</td></tr>
-                <tr><td class="m">labelDistribution</td><td class="d">Comptes par label. Une distribution qui s'effondre sur <code>note</code> et <code>nitpick</code> signifie qu'on esquive les labels bloquants.</td></tr>
-                <tr><td class="m">serviceAccountShare</td><td class="d">Part des commentaires venant de robots. Dit si <code>toolCommands</code> et <code>exemptUsers</code> sont correctement réglés.</td></tr>
-                <tr><td class="m">totalHumanComments</td><td class="d">Le dénominateur. Un taux sur douze commentaires n'est pas une mesure.</td></tr>
-                <tr><td class="m" style="color:var(--warn)">decisionsInBlockingThreads</td><td class="d">Fréquence d'usage de la soupape. Une hausse continue signifie qu'<code>enforce</code> est contourné plutôt que satisfait — à lire avant d'élargir.</td></tr>
+                <tr><td class="m">complianceRate</td><td class="d">La part des commentaires écrits par des humains qui passent sans erreur. C'est le chiffre qui justifie, ou non, de passer au blocage.</td></tr>
+                <tr><td class="m">warningRate</td><td class="d">La part qui ne récolte que des avertissements. Un taux élevé mais stable n'est pas un problème&nbsp;: ils ne bloquent rien.</td></tr>
+                <tr><td class="m">labelDistribution</td><td class="d">Combien de fois chaque étiquette est employée. Si tout se concentre sur <code>note</code> et <code>nitpick</code>, c'est que l'équipe évite celles qui bloquent.</td></tr>
+                <tr><td class="m">serviceAccountShare</td><td class="d">La part des commentaires écrits par des robots. Vous dit si vos listes d'exemptions sont bien réglées.</td></tr>
+                <tr><td class="m">totalHumanComments</td><td class="d">Le dénominateur. Un pourcentage calculé sur douze commentaires ne veut rien dire.</td></tr>
+                <tr><td class="m" style="color:var(--warn)">decisionsInBlockingThreads</td><td class="d">À quelle fréquence la porte de sortie est utilisée. Si ça monte sans arrêt, c'est qu'on contourne le blocage au lieu de le satisfaire. À regarder avant d'élargir.</td></tr>
               </tbody>
             </table>
           </div>
         </section>
 
         <section class="dsec">
-          <h2>La configuration, phase par phase</h2>
-          <p>La bascule tient en une clé du document d'organisation. Tout le reste ne bouge pas.</p>
+          <h2>Ce qui change dans la configuration</h2>
+          <p>Une seule clé change d'une étape à l'autre. Tout le reste est stable.</p>
           <div class="code"><span class="tk-cm">// configuration d'organisation — le point de bascule</span>
 <span class="tk-k">{</span>
   <span class="tk-k">"version"</span>: <span class="tk-v">1</span>,
@@ -1700,13 +1738,13 @@ arrive au T4 et ce handler disparaît avec elle.</div>
 <span class="tk-k">}</span></div>
           <div class="callout">
             <span class="ct">note de migration</span>
-            <p style="margin:0"><code>toolCommands</code> est <strong>vide par défaut</strong>. Les commandes slash étaient autrefois exemptées par une liste intégrée&nbsp;; cette liste a disparu. En <code>enforce</code>, un <code>/rebase</code> nu est désormais rejeté comme n'importe quel autre commentaire tant que le dépôt ne l'a pas déclaré. Ajouter <code>"/*"</code> restaure l'exemption et l'élargit à toute commande slash.</p>
+            <p style="margin:0">La liste des commandes exemptées est <strong>vide par défaut</strong>. Avant, des commandes comme <code>/rebase</code> étaient reconnues toutes seules&nbsp;; ce n'est plus le cas. En mode bloquant, un <code>/rebase</code> est donc refusé comme n'importe quel commentaire tant que le dépôt ne l'a pas déclaré. Mettre <code>"/*"</code> réactive l'exemption pour toutes les commandes.</p>
           </div>
         </section>
 
         <div class="pager">
           <button class="pgl" data-goto="labels"><span class="dir">← précédent</span><span class="ttl">Labels et décorations</span></button>
-          <button class="pgl" style="text-align:right"><span class="dir">suivant →</span><span class="ttl">Compagnon serveur</span></button>
+          <button class="pgl" style="text-align:right"><span class="dir">suivant →</span><span class="ttl">Le serveur</span></button>
         </div>
       </div>
     </div>
