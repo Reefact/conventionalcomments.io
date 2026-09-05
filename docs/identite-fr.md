@@ -93,6 +93,23 @@ La coche est **le seul élément vert de la marque** : c'est un verdict, pas une
 d'accompagnement. La découpe derrière la pastille prend la couleur de surface du thème
 (`--mark-knock`) — la marque ne transporte jamais de blanc en dur.
 
+#### L'icône d'onglet, et la carte sociale
+
+La marque complète ne descend pas à 16 px : rendue côte à côte avec une variante
+simplifiée à 16, 20, 24 et 32 px, elle s'y effondre en bouillie — les chevrons se ferment,
+la pastille de validation devient une tache. L'icône d'onglet est donc **la bulle et les
+chevrons seuls**, plus épais et plus près des bords. La pastille revient sur
+`apple-touch-icon.png`, où 180 px lui laissent la place. C'est de l'optique, pas une
+deuxième marque : la même forme, dessinée pour la taille où elle sera vue.
+
+`favicon.svg` porte un `prefers-color-scheme`, qui suit le thème du navigateur — donc
+celui de sa barre d'onglets. L'icône ne peut pas disparaître dans son propre fond.
+
+La **carte sociale** (`og-en.png`, `og-fr.png`) ne montre pas un logo : elle montre la
+thèse. Le bandeau, la question en Archivo, et dessous le commentaire préfixé
+`nitpick (non-blocking):` — c'est-à-dire la démonstration du site en une image. Une par
+langue, parce qu'une question posée en anglais sous un lien français ne pose rien.
+
 ### 2.2 Le verrou-grammaire (gardé, non employé)
 
 > **`toolkit:` conventional comments**

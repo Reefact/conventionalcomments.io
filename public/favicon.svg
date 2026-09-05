@@ -1,0 +1,20 @@
+<!-- L'icône d'onglet. Variante SIMPLIFIÉE de la marque : bulle et chevrons, sans la
+     pastille de validation. Vérifié en rendant les deux à 16, 20, 24 et 32 px — la marque
+     complète s'y effondre en bouillie, celle-ci reste lisible. La pastille revient sur
+     l'icône Apple, où 180 px lui laissent la place.
+     Le `prefers-color-scheme` suit le thème du navigateur, qui est celui de sa barre
+     d'onglets : l'icône ne disparaît donc jamais dans son propre fond. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <style>
+    .bub{stroke:#0B1522} .chv{stroke:#1E44C8} .knock{fill:#FFFFFF} .chk{stroke:#1F8A4C}
+    @media (prefers-color-scheme:dark){
+      .bub{stroke:#E8EEF6} .chv{stroke:#7A97FF} .knock{fill:#0F1926} .chk{stroke:#45C77C}
+    }
+  </style>
+  <path d="M3 11a7 7 0 0 1 7-7h28a7 7 0 0 1 7 7v16a7 7 0 0 1-7 7H22l-10 10V34h-2a7 7 0 0 1-7-7V11Z"
+        class="bub" fill="none" stroke-width="4.2" stroke-linejoin="round"/>
+  <path d="M18 12 11.5 19l6.5 7" class="chv" fill="none" stroke-width="5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30 12 36.5 19 30 26" class="chv" fill="none" stroke-width="5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

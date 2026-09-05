@@ -18,8 +18,14 @@ interface Props {
 
 const { lang, page, title, description, noindex = false } = Astro.props;
 const ui = t(lang);
+const ogAlt = ui.ogAlt;
 const other = otherLocale(lang);
 const canonical = new URL(ROUTES[page][lang], Astro.site).href;
+
+/** La carte sociale : une par langue, avec la thèse du site dessus plutôt qu'un logo.
+ *  Absolue par obligation — Slack, Teams, LinkedIn et X ne résolvent pas un chemin. */
+const ogImage = new URL(`/og-${lang}.png`, Astro.site).href;
+const OG_LOCALE = { en: 'en_US', fr: 'fr_FR' } as const;
 ---
 <!doctype html>
 <html lang={lang}>
@@ -29,6 +35,30 @@ const canonical = new URL(ROUTES[page][lang], Astro.site).href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+
+    {/* L'icône. Le SVG d'abord, que tout navigateur récent préfère et qui suit le thème ;
+        le .ico ensuite, pour les autres et pour la barre de favoris. */}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    {/* Open Graph. Sans ces lignes, un lien collé dans Slack ou Teams s'affiche en URL
+        nue — ce qui, pour un site qu'on partage entre pairs, est le premier contact. */}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="conventionalcomments.io" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogAlt} />
+    <meta property="og:locale" content={OG_LOCALE[lang]} />
+    <meta property="og:locale:alternate" content={OG_LOCALE[other]} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     {/* Alternats : chaque page se déclare dans les deux langues, et x-default pointe
         l'anglais — la locale servie à la racine. Sans eux, un site bilingue dont les

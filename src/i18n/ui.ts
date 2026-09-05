@@ -24,6 +24,7 @@ type Dict = {
   refGroup: string;
   docsNav: Record<PageKey, string>;
   jsonSchema: string;
+  ogAlt: string;
   releaseNotes: string;
   footerIndependent: string;
   footerSpec: string;
@@ -52,6 +53,9 @@ export const UI: Record<Locale, Dict> = {
       home: '', howitworks: '', platforms: '', privacy: '', releasenotes: '', version: '',
     },
     jsonSchema: 'JSON schema ↗',
+    ogAlt:
+      'conventionalcomments.io — "Is that feedback, or a dig?" Below, a review comment '
+      + 'prefixed nitpick (non-blocking): this variable name says nothing.',
     releaseNotes: 'Release notes',
     footerIndependent: 'Independent tooling. The specification lives on',
     footerSpec: '; this site does not speak for it.',
@@ -82,6 +86,9 @@ export const UI: Record<Locale, Dict> = {
       home: '', howitworks: '', platforms: '', privacy: '', releasenotes: '', version: '',
     },
     jsonSchema: 'schéma JSON ↗',
+    ogAlt:
+      'conventionalcomments.io — « C\'est une remarque, ou un reproche ? » Dessous, un '
+      + 'commentaire de revue préfixé nitpick (non-blocking) : ce nom de variable ne veut rien dire.',
     releaseNotes: 'Notes de version',
     footerIndependent: 'Outillage indépendant. La spécification vit sur',
     footerSpec: `${NBSP}; ce site ne parle pas en son nom.`,
