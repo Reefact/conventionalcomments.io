@@ -1,4 +1,5 @@
 // @ts-check
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
@@ -9,9 +10,44 @@ import { ROUTES, UNLINKED } from './src/i18n/routes.ts';
 const EXCLUDED = new Set(UNLINKED.flatMap((k) => Object.values(ROUTES[k])));
 
 /**
+ * Aplatit les 404 de langue : `dist/fr/404/index.html` → `dist/fr/404.html`.
+ *
+ * Cloudflare sert le `404.html` LE PLUS PROCHE en remontant l'arborescence — une 404 par
+ * langue marche donc toute seule, à condition qu'elle soit un fichier et non un dossier.
+ * Or `build.format: 'directory'` s'applique à toutes les pages, et Astro ne fait
+ * l'exception que pour `src/pages/404.astro`, à la racine. Sans ça, `/fr/n-importe-quoi/`
+ * répond en anglais, et `/fr/404/` devient une page comme une autre — servie en 200, ce
+ * qu'un moteur de recherche appelle une « soft 404 ».
+ *
+ * Générique à dessein : une locale de plus n'aura rien à ajouter ici.
+ */
+function flattenLocalised404s() {
+  return {
+    name: 'flatten-localised-404s',
+    hooks: {
+      'astro:build:done': async ({ dir, logger }) => {
+        const { readdirSync, existsSync, renameSync, rmdirSync } = await import('node:fs');
+        const { join } = await import('node:path');
+        const root = fileURLToPath(dir);
+        for (const entry of readdirSync(root, { withFileTypes: true })) {
+          if (!entry.isDirectory()) continue;
+          const from = join(root, entry.name, '404', 'index.html');
+          if (!existsSync(from)) continue;
+          const to = join(root, entry.name, '404.html');
+          renameSync(from, to);
+          rmdirSync(join(root, entry.name, '404'));
+          logger.info(`404 de ${entry.name} aplatie → ${entry.name}/404.html`);
+        }
+      },
+    },
+  };
+}
+
+/**
  * Le site est publié ici et nulle part ailleurs — `site` alimente le sitemap et les
  * alternats hreflang, qui doivent porter une origine absolue.
  */
+
 export default defineConfig({
   site: 'https://conventionalcomments.io',
 
@@ -38,7 +74,8 @@ export default defineConfig({
   },
 
   integrations: [
-    sitemap({
+flattenLocalised404s(),
+sitemap({
       filter: (page) => !EXCLUDED.has(new URL(page).pathname),
       i18n: { defaultLocale: 'en', locales: { en: 'en', fr: 'fr' } },
     }),

@@ -70,6 +70,7 @@ else for (const [href, from] of dead) fail(`lien mort ${href} — depuis ${[...f
 // routes.ts est du TypeScript, et ce script tourne sous node sans transpilation : on y
 // lit les adresses déclarées plutôt que de compiler le module pour trois chaînes.
 const routesSrc = readFileSync(join(ROOT, 'src/i18n/routes.ts'), 'utf8');
+const LOCALES = [...routesSrc.match(/LOCALES = \[([^\]]*)\]/)[1].matchAll(/'([a-z]{2})'/g)].map((m) => m[1]);
 const unlinkedKeys = [...routesSrc.matchAll(/UNLINKED: PageKey\[\] = \[([^\]]*)\]/g)]
   .flatMap((m) => [...m[1].matchAll(/'([a-z]+)'/g)].map((x) => x[1]));
 const unlinkedPaths = unlinkedKeys.flatMap((key) => {
@@ -155,6 +156,18 @@ for (const f of walkAll(DIST)) {
   if (/\.(md|mjs|ts)$/.test(rel)) fail(`${rel} est servi — la place d'un document interne est docs/`);
 }
 ok('aucune source ni note de maintenance dans dist/');
+
+// ————— 8. Une 404 par langue, et sous forme de fichier —————
+// Cloudflare sert le `404.html` le plus proche en remontant l'arborescence. Un
+// `fr/404/index.html` ne joue donc pas ce rôle : le visiteur francophone reçoit la 404
+// anglaise, et `/fr/404/` devient une page servie en 200 — une « soft 404 ».
+for (const lang of LOCALES) {
+  const at = lang === 'en' ? '404.html' : join(lang, '404.html');
+  if (!existsSync(join(DIST, at))) fail(`${at} absente — ${lang} n'a pas sa page d'erreur`);
+  if (existsSync(join(DIST, lang, '404', 'index.html')))
+    fail(`${lang}/404/index.html existe — Cloudflare ne le servira jamais comme 404`);
+}
+ok(`une 404 par langue (${LOCALES.join(', ')}), en fichier`);
 
 if (failures.length) {
   console.error('\n' + failures.map((f) => `  ✗ ${f}`).join('\n'));
