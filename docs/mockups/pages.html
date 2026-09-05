@@ -302,18 +302,6 @@ ul.bul code { font-size:13px; color:var(--fg-2); }
 .tcell .md { font-family:var(--font-mono); font-size:13.5px; font-weight:600; color:var(--st); }
 .tcell .ds { font-size:12.5px; color:var(--fg-muted); line-height:1.45; }
 
-/* --- matrice de support (/platforms/) --- */
-.g18{gap:18px}
-.legend-row { display:flex; gap:10px; flex-wrap:wrap; }
-.st { display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono);
-      font-size:11px; letter-spacing:.02em; padding:2px 9px 3px; border-radius:2px; white-space:nowrap; }
-.st .dot { width:6px; height:6px; }
-.st.ok { background:var(--pass-soft);  color:var(--pass);  border:1px solid var(--pass); }
-.st.fb { background:var(--warn-soft);  color:var(--warn);  border:1px solid var(--warn); }
-.st.no { background:var(--block-soft); color:var(--block); border:1px solid var(--block); }
-.why { display:block; margin-top:6px; font-size:12px; line-height:1.45; color:var(--fg-muted); }
-.why code { font-size:11.5px; }
-table.t.wide { min-width:800px; }
 
 /* --- comparaison avant / après (accueil) --- */
 .ba { display:flex; flex-direction:column; border:1px solid var(--line);
@@ -350,6 +338,21 @@ table.t.wide { min-width:800px; }
             gap:14px; padding:11px 15px; }
 .prop-n { font-family:var(--font-mono); font-size:20px; font-weight:600; color:var(--fg);
           font-variant-numeric:tabular-nums; }
+
+/* --- plateformes : disponibilité --- */
+.avail { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1px;
+         background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+.av-card { background:var(--bg-surface); padding:22px 24px; display:flex; flex-direction:column;
+           gap:12px; align-items:flex-start; }
+.av-card.soon { background:var(--bg-code); }
+.av-card h3 { font-size:19px; font-weight:600; letter-spacing:-.016em; }
+.av-tag { font-family:var(--font-mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase;
+          padding:2px 8px 3px; border-radius:2px; border:1px solid var(--line-strong); color:var(--fg-faint); }
+.av-tag.ok { border-color:var(--pass); color:var(--pass); }
+.av-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:7px;
+           font-size:14.5px; color:var(--fg-2); }
+.av-note { color:var(--fg-faint); font-size:12.5px; }
+.av-p { font-size:14px; color:var(--fg-muted); line-height:1.55; }
 </style>
 
 <p class="mock-note">
@@ -928,14 +931,37 @@ table.t.wide { min-width:800px; }
       <div class="in">
         <div class="stack g18 measure">
           <span class="eyebrow acc">platforms:</span>
-          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Where it runs — and where it runs on a fallback.</h1>
-          <p class="lede">Two platforms, six editions, two browsers. Some of that is demonstrated. Some of it rests on an assumption we have not been able to establish on a real, authenticated instance — and each of those ships with a fallback already written into the code. This page says which is which.</p>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Where it works</h1>
+          <p class="lede">GitHub and Azure DevOps, in Chrome, Edge, Brave and Firefox. Self-hosted instances included.</p>
         </div>
 
-        <div class="plat">
-          <div><span class="ph">GitHub</span><span class="pl">github.com<br>Enterprise Cloud<br>Enterprise Managed Users<br>Enterprise Server</span></div>
-          <div><span class="ph">Azure DevOps</span><span class="pl">Services<br>Server (self-hosted)</span></div>
-          <div><span class="ph">Browsers</span><span class="pl">Chromium — Manifest V3<br>Firefox — separate bundle<br>No remote code, ever</span></div>
+        <div class="avail">
+          <div class="av-card">
+            <span class="av-tag ok">available</span>
+            <h3>GitHub</h3>
+            <ul class="av-list">
+              <li>github.com</li>
+              <li>Enterprise Cloud</li>
+              <li>Enterprise Managed Users</li>
+              <li>Enterprise Server <span class="av-note">self-hosted</span></li>
+            </ul>
+          </div>
+          <div class="av-card">
+            <span class="av-tag ok">available</span>
+            <h3>Azure DevOps</h3>
+            <ul class="av-list">
+              <li>Services</li>
+              <li>Server <span class="av-note">self-hosted</span></li>
+            </ul>
+          </div>
+          <div class="av-card">
+            <span class="av-tag ok">available</span>
+            <h3>Browsers</h3>
+            <ul class="av-list">
+              <li>Chrome, Edge, Brave <span class="av-note">and other Chromium browsers</span></li>
+              <li>Firefox <span class="av-note">separate build</span></li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -943,70 +969,28 @@ table.t.wide { min-width:800px; }
     <section class="hband sunk">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">the matrix:</span>
-          <h2>Capability by platform</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Three states, and we use all three. A green row is demonstrated. An amber row means the assumption is open and a documented fallback is carrying it. A red row means the rule does not run on that platform at all.</p>
+          <span class="eyebrow">not yet:</span>
+          <h2>Other platforms</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The convention itself works anywhere — it's a way of writing a comment. What isn't built yet is the tooling: the toolbar, the validation, the check.</p>
         </div>
-
-        <div class="legend-row">
-          <span class="st ok"><span class="dot"></span>established</span>
-          <span class="st fb"><span class="dot"></span>on a fallback</span>
-          <span class="st no"><span class="dot"></span>not applied</span>
+        <div class="avail">
+          <div class="av-card soon">
+            <span class="av-tag">to come</span>
+            <h3>GitLab</h3>
+            <p class="av-p">Merge requests, self-managed and gitlab.com.</p>
+          </div>
+          <div class="av-card soon">
+            <span class="av-tag">to come</span>
+            <h3>Bitbucket</h3>
+            <p class="av-p">Cloud and Data Center.</p>
+          </div>
+          <div class="av-card soon">
+            <span class="av-tag">tell us</span>
+            <h3>Something else?</h3>
+            <p class="av-p">Open an issue on the repository saying which platform and roughly how many people it would serve. That's what decides the order.</p>
+          </div>
         </div>
-
-        <div class="scroller">
-          <table class="t wide">
-            <thead><tr><th>Capability</th><th>GitHub</th><th>Azure DevOps</th></tr></thead>
-            <tbody>
-              <tr>
-                <td>Authoring toolbar, shortcuts, prefix insertion</td>
-                <td><span class="st ok"><span class="dot"></span>established</span></td>
-                <td><span class="st fb"><span class="dot"></span>on a fallback</span><span class="why">Editor type not confirmed on a real instance; <code>writeToTextField()</code> covers both a textarea and a rich editor.</span></td>
-              </tr>
-              <tr>
-                <td>Real-time validation and send guard</td>
-                <td><span class="st ok"><span class="dot"></span>established</span></td>
-                <td><span class="st ok"><span class="dot"></span>established</span></td>
-              </tr>
-              <tr>
-                <td>Reading <code>.conventional-comments.json</code> from the repository</td>
-                <td><span class="st ok"><span class="dot"></span>established</span></td>
-                <td><span class="st fb"><span class="dot"></span>on a fallback</span><span class="why">Read route unconfirmed. A failure returns <code>unreachable</code>: the extension assists without blocking, and says so.</span></td>
-              </tr>
-              <tr>
-                <td>Native suggestion block counted as an implicit label</td>
-                <td><span class="st ok"><span class="dot"></span>established</span></td>
-                <td><span class="st fb"><span class="dot"></span>on a fallback</span><span class="why">Info string unknown, so no implicit stage. An explicit <code>suggestion:</code> is still accepted.</span></td>
-              </tr>
-              <tr>
-                <td>Required status check on the pull request</td>
-                <td><span class="st ok"><span class="dot"></span>established</span><span class="why">GitHub le fournit nativement.</span></td>
-                <td><span class="st ok"><span class="dot"></span>established</span><span class="why">PR Status, referenced as <code>conventional-comments/compliance</code>.</span></td>
-              </tr>
-              <tr>
-                <td>Governed resolution — who is allowed to resolve a blocking thread</td>
-                <td><span class="st ok"><span class="dot"></span>established</span><span class="why"><code>resolvedBy</code> is exposed.</span></td>
-                <td><span class="st no"><span class="dot"></span>not applied</span><span class="why"><code>resolvedBy</code> is not exposed — a long-standing open request. Resolutions are accepted, and every evaluation carries <code>resolution-unattributed</code>.</span></td>
-              </tr>
-              <tr>
-                <td>Governed pull-request exemption</td>
-                <td><span class="st ok"><span class="dot"></span>established</span><span class="why">Label provenance is available.</span></td>
-                <td><span class="st fb"><span class="dot"></span>on a fallback</span><span class="why">Provenance is not exposed by the documented API. The §6.3.2 path is implemented end to end: admin endpoint, persisted exemption, label posted by the server.</span></td>
-              </tr>
-              <tr>
-                <td>Detection latency under 60&nbsp;s</td>
-                <td><span class="st ok"><span class="dot"></span>established</span><span class="why">Event channel.</span></td>
-                <td><span class="st fb"><span class="dot"></span>on a fallback</span><span class="why">Set <code>reconcileIntervalSeconds</code> to 60 or below. Above that, in <code>enforce</code>, the server emits a <code>config-warning</code>.</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="callout blk">
-          <span class="ct">the one thing that does not work on Azure DevOps</span>
-          <h4>Resolution attribution, and therefore the §6.1 governance rule.</h4>
-          <p>The platform does not tell us who resolved a thread. So the rule that only the comment's author — or a member of <code>resolverOverrideGroup</code> — may resolve it cannot be enforced there. Resolutions are honoured, and the status carries <code>resolution-unattributed</code> on every evaluation, so nobody has to discover this from a support ticket. It is stated here because a tech lead choosing between platforms deserves to know before adopting, not after.</p>
-        </div>
+        <p class="small measure">No dates are promised. A platform appears above only once it actually works.</p>
       </div>
     </section>
 
@@ -1014,78 +998,38 @@ table.t.wide { min-width:800px; }
       <div class="in">
         <div class="split">
           <div class="stack g14">
-            <span class="eyebrow">permissions:</span>
-            <h2 style="font-size:24px">Out of the box, it runs on github.com and nowhere else.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">There is no <code>&lt;all_urls&gt;</code> in the required permissions, and one single content-script match. Azure DevOps, a GitHub Enterprise Server instance, an enterprise configuration host — each is an <em>optional</em> host permission, requested on demand and granted by you, then tagged with its platform on the options page.</p>
-            <p class="small">Two required permissions in total: <code>storage</code> for your own preferences, and <code>scripting</code>. No authentication token is stored. The extension CSP is <code>script-src 'self'</code> — no remote code can be loaded, which the packaging workflow verifies on every push.</p>
+            <span class="eyebrow">what you need:</span>
+            <h2 style="font-size:24px">The extension alone needs nothing.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Install it from your browser's store and it works on the spot: the toolbar, the shortcuts, the live feedback. No account, no server, no configuration.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The check on the pull request is the part that needs a server — a small service you host, once, for the whole organization. Only a team that wants the convention to become a merge condition needs it.</p>
+            <div class="hero-btns">
+              <button class="btn btn-p">Install the extension</button>
+              <button class="btn btn-s" data-goto="adoption">The server, and when it's worth it</button>
+            </div>
           </div>
-          <div class="stack g10">
-            <span class="eyebrow">manifest.json:</span>
-            <div class="code"><span class="tk-k">"manifest_version"</span>: <span class="tk-v">3</span>,
-<span class="tk-k">"permissions"</span>: [<span class="tk-v">"storage"</span>, <span class="tk-v">"scripting"</span>],
-<span class="tk-k">"optional_host_permissions"</span>: [<span class="tk-v">"https://*/*"</span>],
-<span class="tk-k">"content_scripts"</span>: [<span class="tk-k">{</span>
-  <span class="tk-k">"matches"</span>: [<span class="tk-v">"https://github.com/*"</span>],   <span class="tk-cm">// ← the only one</span>
-  <span class="tk-k">"js"</span>: [<span class="tk-v">"content.js"</span>],
-  <span class="tk-k">"run_at"</span>: <span class="tk-v">"document_idle"</span>
-<span class="tk-k">}</span>],
-<span class="tk-k">"content_security_policy"</span>: <span class="tk-k">{</span>
-  <span class="tk-k">"extension_pages"</span>: <span class="tk-v">"script-src 'self'; object-src 'self'"</span>
-<span class="tk-k">}</span></div>
+          <div class="stack g14">
+            <span class="eyebrow">and where it looks:</span>
+            <h2 style="font-size:24px">github.com, and nowhere else by default.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">No “all sites” permission. One declared domain. Azure DevOps, a self-hosted GitHub, an internal host — each needs its own permission, which your browser asks you for and you grant, or don't.</p>
+            <p class="small">Two permissions in total: one to remember your preferences, one to work inside the page. No account, no token stored. The extension can't load code from anywhere else — locked technically, and re-verified on every release.</p>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="hband sunk">
-      <div class="in">
-        <div class="stack g14 measure">
-          <span class="eyebrow">enterprise server:</span>
-          <h2>One open item, and a failure mode chosen on purpose</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Which GitHub Enterprise Server DOM generations to target is still being settled. Selectors are written as chains with fallbacks, and covered by a multi-version smoke test.</p>
-        </div>
-        <div class="callout acc">
-          <span class="ct">when a selector stops matching</span>
-          <h4>The extension disables its own zone. It never touches the page it no longer understands.</h4>
-          <p>Selector degradation is a designed behaviour, not an accident: when the platform DOM moves under it, the affected zone goes quiet and the reason is reported, rather than the extension writing into an element it has misidentified. You lose assistance on that zone. You never lose the ability to use GitHub — and the server companion keeps judging, because it never depended on the DOM in the first place.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="hband">
-      <div class="in">
-        <div class="stack g14 measure">
-          <span class="eyebrow">how these claims stay true:</span>
-          <h2>Four checks, and one we deliberately do not run</h2>
-        </div>
-        <div class="scroller">
-          <table class="t">
-            <thead><tr><th>Check</th><th>Question it answers</th><th>When</th></tr></thead>
-            <tbody>
-              <tr><td class="m">browser&#8209;smoke</td><td class="d">Does the programmatic-write strategy still hold in a <em>current</em> Chromium — the one thing a simulated DOM cannot tell us?</td><td class="m d">daily, 04:17&nbsp;UTC</td></tr>
-              <tr><td class="m">mv3&#8209;smoke</td><td class="d">Does the packaged extension actually load in a real Chromium?</td><td class="m d">daily</td></tr>
-              <tr><td class="m">cors&nbsp;probes</td><td class="d">What is a content script allowed to read, and what needs the service-worker relay?</td><td class="m d">daily</td></tr>
-              <tr><td class="m">extension&#8209;package</td><td class="d">Does the bundle stay free of remote code, and do both manifests stay loadable?</td><td class="m d">every push to <code>packages/</code></td></tr>
-              <tr><td class="m" style="color:var(--fg-faint)">selector&nbsp;smoke</td><td class="d"><strong style="color:var(--fg-2)">Not run in CI.</strong> Checking selectors against the <em>real</em> platforms needs authenticated sessions. The harness exists and exits cleanly while no DOM captures are supplied — rather than reporting an assurance it does not have.</td><td class="m d">manual</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="small measure">That last row is the honest one. A green tick on a test that cannot reach the thing it claims to test is worse than no test, because someone will believe it.</p>
       </div>
     </section>
 
     <section class="cta-band">
       <div class="cta-in">
         <div class="stack g8">
-          <h2>On GitHub today. On Azure DevOps with its fallbacks named.</h2>
-          <p class="small" style="color:var(--fg-2)">Start in <code style="font-family:var(--font-mono);font-size:.9em">assist</code> — nothing is required until you make it required.</p>
+          <h2>If your platform is on the list, you can start today.</h2>
+          <p class="small" style="color:var(--fg-2)">Nothing blocks anyone until you decide it should.</p>
         </div>
         <div class="hero-btns">
-          <button class="btn btn-p" data-goto="adoption">Read the adoption guide</button>
-          <button class="btn btn-s" data-goto="labels">Browse the labels</button>
+          <button class="btn btn-p">Install the extension</button>
+          <button class="btn btn-s" data-goto="labels">See the labels</button>
         </div>
       </div>
     </section>
+
     </div>
     <div class="loc" data-loc="fr" hidden>
 
@@ -1093,14 +1037,37 @@ table.t.wide { min-width:800px; }
       <div class="in">
         <div class="stack g18 measure">
           <span class="eyebrow acc">plateformes&nbsp;:</span>
-          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Là où ça tourne — et là où ça tourne sur un repli.</h1>
-          <p class="lede">Deux plateformes, six éditions, deux navigateurs. Une partie a été vérifiée pour de vrai. Le reste repose sur des suppositions qu'on n'a pas pu confirmer sur une instance réelle — chacune ayant sa solution de repli, déjà écrite. Cette page dit ce qui relève de l'une et de l'autre.</p>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Où ça marche</h1>
+          <p class="lede">GitHub et Azure DevOps, dans Chrome, Edge, Brave et Firefox. Instances auto-hébergées comprises.</p>
         </div>
 
-        <div class="plat">
-          <div><span class="ph">GitHub</span><span class="pl">github.com<br>Enterprise Cloud<br>Enterprise Managed Users<br>Enterprise Server</span></div>
-          <div><span class="ph">Azure DevOps</span><span class="pl">Services<br>Server (auto-hébergé)</span></div>
-          <div><span class="ph">Navigateurs</span><span class="pl">Chromium — Manifest V3<br>Firefox — bundle distinct<br>Aucun code distant, jamais</span></div>
+        <div class="avail">
+          <div class="av-card">
+            <span class="av-tag ok">disponible</span>
+            <h3>GitHub</h3>
+            <ul class="av-list">
+              <li>github.com</li>
+              <li>Enterprise Cloud</li>
+              <li>Enterprise Managed Users</li>
+              <li>Enterprise Server <span class="av-note">auto-hébergé</span></li>
+            </ul>
+          </div>
+          <div class="av-card">
+            <span class="av-tag ok">disponible</span>
+            <h3>Azure DevOps</h3>
+            <ul class="av-list">
+              <li>Services</li>
+              <li>Server <span class="av-note">auto-hébergé</span></li>
+            </ul>
+          </div>
+          <div class="av-card">
+            <span class="av-tag ok">disponible</span>
+            <h3>Navigateurs</h3>
+            <ul class="av-list">
+              <li>Chrome, Edge, Brave <span class="av-note">et les autres Chromium</span></li>
+              <li>Firefox <span class="av-note">build séparé</span></li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -1108,70 +1075,28 @@ table.t.wide { min-width:800px; }
     <section class="hband sunk">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">la matrice&nbsp;:</span>
-          <h2>Capacité par plateforme</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Trois états, et on se sert des trois. <strong>Vert</strong>&nbsp;: c'est vérifié sur la plateforme. <strong>Ambre</strong>&nbsp;: on n'a pas pu le vérifier, et une solution de repli prend le relais — ça marche, mais autrement. <strong>Rouge</strong>&nbsp;: la règle n'existe pas du tout sur cette plateforme, et il faut le savoir avant de choisir.</p>
+          <span class="eyebrow">pas encore&nbsp;:</span>
+          <h2>Les autres plateformes</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">La convention, elle, marche partout — c'est une façon d'écrire un commentaire. Ce qui n'existe pas encore, c'est l'outillage&nbsp;: la barre d'étiquettes, la validation, la vérification.</p>
         </div>
-
-        <div class="legend-row">
-          <span class="st ok"><span class="dot"></span>vérifié</span>
-          <span class="st fb"><span class="dot"></span>repli en place</span>
-          <span class="st no"><span class="dot"></span>règle inactive</span>
+        <div class="avail">
+          <div class="av-card soon">
+            <span class="av-tag">à venir</span>
+            <h3>GitLab</h3>
+            <p class="av-p">Merge requests, self-managed et gitlab.com.</p>
+          </div>
+          <div class="av-card soon">
+            <span class="av-tag">à venir</span>
+            <h3>Bitbucket</h3>
+            <p class="av-p">Cloud et Data Center.</p>
+          </div>
+          <div class="av-card soon">
+            <span class="av-tag">dites-le nous</span>
+            <h3>Autre chose&nbsp;?</h3>
+            <p class="av-p">Ouvrez une issue sur le dépôt en disant quelle plateforme, et pour combien de personnes. C'est ce qui décide de l'ordre.</p>
+          </div>
         </div>
-
-        <div class="scroller">
-          <table class="t wide">
-            <thead><tr><th>Capacité</th><th>GitHub</th><th>Azure DevOps</th></tr></thead>
-            <tbody>
-              <tr>
-                <td>Barre d'étiquettes, raccourcis, insertion automatique</td>
-                <td><span class="st ok"><span class="dot"></span>vérifié</span></td>
-                <td><span class="st fb"><span class="dot"></span>repli en place</span><span class="why">On n'a pas pu confirmer quel éditeur Azure DevOps utilise vraiment. L'extension gère les deux cas possibles.</span></td>
-              </tr>
-              <tr>
-                <td>Vérification pendant la frappe, et blocage de l'envoi</td>
-                <td><span class="st ok"><span class="dot"></span>vérifié</span></td>
-                <td><span class="st ok"><span class="dot"></span>vérifié</span></td>
-              </tr>
-              <tr>
-                <td>Lecture de <code>.conventional-comments.json</code> dans le dépôt</td>
-                <td><span class="st ok"><span class="dot"></span>vérifié</span></td>
-                <td><span class="st fb"><span class="dot"></span>repli en place</span><span class="why">On n'a pas pu confirmer par quelle adresse lire le fichier. En cas d'échec, l'extension continue d'aider sans rien bloquer, et affiche pourquoi.</span></td>
-              </tr>
-              <tr>
-                <td>Le bloc « suggestion » natif compte comme une étiquette</td>
-                <td><span class="st ok"><span class="dot"></span>vérifié</span></td>
-                <td><span class="st fb"><span class="dot"></span>repli en place</span><span class="why">Le marqueur exact nous est inconnu, donc pas de reconnaissance automatique. Écrire <code>suggestion:</code> à la main marche toujours.</span></td>
-              </tr>
-              <tr>
-                <td>La vérification obligatoire sur la pull request</td>
-                <td><span class="st ok"><span class="dot"></span>vérifié</span><span class="why">GitHub le fournit nativement.</span></td>
-                <td><span class="st ok"><span class="dot"></span>vérifié</span><span class="why">PR Status, référencé par <code>conventional-comments/compliance</code>.</span></td>
-              </tr>
-              <tr>
-                <td>Qui a le droit de refermer un point bloquant</td>
-                <td><span class="st ok"><span class="dot"></span>vérifié</span><span class="why">GitHub dit qui a refermé quoi.</span></td>
-                <td><span class="st no"><span class="dot"></span>règle inactive</span><span class="why">La plateforme ne dit pas qui a refermé quoi. N'importe qui peut donc refermer n'importe quel point&nbsp;; la vérification le signale à chaque fois.</span></td>
-              </tr>
-              <tr>
-                <td>Exempter une pull request, de façon tracée</td>
-                <td><span class="st ok"><span class="dot"></span>vérifié</span><span class="why">On sait qui a posé l'étiquette.</span></td>
-                <td><span class="st fb"><span class="dot"></span>repli en place</span><span class="why">Impossible de savoir qui a posé l'étiquette d'exemption. On passe donc par le serveur, qui la pose lui-même et garde la trace de qui l'a demandée.</span></td>
-              </tr>
-              <tr>
-                <td>Réaction en moins d'une minute</td>
-                <td><span class="st ok"><span class="dot"></span>vérifié</span><span class="why">GitHub prévient tout de suite.</span></td>
-                <td><span class="st fb"><span class="dot"></span>repli en place</span><span class="why">Le serveur doit repasser voir tout seul au moins une fois par minute. Au-delà, il vous avertit.</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="callout blk">
-          <span class="ct">le seul point qui ne marche pas sur azure devops</span>
-          <h4>On ne peut pas savoir qui a refermé un point bloquant.</h4>
-          <p>Azure DevOps ne dit pas qui a marqué une conversation comme résolue. Impossible, donc, d'appliquer la règle qui réserve ce droit à l'auteur du commentaire ou au groupe habilité&nbsp;: sur cette plateforme, n'importe qui peut refermer n'importe quel point bloquant. Les résolutions sont acceptées quand même, et la vérification le signale à chaque évaluation — pour que personne ne le découvre par un ticket de support. C'est écrit ici parce que si vous arbitrez entre deux plateformes, vous méritez de le savoir avant, pas après.</p>
-        </div>
+        <p class="small measure">Aucune date n'est promise. Une plateforme n'apparaît au-dessus qu'une fois qu'elle marche vraiment.</p>
       </div>
     </section>
 
@@ -1179,75 +1104,34 @@ table.t.wide { min-width:800px; }
       <div class="in">
         <div class="split">
           <div class="stack g14">
-            <span class="eyebrow">permissions&nbsp;:</span>
-            <h2 style="font-size:24px">Par défaut, elle tourne sur github.com et nulle part ailleurs.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Aucune permission « tous les sites », et un seul domaine déclaré. Azure DevOps, une instance GitHub Enterprise Server, un serveur de configuration interne&nbsp;: chacun demande une autorisation séparée, que le navigateur vous présente et que vous accordez — ou non.</p>
-            <p class="small">Deux permissions en tout&nbsp;: une pour retenir vos préférences, une pour s'insérer dans la page. Aucun identifiant, aucun jeton stocké. L'extension ne peut charger aucun code venu d'ailleurs — c'est verrouillé techniquement, et revérifié à chaque publication.</p>
+            <span class="eyebrow">ce qu'il vous faut&nbsp;:</span>
+            <h2 style="font-size:24px">L'extension seule ne demande rien.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Vous l'installez depuis le store de votre navigateur et elle marche tout de suite&nbsp;: la barre, les raccourcis, le retour en direct. Aucun compte, aucun serveur, aucune configuration.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">C'est la vérification sur la pull request qui demande un serveur — un petit service à héberger une fois pour toute l'organisation. Seule une équipe qui veut faire de la convention une condition de fusion en a besoin.</p>
+            <div class="hero-btns">
+              <button class="btn btn-p">Installer l'extension</button>
+              <button class="btn btn-s" data-goto="adoption">Le serveur, et quand il vaut le coup</button>
+            </div>
           </div>
-          <div class="stack g10">
-            <span class="eyebrow">manifest.json&nbsp;:</span>
-            <div class="code"><span class="tk-k">"manifest_version"</span>: <span class="tk-v">3</span>,
-<span class="tk-k">"permissions"</span>: [<span class="tk-v">"storage"</span>, <span class="tk-v">"scripting"</span>],
-<span class="tk-k">"optional_host_permissions"</span>: [<span class="tk-v">"https://*/*"</span>],
-<span class="tk-k">"content_scripts"</span>: [<span class="tk-k">{</span>
-  <span class="tk-k">"matches"</span>: [<span class="tk-v">"https://github.com/*"</span>],   <span class="tk-cm">// ← le seul</span>
-  <span class="tk-k">"js"</span>: [<span class="tk-v">"content.js"</span>],
-  <span class="tk-k">"run_at"</span>: <span class="tk-v">"document_idle"</span>
-<span class="tk-k">}</span>],
-<span class="tk-k">"content_security_policy"</span>: <span class="tk-k">{</span>
-  <span class="tk-k">"extension_pages"</span>: <span class="tk-v">"script-src 'self'; object-src 'self'"</span>
-<span class="tk-k">}</span></div>
+          <div class="stack g14">
+            <span class="eyebrow">et où elle regarde&nbsp;:</span>
+            <h2 style="font-size:24px">github.com, et nulle part ailleurs par défaut.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Aucune permission « tous les sites ». Un seul domaine déclaré. Azure DevOps, un GitHub auto-hébergé, un serveur interne&nbsp;: chacun demande son autorisation, que le navigateur vous présente et que vous accordez — ou non.</p>
+            <p class="small">Deux permissions en tout&nbsp;: une pour retenir vos préférences, une pour agir dans la page. Aucun compte, aucun jeton stocké. L'extension ne peut charger aucun code venu d'ailleurs — verrouillé techniquement, et revérifié à chaque publication.</p>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="hband sunk">
-      <div class="in">
-        <div class="stack g14 measure">
-          <span class="eyebrow">enterprise server&nbsp;:</span>
-          <h2>Un point encore ouvert, et une panne choisie exprès</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Quelles versions de GitHub Enterprise Server viser exactement reste à décider. En attendant, l'extension essaie plusieurs repères successifs dans la page, et un test couvre plusieurs versions.</p>
-        </div>
-        <div class="callout acc">
-          <span class="ct">quand github change sa page</span>
-          <h4>L'extension se met en veille. Elle ne touche jamais à une page qu'elle ne reconnaît plus.</h4>
-          <p>C'est voulu, pas accidentel. Quand GitHub change sa page sous l'extension, celle-ci préfère se taire et le dire, plutôt que d'écrire dans un élément qu'elle a mal identifié. Vous perdez l'assistance à cet endroit-là. Vous ne perdez jamais l'usage de GitHub — et le serveur, lui, continue de vérifier&nbsp;: il n'a jamais eu besoin de la page.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="hband">
-      <div class="in">
-        <div class="stack g14 measure">
-          <span class="eyebrow">comment ces affirmations restent vraies&nbsp;:</span>
-          <h2>Quatre contrôles, et un qu'on ne joue délibérément pas</h2>
-        </div>
-        <div class="scroller">
-          <table class="t">
-            <thead><tr><th>Contrôle</th><th>La question qu'il tranche</th><th>Quand</th></tr></thead>
-            <tbody>
-              <tr><td class="m">browser&#8209;smoke</td><td class="d">La façon dont l'extension écrit dans le champ marche-t-elle encore dans un Chrome <em>d'aujourd'hui</em>&nbsp;? C'est la seule chose qu'un test simulé ne peut pas dire.</td><td class="m d">chaque jour, 04:17&nbsp;UTC</td></tr>
-              <tr><td class="m">mv3&#8209;smoke</td><td class="d">L'extension telle qu'elle est publiée se charge-t-elle vraiment dans un navigateur&nbsp;?</td><td class="m d">chaque jour</td></tr>
-              <tr><td class="m">sondes&nbsp;CORS</td><td class="d">Que l'extension a-t-elle vraiment le droit de lire depuis la page, et qu'est-ce qui doit passer par un autre chemin&nbsp;?</td><td class="m d">chaque jour</td></tr>
-              <tr><td class="m">extension&#8209;package</td><td class="d">Le paquet publié reste-t-il exempt de code venu d'ailleurs, et se charge-t-il dans les deux navigateurs&nbsp;?</td><td class="m d">chaque poussée sur <code>packages/</code></td></tr>
-              <tr><td class="m" style="color:var(--fg-faint)">smoke&nbsp;sélecteurs</td><td class="d"><strong style="color:var(--fg-2)">Jamais lancé automatiquement.</strong> Vérifier les repères sur les <em>vraies</em> plateformes demande d'être connecté à un vrai compte. L'outil existe, mais tant qu'on ne lui fournit pas de pages réelles, il se tait au lieu d'annoncer une garantie qu'il n'a pas.</td><td class="m d">manuel</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="small measure">C'est la dernière ligne qui compte le plus. Une coche verte sur un test incapable d'atteindre ce qu'il prétend vérifier est pire que pas de test du tout&nbsp;: quelqu'un finira par la croire.</p>
       </div>
     </section>
 
     <section class="cta-band">
       <div class="cta-in">
         <div class="stack g8">
-          <h2>GitHub aujourd'hui. Azure DevOps, avec ses limites écrites noir sur blanc.</h2>
-          <p class="small" style="color:var(--fg-2)">Commencez en <code style="font-family:var(--font-mono);font-size:.9em">assist</code> — rien n'est obligatoire tant que vous ne l'avez pas rendu obligatoire.</p>
+          <h2>Si votre plateforme est dans la liste, vous pouvez commencer aujourd'hui.</h2>
+          <p class="small" style="color:var(--fg-2)">Rien ne bloque personne tant que vous ne l'avez pas décidé.</p>
         </div>
         <div class="hero-btns">
-          <button class="btn btn-p" data-goto="adoption">Lire le guide d'adoption</button>
-          <button class="btn btn-s" data-goto="labels">Parcourir les labels</button>
+          <button class="btn btn-p">Installer l'extension</button>
+          <button class="btn btn-s" data-goto="labels">Voir les étiquettes</button>
         </div>
       </div>
     </section>
@@ -1376,8 +1260,8 @@ and this handler is deleted with it.</div>
             <table class="t">
               <thead><tr><th>#</th><th>Condition</th><th>Result</th><th>Diagnostic</th></tr></thead>
               <tbody>
-                <tr><td class="m num">1</td><td class="d">Label is <code>alwaysNonBlocking</code>, yet a decoration forces blocking</td><td class="m">falls back to <code>blockingByDefault</code></td><td class="m" style="color:var(--block)">E-CONFLICT</td></tr>
-                <tr><td class="m num">2</td><td class="d">One decoration forces blocking <em>and</em> another forces non-blocking</td><td class="m">falls back to <code>blockingByDefault</code></td><td class="m" style="color:var(--block)">E-CONFLICT</td></tr>
+                <tr><td class="m num">1</td><td class="d">Label is <code>alwaysNonBlocking</code>, yet a decoration forces blocking</td><td class="m">the label's own default applies</td><td class="m" style="color:var(--block)">E-CONFLICT</td></tr>
+                <tr><td class="m num">2</td><td class="d">One decoration forces blocking <em>and</em> another forces non-blocking</td><td class="m">the label's own default applies</td><td class="m" style="color:var(--block)">E-CONFLICT</td></tr>
                 <tr><td class="m num">3</td><td class="d">A decoration forces blocking</td><td class="m" style="color:var(--block)">blocking</td><td class="m d">—</td></tr>
                 <tr><td class="m num">4</td><td class="d">A decoration forces non-blocking</td><td class="m" style="color:var(--pass)">non-blocking</td><td class="m d">—</td></tr>
                 <tr><td class="m num">5</td><td class="d">No forcing decoration</td><td class="m">the label's <code>blockingByDefault</code></td><td class="m d">—</td></tr>
@@ -1559,8 +1443,8 @@ arrive au T4 et ce handler disparaît avec elle.</div>
             <table class="t">
               <thead><tr><th>#</th><th>Condition</th><th>Résultat</th><th>Diagnostic</th></tr></thead>
               <tbody>
-                <tr><td class="m num">1</td><td class="d">Le label est <code>alwaysNonBlocking</code>, et pourtant une décoration force le blocage</td><td class="m">repli sur <code>blockingByDefault</code></td><td class="m" style="color:var(--block)">E-CONFLICT</td></tr>
-                <tr><td class="m num">2</td><td class="d">Une décoration force le blocage <em>et</em> une autre force le non-blocage</td><td class="m">repli sur <code>blockingByDefault</code></td><td class="m" style="color:var(--block)">E-CONFLICT</td></tr>
+                <tr><td class="m num">1</td><td class="d">Le label est <code>alwaysNonBlocking</code>, et pourtant une décoration force le blocage</td><td class="m">le défaut du label s'applique</td><td class="m" style="color:var(--block)">E-CONFLICT</td></tr>
+                <tr><td class="m num">2</td><td class="d">Une décoration force le blocage <em>et</em> une autre force le non-blocage</td><td class="m">le défaut du label s'applique</td><td class="m" style="color:var(--block)">E-CONFLICT</td></tr>
                 <tr><td class="m num">3</td><td class="d">Une décoration force le blocage</td><td class="m" style="color:var(--block)">bloquant</td><td class="m d">—</td></tr>
                 <tr><td class="m num">4</td><td class="d">Une décoration force le non-blocage</td><td class="m" style="color:var(--pass)">non bloquant</td><td class="m d">—</td></tr>
                 <tr><td class="m num">5</td><td class="d">Aucune décoration forçante</td><td class="m">le <code>blockingByDefault</code> du label</td><td class="m d">—</td></tr>
@@ -1683,7 +1567,7 @@ arrive au T4 et ce handler disparaît avec elle.</div>
             <li><span class="mk">1</span><b><code>resolverOverrideGroup</code> is designated</b><span class="tx">Without an authorized group, both release valves are inert at once — no <code>decision</code>, no PR exemption — and a thread whose author is unavailable blocks the pull request with no recourse. The server emits a <code>config-warning</code> on every evaluation of an <code>enforce</code> repository whose resolved group is empty.</span></li>
             <li><span class="mk">2</span><b>The rollback procedure is written, and its owner is named</b><span class="tx">Not “someone will figure it out”. A named person with access to the organization configuration channel and to the server's admin endpoint. See below.</span></li>
             <li><span class="mk">3</span><b>The check is required, and bypass is disabled</b><span class="tx">GitHub: <em>Require status checks to pass</em> on <code>conventional-comments</code>, plus <em>Do not allow bypassing the above settings</em>. Azure DevOps: a <em>Status checks</em> branch policy on <code>conventional-comments/compliance</code>, set to <em>Block</em> rather than <em>Warn</em>. Without the second half, the guarantee doesn't hold for administrators.</span></li>
-            <li><span class="mk n">4</span><b>Azure DevOps — label provenance is established, or the fallback is in place</b><span class="tx">The exemption fallback is implemented end to end: admin entry point, persisted active exemption, label posted by the server. Until a provenance source exists, the fallback is what you're running.</span></li>
+            <li><span class="mk n">4</span><b>Azure DevOps — exemptions go through the server</b><span class="tx">The platform doesn't report who applied a label, so the server posts the exemption label itself and records who asked for it. Nothing to configure, but an exemption is requested through the admin endpoint rather than by a click in the interface.</span></li>
             <li><span class="mk n">5</span><b>Azure DevOps — detection latency meets the 60 s target</b><span class="tx">Either an event channel is established, or <code>reconcileIntervalSeconds</code> is set to 60 or below. The server emits a <code>config-warning</code> if the interval exceeds 60 s in <code>enforce</code>.</span></li>
           </ul>
         </section>
@@ -1692,7 +1576,7 @@ arrive au T4 et ce handler disparaît avec elle.</div>
           <h2>Rollback</h2>
           <div class="callout blk">
             <span class="ct">the one thing to get right</span>
-            <h4>The fallback is <code>warn</code>. It is not <code>off</code>, and it is not <code>assist</code>.</h4>
+            <h4>You drop back to <code>warn</code>. Never to <code>off</code>, and never to <code>assist</code>.</h4>
             <p>In <code>warn</code>, the server keeps publishing a status that never fails — which unblocks every pull request <em>immediately, without touching branch protection</em>. <code>assist</code> and <code>off</code> publish nothing at all: dropping to them from <code>enforce</code> leaves a required check with no status, and blocks every pull request in the organization until protection is removed repository by repository. Reaching for <code>off</code> in an incident is how a rollback becomes a second incident.</p>
           </div>
           <ul class="tick">
@@ -1803,7 +1687,7 @@ arrive au T4 et ce handler disparaît avec elle.</div>
             <li><span class="mk">1</span><b><code>resolverOverrideGroup</code> est désigné</b><span class="tx">Sans ce groupe, les deux portes de sortie sont fermées&nbsp;: ni <code>decision</code>, ni exemption de pull request. Un point bloquant dont l'auteur est absent immobilise alors la PR, sans recours. Le serveur vous avertit à chaque évaluation tant que le groupe est vide.</span></li>
             <li><span class="mk">2</span><b>La procédure de retour arrière est écrite, et son exécutant est désigné</b><span class="tx">Pas « quelqu'un s'en occupera ». Une personne nommée, avec accès au canal de configuration d'organisation et au point d'entrée d'administration du serveur. Voir plus bas.</span></li>
             <li><span class="mk">3</span><b>Le check est déclaré obligatoire, et le contournement est interdit</b><span class="tx">GitHub&nbsp;: <em>Require status checks to pass</em> sur <code>conventional-comments</code>, plus <em>Do not allow bypassing the above settings</em>. Azure DevOps&nbsp;: une policy de branche <em>Status checks</em> sur <code>conventional-comments/compliance</code>, réglée sur <em>Block</em> plutôt que <em>Warn</em>. Sans la seconde option, les administrateurs peuvent passer outre — et la garantie ne vaut plus rien.</span></li>
-            <li><span class="mk n">4</span><b>Azure DevOps — la provenance des étiquettes est établie, ou le repli est en place</b><span class="tx">La solution de repli existe et fonctionne de bout en bout. Mais tant qu'Azure DevOps ne dit pas qui a posé une étiquette, c'est elle qui tourne, et pas le mécanisme normal. Sachez-le avant, pas après.</span></li>
+            <li><span class="mk n">4</span><b>Azure DevOps — l'exemption passe par le serveur</b><span class="tx">La plateforme ne dit pas qui a posé une étiquette&nbsp;: c'est donc le serveur qui pose celle d'exemption et garde la trace de qui l'a demandée. Rien à configurer, mais une exemption se demande par le point d'entrée d'administration, pas par un clic dans l'interface.</span></li>
             <li><span class="mk n">5</span><b>Azure DevOps — la latence de détection respecte la cible de 60&nbsp;s</b><span class="tx">Sans notification en temps réel, le serveur doit repasser voir de lui-même au moins toutes les 60 secondes. Au-delà, il vous avertit&nbsp;: une PR resterait bloquée plus d'une minute après avoir été réglée.</span></li>
           </ul>
         </section>
@@ -1812,7 +1696,7 @@ arrive au T4 et ce handler disparaît avec elle.</div>
           <h2>Retour arrière</h2>
           <div class="callout blk">
             <span class="ct">la seule chose à ne pas rater</span>
-            <h4>Le repli est <code>warn</code>. Ce n'est pas <code>off</code>, et ce n'est pas <code>assist</code>.</h4>
+            <h4>On redescend en <code>warn</code>. Jamais en <code>off</code>, jamais en <code>assist</code>.</h4>
             <p>En <code>warn</code>, le serveur publie encore une vérification, mais toujours verte&nbsp;: toutes les pull requests repartent <em>tout de suite</em>, sans toucher à la protection de branche. <code>assist</code> et <code>off</code>, eux, ne publient plus rien du tout. Vous vous retrouvez alors avec une vérification déclarée obligatoire qui n'arrive jamais — et c'est <em>toute</em> l'organisation qui se bloque, jusqu'à ce que quelqu'un retire la protection dépôt par dépôt. En pleine panne, choisir <code>off</code> transforme le retour arrière en deuxième incident.</p>
           </div>
           <ul class="tick">
