@@ -147,7 +147,7 @@ l'utilisateur retrouvera dans sa PR.
 
 Dans la grammaire, `:` sépare l'étiquette du propos. Sur le site il devient la ponctuation
 de service : chaque sur-titre s'y termine, chaque entrée de navigation aussi
-(`how it holds:`, `platforms:`, `docs:`). Signature typographique gratuite, exacte, et
+(`how it works:`, `platforms:`, `docs:`). Signature typographique gratuite, exacte, et
 impossible à confondre avec un autre site d'outillage.
 
 **Le site porte donc deux deux-points aux règles opposées, et les confondre est un bug.**
