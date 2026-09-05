@@ -118,6 +118,14 @@ de service : chaque sur-titre s'y termine, chaque entrée de navigation aussi
 (`how it holds:`, `platforms:`, `docs:`). Signature typographique gratuite, exacte, et
 impossible à confondre avec un autre site d'outillage.
 
+**Le site porte donc deux deux-points aux règles opposées, et les confondre est un bug.**
+En français, celui de la prose prend une espace insécable — `plateformes :`, `doc :`. Celui
+de la grammaire n'en prend **jamais** : `issue: sujet` est un jeton, et `issue : sujet` ne
+passe pas le parseur. La frontière est nette et mécanisable : tout ce qui est en Plex Mono
+au titre de la règle §3.2 suit la typographie du code, jamais celle du français. Un
+composant `<Eyebrow>` qui insère l'espace selon la locale, et un composant `<Token>` qui ne
+l'insère jamais, suffisent à ce que la règle tienne sans vigilance humaine.
+
 ---
 
 ## 4. Palette
@@ -218,7 +226,25 @@ commercial. Trois arbitrages, à appliquer aux deux langues.
 
 ---
 
-## 8. Jetons
+## 8. Bilinguisme
+
+Anglais à la racine, français sous `/fr/` (voir
+[`decoupage-pages-fr.md`](./decoupage-pages-fr.md) §4). Quatre points relèvent de
+l'identité, pas de la traduction :
+
+1. **Les identifiants de labels restent en anglais dans les deux versions.** `issue`,
+   `nitpick`, `blocking` sont des jetons de grammaire, pas du texte — c'est déjà la règle
+   du toolkit (§10, Internationalisation). Seules les descriptions et les infobulles sont
+   traduites, et le site reprend alors **les chaînes réelles de `strings.ts`** plutôt que
+   de retraduire : il doit montrer les mots que l'extension affiche.
+2. **Les deux deux-points** — voir §3.4.
+3. **Les segments d'URL sont traduits** (`/docs/configure/` ↔ `/fr/docs/configuration/`).
+   Un site bilingue dont les routes ne le sont pas ne l'est qu'en surface.
+4. **Le sélecteur conserve la page courante.** Il bascule la locale, jamais la position.
+   Un renvoi à l'accueil est la façon la plus rapide de faire abandonner un lecteur au
+   milieu d'une page de référence.
+
+## 9. Jetons
 
 Voir [`tokens.css`](./tokens.css) : palette complète en trois états de thème (clair,
 `prefers-color-scheme: dark` non stampé, `[data-theme]` explicite), prêt à importer dans
