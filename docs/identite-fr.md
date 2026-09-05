@@ -93,7 +93,7 @@ La coche est **le seul élément vert de la marque** : c'est un verdict, pas une
 d'accompagnement. La découpe derrière la pastille prend la couleur de surface du thème
 (`--mark-knock`) — la marque ne transporte jamais de blanc en dur.
 
-### 2.2 Le verrou nominal (le pari de cette proposition)
+### 2.2 Le verrou-grammaire (gardé, non employé)
 
 > **`toolkit:` conventional comments**
 
@@ -101,11 +101,14 @@ Le nom s'écrit dans la grammaire que le produit enseigne : une étiquette encad
 deux-points, un sujet. `toolkit` est rendu comme un badge de label ; `conventional
 comments` comme le sujet, en mono.
 
-C'est **le seul choix de cette proposition qui ne se rattrape pas plus tard** : palette,
-typographie et composants tiennent sans lui. À valider ou rejeter en premier.
+**Il n'est employé nulle part sur le site**, et c'est délibéré : l'en-tête utilise le
+verrou sobre — marque + `conventionalcomments` en Archivo 700 + `.io` en gris. L'idée que
+le nom s'écrive dans sa propre grammaire ne se comprend que si on connaît déjà la
+convention, ce qui est précisément le travers que le §7.2 interdit. Le premier écran de
+l'accueil porte la même idée en la *démontrant* plutôt qu'en la signant.
 
-Le verrou d'en-tête, lui, reste sobre : marque + `conventionalcomments` en Archivo 700 +
-`.io` en gris.
+Gardé ici comme piste, pour une carte de conférence ou un sticker — un contexte où le
+lecteur connaît déjà. Jamais en en-tête de page.
 
 ---
 
