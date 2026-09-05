@@ -24,7 +24,7 @@ npm run check    # build + tous les contrôles ci-dessous
 | `npm run dev` | Estampille le build, puis sert le site en développement |
 | `npm run build` | Estampille le build, puis produit `dist/` (28 pages) |
 | `npm run check` | `build`, puis les invariants du site et du schéma |
-| `npm run check:site` | Les sept invariants, sur ce qui est réellement produit |
+| `npm run check:site` | Les dix invariants, sur ce qui est réellement produit |
 | `npm run check:schema` | Le schéma JSON contre ses gabarits ; `-- <chemin-du-toolkit>` le compare à la source |
 | `npm run deploy` | `check`, puis `wrangler deploy` |
 
@@ -36,9 +36,10 @@ src/i18n/ui.ts          Les chaînes de chrome, et rien d'autre (§7.3 : on écr
 src/layouts/            Base (coque, méta, alternats) et Docs (grille + barre latérale)
 src/components/         Mark, Header, Footer, DocsSidebar, BuildFacts
 src/pages/              26 pages : 13 en anglais à la racine, 13 en français sous fr/
-src/styles/             tokens.css (les jetons, trois états de thème) et base.css
+src/styles/             fonts.css (@font-face), tokens.css (jetons, trois thèmes), base.css
 public/schema/v1.json   Le schéma de configuration, servi à /schema/v1.json
-public/_headers         CORS et cache pour le schéma (lu par Cloudflare, jamais servi)
+public/_headers         CORS du schéma, cache des polices (lu par Cloudflare, jamais servi)
+public/fonts/           Les cinq .woff2, empreintés — le site sert ses polices lui-même
 scripts/                Estampille, portage des maquettes, contrôles
 ```
 
@@ -61,6 +62,12 @@ qui compile ne dit rien d'un lien qui ne mène nulle part.
 6. `/schema/v1.json` est servi, parse, et son `$id` nomme l'adresse à laquelle il est servi.
 7. Aucun `.md`, `.mjs` ou `.ts` dans `dist/` — `public/` est copié tel quel, et une note de
    maintenance qu'on y dépose se retrouve en ligne sans que personne ne l'ait décidé.
+8. Une page d'erreur par langue, et sous forme de fichier : Cloudflare sert le `404.html`
+   le plus proche, jamais un `404/index.html`.
+9. Aucune sous-ressource tierce. Les liens `<a>` mènent où ils veulent ; ce que le
+   navigateur va chercher tout seul vient de ce site et de nulle part ailleurs.
+10. Toute classe employée dans le HTML a une règle CSS — sans quoi rien ne casse, la page
+    s'affiche, et un élément est simplement invisible ou collé au suivant.
 
 ## L'estampille de build
 
