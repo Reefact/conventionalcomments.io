@@ -15,21 +15,24 @@ Quatre pages, une par objection.
 
 ### `/` · `/fr/` — Accueil
 
-**Travail :** faire admettre qu'une convention peut devenir une contrainte tenue.
+**Travail :** faire comprendre à quelqu'un qui ne connaît rien à la convention pourquoi
+elle existe — en partant du malentendu humain, pas du mécanisme (§1 de l'identité).
 
-Hero (« La convention ne tient pas toute seule ») accompagné du **check de conformité en
-échec puis vert** — pas d'une capture de l'extension · le problème · les deux composants
-(A assiste / B tranche) · la trajectoire `assist → warn → enforce` · la garantie de
-confidentialité · les plateformes · double CTA.
+Hero « C'est une remarque, ou un reproche ? » avec le bloc **avant / après** : la même
+phrase seule, puis précédée de `nitpick (non-blocking)` · les quatre malentendus réels ·
+la convention expliquée par *ce que l'auteur entend* · **l'effort demandé au relecteur** ·
+l'objection « ça va rendre les revues molles » · la proportion visible d'une revue ·
+**puis seulement** l'outil, sous « une bonne habitude s'oublie en trois jours » · la
+trajectoire · confidentialité · plateformes.
 
-- CTA principal : **« Adopter dans votre équipe »** → `/docs/adoption/`
+- CTA principal : **« Voir les étiquettes »** → `/docs/labels/`
 - CTA secondaire : « Installer l'extension » → `/docs/install/`
-- Lien sortant vers `conventionalcomments.org` dans la **première** section (§1.1 de
-  l'identité).
+- Lien sortant vers `conventionalcomments.org` dans la section « la convention », pas en
+  pied (§1.1 de l'identité).
 
-Source : `README.md`.
+Source : `README.md`, et le §1 de l'identité pour l'angle.
 
-### `/how-it-works/` · `/fr/comment-ca-tient/`
+### `/how-it-works/` · `/fr/comment-ca-marche/`
 
 **Travail :** lever l'objection « une extension, ça se désinstalle ».
 
@@ -167,8 +170,10 @@ du toolkit (§10, Internationalisation), et ce sont des jetons de grammaire, pas
 
 ## 5. Navigation
 
-**En-tête :** marque · `how it holds:` · `platforms:` · `docs:` · GitHub · sélecteur EN/FR
+**En-tête :** marque · `how it works:` · `platforms:` · `docs:` · GitHub · sélecteur EN/FR
 · bouton **« Adopt it in your team »**.
+
+Écarté : `how it holds:`. Joli, et incompréhensible pour qui découvre le site.
 
 « Installer l'extension » n'est **pas** dans l'en-tête. L'y placer ferait du produit une
 extension de navigateur avec un serveur en option — soit l'inverse exact de ce que dit le
@@ -204,8 +209,6 @@ une version de `core/` — donc la seule page qu'un administrateur reviendra con
 
 ## 7. À trancher avant d'écrire du code
 
-- [ ] **Valider ou rejeter le verrou nominal** `toolkit: conventional comments` (§2.2 de
-      l'identité). Seul choix qui ne se rattrape pas plus tard.
 - [ ] **Décider du sort de `conventional-comments-toolkit.dev`** et du déménagement du
       schéma.
 - [ ] **Arbitrer la source de vérité de la doc.** Onze pages traduites qui reformulent des
