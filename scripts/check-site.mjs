@@ -214,6 +214,33 @@ const orphans = [...usedClasses]
 if (orphans.length) fail(`classe(s) sans règle : ${orphans.join(', ')}`);
 else ok(`${usedClasses.size} classes employées, toutes stylées`);
 
+// ————— 11. Chaque page se présente correctement quand on la partage —————
+// Un lien collé dans Slack, Teams ou LinkedIn est souvent le premier contact avec le site.
+// Sans ces balises il s'affiche en URL nue ; avec une image absente, en cadre vide — ce qui
+// est pire, parce que le client social met l'échec en cache.
+const SOCIAL = ['og:title', 'og:description', 'og:url', 'og:image', 'og:image:alt', 'twitter:card'];
+const seenImages = new Set();
+for (const file of pages) {
+  const rel = relative(DIST, file);
+  const html = readFileSync(file, 'utf8');
+  for (const tag of SOCIAL) {
+    const attr = tag.startsWith('og:') ? 'property' : 'name';
+    const m = html.match(new RegExp(`<meta ${attr}="${tag}" content="([^"]*)"`));
+    if (!m || !m[1].trim()) fail(`${rel} : ${tag} absent ou vide`);
+    else if (tag === 'og:image') seenImages.add(m[1]);
+  }
+}
+for (const img of seenImages) {
+  const path = img.replace(/^https?:\/\/[^/]+/, '');
+  if (!served(path)) fail(`og:image ${img} n'est pas servi`);
+}
+if (seenImages.size) ok(`cartes sociales complètes, ${seenImages.size} image(s) servie(s)`);
+
+// L'icône, aux trois formes que les navigateurs vont chercher.
+for (const icon of ['/favicon.svg', '/favicon.ico', '/apple-touch-icon.png'])
+  if (!served(icon)) fail(`${icon} non servi`);
+ok('icône servie en svg, ico et apple-touch');
+
 if (failures.length) {
   console.error('\n' + failures.map((f) => `  ✗ ${f}`).join('\n'));
   console.error(`\n${failures.length} problème(s).`);
