@@ -1,0 +1,20 @@
+<!-- La source de public/apple-touch-icon.png. Boîte de 64 pour un dessin de 48 :
+     8 d'air de chaque côté, soit 75 % d'emprise. Sans cette marge, le masque
+     arrondi d'iOS rogne la pastille de validation, qui touchait le coin.
+     Fond opaque parce qu'un PNG transparent se pose sur le fond d'écran du
+     visiteur : la bulle sombre disparaîtrait sur un fond sombre. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#FFFFFF"/>
+  <g transform="translate(8 8)">
+    <path d="M3 12a7 7 0 0 1 7-7h28a7 7 0 0 1 7 7v13a7 7 0 0 1-7 7H21l-9 9v-9h-2a7 7 0 0 1-7-7V12Z"
+          fill="none" stroke="#0B1522" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M17.5 13.5 12.5 19l5 5.5" fill="none" stroke="#1E44C8" stroke-width="4.4"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M30.5 13.5 35.5 19l-5 5.5" fill="none" stroke="#1E44C8" stroke-width="4.4"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="35.5" cy="35.5" r="12.5" fill="#FFFFFF"/>
+    <circle cx="35.5" cy="35.5" r="9.6" fill="none" stroke="#1F8A4C" stroke-width="4"/>
+    <path d="m31 35.8 3.2 3.2 6-6.4" fill="none" stroke="#1F8A4C" stroke-width="4.2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

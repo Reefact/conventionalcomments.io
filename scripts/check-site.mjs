@@ -241,6 +241,26 @@ for (const icon of ['/favicon.svg', '/favicon.ico', '/apple-touch-icon.png'])
   if (!served(icon)) fail(`${icon} non servi`);
 ok('icône servie en svg, ico et apple-touch');
 
+// ————— 12. Toute variable CSS lue sans repli est définie quelque part —————
+// C'est ce contrôle qui manquait quand `--on-accent` a été perdu en recopiant les jetons
+// des maquettes : le bouton principal héritait alors de --fg, soit 2,37:1 sur le bleu là
+// où la maquette donnait 7,73:1. Rien ne cassait — la déclaration devient simplement
+// invalide et la couleur est héritée — et le bouton restait beau, juste illisible.
+//
+// PORTÉE. On demande qu'une variable soit définie quelque part : dans le CSS, ou en ligne
+// dans le HTML. Vérifier page par page serait plus strict mais faux — la règle
+// `.step { border-top: 3px solid var(--st) }` voyage dans le bundle commun, donc sur toute
+// page, alors que `--st` n'est posé que sur les pages qui ont des `.step`. Ce contrôle
+// attrape ce qu'il doit attraper : une variable définie NULLE PART.
+const cssText = walkAll(DIST).filter((f) => f.endsWith('.css'))
+  .map((f) => readFileSync(f, 'utf8')).join('\n');
+const inlineText = pages.map((f) => readFileSync(f, 'utf8')).join('\n');
+const readNoFallback = new Set([...cssText.matchAll(/var\(\s*(--[\w-]+)\s*\)/g)].map((m) => m[1]));
+const declared = new Set([...(cssText + inlineText).matchAll(/(--[\w-]+)\s*:/g)].map((m) => m[1]));
+const undefinedVars = [...readNoFallback].filter((v) => !declared.has(v)).sort();
+if (undefinedVars.length) fail(`variable(s) CSS lue(s) sans repli ni définition : ${undefinedVars.join(', ')}`);
+else ok(`${readNoFallback.size} variables lues sans repli, toutes définies`);
+
 if (failures.length) {
   console.error('\n' + failures.map((f) => `  ✗ ${f}`).join('\n'));
   console.error(`\n${failures.length} problème(s).`);
