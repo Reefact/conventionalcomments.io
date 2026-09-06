@@ -16,7 +16,11 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
-_Nothing pending yet._
+### 🔧 Improved
+
+- **The docs table of contents stays put while you scroll.** The left-hand navigation on
+  documentation and release-notes pages now stays visible as you read down a long page,
+  instead of scrolling out of view with the rest of the sidebar.
 
 ## release/2026-09-06T21-44-09Z — September 6, 2026
 
