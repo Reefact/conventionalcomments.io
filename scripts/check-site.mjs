@@ -7,8 +7,11 @@
 
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = new URL('..', import.meta.url).pathname;
+// `new URL(...).pathname` reste une URL : il garde les %20 et ne rend pas un chemin
+// natif sous Windows. fileURLToPath fait la conversion, dans les deux cas.
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DIST = join(ROOT, 'dist');
 if (!existsSync(DIST)) {
   console.error('dist/ absent — lancer `npm run build` d’abord.');
@@ -273,13 +276,17 @@ for (const file of pages) {
   const html = readFileSync(file, 'utf8');
   for (const m of html.matchAll(/<a\b[^>]*\bhref="(#|)"/g))
     noWhere.push(`${rel} — <a href="${m[1]}"> sans destination`);
-  // Un <button> qui porte une classe de navigation est un lien qui n'a pas été converti.
-  for (const m of html.matchAll(/<button\b[^>]*class="([^"]*)"/g))
-    if (/\b(pgl|side|rn-side|path|navlink|brand|rel-tag)\b/.test(m[1]))
-      noWhere.push(`${rel} — <button class="${m[1]}"> là où un lien est attendu`);
+  // Un <button> OU un <span> qui porte une classe de navigation est un lien qui n'a pas
+  // été converti. Le second cas a été manqué au premier tour : neuf « tag ↗ » sur les
+  // notes de version étaient devenus des ancres, trois autres sur /version étaient restés
+  // des <span>. Un chevron sortant sur un élément non cliquable promet une navigation qui
+  // n'existe pas — et rien dans le HTML produit ne le signale.
+  for (const m of html.matchAll(/<(button|span)\b[^>]*class="([^"]*)"/g))
+    if (/\b(pgl|side|rn-side|path|navlink|brand|rel-tag)\b/.test(m[2]))
+      noWhere.push(`${rel} — <${m[1]} class="${m[2]}"> là où un lien est attendu`);
 }
 if (noWhere.length) for (const n of new Set(noWhere)) fail(n);
-else ok('aucun lien vide ni bouton de navigation sans destination');
+else ok('aucun lien vide, ni élément de navigation sans destination');
 
 if (failures.length) {
   console.error('\n' + failures.map((f) => `  ✗ ${f}`).join('\n'));

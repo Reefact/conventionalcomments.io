@@ -10,8 +10,11 @@
 
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = new URL('..', import.meta.url).pathname;
+// `new URL(...).pathname` reste une URL : il garde les %20 et ne rend pas un chemin
+// natif sous Windows. fileURLToPath fait la conversion, dans les deux cas.
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const toolkit = process.argv[2] || process.env.TOOLKIT_PATH || '';
 if (!toolkit) {
   console.log('  · comparaison des notes de version ignorée (passer le chemin du toolkit)');

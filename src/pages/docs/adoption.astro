@@ -92,8 +92,12 @@ const page = 'adoption' as const;
   <span class="tk-k">"formatSeverity"</span>: <span class="tk-v">"warn"</span>,          <span class="tk-cm">// criterion 1 does not gate</span>
   <span class="tk-k">"exemptUsers"</span>: [<span class="tk-v">"dependabot[bot]"</span>, <span class="tk-v">"github-actions[bot]"</span>],
   <span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>],
-  <span class="tk-k">"server"</span>: <span class="tk-k">&#123;</span> <span class="tk-k">"gracePeriodSeconds"</span>: <span class="tk-v">900</span>, <span class="tk-k">"reconcileIntervalSeconds"</span>: <span class="tk-v">900</span> <span class="tk-k">&#125;</span>
+  <span class="tk-k">"server"</span>: <span class="tk-k">&#123;</span> <span class="tk-k">"gracePeriodSeconds"</span>: <span class="tk-v">900</span>, <span class="tk-k">"reconcileIntervalSeconds"</span>: <span class="tk-v">60</span> <span class="tk-k">&#125;</span>   <span class="tk-cm">// 60, not 900: prerequisite 5</span>
 <span class="tk-k">&#125;</span></pre>
+          <div class="callout">
+            <span class="ct">why 60</span>
+            <p style="margin:0"><code>reconcileIntervalSeconds</code> is <strong>60 here, not 900</strong>. Prerequisite 5 asks for 60 or below on Azure DevOps under <code>enforce</code>, and this page says the phase change touches <code>mode</code> alone — so the value has to be right before the change, not after it. On GitHub, where an event channel covers thread state, 900 is fine.</p>
+          </div>
           <div class="callout">
             <span class="ct">upgrade note</span>
             <p style="margin:0"><code>toolCommands</code> is <strong>empty by default</strong>. Slash commands used to be exempted through a built-in list; that list is gone. In <code>enforce</code>, a bare <code>/rebase</code> is now rejected like any other comment until the repository declares it. Adding <code>"/*"</code> restores the exemption and widens it to every slash command.</p>

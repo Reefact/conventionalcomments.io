@@ -26,15 +26,10 @@ const page = 'version' as const;
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">what it changed:</span>
-          <h2>5 September 2026</h2>
+          <h2>Nothing to report yet</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">This section names what the release above brought. There is no release above — the <code>release</code> row is empty — so there is nothing to name. It fills itself the day a <code>release/*</code> tag is pushed.</p>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The toolkit's own release notes, which are a different thing and do exist, are at <a href={href('releasenotes', 'en')}>release notes</a>.</p>
         </div>
-        <div class="rel-s"><h4>✨ New</h4><ul>
-          <li>The site publishes its own release notes, at <code>/release-notes/v1/</code> — the toolkit's nine releases, in English and French, with what each one changed for the person using it rather than a list of commits.</li>
-          <li>The configuration schema is served at <code>/schema/v1.json</code>. Put it in a repository's <code>$schema</code> line and your editor completes the keys, describes them on hover, and underlines a wrong value before you commit.</li>
-        </ul></div>
-        <div class="rel-s"><h4>🙌 Improvements</h4><ul>
-          <li>Every page exists in both languages, with translated routes — <code>/docs/configure/</code> answers to <code>/fr/docs/configuration/</code> — and the language switcher keeps you on the page you were reading instead of sending you home.</li>
-        </ul></div>
       </div>
     </section>
 
@@ -43,37 +38,9 @@ const page = 'version' as const;
         <div class="stack g14 measure">
           <span class="eyebrow">previous releases:</span>
           <h2>What came before</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The five releases published just before this one.</p>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Nothing yet. No <code>release/*</code> tag has been pushed, so this site has no release history to show — and inventing one on the page whose whole job is to state facts about the build would be the worst place for it.</p>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Once tags exist they are listed on <a href="https://github.com/Reefact/conventionalcomments.io/tags" rel="noopener noreferrer" target="_blank">the repository's tag page ↗</a>, and the <code>release</code> row above names the one this build came from.</p>
         </div>
-
-        <div class="stack g28">
-          <article class="rel">
-            <div class="rel-h"><span class="rel-v" style="font-size:15px">release/2026-09-04T17-30-11Z</span><span class="rel-d">4 September 2026</span><span class="rel-tag">on GitHub ↗</span></div>
-            <div class="rel-s"><h4>✨ New</h4><ul>
-              <li>Documentation: install, labels and decorations, configuration, adoption, the server, and troubleshooting — seven pages in two languages, each written from the toolkit's own sources rather than from a summary of them.</li>
-            </ul></div>
-          </article>
-
-          <article class="rel">
-            <div class="rel-h"><span class="rel-v" style="font-size:15px">release/2026-09-04T08-02-55Z</span><span class="rel-d">4 September 2026</span><span class="rel-tag">on GitHub ↗</span></div>
-            <div class="rel-s"><h4>🙌 Improvements</h4><ul>
-              <li>The home page now opens on the misunderstanding it exists to fix — “is that feedback, or a dig?” — instead of on the mechanism. The tool arrives in the sixth section, where it belongs.</li>
-            </ul></div>
-            <div class="rel-s"><h4>🐛 Fixes</h4><ul>
-              <li>The site's brand in the header is a link again, so there was a way back to the home page from a documentation page.</li>
-              <li>The <code>quibble</code> label showed the wrong emoji — a hand heart instead of a feather. Thirteen icons transcribed by hand, one of them wrong.</li>
-            </ul></div>
-          </article>
-
-          <article class="rel">
-            <div class="rel-h"><span class="rel-v" style="font-size:15px">release/2026-09-03T11-45-20Z</span><span class="rel-d">3 September 2026</span><span class="rel-tag">on GitHub ↗</span></div>
-            <div class="rel-s"><h4>✨ New</h4><ul>
-              <li>First publication: the home page, how it works, supported platforms, and privacy.</li>
-            </ul></div>
-          </article>
-        </div>
-
-        <p class="small measure"><a href="https://github.com/Reefact/conventionalcomments.io/tags" rel="noopener noreferrer" target="_blank">See further releases on GitHub ↗</a></p>
       </div>
     </section>
 </Base>

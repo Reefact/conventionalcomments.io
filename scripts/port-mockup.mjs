@@ -22,8 +22,11 @@
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = new URL('..', import.meta.url).pathname;
+// `new URL(...).pathname` reste une URL : il garde les %20 et ne rend pas un chemin
+// natif sous Windows. fileURLToPath fait la conversion, dans les deux cas.
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const html = readFileSync(join(ROOT, 'docs/mockups/pages.html'), 'utf8');
 
 /** clé → { layout, fichier par locale, titre et description par locale } */
