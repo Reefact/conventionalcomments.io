@@ -13,6 +13,23 @@
   // pas rattaché.
   "workers_dev": false,
 
+  // Le nom d'hôte sur lequel le site répond. « Custom domain » et non « route » : le
+  // Worker EST l'origine, Cloudflare crée l'enregistrement DNS et le certificat tout
+  // seul. Une route, elle, suppose une origine derrière et exige un enregistrement DNS
+  // proxifié préexistant — sans quoi le nom ne résout pas et rien n'atteint le Worker.
+  //
+  // PRÉREQUIS, et il est dur : la zone doit être gérée par Cloudflare. Contrairement à
+  // Pages, Workers n'accepte aucun domaine dont les serveurs de noms sont ailleurs.
+  //
+  // PAS DE www. L'ajouter ici en second « custom domain » servirait les mêmes octets
+  // sous deux noms — exactement ce que `workers_dev: false` évite par ailleurs, et les
+  // `<link rel="canonical"> `du site désignent tous l'apex. Si www doit répondre, c'est
+  // une règle de redirection au niveau de la zone (301 vers l'apex), pas un second
+  // hôte servi.
+  "routes": [
+    { "pattern": "conventionalcomments.io", "custom_domain": true }
+  ],
+
   // PAS de "main" : aucune requête n'invoque de script.
   //
   // Une requête servie comme asset statique est gratuite et non mesurée ; une requête
