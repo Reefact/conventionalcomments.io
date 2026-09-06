@@ -214,8 +214,8 @@ Corollaire : **chaque** build en produit un, pas seulement un build de release. 
 qui n'existe que parfois est un fichier que chaque lecteur doit tester ; et `release: null`
 dit « ceci n'est pas une release » plus utilement qu'un 404.
 
-Sur la maquette, le bouton `/version` est dans la barre de méta **hors du cadre**, avec les
-autres informations de maquette : il tient lieu de barre d'adresse, pas de lien du site.
+Rien du site n'y mène, et un invariant le vérifie plutôt que de s'en remettre à la
+vigilance : on tape l'adresse, ou on ne la trouve pas. C'est une page d'exploitation.
 
 ### `/sitemap-index.xml` · `/robots.txt` · `/404`
 
