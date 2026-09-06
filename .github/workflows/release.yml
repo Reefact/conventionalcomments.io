@@ -1,0 +1,57 @@
+# Mise en ligne, sur tag `release/*` et rien d'autre.
+#
+# Pas sur chaque poussée de `main` : le tag EST la décision de publier, et c'est déjà la
+# convention des autres dépôts. Il vaut aussi pour le site lui-même — `/version` lit
+# `git describe --tags --match 'release/*'`, donc un déploiement hors tag s'annoncerait
+# « pas une release » sur sa propre page.
+#
+# VÉRIFIER PUIS PUBLIER L'ARTEFACT VÉRIFIÉ : `npm run check` construit `dist/` et le
+# contrôle, `wrangler deploy` téléverse ce même `dist/` sans rien reconstruire. Un job
+# unique suffit ici — rien ne s'intercale entre le contrôle et la publication. Le jour où
+# des tests navigateur s'ajoutent, il faudra les séparer et passer l'artefact d'un job à
+# l'autre, comme justdummies.io le fait.
+name: Release (mise en ligne)
+
+on:
+  push:
+    tags: ['release/*']
+  # Répétition à blanc utile : déploie l'état courant sans poser de tag.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Deux publications simultanées sur le même nom d'hôte n'ont pas de sens, et la seconde
+# gagnerait sans qu'on sache laquelle. On ne coupe pas celle qui est en vol.
+concurrency:
+  group: release-${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Vérifier, puis publier sur Cloudflare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # `/version` lit `git describe --tags`. Un clone superficiel n'a pas les tags :
+          # la page annoncerait « pas une release » sur une release.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Vérifier (construit dist/ et le contrôle)
+        run: npm run check
+
+      - name: Publier dist/ tel quel
+        run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Un site qui refuse les tiers dans le navigateur n'en appelle pas depuis sa CI.
+          WRANGLER_SEND_METRICS: false
