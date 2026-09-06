@@ -13,12 +13,13 @@ const page = 'releasenotes' as const;
         <p class="grp">ligne de version&nbsp;:</p>
         <div class="rn-line">
           <span class="rn-ln">Toolkit 1.x</span>
-          <span class="rn-lv">1.0.0-beta.9</span>
-          <span class="rn-ld">4 septembre 2026 · 9 versions</span>
+          <span class="rn-lv">1.0.0-beta.10</span>
+          <span class="rn-ld">5 septembre 2026 · 10 versions</span>
         </div>
         <p class="grp">sur cette page&nbsp;:</p>
         <ul class="rn-jump">
-          <li><a href="#v1-0-0-beta-9" class="cur">1.0.0-beta.9</a></li>
+          <li><a href="#v1-0-0-beta-10" class="cur">1.0.0-beta.10</a></li>
+          <li><a href="#v1-0-0-beta-9">1.0.0-beta.9</a></li>
           <li><a href="#v1-0-0-beta-8">1.0.0-beta.8</a></li>
           <li><a href="#v1-0-0-beta-7">1.0.0-beta.7</a></li>
           <li><a href="#v1-0-0-beta-6">1.0.0-beta.6</a></li>
@@ -48,8 +49,22 @@ const page = 'releasenotes' as const;
 
         <h2 class="rn-major">Version 1</h2>
 
+        <article class="rel" id="v1-0-0-beta-10">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.10</span><span class="rel-m">beta</span><span class="rel-d">5 septembre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.10" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">GitHub a réécrit sa vue « Files changed », et l'extension s'y était tue : cette version y ramène tout l'outillage, et fait parler les diagnostics dans la langue que vous avez choisie.</p>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li><strong>L'outillage des commentaires fonctionne de nouveau sur la vue « Files changed » réécrite de GitHub.</strong> GitHub sert désormais cette page sous <code>/pull/N/changes</code>, où l'extension ne reconnaissait rien : pas de barre de labels, pas de saisie rapide, pas de validation en direct, pas de badges sur les commentaires publiés — précisément là où un <code>issue:</code> bloquant compte le plus. Tout est de retour. Et une page qui porte une zone de saisie que l'extension ne reconnaît pas laisse maintenant une entrée de diagnostic, au lieu d'être inerte et muette à la fois.</li>
+            <li><strong>Sous <code>enforce</code>, un commentaire non conforme ne peut plus être publié depuis cette vue.</strong> Ni en cliquant sur <em>Reply</em> sous une ligne de diff, ni depuis le panneau « Finish your comments » d'une revue groupée, dont les boutons vivent dans la surcouche et non à côté du champ. Seul le chemin clavier était gardé jusqu'ici : un commentaire signalé par l'extension partait quand même à la souris.</li>
+            <li><strong>Modifier le commentaire racine d'un fil y est de nouveau validé.</strong> C'était pris pour une réponse, que la configuration par défaut dispense de validation — une racine <code>issue:</code> pouvait donc être réécrite en n'importe quoi sans que l'extension y regarde. Les commentaires publiés retrouvent aussi leurs badges, les fils résolus se lisent comme résolus, et le bandeau de la pull request affiche les auteurs et les textes qui lui manquaient.</li>
+            <li><strong>Un label bloquant dans le résumé d'une revue est de nouveau signalé.</strong> Dans le corps de « Finish your comments », <code>issue:</code> remontait tout sauf le seul avertissement qui compte là : personne ne peut résoudre un résumé de revue, qui ne porte donc aucun état bloquant.</li>
+            <li><strong>L'onglet Preview affiche les badges sur cette vue aussi.</strong> Écrire <code>issue: …</code> dans un composeur sur <code>…/changes</code> puis basculer sur <em>Preview</em> rendait le préfixe en texte brut, là où la même bascule sur la page de conversation affichait le badge.</li>
+            <li><strong>Le composeur ressemble de nouveau à lui-même sur cette vue.</strong> La barre d'outils est au-dessus du champ au lieu d'être repliée en colonne étroite à côté de lui, et le trait de conformité autour du champ est visible au lieu d'être rogné. Cet espacement survit aussi à un aller-retour par l'onglet <em>Preview</em>.</li>
+            <li><strong>Les messages de diagnostic suivent maintenant la langue choisie dans la page d'options.</strong> Une interface en français pouvait afficher <em>Conforme, avec avertissements</em> au-dessus de <em>This comment is blocking but has no discussion</em> : cette ligne-là prenait sa langue dans la configuration du dépôt plutôt que dans votre propre préférence. Les noms de labels et les codes de diagnostic restent non traduits dans les deux langues — ce sont des identifiants.</li>
+          </ul></div>
+        </article>
+
         <article class="rel" id="v1-0-0-beta-9">
-          <div class="rel-h"><span class="rel-v">1.0.0-beta.9</span><span class="rel-m">beta</span><span class="rel-d">4 septembre 2026</span><span class="rel-tag">tag ↗</span></div>
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.9</span><span class="rel-m">beta</span><span class="rel-d">4 septembre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.9" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
           <p class="rel-sum">L'extension ne s'impose plus sur la description d'une pull request, ne s'endort plus sur une page vide au départ, et dit enfin pourquoi quand elle n'arrive pas à lire votre configuration.</p>
           <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
             <li>Quand la configuration ne peut pas être lue, la page d'options affiche désormais <strong>pourquoi</strong> — <code>HTTP 429</code>, une <code>TypeError</code>, un 404 qu'on ne distingue pas d'un refus — avec le niveau d'où vient l'échec, au lieu du seul mot <code>unreachable</code>. La raison reste sur votre machine.</li>
@@ -64,7 +79,7 @@ const page = 'releasenotes' as const;
         </article>
 
         <article class="rel" id="v1-0-0-beta-8">
-          <div class="rel-h"><span class="rel-v">1.0.0-beta.8</span><span class="rel-m">beta</span><span class="rel-d">4 septembre 2026</span><span class="rel-tag">tag ↗</span></div>
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.8</span><span class="rel-m">beta</span><span class="rel-d">4 septembre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.8" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
           <p class="rel-sum">Un commentaire publié se lit comme un titre — les badges, puis le sujet en gras sur la même ligne — et trois façons de perdre silencieusement ses badges sont refermées.</p>
           <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
             <li>Le sujet d'un commentaire publié s'affiche désormais <strong>en gras sur la ligne des badges</strong>, à leur droite. Quand il ne peut pas être borné sans risque, la mise en page précédente est conservée plutôt que de couper au mauvais endroit.</li>
@@ -81,7 +96,7 @@ const page = 'releasenotes' as const;
         </article>
 
         <article class="rel" id="v1-0-0-beta-7">
-          <div class="rel-h"><span class="rel-v">1.0.0-beta.7</span><span class="rel-m">beta</span><span class="rel-d">3 septembre 2026</span><span class="rel-tag">tag ↗</span></div>
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.7</span><span class="rel-m">beta</span><span class="rel-d">3 septembre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.7" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
           <p class="rel-sum">Le préfixe structuré disparaît d'un commentaire publié — les badges le disent déjà — sauf partout où le dire deux fois était la réponse la plus sûre.</p>
           <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
             <li><code>issue (blocking):</code> n'apparaît plus dans un commentaire publié. À l'écran seulement — le commentaire stocké n'est pas touché, et rouvrir le formulaire d'édition le réaffiche en entier.</li>
@@ -94,7 +109,7 @@ const page = 'releasenotes' as const;
         </article>
 
         <article class="rel" id="v1-0-0-beta-6">
-          <div class="rel-h"><span class="rel-v">1.0.0-beta.6</span><span class="rel-m">beta</span><span class="rel-d">3 septembre 2026</span><span class="rel-tag">tag ↗</span></div>
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.6</span><span class="rel-m">beta</span><span class="rel-d">3 septembre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.6" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
           <p class="rel-sum">Les décorations ont leurs propres badges, et l'affichage suit un changement de configuration sous vos yeux.</p>
           <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
             <li>Chaque décoration reçoit son badge à côté du label&nbsp;: rouge quand elle force le caractère bloquant, vert quand elle force le non-bloquant, en pointillés quand elle n'est déclarée nulle part.</li>
@@ -106,7 +121,7 @@ const page = 'releasenotes' as const;
         </article>
 
         <article class="rel" id="v1-0-0-beta-5">
-          <div class="rel-h"><span class="rel-v">1.0.0-beta.5</span><span class="rel-m">beta</span><span class="rel-d">2 septembre 2026</span><span class="rel-tag">tag ↗</span></div>
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.5</span><span class="rel-m">beta</span><span class="rel-d">2 septembre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.5" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
           <p class="rel-sum">La configuration du dépôt redevient lisible sur les dépôts privés.</p>
           <div class="rel-s"><h4>🐛 Corrections</h4><ul>
             <li>La lecture suit une redirection que le navigateur refuse d'authentifier&nbsp;; les identifiants ne sont désormais retirés que sur ce saut-là, si bien que le fichier reste lisible sans vous demander la moindre permission d'hôte.</li>
@@ -115,7 +130,7 @@ const page = 'releasenotes' as const;
         </article>
 
         <article class="rel" id="v1-0-0-beta-4">
-          <div class="rel-h"><span class="rel-v">1.0.0-beta.4</span><span class="rel-m">beta</span><span class="rel-d">1er septembre 2026</span><span class="rel-tag">tag ↗</span></div>
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.4</span><span class="rel-m">beta</span><span class="rel-d">1er septembre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.4" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
           <p class="rel-sum">Le sélecteur de décoration dit ce que porte votre commentaire, pas ce que vous avez cliqué en dernier.</p>
           <div class="rel-s"><h4>🐛 Corrections</h4><ul>
             <li>Une décoration que vous avez retirée en modifiant le texte, ou partie avec un label que la configuration a désactivé, ne reste plus allumée dans la barre d'outils.</li>
@@ -123,7 +138,7 @@ const page = 'releasenotes' as const;
         </article>
 
         <article class="rel" id="v1-0-0-beta-3">
-          <div class="rel-h"><span class="rel-v">1.0.0-beta.3</span><span class="rel-m">beta</span><span class="rel-d">1er septembre 2026</span><span class="rel-tag">tag ↗</span></div>
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.3</span><span class="rel-m">beta</span><span class="rel-d">1er septembre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.3" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
           <p class="rel-sum">Deux permissions retirées du manifeste, une télémétrie qui n'existe que si vous la demandez, et de quoi soumettre aux stores.</p>
           <div class="rel-s"><h4>🔧 Changements</h4><ul>
             <li><strong><code>activeTab</code> et la permission d'hôte permanente sur <code>github.com</code> sont retirées.</strong> Les hôtes sont accordés à la demande — l'extension demande ce dont elle a besoin, quand elle en a besoin.</li>
@@ -140,7 +155,7 @@ const page = 'releasenotes' as const;
         </article>
 
         <article class="rel" id="v1-0-0-beta-2">
-          <div class="rel-h"><span class="rel-v">1.0.0-beta.2</span><span class="rel-m">beta</span><span class="rel-d">24 août 2026</span><span class="rel-tag">tag ↗</span></div>
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.2</span><span class="rel-m">beta</span><span class="rel-d">24 août 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.2" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
           <p class="rel-sum">Les commentaires de bots et d'outils cessent d'être signalés, et la barre d'outils cesse d'être collée au bord.</p>
           <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
             <li><strong>Une commande d'outil n'est plus signalée comme un commentaire mal formé.</strong> Une commande slash, ou la mention d'un bot listé dans <code>toolCommands</code>, est exemptée — <code>/rebase</code> et <code>@dependabot recreate</code> passent intacts.</li>
@@ -153,7 +168,7 @@ const page = 'releasenotes' as const;
         </article>
 
         <article class="rel" id="v1-0-0-beta-1">
-          <div class="rel-h"><span class="rel-v">1.0.0-beta.1</span><span class="rel-m">beta</span><span class="rel-d">24 août 2026</span><span class="rel-tag">tag ↗</span></div>
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.1</span><span class="rel-m">beta</span><span class="rel-d">24 août 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.1" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
           <p class="rel-sum">Première version installable.</p>
           <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
             <li>L'extension pour GitHub et Azure DevOps&nbsp;: une barre d'outils au-dessus de la boîte de commentaire, une saisie rapide au clavier, un retour visuel pendant la frappe, et un garde d'envoi en mode <code>enforce</code>.</li>

@@ -261,6 +261,26 @@ const undefinedVars = [...readNoFallback].filter((v) => !declared.has(v)).sort()
 if (undefinedVars.length) fail(`variable(s) CSS lue(s) sans repli ni définition : ${undefinedVars.join(', ')}`);
 else ok(`${readNoFallback.size} variables lues sans repli, toutes définies`);
 
+// ————— 13. Aucun contrôle de navigation sans destination —————
+// La revue en a trouvé deux que rien n'attrapait : un pager anglais resté <button> quand
+// son jumeau français était un lien, et un href="#" laissé en place de l'adresse réelle.
+// Le contrôle des liens morts ne les voyait pas — un bouton n'a pas de href, et "#" est
+// une adresse valide. Ce sont pourtant les deux formes que prend un lien qui ne mène nulle
+// part une fois la maquette portée : la maquette naviguait en JS, le site navigue en HTML.
+const noWhere = [];
+for (const file of pages) {
+  const rel = relative(DIST, file);
+  const html = readFileSync(file, 'utf8');
+  for (const m of html.matchAll(/<a\b[^>]*\bhref="(#|)"/g))
+    noWhere.push(`${rel} — <a href="${m[1]}"> sans destination`);
+  // Un <button> qui porte une classe de navigation est un lien qui n'a pas été converti.
+  for (const m of html.matchAll(/<button\b[^>]*class="([^"]*)"/g))
+    if (/\b(pgl|side|rn-side|path|navlink|brand|rel-tag)\b/.test(m[1]))
+      noWhere.push(`${rel} — <button class="${m[1]}"> là où un lien est attendu`);
+}
+if (noWhere.length) for (const n of new Set(noWhere)) fail(n);
+else ok('aucun lien vide ni bouton de navigation sans destination');
+
 if (failures.length) {
   console.error('\n' + failures.map((f) => `  ✗ ${f}`).join('\n'));
   console.error(`\n${failures.length} problème(s).`);

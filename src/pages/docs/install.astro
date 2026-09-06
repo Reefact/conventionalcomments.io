@@ -15,30 +15,23 @@ const page = 'install' as const;
         </div>
 
         <section class="dsec">
-          <h2>From your browser's store</h2>
-          <p>The normal route, and the only one that updates itself.</p>
-          <div class="split">
-            <div class="callout">
-              <span class="ct">chromium</span>
-              <h4>Chrome, Edge, Brave, Vivaldi…</h4>
-              <p>One click from the Chrome Web Store. Edge and Brave install Chrome Web Store extensions directly.</p>
-            </div>
-            <div class="callout">
-              <span class="ct">firefox</span>
-              <h4>Firefox</h4>
-              <p>A separate build, on Firefox Add-ons. Same code, packaged for Firefox's manifest.</p>
-            </div>
+          <h2>From your browser's store — coming</h2>
+          <p>Submission to the Chrome Web Store and to Firefox Add-ons has not happened yet, so there is nothing to link to and no listing to install from. Until then, the release zip below is the route.</p>
+          <div class="callout warn">
+            <span class="ct">why it matters, and not only for convenience</span>
+            <h4>The store is the only channel that updates itself.</h4>
+            <p>An extension loaded from a zip stays on the version you loaded until you repeat the operation by hand. For a team, that is the difference between everyone running the same version and nobody knowing who runs what — which is why this page says the channel is coming rather than quietly leaving it out.</p>
           </div>
-          <p class="small">Nothing else to do. Open a pull request on GitHub and the toolbar appears above the comment box.</p>
         </section>
 
         <section class="dsec">
           <h2>From a release zip — no Node, no Git</h2>
           <p>For a locked-down machine where you can't install a build chain. Every tagged release ships a ready-to-load zip, one for Chromium and one for Firefox.</p>
           <ul class="tick">
-            <li><span class="mk">1</span><b>Download and unzip</b><span class="tx">From the repository's releases page. Pick the bundle matching your browser.</span></li>
-            <li><span class="mk">2</span><b>Open your browser's extensions page</b><span class="tx"><code>chrome://extensions</code> and turn on Developer mode.</span></li>
-            <li><span class="mk">3</span><b>Load the unpacked folder</b><span class="tx">“Load unpacked”, then pick the folder you just unzipped.</span></li>
+            <li><span class="mk">1</span><b>Download the bundle for your browser</b><span class="tx">From the <a href="https://github.com/Reefact/conventional-comments-toolkit/releases" rel="noopener noreferrer" target="_blank">releases list</a> — the list, not <code>/releases/latest</code>, which skips prereleases. Take <code>…-chromium.zip</code> or <code>…-firefox.zip</code>.</span></li>
+            <li><span class="mk">2</span><b>Unzip it somewhere other than Downloads</b><span class="tx">The browser re-reads that folder at every start, and deleting it disables the extension.</span></li>
+            <li><span class="mk">3</span><b>Chrome, Edge, Brave…</b><span class="tx"><code>chrome://extensions</code> → <b>Developer mode</b> → <b>Load unpacked</b> → the unzipped folder, the one that directly contains <code>manifest.json</code>.</span></li>
+            <li><span class="mk">4</span><b>Firefox — a different path</b><span class="tx"><code>about:debugging#/runtime/this-firefox</code> → <b>Load Temporary Add-on</b> → the <code>manifest.json</code> itself, not the folder. A temporary add-on is removed when Firefox closes.</span></li>
           </ul>
           <div class="callout blk">
             <span class="ct">the one thing to know</span>

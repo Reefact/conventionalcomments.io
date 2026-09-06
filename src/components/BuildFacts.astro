@@ -9,6 +9,10 @@ interface Props { lang: Locale }
 const { lang } = Astro.props;
 
 const REPO = 'https://github.com/Reefact/conventionalcomments.io';
+
+/* Le tag, pas la Release. `release.yml` pose un tag `release/*` et déploie ; il ne crée
+   aucune GitHub Release. Une URL /releases/tag/<tag> vise une Release et répond 404 tant
+   qu'aucune n'existe, alors que /tree/<tag> répond toujours. */
 const none = '—';
 const noneHint = lang === 'fr'
   ? "ce build ne vient pas d'un tag de release"
@@ -19,7 +23,7 @@ const noneHint = lang === 'fr'
     <span class="vk">release</span>
     <span class="vv">
       {version.release
-        ? <a href={`${REPO}/releases/tag/${version.release}`} rel="noopener noreferrer" target="_blank">{version.release}</a>
+        ? <a href={`${REPO}/tree/${version.release}`} rel="noopener noreferrer" target="_blank">{version.release}</a>
         : <>{none}{' '}<span class="vhint">{noneHint}</span></>}
     </span>
   </div>

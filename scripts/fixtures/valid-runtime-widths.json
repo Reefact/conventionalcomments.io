@@ -1,0 +1,10 @@
+{
+  "$schema": "https://conventionalcomments.io/schema/v1.json",
+  "version": 1,
+  "mode": "assist",
+  "labels": [
+    { "id": "issue", "color": "red" },
+    { "id": "nitpick", "color": "rgb(118, 129, 142)" }
+  ],
+  "activation": { "activatedAt": "2026-09-01" }
+}

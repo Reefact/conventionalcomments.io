@@ -24,6 +24,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+
+      # Le dépôt qui fait foi sur le schéma. `check-schema.mjs` compare les clés, les
+      # domaines et les bornes à ses sources ; sans ce checkout il sautait la comparaison
+      # et n'affirmait plus rien. Branche par défaut à dessein : une dérive du validateur
+      # doit se voir ici, pas six mois plus tard.
+      - name: Checkout du toolkit (source de vérité du schéma)
+        uses: actions/checkout@v4
+        with:
+          repository: Reefact/conventional-comments-toolkit
+          path: toolkit
+
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
@@ -31,5 +42,7 @@ jobs:
 
       - run: npm ci
 
-      # build + les douze invariants du site + le contrôle du schéma
+      # build + les invariants du site + le schéma comparé au toolkit
       - run: npm run check
+        env:
+          TOOLKIT_PATH: ./toolkit

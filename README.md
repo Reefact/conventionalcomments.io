@@ -25,8 +25,9 @@ npm run check    # build + tous les contrôles ci-dessous
 | `npm run dev` | Estampille le build, puis sert le site en développement |
 | `npm run build` | Estampille le build, puis produit `dist/` (28 pages) |
 | `npm run check` | `build`, puis les invariants du site et du schéma |
-| `npm run check:site` | Les onze invariants, sur ce qui est réellement produit |
-| `npm run check:schema` | Le schéma JSON contre ses gabarits ; `-- <chemin-du-toolkit>` le compare à la source |
+| `npm run check:site` | Les treize invariants, sur ce qui est réellement produit |
+| `npm run check:schema` | Le schéma JSON contre ses gabarits ; `-- <chemin>` ou `TOOLKIT_PATH` le compare à la source |
+| `npm run check:toolkit` | Les notes de version du site contre celles du toolkit |
 | `npm run deploy` | `check`, puis `wrangler deploy` (demande `wrangler login`) |
 
 ## Structure
@@ -73,6 +74,9 @@ qui compile ne dit rien d'un lien qui ne mène nulle part.
     s'affiche, et un élément est simplement invisible ou collé au suivant.
 11. Chaque page porte ses balises Open Graph et Twitter, l'image qu'elles nomment est
     servie, et l'icône existe sous ses trois formes.
+12. Toute variable CSS lue sans repli est définie.
+13. Aucun lien vide ni bouton de navigation sans destination — les deux formes que prend
+    un lien mort quand une maquette qui navigue en JS est portée vers du HTML.
 
 ## L'estampille de build
 
@@ -86,6 +90,15 @@ en découlent :
 
 Tout build en produit une ; `release` vaut `null` quand le build ne vient pas d'un tag, ce
 qui est plus utile qu'un 404.
+
+## En accord avec le toolkit
+
+Deux contenus du site recopient le dépôt du toolkit, et une recopie ne se périme pas
+bruyamment : elle reste juste, en retard. La CI récupère donc le toolkit et compare.
+
+- `check:schema` compare les clés, les domaines et les bornes à `schema.ts`.
+- `check:toolkit` compare la liste des versions de `/release-notes/v1/` à celle que le
+  toolkit publie — la page a été mise en ligne à jour et l'était déjà moins le lendemain.
 
 ## Intégration continue
 
