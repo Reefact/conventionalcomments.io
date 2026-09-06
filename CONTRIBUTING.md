@@ -136,6 +136,52 @@ Issue-closing keywords (`Closes #42`) belong in the pull request description,
 not in a commit — the commit is the unit of the change, the issue is the unit of
 the request, and only the pull request closes one.
 
+## Releasing
+
+A release is a `release/*` tag. Nothing else publishes: `main` moving does not deploy, and the
+manual `Release` run verifies and stops at `wrangler deploy --dry-run`.
+
+The tag's name is decided **before the tag exists**, and the notes are written before it is
+pushed:
+
+1. **The maintainer asks for a release.**
+2. **The notes are drafted.** Whatever accumulated under `## Unreleased` in
+   `RELEASE_NOTES-en.md` and `RELEASE_NOTES-fr.md` is retitled with the tag being proposed —
+   `## release/YYYY-MM-DDTHH-MM-SSZ — <date>` — and a fresh empty `## Unreleased` is put back
+   above it. A pull request titled exactly `ci: prepare <tag>` carries that change and nothing
+   else.
+3. **The maintainer reviews and merges it.** This is where the notes are read; after the tag,
+   it is too late.
+4. **The maintainer tags**, themselves, the commit that pull request produced:
+
+   ```sh
+   git checkout main && git pull
+   TAG="release/YYYY-MM-DDTHH-MM-SSZ"      # the tag the pull request named
+   git tag -a "$TAG" -m "$TAG"             # one variable, used twice
+   git push origin "$TAG"
+   ```
+
+`scripts/check-release-tag.sh` runs first in CI and refuses three things: a lightweight tag (it
+carries no message, so the release page has no title), a message that is not the tag's own name,
+and — the one that matters — a tag whose commit is **not** the merge commit of
+`ci: prepare <tag>`. If anything else reached `main` between that merge and the tag — a second
+pull request, a Dependabot auto-merge — the tag would publish work nobody reviewed as part of
+this release, and it is refused.
+
+`scripts/release-notes.sh` then reads that tag's section out of `RELEASE_NOTES-en.md` and
+publishes it as the GitHub Release. It **refuses rather than falling back** to a commit-derived
+list: a tagged release is the wrong moment to discover that nobody wrote what it contains.
+
+### Writing the notes
+
+They are for a reader, not a reviewer. A commit subject explains a diff to whoever reviews it; a
+release note tells someone deciding whether to look at what is new. Describe what a visitor would
+notice, not which pull request brought it.
+
+Both languages or neither: `npm run check:notes` compares the two files' structure — the same
+tags, the same headings, the same number of bullets — because the usual mistake is adding to one
+side, which breaks nothing and is never seen.
+
 ## Pull request titles
 
 A pull request MAY gather several commits, of several types. Its title is read

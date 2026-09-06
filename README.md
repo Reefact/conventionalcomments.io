@@ -29,6 +29,7 @@ npm run check    # build + tous les contrôles ci-dessous
 | `npm run check:schema` | Le schéma JSON contre ses gabarits ; `-- <chemin>` ou `TOOLKIT_PATH` le compare à la source |
 | `npm run check:toolkit` | Les notes de version du site contre celles du toolkit |
 | `npm run check:labels` | Les icônes et couleurs affichées contre `defaults.ts` |
+| `npm run check:notes` | Les notes de version, appariées entre les deux langues |
 | `npm run deploy` | `check`, puis `wrangler deploy` (demande `wrangler login`) |
 
 ## Structure
@@ -133,15 +134,24 @@ et un seul *custom domain*. Pas de `www` — l'ajouter servirait les mêmes octe
 noms, quand tous les `<link rel="canonical">` désignent l'apex ; si `www` doit répondre,
 c'est une redirection 301 au niveau de la zone.
 
+### Publier
+
+Une release est un tag `release/*`, et rien d'autre ne publie. Le nom du tag est décidé **avant**
+que le tag existe : les notes sont rédigées sous `## Unreleased`, retitrées avec le tag proposé
+dans une PR nommée `ci: prepare <tag>`, relues, fusionnées — puis le tag est posé sur le commit
+de cette fusion. `scripts/check-release-tag.sh` refuse tout tag qui ne pointe pas exactement ce
+commit. La marche complète est dans [`CONTRIBUTING.md`](./CONTRIBUTING.md#releasing).
+
 ### Pour mettre en ligne la première fois
 
 1. **La zone doit être gérée par Cloudflare.** Contrainte dure : contrairement à Pages,
    Workers n'accepte aucun domaine dont les serveurs de noms sont ailleurs.
 2. Deux secrets de dépôt : `CLOUDFLARE_API_TOKEN` (portée *Edit Cloudflare Workers*) et
    `CLOUDFLARE_ACCOUNT_ID`.
-3. Lancer `Release` à la main une première fois (onglet Actions), pour voir le domaine
-   s'attacher et le certificat se créer.
-4. Ensuite, publier c'est poser un tag : `git tag release/1.0 && git push origin release/1.0`.
+3. Lancer `Release` à la main une fois (onglet Actions) : c'est une répétition à blanc, elle
+   vérifie sans publier.
+4. Puis suivre la marche « Publier » ci-dessus. Le premier tag attache le domaine et crée le
+   certificat — comptez une minute avant que le HTTPS réponde.
 
 En local, `npm run deploy` fait la même chose après `wrangler login`.
 

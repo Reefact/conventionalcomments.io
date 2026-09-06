@@ -1,0 +1,77 @@
+name: lint
+
+# Analyse statique des fichiers qu'aucun compilateur ne voit : les scripts shell de
+# scripts/ et tools/, et les définitions de workflow elles-mêmes.
+#
+# Tout le reste de ce dépôt est vérifié pendant un build — Astro type-checke, les treize
+# invariants lisent le HTML produit, le schéma est comparé au toolkit — donc un
+# contributeur rencontre le contrôle au moment où il écrit. Le shell et le YAML n'avaient
+# pas ce moment. Les deux outils tournent sur nos propres runners : le signal ne dépend
+# pas de la disponibilité d'un service tiers.
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: lint-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scripts-and-workflows:
+    name: Lint scripts and workflows
+    runs-on: ubuntu-latest
+    # Les deux outils sont statiques et finissent en secondes ; le plafond ne garde
+    # qu'un téléchargement bloqué.
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Lint the shell scripts
+        # shellcheck est préinstallé sur l'image ubuntu : rien à télécharger, aucune
+        # action tierce dans la chaîne d'approvisionnement. La version est affichée pour
+        # qu'un échec futur causé par une montée de l'image se lise dans le log seul.
+        #
+        # shellcheck lit le shebang de chaque script et applique le dialecte
+        # correspondant — bash pour scripts/, sh POSIX pour
+        # tools/commit-lint/lint-commit-message.sh.
+        run: |
+          shellcheck --version | sed -n 's/^version: /shellcheck /p'
+          find . -name '*.sh' -not -path './.git/*' -not -path '*/node_modules/*' \
+            -not -path '*/dist/*' \
+            -print0 | xargs -0 --no-run-if-empty shellcheck
+
+      - name: Lint the workflow definitions
+        # actionlint vérifie ce que le YAML seul ne peut pas : le typage des `${{ }}`, les
+        # entrées de chaque action contre son propre schéma, les références `needs` et
+        # matrice, la syntaxe cron, et le shell de chaque bloc `run:` (il embarque
+        # shellcheck).
+        #
+        # Épinglé sur une archive de release vérifiée par somme de contrôle plutôt que
+        # passé par une action tierce : une action non épinglée est exactement ce que la
+        # vérification Pinned-Dependencies d'OpenSSF Scorecard compte contre un dépôt.
+        # Les deux lignes se montent ensemble.
+        env:
+          ACTIONLINT_VERSION: '1.7.7'
+          ACTIONLINT_SHA256: '023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757'
+        run: |
+          set -eu
+          archive="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          # --proto '=https' --proto-redir '=https' refusent tout ce qui n'est pas HTTPS,
+          # sur la requête initiale ET sur chaque redirection. Sans eux, -L suivrait une
+          # redirection vers du clair : la somme de contrôle attraperait la falsification,
+          # mais après que les octets aient traversé le réseau en clair.
+          curl --proto '=https' --proto-redir '=https' -sSfL -o "$archive" \
+            "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/${archive}"
+          echo "${ACTIONLINT_SHA256}  ${archive}" | sha256sum --check --strict
+          tar xzf "$archive" actionlint
+          ./actionlint --version
+          ./actionlint -color

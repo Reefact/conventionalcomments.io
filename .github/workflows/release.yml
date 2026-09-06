@@ -21,9 +21,6 @@ on:
   # au passage un `/version` annonçant « pas une release ».
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 # Deux publications simultanées sur le même nom d'hôte n'ont pas de sens, et la seconde
 # gagnerait sans qu'on sache laquelle. On ne coupe pas celle qui est en vol.
 concurrency:
@@ -31,11 +28,38 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Un tag de release nomme quelque chose qui va réellement être publié. Ce job passe AVANT
+  # le build : un tag qui échoue ici bloque la release, plutôt que d'être nettoyé après coup.
+  # Le détail des trois contrôles — tag annoté, message qui répète son nom, commit qui est
+  # celui de la fusion de « ci: prepare <tag> » — est dans le script.
+  # La condition est portée par les ÉTAPES, pas par le job : un job sauté rend sauté tout ce
+  # qui en dépend, et `release` en dépend. Hors tag, ce job tourne donc à vide et réussit.
+  verify-tag:
+    name: Le tag nomme ce qu'il pointe
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        if: startsWith(github.ref, 'refs/tags/release/')
+        with:
+          fetch-depth: 0
+      - name: Contrôler le tag
+        if: startsWith(github.ref, 'refs/tags/release/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ./scripts/check-release-tag.sh "${GITHUB_REF_NAME}"
+
   release:
     name: Vérifier, puis publier sur Cloudflare
+    # Sur un tag, rien ne part avant que le tag lui-même ait été jugé bon.
+    needs: [verify-tag]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           # `/version` lit `git describe --tags`. Un clone superficiel n'a pas les tags :
           # la page annoncerait « pas une release » sur une release.
@@ -47,12 +71,12 @@ jobs:
       # et n'affirmait plus rien. Branche par défaut à dessein : une dérive du validateur
       # doit se voir ici, pas six mois plus tard.
       - name: Checkout du toolkit (source de vérité du schéma)
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: Reefact/conventional-comments-toolkit
           path: toolkit
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -82,3 +106,49 @@ jobs:
         run: npx wrangler deploy --dry-run
         env:
           WRANGLER_SEND_METRICS: false
+
+  # Ce que la release a changé, lu tel quel dans RELEASE_NOTES-en.md — écrit et relu AVANT
+  # que le tag ne soit posé. Rien n'est dérivé de `git log` : un sujet de commit explique un
+  # diff à un relecteur, pas une version à quelqu'un qui décide s'il va regarder ce qui est
+  # nouveau. `scripts/release-notes.sh` refuse plutôt que de produire un pis-aller, donc une
+  # release sans notes échoue ici — bruyamment, et après le déploiement, qui lui est déjà
+  # parti et n'a pas à en souffrir.
+  notes:
+    name: Notes de version
+    needs: release
+    if: startsWith(github.ref, 'refs/tags/release/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+
+      - name: Publier la Release GitHub
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF_NAME}"
+
+          # Rejouable : un tag peut arriver ici deux fois — le dialogue « Run workflow »
+          # liste les tags, et redéployer une release est une chose légitime. Une seconde
+          # tentative ne doit pas faire échouer le pipeline sur une page qui existe déjà.
+          if gh release view "${tag}" > /dev/null 2>&1; then
+            echo "::notice title=Release déjà présente::${tag} a déjà sa page ; laissée telle quelle."
+            exit 0
+          fi
+
+          # Le sujet du tag annoté. Le repli sur le nom du tag est une ceinture à cette
+          # bretelle, pas un second titre : ce qui dit POURQUOI la release existe, c'est
+          # RELEASE_NOTES-en.md ci-dessous.
+          title="$(git for-each-ref "refs/tags/${tag}" --format='%(contents:subject)')"
+
+          ./scripts/release-notes.sh "${tag}" > release-notes.md
+
+          gh release create "${tag}" \
+            --title "${title:-${tag}}" \
+            --notes-file release-notes.md \
+            --latest
