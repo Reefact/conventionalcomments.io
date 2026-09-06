@@ -16,7 +16,11 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
-_Nothing pending yet._
+### 🐛 Fixed
+
+- **Text no longer stretches edge to edge on wide screens.** The header, footer, and every
+  content section now sit in a centered column instead of spanning the full width of a large
+  monitor, where a line of text could otherwise run far past a comfortable reading width.
 
 ## release/2026-09-06T18-03-59Z — September 6, 2026
 
