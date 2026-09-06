@@ -20,12 +20,12 @@ _Rien en attente pour l'instant._
 
 ## release/2026-09-06T21-44-09Z — 6 septembre 2026
 
-### 🐛 Corrigé
+### 🐛 Corrections
 
 - **Le texte ne s'étale plus d'un bord à l'autre sur les grands écrans.** L'en-tête, le pied
-  de page et chaque section de contenu tiennent désormais dans une colonne centrée au lieu de
-  couvrir toute la largeur d'un grand écran, où une ligne de texte pouvait autrement dépasser
-  largement une largeur de lecture confortable.
+  de page et chaque section de contenu tiennent désormais dans une colonne centrée au lieu
+  d'occuper toute la largeur disponible, sur laquelle les lignes de texte pouvaient devenir
+  bien trop longues pour rester confortables à lire.
 
 ## release/2026-09-06T18-03-59Z — 6 septembre 2026
 
