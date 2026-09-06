@@ -11,7 +11,7 @@ const page = 'server' as const;
 <div class="dhead stack g12">
           <p class="crumb"><b>docs</b> / the server</p>
           <h1>Deploy the server</h1>
-          <p class="lede measure">One small service, hosted by you, once for the whole organization. It re-reads pull requests and publishes the check. Nothing about it is a SaaS: it runs on your infrastructure, and the only thing it talks to is your own code platform — the GitHub or Azure DevOps API, with the tokens you issue it. Nothing reaches Reefact, which operates no service in this picture.</p>
+          <p class="lede measure">One small service, hosted by you, once for the whole organization. It re-reads pull requests and publishes the check. Nothing about it is a SaaS: <strong>Reefact operates no service here and receives nothing.</strong> The server runs on your infrastructure, and what it calls out to is your own code platform's API, with the tokens you issue it — plus the organization document at <code>configUrl</code>, if you configure one, wherever you choose to host it.</p>
         </div>
 
         <section class="dsec">
