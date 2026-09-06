@@ -86,7 +86,11 @@ tag_commit="$(git rev-parse "refs/tags/${tag}^{commit}")"
 # briefly unindexed.
 pr_title="ci: prepare ${tag}"
 prs_json="$(gh api "repos/{owner}/{repo}/commits/${tag_commit}/pulls" 2> /dev/null || echo '[]')"
-matches="$(printf '%s' "${prs_json}" | jq --arg title "${pr_title}" '[.[] | select(.title == $title and .merged_at != null)]')"
+# `base.ref == "main"` en plus du titre : cet endpoint rend une pull request associée au
+# commit même quand ce commit n'est PAS sur la branche par défaut. Sans ce filtre, une
+# « ci: prepare <tag> » fusionnée vers une autre branche satisferait le contrôle, et le tag
+# posé sur son commit déclencherait release.yml sans être jamais passé par main.
+matches="$(printf '%s' "${prs_json}" | jq --arg title "${pr_title}" '[.[] | select(.title == $title and .merged_at != null and .base.ref == "main")]')"
 match_count="$(printf '%s' "${matches}" | jq 'length')"
 
 if [ "${match_count}" -eq 0 ]; then
@@ -116,4 +120,18 @@ if [ "${tag_commit}" != "${merge_commit}" ]; then
   exit 1
 fi
 
-echo "  ${tag}  annotated, message matches its name, points at '${pr_title}''s own merge commit."
+# Ceinture à cette bretelle, et elle ne dépend d'aucun titre : le commit tagué doit être
+# atteignable depuis main. L'API répond `behind` quand il en est un ancêtre, `identical`
+# quand c'est main lui-même ; `ahead` ou `diverged` disent qu'il est ailleurs.
+status="$(gh api "repos/{owner}/{repo}/compare/main...${tag_commit}" --jq '.status' 2> /dev/null || echo 'unknown')"
+
+case "${status}" in
+  behind | identical) ;;
+  *)
+    echo "check-release-tag: ${tag} points at a commit that is not on main (compare says '${status}')." >&2
+    echo "  A release publishes what main holds. Tag a commit that main contains." >&2
+    exit 1
+    ;;
+esac
+
+echo "  ${tag}  annotated, message matches its name, on main, points at '${pr_title}''s own merge commit."

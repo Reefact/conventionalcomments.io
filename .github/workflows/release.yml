@@ -51,6 +51,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: ./scripts/check-release-tag.sh "${GITHUB_REF_NAME}"
 
+      # Les notes sont extraites ICI, avant que quoi que ce soit ne parte. Elles ne
+      # servaient qu'au job `notes`, qui vient après le déploiement : une PR
+      # « ci: prepare <tag> » au bon titre mais sans la section correspondante passait
+      # `verify-tag`, passait `npm run check`, déployait le site — et n'échouait qu'après,
+      # sur une release déjà en ligne. La promesse écrite est qu'une release sans notes
+      # ne sort pas ; elle est tenue à partir d'ici. La publication de la page GitHub
+      # reste après le déploiement, elle : elle annonce, elle ne décide pas.
+      - name: Les notes de cette release existent
+        if: startsWith(github.ref, 'refs/tags/release/')
+        run: ./scripts/release-notes.sh "${GITHUB_REF_NAME}" > /dev/null
+
   release:
     name: Vérifier, puis publier sur Cloudflare
     # Sur un tag, rien ne part avant que le tag lui-même ait été jugé bon.
