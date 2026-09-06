@@ -16,7 +16,11 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
-_Rien en attente pour l'instant._
+### 🔧 Amélioré
+
+- **La table des matières de la doc reste en place pendant le défilement.** La navigation de
+  gauche, sur les pages de documentation et de notes de version, reste désormais visible
+  quand on lit une page longue, au lieu de disparaître avec le reste de la colonne.
 
 ## release/2026-09-06T21-44-09Z — 6 septembre 2026
 
