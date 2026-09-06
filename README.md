@@ -75,8 +75,8 @@ qui compile ne dit rien d'un lien qui ne mène nulle part.
 11. Chaque page porte ses balises Open Graph et Twitter, l'image qu'elles nomment est
     servie, et l'icône existe sous ses trois formes.
 12. Toute variable CSS lue sans repli est définie.
-13. Aucun lien vide ni bouton de navigation sans destination — les deux formes que prend
-    un lien mort quand une maquette qui navigue en JS est portée vers du HTML.
+13. Aucun lien vide, ni `<button>`/`<span>` portant une classe de navigation — les formes
+    que prend un lien mort quand une maquette qui navigue en JS est portée vers du HTML.
 
 ## L'estampille de build
 

@@ -26,8 +26,11 @@
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = new URL('..', import.meta.url).pathname;
+// `new URL(...).pathname` reste une URL : il garde les %20 et ne rend pas un chemin
+// natif sous Windows. fileURLToPath fait la conversion, dans les deux cas.
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 
 const git = (...args) => {
   try {

@@ -92,8 +92,12 @@ const page = 'adoption' as const;
   <span class="tk-k">"formatSeverity"</span>: <span class="tk-v">"warn"</span>,          <span class="tk-cm">// le critère 1 ne bloque pas</span>
   <span class="tk-k">"exemptUsers"</span>: [<span class="tk-v">"dependabot[bot]"</span>, <span class="tk-v">"github-actions[bot]"</span>],
   <span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>],
-  <span class="tk-k">"server"</span>: <span class="tk-k">&#123;</span> <span class="tk-k">"gracePeriodSeconds"</span>: <span class="tk-v">900</span>, <span class="tk-k">"reconcileIntervalSeconds"</span>: <span class="tk-v">900</span> <span class="tk-k">&#125;</span>
+  <span class="tk-k">"server"</span>: <span class="tk-k">&#123;</span> <span class="tk-k">"gracePeriodSeconds"</span>: <span class="tk-v">900</span>, <span class="tk-k">"reconcileIntervalSeconds"</span>: <span class="tk-v">60</span> <span class="tk-k">&#125;</span>   <span class="tk-cm">// 60, et non 900 : prérequis 5</span>
 <span class="tk-k">&#125;</span></pre>
+          <div class="callout">
+            <span class="ct">pourquoi 60</span>
+            <p style="margin:0"><code>reconcileIntervalSeconds</code> vaut <strong>60 ici, et non 900</strong>. Le prérequis 5 demande 60 ou moins sur Azure DevOps en <code>enforce</code>, et cette page dit que le passage de phase ne touche que <code>mode</code>&nbsp;: la valeur doit donc être bonne avant le changement, pas après. Sur GitHub, où un canal événementiel couvre l'état des fils, 900 convient.</p>
+          </div>
           <div class="callout">
             <span class="ct">note de migration</span>
             <p style="margin:0">La liste des commandes exemptées est <strong>vide par défaut</strong>. Avant, des commandes comme <code>/rebase</code> étaient reconnues toutes seules&nbsp;; ce n'est plus le cas. En mode bloquant, un <code>/rebase</code> est donc refusé comme n'importe quel commentaire tant que le dépôt ne l'a pas déclaré. Mettre <code>"/*"</code> réactive l'exemption pour toutes les commandes.</p>
