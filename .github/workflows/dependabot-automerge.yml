@@ -7,9 +7,12 @@ name: dependabot-automerge
 #
 # IMPORTANT — this workflow only *enables* auto-merge; it does not decide when to
 # merge. GitHub merges the PR only once the branch's REQUIRED status checks pass.
-# Without a branch-protection rule on `main` that marks the CI checks as required,
-# auto-merge would merge immediately. The required checks are therefore the safety
-# gate, not this workflow.
+# Without a rule on `main` that marks the CI checks as required, auto-merge would
+# merge immediately. The required checks are therefore the safety gate, not this
+# workflow — which is why the `gate` step below reads the ruleset and refuses to arm
+# while that gate does not exist. Stating the assumption in a comment was not enough:
+# a review found `main` carrying no required check at all, so this file would have
+# armed auto-merge on a branch where "auto" meant "now".
 #
 # Why the job keys on the pull request's AUTHOR and not on `github.actor`. Auto-merge,
 # once enabled, SURVIVES later pushes to the head branch. `github.actor` names whoever
@@ -70,12 +73,19 @@ jobs:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           set -euo pipefail
+          # `.author.login` names the git AUTHOR; the signature attests the COMMITTER.
+          # They are not the same identity, so reading one and believing the other lets a
+          # tip through whose author reads "dependabot[bot]" while the signature covers
+          # someone else. All three are read, and all three must agree.
           tip="$(gh api "repos/${GH_REPO}/commits/${HEAD_SHA}" \
-            --jq '"\(.author.login // "")|\(.commit.verification.verified)"' 2>/dev/null || true)"
+            --jq '"\(.author.login // "")|\(.committer.login // "")|\(.commit.verification.verified)"' 2>/dev/null || true)"
           author="${tip%%|*}"
-          echo "head ${HEAD_SHA}: author='${author:-unknown}' signed='${tip##*|}'"
-          # Signed by Dependabot — the strong proof, required to ARM auto-merge.
-          if [ "$tip" = "dependabot[bot]|true" ]; then
+          rest="${tip#*|}"
+          committer="${rest%%|*}"
+          echo "head ${HEAD_SHA}: author='${author:-unknown}' committer='${committer:-unknown}' signed='${tip##*|}'"
+          # Author AND committer are Dependabot, AND the signature is valid — the strong
+          # proof, the only one allowed to ARM auto-merge.
+          if [ "$tip" = "dependabot[bot]|dependabot[bot]|true" ]; then
             echo "state=dependabot-signed" >> "$GITHUB_OUTPUT"
           # Authored by Dependabot but unsigned: not proof enough to arm, not
           # foreign enough to disarm — leave whatever is already set alone.
@@ -85,10 +95,38 @@ jobs:
             echo "state=foreign" >> "$GITHUB_OUTPUT"
           fi
 
+      # The guard rail this workflow ASSUMES. `gh pr merge --auto` does not decide when to
+      # merge: GitHub merges as soon as the REQUIRED checks pass. If the branch requires
+      # none, "as soon as" means immediately, and a Dependabot pull request lands before
+      # CI, lint, dependency-review and codeql have said anything. The comment at the head
+      # of this file already says so — it assumed the rule rather than checking it.
+      #
+      # So the workflow verifies its own precondition and fails closed: with no required
+      # check on main it does not arm, and says why. It arms itself the day the ruleset
+      # carries them.
+      - name: Are required status checks configured on main?
+        id: gate
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -uo pipefail
+          required="$(gh api "repos/${GH_REPO}/rules/branches/main" \
+            --jq '[.[] | select(.type == "required_status_checks")
+                       | .parameters.required_status_checks[]?.context] | length' 2>/dev/null || echo 0)"
+          echo "main requires ${required} status check(s)"
+          if [ "${required:-0}" -gt 0 ]; then
+            echo "ready=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=no" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Auto-merge withheld::main requires no status check, so auto-merge would merge before CI has run. Add the required checks to the ruleset; this workflow arms itself once they exist."
+          fi
+
       - name: Enable auto-merge for patch and minor updates
         # Major updates fall through this condition, so they never get auto-merge
         # and stay open for a human to review.
         if: >-
+          steps.gate.outputs.ready == 'yes' &&
           steps.tip.outputs.state == 'dependabot-signed' &&
           (steps.meta.outputs.update-type == 'version-update:semver-patch' ||
            steps.meta.outputs.update-type == 'version-update:semver-minor')
