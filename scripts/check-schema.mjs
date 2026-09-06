@@ -39,11 +39,20 @@ try {
 const fixturesDir = join(root, 'scripts/fixtures');
 if (existsSync(fixturesDir)) {
   for (const name of readdirSync(fixturesDir).filter((f) => f.endsWith('.json')).sort()) {
-    const shouldPass = name.startsWith('valid-');
+    // Trois préfixes, trois attentes.
+    //   valid-   le schéma accepte, le validateur aussi.
+    //   invalid- le schéma refuse, le validateur aussi.
+    //   loose-   le schéma ACCEPTE ce que le validateur refuse, faute de pouvoir
+    //            l'exprimer. Une lacune connue, nommée plutôt que laissée en silence :
+    //            sans ce troisième cas, on la découvre en voyant un gabarit « invalid »
+    //            passer, et le réflexe est de durcir le schéma — ce qui le rendrait plus
+    //            strict que le produit, exactement le défaut qu'on vient de corriger.
+    const loose = name.startsWith('loose-');
+    const shouldPass = loose || name.startsWith('valid-');
     const doc = JSON.parse(readFileSync(join(fixturesDir, name), 'utf8'));
     const passed = validate(doc);
     if (passed === shouldPass) {
-      ok(`${name} — ${shouldPass ? 'accepté' : 'rejeté'}, comme attendu`);
+      ok(`${name} — ${loose ? 'accepté, lacune assumée' : shouldPass ? 'accepté' : 'rejeté'}, comme attendu`);
     } else if (shouldPass) {
       fail(`${name} devait être accepté : ${ajv.errorsText(validate.errors, { separator: ' · ' })}`);
     } else {
@@ -53,7 +62,12 @@ if (existsSync(fixturesDir)) {
 }
 
 // ————— 3. Comparaison avec le validateur du toolkit —————
-const toolkit = process.argv[2];
+// Le chemin du toolkit vient de l'argument, ou de TOOLKIT_PATH. La variable existe pour
+// que `npm run check` — qui n'a pas d'endroit où passer un argument — fasse la comparaison
+// en CI. Sans elle, la CI affichait « comparaison ignorée » à chaque run : une évolution du
+// validateur pouvait passer verte sans que le schéma bouge, ce qui est exactement la
+// dérive que ce script existe pour empêcher.
+const toolkit = process.argv[2] || process.env.TOOLKIT_PATH || '';
 if (toolkit) {
   const src = join(toolkit, 'packages/core/src/config/schema.ts');
   if (!existsSync(src)) {

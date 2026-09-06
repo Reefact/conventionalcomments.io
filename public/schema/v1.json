@@ -84,8 +84,7 @@
           },
           "color": {
             "type": "string",
-            "pattern": "^#[0-9a-fA-F]{6}$",
-            "description": "Badge border colour, as #rrggbb. It only ever touches border-color, never a background at rest — so the applicable contrast criterion is WCAG 2.1 SC 1.4.11 (3:1 for a UI component boundary), not the 4.5:1 required of text. Cosmetic, and excluded from the fingerprint."
+            "description": "Badge border colour, conventionally #rrggbb. The validator only checks that this is a string, so the schema does not reject other forms either: a transcription that refuses what the product accepts is not a transcription. It only ever touches border-color, never a background at rest — so the applicable contrast criterion is WCAG 2.1 SC 1.4.11 (3:1 for a UI component boundary), not the 4.5:1 required of text. Cosmetic, and excluded from the fingerprint."
           },
           "aliases": {
             "type": "array",
@@ -345,9 +344,8 @@
             "string",
             "null"
           ],
-          "format": "date-time",
           "default": null,
-          "description": "ISO 8601 instant from which pull requests are evaluated, or null for no cut-off. Anything Date.parse accepts is taken."
+          "description": "ISO 8601 instant from which pull requests are evaluated, or null for no cut-off. Anything Date.parse accepts is taken -- which is wider than RFC 3339, so no format is imposed here: \"2026-09-01\" is accepted at runtime and must be accepted in the editor too."
         }
       }
     },

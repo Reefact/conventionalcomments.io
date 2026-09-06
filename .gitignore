@@ -6,3 +6,4 @@ dist/
 # Écrit par le build, à chaque build : le commiter laisserait chaque copie sale.
 src/generated/version.json
 public/version.json
+toolkit/

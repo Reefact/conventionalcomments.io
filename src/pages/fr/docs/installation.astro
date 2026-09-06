@@ -15,30 +15,23 @@ const page = 'install' as const;
         </div>
 
         <section class="dsec">
-          <h2>Depuis le store de votre navigateur</h2>
-          <p>La voie normale, et la seule qui se met à jour toute seule.</p>
-          <div class="split">
-            <div class="callout">
-              <span class="ct">chromium</span>
-              <h4>Chrome, Edge, Brave, Vivaldi…</h4>
-              <p>Un clic depuis le Chrome Web Store. Edge et Brave installent directement les extensions du Chrome Web Store.</p>
-            </div>
-            <div class="callout">
-              <span class="ct">firefox</span>
-              <h4>Firefox</h4>
-              <p>Un build séparé, sur Firefox Add-ons. Même code, empaqueté pour le manifeste de Firefox.</p>
-            </div>
+          <h2>Depuis le store de votre navigateur — à venir</h2>
+          <p>La soumission au Chrome Web Store et à Firefox Add-ons n'a pas encore eu lieu : il n'y a donc rien à lier, et aucune fiche depuis laquelle installer. En attendant, le zip de release ci-dessous est la voie.</p>
+          <div class="callout warn">
+            <span class="ct">pourquoi ça compte, et pas seulement pour le confort</span>
+            <h4>Le store est le seul canal qui se met à jour tout seul.</h4>
+            <p>Une extension chargée depuis un zip reste sur la version chargée jusqu'à ce que vous refassiez l'opération à la main. Pour une équipe, c'est la différence entre tout le monde sur la même version et personne qui sait qui a quoi — d'où cette section, qui annonce le canal plutôt que de le passer sous silence.</p>
           </div>
-          <p class="small">Rien d'autre à faire. Ouvrez une pull request sur GitHub et la barre apparaît au-dessus du champ de commentaire.</p>
         </section>
 
         <section class="dsec">
           <h2>Depuis un zip de release — sans Node, sans Git</h2>
           <p>Pour un poste verrouillé où vous ne pouvez pas installer de chaîne de compilation. Chaque version publiée embarque un zip prêt à charger, un pour Chromium et un pour Firefox.</p>
           <ul class="tick">
-            <li><span class="mk">1</span><b>Télécharger et décompresser</b><span class="tx">Depuis la page des releases du dépôt. Prenez le bundle qui correspond à votre navigateur.</span></li>
-            <li><span class="mk">2</span><b>Ouvrir la page des extensions</b><span class="tx"><code>chrome://extensions</code>, puis activer le mode développeur.</span></li>
-            <li><span class="mk">3</span><b>Charger le dossier décompressé</b><span class="tx">« Charger l'extension non empaquetée », puis désignez le dossier.</span></li>
+            <li><span class="mk">1</span><b>Télécharger le bundle de votre navigateur</b><span class="tx">Depuis la <a href="https://github.com/Reefact/conventional-comments-toolkit/releases" rel="noopener noreferrer" target="_blank">liste des releases</a> — la liste, et non <code>/releases/latest</code>, qui saute les pré-versions. Prenez <code>…-chromium.zip</code> ou <code>…-firefox.zip</code>.</span></li>
+            <li><span class="mk">2</span><b>Décompresser ailleurs que dans les téléchargements</b><span class="tx">Le navigateur relit ce dossier à chaque démarrage, et le supprimer désactive l'extension.</span></li>
+            <li><span class="mk">3</span><b>Chrome, Edge, Brave…</b><span class="tx"><code>chrome://extensions</code> → <b>Mode développeur</b> → <b>Charger l'extension non empaquetée</b> → le dossier décompressé, celui qui contient directement <code>manifest.json</code>.</span></li>
+            <li><span class="mk">4</span><b>Firefox — un autre chemin</b><span class="tx"><code>about:debugging#/runtime/this-firefox</code> → <b>Charger un module temporaire</b> → le <code>manifest.json</code> lui-même, pas le dossier. Un module temporaire est retiré à la fermeture de Firefox.</span></li>
           </ul>
           <div class="callout blk">
             <span class="ct">la chose à savoir</span>

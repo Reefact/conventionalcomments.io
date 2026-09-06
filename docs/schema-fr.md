@@ -77,6 +77,23 @@ Sortie non nulle au moindre écart.
 Sans le chemin du toolkit, il ne joue que le schéma et les fixtures — utile en CI sur ce
 dépôt seul.
 
+## Ce que le schéma n'impose pas
+
+Il a imposé deux contraintes que le validateur n'impose pas, et une revue les a relevées :
+`^#[0-9a-fA-F]{6}$` sur la couleur d'un label, et `format: "date-time"` sur `activatedAt`.
+Le toolkit ne vérifie dans les deux cas qu'`typeof === "string"`, et pour la date que
+`Date.parse` réussit. Une configuration que le produit accepte et applique était donc
+soulignée en rouge dans l'éditeur. **Un fichier qui se dit transcription ne peut pas
+refuser ce que la source accepte** — les deux contraintes sont retirées, et
+`scripts/fixtures/valid-runtime-widths.json` interdit la récidive.
+
+L'écart existe aussi dans l'autre sens, et lui ne se corrige pas : JSON Schema ne sait pas
+exprimer « `Date.parse` réussit ». `"septembre 2026"` est donc accepté ici et refusé à
+l'exécution. Plutôt que de laisser cette lacune muette, elle porte un nom : les gabarits
+préfixés `loose-` désignent ce que le schéma accepte et que le validateur refuse. Sans ce
+troisième cas, on découvre la lacune en voyant un gabarit `invalid-` passer, et le réflexe
+est de durcir le schéma — c'est-à-dire de refaire le défaut qu'on vient de corriger.
+
 ## Trois écarts assumés
 
 1. **Les clés inconnues sont refusées ici, seulement signalées à l'exécution.** Le toolkit
