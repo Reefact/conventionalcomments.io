@@ -23,8 +23,15 @@ code { font-family:var(--font-mono); }
 /* ===========================================================================
    Chrome du site
    ======================================================================== */
-.sheader { display:flex; align-items:center; gap:22px; flex-wrap:wrap;
-           padding:14px 26px; border-bottom:1px solid var(--line-soft); }
+/* Empêche le contenu de s'étaler d'un bord à l'autre sur les grands écrans : la bande
+   (fond, filet) reste pleine largeur, mais son contenu est centré dans une gouttière
+   d'au plus --rail. */
+.sheader > .in, .sfooter > .in, .hband > .in, .cta-in, .docs {
+  max-width:var(--rail); margin-left:auto; margin-right:auto;
+}
+
+.sheader { padding:14px 26px; border-bottom:1px solid var(--line-soft); }
+.sheader > .in { display:flex; align-items:center; gap:22px; flex-wrap:wrap; }
 .brand { background:none; border:0; padding:0; cursor:pointer; display:inline-flex; align-items:center; gap:9px; font-family:var(--font-display);
          font-weight:700; letter-spacing:-.026em; font-size:15.5px; color:var(--fg); }
 .brand .dom { color:var(--fg-faint); font-weight:500; }
@@ -47,8 +54,8 @@ code { font-family:var(--font-mono); }
 .btn-p { background:var(--accent); color:var(--on-accent); }
 .btn-s { background:transparent; color:var(--fg-2); border-color:var(--line-strong); font-weight:500; }
 
-.sfooter { border-top:1px solid var(--line-soft); padding:28px 26px 34px;
-           display:flex; flex-direction:column; gap:10px; background:var(--bg-sunken); }
+.sfooter { padding:28px 26px 34px; border-top:1px solid var(--line-soft); background:var(--bg-sunken); }
+.sfooter > .in { display:flex; flex-direction:column; gap:10px; }
 .sfooter .ind { font-size:13px; color:var(--fg-2); }
 .sfooter .meta { font-family:var(--font-mono); font-size:11.5px; color:var(--fg-faint);
                  display:flex; gap:6px 18px; flex-wrap:wrap; }

@@ -7,17 +7,19 @@ const { lang } = Astro.props;
 const ui = t(lang);
 ---
 <footer class="sfooter">
-  <p class="ind">
-    {ui.footerIndependent}{' '}
-    <a href="https://conventionalcomments.org/" rel="noopener noreferrer" target="_blank">conventionalcomments.org</a>{ui.footerSpec}
-  </p>
-  <p class="meta">
-    <a class="navlink" style="font-size:11.5px" href={href('privacy', lang)}>{ui.privacyLink}</a>
-    <a class="navlink" style="font-size:11.5px" href={href('releasenotes', lang)}>{ui.releaseNotesLink}</a>
-    <span>Apache-2.0</span>
-    <span>Reefact</span>
-    <a class="navlink" style="font-size:11.5px" href="https://github.com/Reefact/conventional-comments-toolkit"
-       rel="noopener noreferrer" target="_blank">github.com/reefact/conventional-comments-toolkit</a>
-    <a class="navlink" style="font-size:11.5px" href="/schema/v1.json">/schema/v1.json</a>
-  </p>
+  <div class="in">
+    <p class="ind">
+      {ui.footerIndependent}{' '}
+      <a href="https://conventionalcomments.org/" rel="noopener noreferrer" target="_blank">conventionalcomments.org</a>{ui.footerSpec}
+    </p>
+    <p class="meta">
+      <a class="navlink" style="font-size:11.5px" href={href('privacy', lang)}>{ui.privacyLink}</a>
+      <a class="navlink" style="font-size:11.5px" href={href('releasenotes', lang)}>{ui.releaseNotesLink}</a>
+      <span>Apache-2.0</span>
+      <span>Reefact</span>
+      <a class="navlink" style="font-size:11.5px" href="https://github.com/Reefact/conventional-comments-toolkit"
+         rel="noopener noreferrer" target="_blank">github.com/reefact/conventional-comments-toolkit</a>
+      <a class="navlink" style="font-size:11.5px" href="/schema/v1.json">/schema/v1.json</a>
+    </p>
+  </div>
 </footer>
