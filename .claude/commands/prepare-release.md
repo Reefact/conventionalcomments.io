@@ -45,18 +45,34 @@ Puis dérive les deux dates humaines **du jour que porte ce tag**. Ne les écris
 `check-release-notes.mjs` ne compare que les tags, le nombre de rubriques et le nombre de puces,
 donc une date périmée passe tous les contrôles sans un mot.
 
-```sh
-DAY="${TAG#release/}"; DAY="${DAY%T*}"                     # 2026-09-06
-DATE_EN="$(LC_ALL=C date -u -d "$DAY" '+%B %-d, %Y')"      # September 6, 2026
+```bash
+DAY="${TAG#release/}"; DAY="${DAY%T*}"       # 2026-09-06
+Y="${DAY%%-*}"; MD="${DAY#*-}"; M="${MD%%-*}"; D="${MD#*-}"
 
-# Le français ne passe PAS par la locale. `fr_FR.UTF-8` n'est pas installée partout, et
-# `LC_ALL=fr_FR.UTF-8 date` retombe alors EN SILENCE sur les noms de mois anglais : on
-# obtient « 6 September 2026 », qui a l'air français et ne l'est pas. D'où la table.
-MOIS=(janvier février mars avril mai juin juillet août septembre octobre novembre décembre)
-n=$(date -u -d "$DAY" '+%-m'); j=$(date -u -d "$DAY" '+%-d')
-[ "$j" = 1 ] && j="1er"                                    # « 1er mars », jamais « 1 mars »
-DATE_FR="$j ${MOIS[$((n-1))]} $(date -u -d "$DAY" '+%Y')"  # 6 septembre 2026
+# `10#` n'est pas décoratif : sans lui, $((08)) et $((09)) sont lus comme de l'octal et
+# bash s'arrête sur « value too great for base ». Août et septembre casseraient, et
+# seulement eux — le genre de défaut qui dort dix mois par an.
+n=$((10#$M)); d=$((10#$D))
+
+EN=(January February March April May June July August September October November December)
+FR=(janvier février mars avril mai juin juillet août septembre octobre novembre décembre)
+
+DATE_EN="${EN[n-1]} $d, $Y"                  # September 6, 2026
+if [ "$d" = 1 ]; then j="1er"; else j="$d"; fi   # « 1er mars », jamais « 1 mars »
+DATE_FR="$j ${FR[n-1]} $Y"                   # 6 septembre 2026
 ```
+
+Aucun appel à `date` ici, et c'est délibéré. `date -d` est une extension GNU : le `date` BSD
+de macOS ne la connaît pas, et cette commande est versionnée pour servir depuis n'importe quel
+clone. Le tag porte déjà `YYYY-MM-DD` — il n'y a aucun calcul à faire, seulement un découpage
+de chaîne, qui ne dépend de rien.
+
+La table anglaise est là pour la même raison que la française : passer par la locale suppose
+qu'elle soit installée, et quand elle ne l'est pas, `date` retombe EN SILENCE sur l'anglais.
+On obtiendrait « 6 September 2026 » — français de forme, pas de fond — et rien ne l'attraperait.
+
+Bash 3.2 suffit (c'est celui de macOS), mais des tableaux indexés sont nécessaires : lance ce
+bloc avec `bash`, pas avec `sh`.
 
 ## 3. Retitrer, dans les deux langues
 
