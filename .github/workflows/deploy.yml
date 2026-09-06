@@ -1,0 +1,36 @@
+# La mise en ligne. Elle VÉRIFIE puis PUBLIE L'ARTEFACT VÉRIFIÉ — elle ne reconstruit pas
+# après coup, sans quoi ce qui part en production n'est pas ce qui a été contrôlé.
+name: deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    tags: ['release/*']
+
+jobs:
+  deploy:
+    # Tant que la variable de dépôt CF_DEPLOY ne vaut pas 'true', seul le déclenchement
+    # manuel passe. Évite qu'une poussée sur main échoue en boucle avant que les secrets
+    # Cloudflare n'existent.
+    if: github.event_name == 'workflow_dispatch' || vars.CF_DEPLOY == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # `/version` lit `git describe --tags`. Un clone superficiel n'a pas les tags :
+          # la page annoncerait « pas une release » sur une release.
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - name: wrangler deploy
+        run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Un site qui refuse les tiers dans le navigateur n'en envoie pas depuis sa CI.
+          WRANGLER_SEND_METRICS: false

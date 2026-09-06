@@ -26,7 +26,7 @@ npm run check    # build + tous les contrôles ci-dessous
 | `npm run check` | `build`, puis les invariants du site et du schéma |
 | `npm run check:site` | Les onze invariants, sur ce qui est réellement produit |
 | `npm run check:schema` | Le schéma JSON contre ses gabarits ; `-- <chemin-du-toolkit>` le compare à la source |
-| `npm run deploy` | `check`, puis `wrangler deploy` |
+| `npm run deploy` | `check`, puis `wrangler deploy` (demande `wrangler login`) |
 
 ## Structure
 
@@ -86,12 +86,44 @@ en découlent :
 Tout build en produit une ; `release` vaut `null` quand le build ne vient pas d'un tag, ce
 qui est plus utile qu'un 404.
 
+## Intégration continue
+
+| Workflow | Quand | Ce qu'il fait |
+| --- | --- | --- |
+| `.github/workflows/check.yml` | chaque poussée, chaque PR | `npm ci && npm run check` |
+| `.github/workflows/deploy.yml` | manuel, `main`, tags `release/*` | vérifie, puis publie **l'artefact vérifié** |
+
+Le déploiement ne reconstruit pas après avoir vérifié : ce qui part en production est
+exactement ce qui a été contrôlé. Il récupère l'historique complet (`fetch-depth: 0`) parce
+que `/version` lit `git describe --tags` — un clone superficiel annoncerait « pas une
+release » sur une release.
+
 ## Hébergement
 
 `wrangler.jsonc` déclare des **assets statiques sans script** (pas de `main`). Les requêtes
 d'assets sont gratuites et non comptabilisées ; une requête qui réveille un script consomme
 le quota et répond 429 une fois celui-ci épuisé. Le site n'a besoin d'aucun calcul à la
 requête : il n'en demande donc aucun.
+
+Le site répond sur `conventionalcomments.io` et nulle part ailleurs : `workers_dev: false`,
+et un seul *custom domain*. Pas de `www` — l'ajouter servirait les mêmes octets sous deux
+noms, quand tous les `<link rel="canonical">` désignent l'apex ; si `www` doit répondre,
+c'est une redirection 301 au niveau de la zone.
+
+### Pour mettre en ligne la première fois
+
+1. **La zone doit être gérée par Cloudflare.** Contrainte dure : contrairement à Pages,
+   Workers n'accepte aucun domaine dont les serveurs de noms sont ailleurs.
+2. Deux secrets de dépôt : `CLOUDFLARE_API_TOKEN` (portée *Edit Cloudflare Workers*) et
+   `CLOUDFLARE_ACCOUNT_ID`.
+3. Lancer `deploy` à la main une première fois (onglet Actions), pour voir le domaine
+   s'attacher et le certificat se créer.
+4. Puis poser la variable de dépôt `CF_DEPLOY = true` : les poussées sur `main` déploient.
+
+Tant que cette variable n'existe pas, seul le déclenchement manuel passe — une poussée sur
+`main` n'échoue pas en boucle avant que les secrets ne soient posés.
+
+En local, `npm run deploy` fait la même chose après `wrangler login`.
 
 ## Schéma de configuration
 
