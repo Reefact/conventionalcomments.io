@@ -1,0 +1,61 @@
+name: codeql
+
+# Analyse statique de sécurité (SAST) du seul langage que ce dépôt embarque : le site
+# Astro et ses scripts, en TypeScript et JavaScript. Les constats arrivent sur l'onglet
+# Security, à côté des alertes Dependabot.
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    # Weekly re-scan so newly shipped CodeQL queries run against unchanged code.
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+
+# Cancel superseded runs on the same branch / PR.
+concurrency:
+  group: codeql-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    name: CodeQL analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    # Buildless CodeQL is a couple of minutes per language; cap a stuck analysis
+    # well above that.
+    timeout-minutes: 20
+    permissions:
+      # Required to upload results to the code-scanning dashboard.
+      security-events: write
+      # Needed by the action on private repositories; harmless on public ones.
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: javascript-typescript
+            # Extraction sans build : rien à compiler, et le site est de toute façon
+            # produit par Astro à partir de ces mêmes sources.
+            build-mode: none
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
+        with:
+          category: "/language:${{ matrix.language }}"

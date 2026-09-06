@@ -1,0 +1,27 @@
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "build"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "ci"
+    # codeql-action publie init et analyze comme deux actions distinctes qui DOIVENT
+    # tourner dans la même version : une paire dépareillée fait échouer l'analyse. On
+    # les groupe en une seule pull request pour qu'elles bougent ensemble.
+    groups:
+      codeql-action:
+        patterns:
+          - "github/codeql-action*"
