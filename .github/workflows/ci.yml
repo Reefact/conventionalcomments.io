@@ -1,0 +1,35 @@
+# Garde principal : les douze invariants du site tiennent-ils encore ? Sans ce workflow ils
+# ne tournent que quand quelqu'un pense à les lancer, c'est-à-dire jamais au moment où ça
+# compte. C'est le seul workflow qu'il est raisonnable de rendre obligatoire sur `main`.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Un commit plus récent sur la même branche rend un run en vol sans objet.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Build et invariants
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      # build + les douze invariants du site + le contrôle du schéma
+      - run: npm run check

@@ -90,13 +90,18 @@ qui est plus utile qu'un 404.
 
 | Workflow | Quand | Ce qu'il fait |
 | --- | --- | --- |
-| `.github/workflows/check.yml` | chaque poussée, chaque PR | `npm ci && npm run check` |
-| `.github/workflows/deploy.yml` | manuel, `main`, tags `release/*` | vérifie, puis publie **l'artefact vérifié** |
+| `.github/workflows/ci.yml` | `main`, chaque PR, manuel | `npm ci && npm run check` |
+| `.github/workflows/release.yml` | tag `release/*`, manuel | vérifie, puis publie **l'artefact vérifié** |
 
-Le déploiement ne reconstruit pas après avoir vérifié : ce qui part en production est
-exactement ce qui a été contrôlé. Il récupère l'historique complet (`fetch-depth: 0`) parce
-que `/version` lit `git describe --tags` — un clone superficiel annoncerait « pas une
-release » sur une release.
+**La mise en ligne se déclenche sur un tag `release/*`, pas sur une poussée de `main`.**
+Le tag est la décision de publier — c'est la convention des autres dépôts Reefact, et elle
+vaut ici pour une raison propre au site : `/version` lit
+`git describe --tags --match 'release/*'`, donc un déploiement hors tag s'annoncerait
+« pas une release » sur sa propre page.
+
+Le job vérifie puis publie sans reconstruire : `npm run check` produit `dist/` et le
+contrôle, `wrangler deploy` téléverse ce même `dist/`. Il récupère l'historique complet
+(`fetch-depth: 0`) parce qu'un clone superficiel n'a pas les tags.
 
 ## Hébergement
 
@@ -116,12 +121,9 @@ c'est une redirection 301 au niveau de la zone.
    Workers n'accepte aucun domaine dont les serveurs de noms sont ailleurs.
 2. Deux secrets de dépôt : `CLOUDFLARE_API_TOKEN` (portée *Edit Cloudflare Workers*) et
    `CLOUDFLARE_ACCOUNT_ID`.
-3. Lancer `deploy` à la main une première fois (onglet Actions), pour voir le domaine
+3. Lancer `Release` à la main une première fois (onglet Actions), pour voir le domaine
    s'attacher et le certificat se créer.
-4. Puis poser la variable de dépôt `CF_DEPLOY = true` : les poussées sur `main` déploient.
-
-Tant que cette variable n'existe pas, seul le déclenchement manuel passe — une poussée sur
-`main` n'échoue pas en boucle avant que les secrets ne soient posés.
+4. Ensuite, publier c'est poser un tag : `git tag release/1.0 && git push origin release/1.0`.
 
 En local, `npm run deploy` fait la même chose après `wrangler login`.
 
