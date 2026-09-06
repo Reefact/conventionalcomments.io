@@ -16,6 +16,10 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
+_Rien en attente pour l'instant._
+
+## release/2026-09-06T18-03-59Z — 6 septembre 2026
+
 ### ✨ Nouveautés
 
 - **Le site existe.** conventionalcomments.io répond, en anglais à la racine et en français

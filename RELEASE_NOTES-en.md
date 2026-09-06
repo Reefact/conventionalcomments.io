@@ -16,6 +16,10 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
+_Nothing pending yet._
+
+## release/2026-09-06T18-03-59Z — September 6, 2026
+
 ### ✨ New
 
 - **The site exists.** conventionalcomments.io answers, in English at the root and in French
