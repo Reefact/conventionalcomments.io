@@ -11,7 +11,7 @@ const page = 'server' as const;
 <div class="dhead stack g12">
           <p class="crumb"><b>doc</b> / le serveur</p>
           <h1>Déployer le serveur</h1>
-          <p class="lede measure">Un petit service, que vous hébergez, une fois pour toute l'organisation. Il relit les pull requests et publie la vérification. Rien là-dedans n'est du SaaS&nbsp;: il tourne sur votre infrastructure, et le seul interlocuteur qu'il a est votre propre plateforme de code — l'API GitHub ou Azure DevOps, avec les jetons que vous lui donnez. Rien ne remonte chez Reefact, qui n'opère aucun service dans ce tableau.</p>
+          <p class="lede measure">Un petit service, que vous hébergez, une fois pour toute l'organisation. Il relit les pull requests et publie la vérification. Rien là-dedans n'est du SaaS&nbsp;: <strong>Reefact n'opère aucun service ici et ne reçoit rien.</strong> Le serveur tourne sur votre infrastructure, et ce qu'il appelle au dehors, c'est l'API de votre plateforme de code, avec les jetons que vous lui donnez — plus le document d'organisation à <code>configUrl</code>, si vous en configurez un, là où vous choisissez de l'héberger.</p>
         </div>
 
         <section class="dsec">
