@@ -2,6 +2,7 @@
 description: Rédige les notes de la prochaine release et ouvre sa pull request `ci: prepare <tag>`
 argument-hint: (aucun argument — le tag est calculé)
 allowed-tools: Bash, Read, Edit, Write
+disable-model-invocation: true
 ---
 
 Préparer une release de conventionalcomments.io : l'étape 2 des quatre décrites dans
@@ -40,6 +41,23 @@ satisfaire la regex qu'impose `check-release-tag.sh` :
 ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}-[0-9]{2}-[0-9]{2}Z$
 ```
 
+Puis dérive les deux dates humaines **du jour que porte ce tag**. Ne les écris jamais en dur :
+`check-release-notes.mjs` ne compare que les tags, le nombre de rubriques et le nombre de puces,
+donc une date périmée passe tous les contrôles sans un mot.
+
+```sh
+DAY="${TAG#release/}"; DAY="${DAY%T*}"                     # 2026-09-06
+DATE_EN="$(LC_ALL=C date -u -d "$DAY" '+%B %-d, %Y')"      # September 6, 2026
+
+# Le français ne passe PAS par la locale. `fr_FR.UTF-8` n'est pas installée partout, et
+# `LC_ALL=fr_FR.UTF-8 date` retombe alors EN SILENCE sur les noms de mois anglais : on
+# obtient « 6 September 2026 », qui a l'air français et ne l'est pas. D'où la table.
+MOIS=(janvier février mars avril mai juin juillet août septembre octobre novembre décembre)
+n=$(date -u -d "$DAY" '+%-m'); j=$(date -u -d "$DAY" '+%-d')
+[ "$j" = 1 ] && j="1er"                                    # « 1er mars », jamais « 1 mars »
+DATE_FR="$j ${MOIS[$((n-1))]} $(date -u -d "$DAY" '+%Y')"  # 6 septembre 2026
+```
+
 ## 3. Retitrer, dans les deux langues
 
 Dans `RELEASE_NOTES-en.md` et `RELEASE_NOTES-fr.md`, remplace l'unique ligne `## Unreleased`
@@ -50,7 +68,7 @@ par un `## Unreleased` vide, le texte d'attente de sa langue, puis l'en-tête re
 
 _Nothing pending yet._
 
-## <TAG> — September 6, 2026
+## <TAG> — <DATE_EN>
 ```
 
 ```
@@ -58,13 +76,17 @@ _Nothing pending yet._
 
 _Rien en attente pour l'instant._
 
-## <TAG> — 6 septembre 2026
+## <TAG> — <DATE_FR>
 ```
 
-La date s'écrit dans la forme propre à chaque langue — `September 6, 2026` et
-`6 septembre 2026` — comme dans `justdummies.io`. La chaîne du tag, elle, est identique des
-deux côtés : `check-release-notes.mjs` compare les tags des deux fichiers dans l'ordre et
-échoue s'ils diffèrent.
+`<DATE_EN>` et `<DATE_FR>` sont les valeurs calculées à l'étape 2, pas des dates recopiées d'une
+release précédente. Chaque langue garde sa forme — `September 6, 2026` d'un côté,
+`6 septembre 2026` de l'autre — comme dans `justdummies.io`. La chaîne du tag, elle, est
+identique des deux côtés : `check-release-notes.mjs` compare les tags des deux fichiers dans
+l'ordre et échoue s'ils diffèrent.
+
+Avant de commiter, relis les deux en-têtes produits et vérifie que leur date est bien celle du
+jour porté par le tag. C'est le seul contrôle de cette étape qu'aucun script ne fait pour toi.
 
 Rien d'autre ne change. Le contenu de la release a été écrit et relu quand le travail a été
 fusionné ; cette étape décide seulement sous quel tag il se range.
