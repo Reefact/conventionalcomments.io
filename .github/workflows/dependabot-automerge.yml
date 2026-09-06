@@ -29,11 +29,17 @@ name: dependabot-automerge
 #     the first commit; auto-merge acts on the tip. Somebody with push access can append
 #     to a Dependabot branch without changing either the author or the first commit.
 #
-# The two guards are deliberately asymmetric:
-#   - ENABLING requires the strong proof — the tip is Dependabot's own GitHub-signed
-#     commit. Commit author NAMES forge freely; GitHub's signature does not.
-#   - DISABLING triggers on the weaker signal — the tip's author is not Dependabot —
-#     because disabling is the fail-safe direction: at worst a human merges by hand.
+# The tip is sorted into exactly TWO states, and there is deliberately no third:
+#   - `dependabot-signed` — the tuple matches one GitHub itself produces for Dependabot.
+#     Only this state ARMS auto-merge.
+#   - `foreign` — everything else, including a tip this job could not read. This state
+#     WITHDRAWS auto-merge.
+# An earlier version kept a middle state for "authored by Dependabot but not signed",
+# which left whatever was already armed alone. A review showed that bucket is reachable
+# by the attacker it was meant to stop: commit author names forge freely, so anyone with
+# push access could park a tip there and keep an armed auto-merge from being withdrawn.
+# Anything not positively recognised is now foreign, and withdrawing is the fail-safe
+# direction — at worst a human merges by hand.
 
 on:
   pull_request:
@@ -73,25 +79,33 @@ jobs:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           set -euo pipefail
-          # `.author.login` names the git AUTHOR; the signature attests the COMMITTER.
-          # They are not the same identity, so reading one and believing the other lets a
-          # tip through whose author reads "dependabot[bot]" while the signature covers
-          # someone else. All three are read, and all three must agree.
+          # `.author` and `.committer` are the GitHub ACCOUNTS resolved from the commit's
+          # author and committer e-mail addresses — not the free-text names in the commit
+          # object. `.commit.verification.verified` attests the signature over the whole
+          # commit. All three are read in one call so they describe one object.
           tip="$(gh api "repos/${GH_REPO}/commits/${HEAD_SHA}" \
             --jq '"\(.author.login // "")|\(.committer.login // "")|\(.commit.verification.verified)"' 2>/dev/null || true)"
-          author="${tip%%|*}"
-          rest="${tip#*|}"
-          committer="${rest%%|*}"
-          echo "head ${HEAD_SHA}: author='${author:-unknown}' committer='${committer:-unknown}' signed='${tip##*|}'"
-          # Author AND committer are Dependabot, AND the signature is valid — the strong
-          # proof, the only one allowed to ARM auto-merge.
-          if [ "$tip" = "dependabot[bot]|dependabot[bot]|true" ]; then
+          echo "head ${HEAD_SHA}: ${tip:-unreadable}"
+          # Dependabot does not commit — it asks GitHub to, and GitHub signs with its own
+          # key. So the AUTHOR is Dependabot while the COMMITTER is GitHub's own identity,
+          # `noreply@github.com`, which resolves to the `web-flow` account. Requiring
+          # Dependabot on both sides therefore rejects every genuine tip; a review caught
+          # exactly that, citing Reefact/justdummies.io#180, whose head 55f81ca reads
+          # author=dependabot[bot], committer=web-flow, verified=true.
+          #
+          # `verified` is the load-bearing field: forging either NAME is free, but a commit
+          # GitHub reports as verified was signed by a key GitHub holds. The committer list
+          # then says WHICH GitHub-held identity is acceptable, so a tip signed with some
+          # contributor's own verified key — author forged to dependabot[bot], committer
+          # themselves — fails to match and is treated as foreign.
+          #
+          # String equality, not `case`: in a shell pattern the brackets of "[bot]" are a
+          # character class, so `case` would match "dependabott" and not the literal name.
+          if [ "$tip" = "dependabot[bot]|web-flow|true" ] \
+            || [ "$tip" = "dependabot[bot]|dependabot[bot]|true" ]; then
             echo "state=dependabot-signed" >> "$GITHUB_OUTPUT"
-          # Authored by Dependabot but unsigned: not proof enough to arm, not
-          # foreign enough to disarm — leave whatever is already set alone.
-          elif [ "$author" = "dependabot[bot]" ]; then
-            echo "state=dependabot-unsigned" >> "$GITHUB_OUTPUT"
           else
+            # Unrecognised, or unreadable. Fail closed in the safe direction.
             echo "state=foreign" >> "$GITHUB_OUTPUT"
           fi
 
@@ -141,6 +155,9 @@ jobs:
         # ride an approval it never got. Withdrawing is idempotent — `|| true` because the
         # call errors when auto-merge was not enabled in the first place, which is the
         # ordinary case here.
+        #
+        # `foreign` now also covers a tip that is merely unrecognised or unreadable, so a
+        # transient API failure withdraws rather than leaves an armed pull request behind.
         if: steps.tip.outputs.state == 'foreign'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
