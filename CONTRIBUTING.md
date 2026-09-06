@@ -103,7 +103,7 @@ it MUST be lowercase and MUST be one of:
 | `ci` | The pipeline as a subject — a `docs(ci)` explaining a workflow, not a change to the workflow itself, which is the `ci` type |
 | `schema` | The configuration schema served at `/schema/v1.json`, and the guard that keeps it in step with the toolkit |
 | `site` | The Astro application — pages, layouts, components, routes, invariants |
-| `tokens` | The design tokens and the stylesheets built on them, consumed by both the site and the mockups |
+| `tokens` | The design tokens and the stylesheets built on them |
 
 A scope names a **component**, never a file or a directory: `fix(site)`, never
 `fix(Header.astro)`. Several scopes are comma-separated, unique and alphabetical,
@@ -111,7 +111,7 @@ with no space: `feat(site,tokens)`.
 
 `feat` and `fix` require one because a capability added or a defect fixed always
 belongs to a component, and the diff does not always say which — a change under
-the design tokens serves the site and the mockups at once.
+the design tokens can serve any page of the site at once.
 
 ### Breaking changes
 

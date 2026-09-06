@@ -8,12 +8,12 @@
     "dev": "node scripts/generate-version.mjs && astro dev",
     "build": "node scripts/generate-version.mjs && astro build",
     "preview": "astro preview",
-    "check": "npm run build && node scripts/check-site.mjs && npm run check:schema && npm run check:toolkit",
+    "check": "npm run build && node scripts/check-site.mjs && npm run check:schema && npm run check:toolkit && npm run check:labels",
     "check:site": "node scripts/check-site.mjs",
     "check:schema": "node scripts/check-schema.mjs",
-    "port:mockup": "node scripts/port-mockup.mjs",
     "deploy": "npm run check && wrangler deploy",
-    "check:toolkit": "node scripts/check-toolkit-sync.mjs"
+    "check:toolkit": "node scripts/check-toolkit-sync.mjs",
+    "check:labels": "node scripts/audit-labels.mjs"
   },
   "devDependencies": {
     "@astrojs/sitemap": "^3.7.4",

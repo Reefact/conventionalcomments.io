@@ -28,6 +28,7 @@ npm run check    # build + tous les contrôles ci-dessous
 | `npm run check:site` | Les treize invariants, sur ce qui est réellement produit |
 | `npm run check:schema` | Le schéma JSON contre ses gabarits ; `-- <chemin>` ou `TOOLKIT_PATH` le compare à la source |
 | `npm run check:toolkit` | Les notes de version du site contre celles du toolkit |
+| `npm run check:labels` | Les icônes et couleurs affichées contre `defaults.ts` |
 | `npm run deploy` | `check`, puis `wrangler deploy` (demande `wrangler login`) |
 
 ## Structure
@@ -44,7 +45,7 @@ public/_headers         CORS du schéma, cache des polices (lu par Cloudflare, j
 public/fonts/           Les cinq .woff2, empreintés — le site sert ses polices lui-même
 public/favicon.*        L'icône : svg (suit le thème), ico, apple-touch-icon
 public/og-{en,fr}.png   Les cartes sociales, une par langue
-scripts/                Estampille, portage des maquettes, contrôles
+scripts/                Estampille et contrôles
 ```
 
 Les segments sont traduits : `/docs/configure/` répond à `/fr/docs/configuration/`. Le
@@ -99,6 +100,9 @@ bruyamment : elle reste juste, en retard. La CI récupère donc le toolkit et co
 - `check:schema` compare les clés, les domaines et les bornes à `schema.ts`.
 - `check:toolkit` compare la liste des versions de `/release-notes/v1/` à celle que le
   toolkit publie — la page a été mise en ligne à jour et l'était déjà moins le lendemain.
+- `check:labels` compare les treize icônes et couleurs **affichées** à `defaults.ts`. Une
+  transcription de treize emoji en avait déjà un faux, que rien ne signalait : les deux
+  s'affichent, seul le codet diffère.
 
 ## Intégration continue
 
@@ -164,12 +168,14 @@ partagent le même script.
 | [`docs/decoupage-pages-fr.md`](./docs/decoupage-pages-fr.md) | Les routes, le bilinguisme, la navigation, ce qui reste à trancher |
 | [`docs/schema-fr.md`](./docs/schema-fr.md) | Le schéma : statut, écarts assumés, ce qu'il reste à faire côté toolkit |
 | [`docs/tokens.css`](./docs/tokens.css) | Jetons de design, trois états de thème |
-| [`docs/mockups/`](./docs/mockups/) | Les treize pages maquettées, bilingues — la source de la prose |
 
-Les maquettes restent la référence du **texte** ; `src/pages/` en est le portage, produit
-une fois par `npm run port:mockup`. Toute retouche de prose se fait désormais dans les pages.
+Les maquettes ont été supprimées. Elles ont servi à écrire et à relire la prose, puis
+`src/pages/` en a été le portage — après quoi deux tours de revue ont corrigé douze pages
+sans qu'elles suivent. Une référence qui contient des étapes d'installation fausses, une
+affirmation démentie et un historique de releases inventé est pire que pas de référence.
+**Les pages sont la source du texte.**
 
 Rendus publiés :
 
 - [Identité](https://claude.ai/code/artifact/70e2f349-e416-41f3-8cce-0215c71dd668) — marque, palette, spécimens, système de composants
-- [Pages](https://claude.ai/code/artifact/694a5694-3c66-49fc-b3dc-10fdc5c4611f) — les pages complètes, navigation active
+- [Pages](https://claude.ai/code/artifact/694a5694-3c66-49fc-b3dc-10fdc5c4611f) — rendu des maquettes d'alors, gardé comme trace ; le site l'a dépassé
