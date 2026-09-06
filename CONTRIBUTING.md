@@ -144,7 +144,10 @@ manual `Release` run verifies and stops at `wrangler deploy --dry-run`.
 The tag's name is decided **before the tag exists**, and the notes are written before it is
 pushed:
 
-1. **The maintainer asks for a release.**
+1. **The maintainer asks for a release.** `/prepare-release` performs step 2 below — it
+   drafts the notes, verifies them, opens the pull request and hands back the tag. It stops
+   there: steps 3 and 4, merging and tagging, stay the maintainer's. The command is
+   `.claude/commands/prepare-release.md`.
 2. **The notes are drafted.** Whatever accumulated under `## Unreleased` in
    `RELEASE_NOTES-en.md` and `RELEASE_NOTES-fr.md` is retitled with the tag being proposed —
    `## release/YYYY-MM-DDTHH-MM-SSZ — <date>` — and a fresh empty `## Unreleased` is put back
