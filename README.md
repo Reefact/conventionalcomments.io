@@ -15,6 +15,7 @@ Site statique **Astro**, hébergé sur **Cloudflare**. Bilingue anglais (racine)
 
 ```sh
 npm install
+git config core.hooksPath .githooks   # une fois par clone : contrôle des messages de commit
 npm run dev      # http://localhost:4321
 npm run check    # build + tous les contrôles ci-dessous
 ```
@@ -133,6 +134,14 @@ En local, `npm run deploy` fait la même chose après `wrangler login`.
 l'autocomplétion et la validation dans l'éditeur à tout dépôt qui configure le toolkit.
 Transcrit de `packages/core/src/config/schema.ts`, et tenu en accord avec lui par
 `npm run check:schema -- <chemin-du-toolkit>`. Détails : [`docs/schema-fr.md`](./docs/schema-fr.md).
+
+## Contribuer
+
+Les messages de commit, les noms de branche et les titres de pull request sont **en
+anglais**, au format `<type>(<scope>): <description>` — la convention des autres dépôts
+Reefact. Le reste du dépôt est en français. Le tout est écrit dans
+[`CONTRIBUTING.md`](./CONTRIBUTING.md), et vérifié par un hook local et par la CI, qui
+partagent le même script.
 
 ## Conception
 
