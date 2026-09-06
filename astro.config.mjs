@@ -1,4 +1,6 @@
 // @ts-check
+import { existsSync, readdirSync, renameSync, rmdirSync } from 'node:fs';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
@@ -26,8 +28,6 @@ function flattenLocalised404s() {
     name: 'flatten-localised-404s',
     hooks: {
       'astro:build:done': async ({ dir, logger }) => {
-        const { readdirSync, existsSync, renameSync, rmdirSync } = await import('node:fs');
-        const { join } = await import('node:path');
         const root = fileURLToPath(dir);
         for (const entry of readdirSync(root, { withFileTypes: true })) {
           if (!entry.isDirectory()) continue;
