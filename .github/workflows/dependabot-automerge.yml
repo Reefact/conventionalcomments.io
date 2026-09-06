@@ -115,25 +115,54 @@ jobs:
       # CI, lint, dependency-review and codeql have said anything. The comment at the head
       # of this file already says so — it assumed the rule rather than checking it.
       #
-      # So the workflow verifies its own precondition and fails closed: with no required
-      # check on main it does not arm, and says why. It arms itself the day the ruleset
-      # carries them.
-      - name: Are required status checks configured on main?
+      # So the workflow verifies its own precondition and fails closed: unless main
+      # requires EVERY check below, it does not arm, and says which ones are missing. It
+      # arms itself the day the ruleset carries them all.
+      #
+      # Counting was not enough. A review pointed out that a non-zero count is satisfied by
+      # a single required check, so a ruleset holding one — or one that later drifts and
+      # loses four — would arm auto-merge while the other four were still running or
+      # already failing. The names are therefore compared as a set.
+      - name: Are the required status checks configured on main?
         id: gate
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
+          # Every check that must be required on main before auto-merge may arm, one per
+          # line. Each string is a job's `name:`, which is what GitHub uses as the status
+          # check context — so renaming a job means renaming it here too, and until then
+          # this gate withholds rather than arming on a check that no longer reports.
+          EXPECTED: |
+            Build et invariants
+            Conventional commits
+            Lint scripts and workflows
+            CodeQL analyze (javascript-typescript)
+            Dependency review
         run: |
           set -uo pipefail
+          # The contexts main actually requires, one per line. Unreadable answers the same
+          # as empty, which withholds.
           required="$(gh api "repos/${GH_REPO}/rules/branches/main" \
-            --jq '[.[] | select(.type == "required_status_checks")
-                       | .parameters.required_status_checks[]?.context] | length' 2>/dev/null || echo 0)"
-          echo "main requires ${required} status check(s)"
-          if [ "${required:-0}" -gt 0 ]; then
+            --jq '.[] | select(.type == "required_status_checks")
+                      | .parameters.required_status_checks[]?.context' 2>/dev/null || true)"
+          echo "main requires: ${required:-(none)}"
+          # A herestring, not a pipe: a piped `while` runs in a subshell and would lose
+          # `missing`. `grep -qxF` matches the whole line literally, so the parentheses in
+          # "CodeQL analyze (javascript-typescript)" stay parentheses.
+          missing=""
+          while IFS= read -r want; do
+            [ -n "${want}" ] || continue
+            if ! printf '%s\n' "${required}" | grep -qxF -- "${want}"; then
+              echo "  MISSING: ${want}"
+              missing="${missing}${want}; "
+            fi
+          done <<< "${EXPECTED}"
+          # A superset is fine — extra required checks only ever delay a merge.
+          if [ -z "${missing}" ]; then
             echo "ready=yes" >> "$GITHUB_OUTPUT"
           else
             echo "ready=no" >> "$GITHUB_OUTPUT"
-            echo "::notice title=Auto-merge withheld::main requires no status check, so auto-merge would merge before CI has run. Add the required checks to the ruleset; this workflow arms itself once they exist."
+            echo "::notice title=Auto-merge withheld::main does not require: ${missing}Auto-merge would let a Dependabot pull request merge while those run, or fail. Add them to the ruleset; this workflow arms itself once they are all there."
           fi
 
       - name: Enable auto-merge for patch and minor updates
