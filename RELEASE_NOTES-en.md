@@ -16,6 +16,10 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
+_Nothing pending yet._
+
+## release/2026-09-06T21-44-09Z — September 6, 2026
+
 ### 🐛 Fixed
 
 - **Text no longer stretches edge to edge on wide screens.** The header, footer, and every

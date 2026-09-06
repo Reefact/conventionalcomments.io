@@ -16,6 +16,10 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
+_Rien en attente pour l'instant._
+
+## release/2026-09-06T21-44-09Z — 6 septembre 2026
+
 ### 🐛 Corrigé
 
 - **Le texte ne s'étale plus d'un bord à l'autre sur les grands écrans.** L'en-tête, le pied
