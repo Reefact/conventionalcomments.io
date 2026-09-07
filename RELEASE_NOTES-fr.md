@@ -16,7 +16,14 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
-_Rien en attente pour l'instant._
+### 🐛 Corrections
+
+- **La page `/version` ne nomme plus deux fois la même release.** Sur un build issu d'un tag
+  de release, le titre situé juste sous les informations de build répétait le titre de la
+  page elle-même, « Dernière release ». Il affiche désormais « Ce qui a été livré », sur tout
+  build — nommant le contenu de la section plutôt que la release elle-même, et conservant un
+  vrai titre entre le h1 de la page et les titres propres à la carte de release, dans les
+  deux cas.
 
 ## release/2026-09-07T10-06-13Z — 7 septembre 2026
 

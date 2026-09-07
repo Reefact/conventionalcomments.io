@@ -16,7 +16,13 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
-_Nothing pending yet._
+### 🐛 Fixed
+
+- **The `/version` page no longer names the same release twice.** On a build that came from a
+  release tag, the heading right below the build facts repeated the page's own title,
+  "Latest release". It now reads "What shipped" instead, on every build — naming the
+  section's content rather than the release itself, and keeping a real heading between the
+  page's h1 and the release card's own headings either way.
 
 ## release/2026-09-07T10-06-13Z — September 7, 2026
 
