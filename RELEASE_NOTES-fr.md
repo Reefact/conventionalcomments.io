@@ -16,6 +16,10 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
+_Rien en attente pour l'instant._
+
+## release/2026-09-07T08-30-31Z — 7 septembre 2026
+
 ### ✨ Nouveautés
 
 - **`/version` affiche maintenant l'historique des releases de ce site**, à la place du texte

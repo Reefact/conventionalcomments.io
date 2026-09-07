@@ -16,6 +16,10 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
+_Nothing pending yet._
+
+## release/2026-09-07T08-30-31Z — September 7, 2026
+
 ### ✨ New
 
 - **`/version` now shows this site's own release history**, instead of the placeholder text it
