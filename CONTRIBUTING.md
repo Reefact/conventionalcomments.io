@@ -5,24 +5,23 @@ This repository holds the showcase site for
 
 ## Language
 
-**Commit messages, branch names, pull request titles and descriptions are in
-English.** They follow the convention of the other Reefact repositories, so a
-maintainer moving between them does not have to remember which set of rules is in
-force.
+**Everything in this repository is in English** — commit messages, branch names,
+pull request titles and descriptions, code comments, design documents under
+`docs/`, the README, the comments inside the workflows. This follows the
+convention of the other Reefact repositories, so a maintainer moving between them
+does not have to remember which set of rules is in force.
 
-**Everything else in this repository is in French** — code comments, design
-documents under `docs/`, the README, the comments inside the workflows. That is a
-deliberate divergence from `justdummies.io`, whose rule pushes English into code
-comments too. Here the reasoning is written in French because the design that
-produced it was, and a comment that explains a French design document in English
-adds a translation step to every reading of it.
+This was not always the rule: earlier revisions of this file asked for code
+comments in French, on the reasoning that the design producing them was written
+in French. That divergence from `justdummies.io` is dropped — keeping two
+languages of comments across Reefact repositories cost more than it bought.
+Existing French comments are not retroactively rewritten by this change alone —
+a diff whose only content is a translation is not worth reviewing on its own —
+but anything new, and anything touched in the course of other work, is written
+in English from here on.
 
-The exception is `tools/commit-lint/lint-commit-message.sh`, kept a near-copy of
-the file in `justdummies.io` — including its English comments — precisely so the
-two do not drift.
-
-The site's own copy is a third question, settled by the identity document: English
-at the root, French under `/fr/`, each written rather than translated.
+The site's own copy is a separate question, settled by the identity document:
+English at the root, French under `/fr/`, each written rather than translated.
 
 This is written down because an exception nobody wrote down is not an exception,
 it is the beginning of a repository in two languages.
