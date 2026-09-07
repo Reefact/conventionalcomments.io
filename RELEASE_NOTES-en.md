@@ -18,11 +18,12 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ### 🔧 Improved
 
-- **The site now sells the extension, not a server you'd have to run.** Assist and warn are
-  described as available today through the browser extension alone. Enforce — an
-  authoritative, platform-level merge check — is presented as a roadmap direction rather
-  than a shipped or required backend, and the former "deploy the server" doc page now
-  explains why nothing ships there yet instead of walking through a Docker deployment.
+- **The site now presents the extension as the product available today, with no server to
+  deploy.** Assist and warn are available through the browser extension today. Enforce —
+  eventually, a platform-level merge check — is now clearly presented as roadmap work
+  rather than a shipped or required backend. The former server deployment page is now an
+  Enforce roadmap page that explains the goal without committing to a specific
+  architecture.
 
 ## release/2026-09-07T08-30-31Z — September 7, 2026
 

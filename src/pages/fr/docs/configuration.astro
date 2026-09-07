@@ -39,7 +39,7 @@ const page = 'configure' as const;
           </div>
           <div class="callout acc">
             <span class="ct">qui applique le plancher aujourd'hui</span>
-            <p style="margin:0">Aujourd'hui, c'est l'extension qui applique le plancher, en le lisant depuis la politique d'entreprise du navigateur. Un futur mécanisme d'application au niveau de la plateforme n'aurait pas de navigateur pour lire cette politique&nbsp;: il lui faudrait son propre canal vers ce même plancher — l'une des raisons pour lesquelles ce mécanisme n'est pas encore documenté ici comme une capacité livrée.</p>
+            <p style="margin:0">Aujourd'hui, seule l'extension applique ce plancher, qu'elle lit dans la politique d'entreprise du navigateur. Un futur contrôle exécuté au niveau de la plateforme ne pourrait pas lire cette politique directement et devrait donc recevoir la même information par un autre mécanisme. Ce mécanisme n'est volontairement pas figé tant que l'implémentation d'Enforce n'a pas été définie pour chaque plateforme.</p>
           </div>
         </section>
 
@@ -50,7 +50,7 @@ const page = 'configure' as const;
             <table class="t wide">
               <thead><tr><th>Clé</th><th>Valeur par défaut</th><th>Rôle</th></tr></thead>
               <tbody>
-                <tr><td class="m">mode</td><td class="m d">assist</td><td class="d"><code>off</code> · <code>assist</code> · <code>warn</code> · <code>enforce</code>. Assist et warn prennent effet dès aujourd'hui via l'extension. Enforce est la direction visée, pas encore appuyée par une vérification faisant autorité au niveau de la plateforme — consultez le guide d'adoption pour savoir ce que ça signifie concrètement pour l'instant.</td></tr>
+                <tr><td class="m">mode</td><td class="m d">assist</td><td class="d"><code>off</code> · <code>assist</code> · <code>warn</code> · <code>enforce</code>. Assist et warn sont pleinement pris en charge par l'extension aujourd'hui. Enforce ajoute déjà un mode strict local dans le navigateur&nbsp;; le contrôle de fusion au niveau de la plateforme reste, lui, sur la feuille de route. Consultez le guide d'adoption pour le détail.</td></tr>
                 <tr><td class="m">formatSeverity</td><td class="m d">warn</td><td class="d">Détermine si un commentaire mal formé peut faire échouer la vérification. La plupart des équipes conservent cette valeur&nbsp;: en règle générale, ce sont les points bloquants non résolus qui doivent empêcher une fusion, pas une erreur de format.</td></tr>
                 <tr><td class="m">resolverOverrideGroup</td><td class="m d">vide</td><td class="d">Définit qui peut passer outre une résolution et enregistrer une <code>decision</code>. <strong>Ce paramètre doit être configuré avant d'utiliser <code>enforce</code>.</strong> Lorsqu'il est vide, les deux mécanismes permettant de sortir d'une situation bloquée sont indisponibles.</td></tr>
                 <tr><td class="m">exemptUsers</td><td class="m d">vide</td><td class="d">Liste les utilisateurs dont les commentaires ne sont jamais validés. La comparaison se fait avec leur identifiant sur la plateforme, sans tenir compte de la casse.</td></tr>

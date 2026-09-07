@@ -7,7 +7,7 @@ const page = 'home' as const;
 ---
 <Base lang={lang} page={page}
   title="Conventional Comments Toolkit"
-  description="Des commentaires de revue qui disent ce qu'ils attendent. Une extension qui rend la convention Conventional Comments facile à suivre, avec une application au niveau des plateformes prévue à terme.">
+  description="Des commentaires de revue qui disent clairement ce qu'ils attendent. Une extension qui facilite l'adoption de Conventional Comments, avec un contrôle de fusion au niveau de la plateforme prévu à terme.">
 <section class="hband">
       <div class="in">
         <div class="hero-g">
@@ -194,13 +194,13 @@ const page = 'home' as const;
           </div>
           <div>
             <span class="tag" style="color:var(--accent)">une fois publié</span>
-            <h3>Un décompte qui ne lâche rien</h3>
-            <p>L'extension garde la trace des commentaires bloquants non résolus directement sur la pull request et affiche combien il en reste. Personne n'a besoin de remonter tout le fil pour vérifier.</p>
+            <h3>Les points bloquants restent visibles</h3>
+            <p>L'extension suit les commentaires bloquants non résolus directement sur la pull request et affiche combien il en reste. Plus besoin de parcourir toute la discussion pour vérifier qu'aucun point important n'a été oublié.</p>
             <p class="guar">L'objectif n'est pas de faire la police. C'est un pense-bête&nbsp;: <strong style="color:var(--fg)">un point important ne se perd plus au milieu du fil de discussion.</strong></p>
           </div>
         </div>
 
-        <p class="small measure">Et si votre équipe ne veut rien de plus, c'est déjà suffisant. L'extension fonctionne très bien toute seule. La convention, elle, n'a besoin d'aucun outil. Les outils servent uniquement à la rendre plus facile à appliquer dans la durée.</p>
+        <p class="small measure">Pour commencer, l'extension suffit à elle seule. La convention, elle, n'a besoin d'aucun outil. Les outils servent uniquement à la rendre plus facile à appliquer dans la durée.</p>
       </div>
     </section>
 
@@ -209,8 +209,8 @@ const page = 'home' as const;
         <div class="split">
           <div class="stack g14">
             <span class="eyebrow">la direction&nbsp;:</span>
-            <h2 style="font-size:24px">Assist et warn sont là aujourd'hui. Enforce, c'est la suite.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">L'extension couvre déjà les deux premières étapes. La troisième — un contrôle de fusion qui fait autorité au niveau de la plateforme — fait partie de la feuille de route, pas de votre navigateur aujourd'hui.</p>
+            <h2 style="font-size:24px">Assist et warn sont disponibles aujourd'hui. Enforce viendra ensuite.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">L'extension couvre déjà les deux premières étapes. Enforce ajoutera à terme un contrôle de fusion exécuté au niveau de la plateforme et indépendant du navigateur. Cette capacité fait partie de la feuille de route.</p>
             <a class="btn btn-p" href={href('adoption', 'fr')} style="align-self:flex-start">Comment l'adopter en équipe</a>
           </div>
           <div class="traj">
@@ -224,7 +224,7 @@ const page = 'home' as const;
             </div>
             <div class="step" style="--st:var(--block)">
               <span class="sn">enforce</span><span class="sw">sur la feuille de route</span>
-              <span class="sd">Un contrôle de fusion qui fait autorité sur GitHub, Azure DevOps et d'autres plateformes — pas encore disponible, et pas figé sur une seule architecture.</span>
+              <span class="sd">À terme, un contrôle de fusion au niveau de GitHub, Azure DevOps et d'autres plateformes pourra s'appuyer sur les mêmes règles. Cette capacité n'est pas encore disponible et son architecture n'est pas encore figée.</span>
             </div>
           </div>
         </div>

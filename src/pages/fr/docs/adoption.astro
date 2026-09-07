@@ -7,51 +7,51 @@ const page = 'adoption' as const;
 ---
 <Docs lang={lang} page={page}
   title="Adoption : assist → warn → enforce"
-  description="Assist et warn sont disponibles dès aujourd'hui via l'extension. Découvrez comment les équipes adoptent la convention progressivement, ce qui change à chaque étape, et où se situe enforce — encore sur la feuille de route.">
+  description="Assist et warn sont disponibles dès aujourd'hui via l'extension. Découvrez comment introduire progressivement la convention dans une équipe, ce qui change à chaque étape et la place qu'occupera enforce, encore sur la feuille de route.">
 <div class="dhead stack g12">
           <p class="crumb"><b>doc</b> / adoption</p>
           <h1>Adoption&nbsp;: assist → warn → enforce</h1>
-          <p class="lede measure">La manière la plus sûre d'introduire une convention dans une équipe est progressive&nbsp;: aider d'abord, rendre les progrès visibles ensuite, puis décider ensemble s'il faut — et comment — la tenir fermement. Assist et warn fonctionnent dès aujourd'hui, uniquement via l'extension. Enforce, en tant qu'exigence qui ferait autorité au niveau de la plateforme, reste sur la feuille de route — consultez <a href={href('server', 'fr')}>ce qui s'en vient</a> pour cette partie.</p>
+          <p class="lede measure">La manière la plus sûre d'introduire une convention dans une équipe consiste à avancer progressivement&nbsp;: aider d'abord, rendre les points à traiter visibles ensuite, puis décider ensemble s'il faut aller jusqu'à rendre son respect obligatoire. Assist et warn fonctionnent dès aujourd'hui uniquement via l'extension. Enforce, dans sa dimension de contrôle de fusion au niveau de la plateforme, reste sur la feuille de route — consultez <a href={href('server', 'fr')}>la feuille de route</a> pour en savoir plus.</p>
         </div>
 
         <section class="dsec">
-          <h2>La séquence de déploiement</h2>
+          <h2>Les étapes d'adoption</h2>
           <div class="timeline">
-            <div class="tcell" style="--st:var(--fg-faint)"><span class="wk">semaine 0–2</span><span class="md">assist</span><span class="ds">Installez l'extension et laissez les personnes l'utiliser. Aucun statut n'est publié où que ce soit. Rien n'est mesuré de manière centralisée, sauf si votre organisation a explicitement activé la télémétrie.</span></div>
-            <div class="tcell" style="--st:var(--warn)"><span class="wk">semaine 2–6</span><span class="md">warn</span><span class="ds">Les points bloquants non résolus deviennent visibles directement sur la pull request, sans que rien ne soit refusé. Vous pouvez désormais parler de conformité sans changer le quotidien de personne.</span></div>
-            <div class="tcell" style="--st:var(--block)"><span class="wk">plus tard</span><span class="md">enforce</span><span class="ds">Pas encore disponible en tant qu'exigence faisant autorité au niveau de la plateforme. Suivez la feuille de route pour GitHub, Azure DevOps et les autres plateformes.</span></div>
+            <div class="tcell" style="--st:var(--fg-faint)"><span class="wk">semaines 0 à 2</span><span class="md">assist</span><span class="ds">Installez l'extension et laissez l'équipe se l'approprier. Aucun statut n'est publié et rien n'est mesuré au-delà de ce que chaque relecteur voit dans son navigateur.</span></div>
+            <div class="tcell" style="--st:var(--warn)"><span class="wk">semaines 2 à 6</span><span class="md">warn</span><span class="ds">Les points bloquants non résolus deviennent visibles directement sur la pull request, sans bloquer l'envoi d'un commentaire ni la fusion. L'équipe voit ainsi ce qui reste à traiter sans modifier son fonctionnement habituel.</span></div>
+            <div class="tcell" style="--st:var(--block)"><span class="wk">plus tard</span><span class="md">enforce</span><span class="ds">Le contrôle de fusion au niveau de la plateforme n'est pas encore disponible. Il fait partie de la feuille de route pour GitHub, Azure DevOps et, à terme, d'autres plateformes.</span></div>
           </div>
           <div class="scroller">
             <table class="t">
               <thead><tr><th>Mode</th><th>Ce que fait l'extension</th><th>Effet sur la pull request</th></tr></thead>
               <tbody>
                 <tr><td class="m">off</td><td class="d">Ne fait rien.</td><td class="d">Aucun.</td></tr>
-                <tr><td class="m">assist</td><td class="d">Aide les relecteurs à rédiger des commentaires conformes et signale les diagnostics. Ne bloque jamais.</td><td class="d">Aucun.</td></tr>
-                <tr><td class="m" style="color:var(--warn)">warn</td><td class="d">Comme <code>assist</code>, avec en plus un décompte visible des fils bloquants non résolus.</td><td class="d">Visible, jamais bloquant.</td></tr>
-                <tr><td class="m" style="color:var(--block)">enforce</td><td class="d">Peut refuser localement, dans le navigateur, l'envoi d'un commentaire mal formé.</td><td class="d">Pas encore de contrôle de fusion faisant autorité — cette partie n'est pas construite.</td></tr>
+                <tr><td class="m">assist</td><td class="d">Aide les relecteurs à rédiger des commentaires conformes et signale les problèmes détectés. Ne bloque jamais.</td><td class="d">Aucun.</td></tr>
+                <tr><td class="m" style="color:var(--warn)">warn</td><td class="d">Comme <code>assist</code>, avec en plus un décompte visible des fils bloquants non résolus.</td><td class="d">Les points restent visibles, sans bloquer.</td></tr>
+                <tr><td class="m" style="color:var(--block)">enforce</td><td class="d">Peut refuser localement, dans le navigateur, l'envoi d'un commentaire mal formé.</td><td class="d">Aucun contrôle de fusion au niveau de la plateforme n'est encore disponible.</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="small">Comme rien ici ne dépend d'un serveur, passer d'une étape à l'autre n'est qu'un changement de configuration que votre équipe peut faire — et défaire — elle-même&nbsp;: il n'y a aucune infrastructure séparée à mettre en place ou à démonter.</p>
+          <p class="small">Comme ces étapes reposent aujourd'hui uniquement sur l'extension, passer de l'une à l'autre revient à modifier la configuration. Il n'y a aucun service séparé à déployer, redémarrer ou retirer.</p>
         </section>
 
         <section class="dsec">
-          <h2>Un prérequis à régler tôt</h2>
-          <p><strong>Configurez <code>resolverOverrideGroup</code></strong> avant de compter sur les réponses <code>decision</code> pour clore des fils bloquants. Ce paramètre définit qui peut enregistrer une <code>decision</code> lorsque l'auteur du commentaire bloquant n'est pas disponible. Laissé vide, personne ne peut utiliser ce mécanisme de secours, et un fil bloquant peut rester coincé sans aucune façon de le refermer.</p>
+          <h2>Un prérequis à anticiper</h2>
+          <p><strong>Configurez <code>resolverOverrideGroup</code></strong> avant de compter sur les réponses <code>decision</code> pour résoudre un fil bloquant. Ce paramètre définit qui peut enregistrer une <code>decision</code> lorsque l'auteur du commentaire bloquant n'est pas disponible. S'il reste vide, personne ne peut utiliser ce mécanisme de secours et un fil bloquant peut rester sans personne autorisée pour le résoudre.</p>
         </section>
 
         <section class="dsec">
           <h2>Revenir en arrière</h2>
-          <p>Chaque étape ici n'est qu'un changement du paramètre <code>mode</code>, appliqué via le même système à trois niveaux décrit dans <a href={href('configure', 'fr')}>la configuration</a>. Repasser de <code>warn</code> à <code>assist</code>, ou du mode strict local d'<code>enforce</code> à <code>warn</code>, prend effet dès la prochaine lecture de la configuration par l'extension&nbsp;: il n'y a ni service séparé à redémarrer ni règle de protection de branche à défaire, puisqu'aucune de ces étapes ne touche encore aux règles de fusion propres à votre plateforme.</p>
+          <p>Chaque étape correspond à une valeur du paramètre <code>mode</code>, appliquée via le même système à trois niveaux décrit dans <a href={href('configure', 'fr')}>la configuration</a>. Repasser de <code>warn</code> à <code>assist</code>, ou du mode strict local d'<code>enforce</code> à <code>warn</code>, prend effet dès la prochaine lecture de la configuration par l'extension. Aucun service n'est à redémarrer et aucune règle de protection de branche n'est à modifier, puisque ces modes n'agissent pas encore sur les règles de fusion de la plateforme.</p>
         </section>
 
         <section class="dsec">
           <h2>Ce qu'il faut surveiller avant d'aller plus loin</h2>
-          <p>Il n'existe pas encore de tableau de bord à l'échelle de l'organisation&nbsp;: ce type de rapport agrégé fait partie de ce qu'une vérification faisant autorité au niveau de la plateforme permettrait un jour. En attendant, ce qui mérite d'être observé reste qualitatif&nbsp;: les relecteurs trouvent-ils les bons labels, les fils bloquants se résolvent-ils au lieu de s'enliser, et le décompte affiché à l'étape <code>warn</code> retombe-t-il généralement à zéro avant la fusion. Un usage inégal des labels ou un décompte qui n'atteint jamais tout à fait zéro sont deux signaux pour ralentir plutôt que pour se précipiter vers un mode plus strict.</p>
+          <p>Il n'existe pas encore de tableau de bord à l'échelle de l'organisation. Une vue agrégée de ce type deviendra pertinente avec un futur contrôle exécuté au niveau de la plateforme. En attendant, l'observation reste surtout qualitative&nbsp;: les relecteurs trouvent-ils les bons labels&nbsp;? Les fils bloquants sont-ils réellement résolus&nbsp;? Le décompte affiché en <code>warn</code> revient-il généralement à zéro avant la fusion&nbsp;? Un usage très inégal des labels ou des points bloquants qui restent systématiquement ouverts sont de bonnes raisons de ne pas durcir les règles trop vite.</p>
         </section>
 
         <section class="dsec">
-          <h2>Configuration pour chaque étape</h2>
+          <h2>Configuration à chaque étape</h2>
           <p>Un seul paramètre doit changer en passant d'une étape à l'autre&nbsp;: <code>mode</code>. Tout le reste devrait déjà être en place.</p>
           <pre class="code"><span class="tk-k">&#123;</span>
   <span class="tk-k">"version"</span>: <span class="tk-v">1</span>,
@@ -62,7 +62,7 @@ const page = 'adoption' as const;
   <span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>]
 <span class="tk-k">&#125;</span></pre>
           <div class="callout">
-            <span class="ct">à vérifier avant de l'activer</span>
+            <span class="ct">à vérifier avant d'activer le mode strict</span>
             <p style="margin:0"><code>toolCommands</code> est <strong>vide par défaut</strong>. Dans le mode strict local d'<code>enforce</code>, un <code>/rebase</code> utilisé seul est rejeté comme n'importe quel autre commentaire non conforme, sauf s'il a été déclaré. Ajouter <code>"/*"</code> exempte toutes les commandes commençant par <code>/</code>.</p>
           </div>
         </section>

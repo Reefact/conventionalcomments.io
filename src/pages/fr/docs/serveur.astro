@@ -6,33 +6,33 @@ const lang = 'fr' as const;
 const page = 'server' as const;
 ---
 <Docs lang={lang} page={page}
-  title="Enforce : ce qui s'en vient"
-  description="Enforce est une direction, pas un produit livré : une vérification de fusion qui ferait autorité au niveau de la plateforme. Découvrez ce qui est prévu pour GitHub et Azure DevOps, et pourquoi aucune architecture serveur unique n'est promise pour l'instant.">
+  title="Enforce : feuille de route"
+  description="Enforce n'est pas encore disponible au niveau de la plateforme : l'objectif est d'ajouter un contrôle de fusion indépendant du navigateur. Découvrez ce qui est envisagé pour GitHub et Azure DevOps, et pourquoi aucune architecture unique n'est définie à ce stade.">
 <div class="dhead stack g12">
           <p class="crumb"><b>doc</b> / enforce</p>
-          <h1>Enforce&nbsp;: ce qui s'en vient</h1>
-          <p class="lede measure"><strong>Assist</strong> et <strong>warn</strong> sont là dès aujourd'hui, entièrement via l'extension. <strong>Enforce</strong> — une vérification de fusion qui ferait autorité au niveau de la plateforme, indépendamment du navigateur d'un relecteur en particulier — est la direction visée, pas quelque chose que vous pouvez installer aujourd'hui. Cette page décrit une intention, pas un produit.</p>
+          <h1>Enforce&nbsp;: feuille de route</h1>
+          <p class="lede measure"><strong>Assist</strong> et <strong>warn</strong> sont disponibles dès aujourd'hui via l'extension. <strong>Enforce</strong> vise à ajouter, à terme, un contrôle de fusion exécuté au niveau de la plateforme et indépendant du navigateur de chaque relecteur. Cette capacité n'est pas encore disponible. Cette page présente l'objectif et les principes envisagés, pas une implémentation déjà livrée.</p>
         </div>
 
         <section class="dsec">
-          <h2>Pourquoi rien n'est encore livré ici</h2>
-          <p>Une vérification qui fait autorité doit s'exécuter ailleurs que dans le navigateur d'un relecteur, et le plan par défaut consiste à utiliser le mécanisme le plus simple et le plus natif à chaque plateforme — pas à mettre en place un backend générique&nbsp;:</p>
+          <h2>Pourquoi le contrôle au niveau de la plateforme n'est pas encore défini</h2>
+          <p>Un contrôle indépendant du navigateur doit nécessairement s'exécuter ailleurs que dans l'extension. L'approche envisagée consiste à privilégier, pour chaque plateforme, la solution la plus simple et ses mécanismes natifs plutôt qu'à imposer d'emblée un backend générique&nbsp;:</p>
           <ul class="bul">
-            <li>GitHub utiliserait par défaut le mécanisme natif à GitHub, ou léger, le plus simple disponible.</li>
-            <li>Azure DevOps utiliserait par défaut le mécanisme natif à Azure DevOps, ou léger, le plus simple disponible.</li>
-            <li>Un backend CCT ne fait pas partie du plan par défaut. Il n'entrerait en jeu que si un besoin concret montrait un jour qu'une intégration propre à la plateforme ne suffit vraiment pas.</li>
+            <li>Sur GitHub, privilégier d'abord une intégration native ou légère, aussi simple que possible.</li>
+            <li>Sur Azure DevOps, appliquer le même principe en s'appuyant en priorité sur les mécanismes propres à la plateforme.</li>
+            <li>Un backend CCT dédié ne serait envisagé que si un besoin concret montrait qu'une intégration propre à la plateforme ne suffit pas.</li>
           </ul>
-          <p class="small">S'engager dès maintenant sur une architecture serveur générique, avant que rien de tout cela n'ait été validé face à une plateforme réelle, risquerait d'enfermer le projet dans une forme dont la plupart des plateformes n'ont pas besoin. Cette page nomme donc une destination, pas un mécanisme — et aucun serveur n'est présumé en chemin.</p>
+          <p class="small">Figer dès maintenant une architecture serveur générique, avant d'avoir validé les besoins réels de chaque plateforme, serait prématuré. Cette page décrit donc la destination visée par Enforce, sans présumer de son implémentation. Un service dédié reste une possibilité, pas le point de départ.</p>
         </section>
 
         <section class="dsec">
-          <h2>Ce qui fonctionne déjà sans lui</h2>
-          <p>L'extension n'attend pas qu'enforce existe pour être utile. Dans son mode strict, elle peut déjà refuser l'envoi d'un commentaire mal formé&nbsp;: un garde-fou dans le navigateur, pas un contrôle de fusion au niveau de la plateforme. Consultez <a href={href('howitworks', 'fr')}>comment ça marche</a> pour la distinction entre ce que l'extension peut bloquer aujourd'hui et ce qu'une vérification au niveau de la plateforme sera seule, un jour, à pouvoir garantir.</p>
+          <h2>Ce que l'extension sait déjà faire</h2>
+          <p>L'extension est déjà utile sans contrôle au niveau de la plateforme. Dans son mode strict, elle peut refuser l'envoi d'un commentaire mal formé&nbsp;: c'est un garde-fou dans le navigateur, pas une condition de fusion imposée par la plateforme. Consultez <a href={href('howitworks', 'fr')}>comment ça marche</a> pour distinguer ce que l'extension peut empêcher aujourd'hui de ce qui nécessitera, à terme, un contrôle indépendant du navigateur.</p>
         </section>
 
         <section class="dsec">
           <h2>Envie d'aider à en définir la forme&nbsp;?</h2>
-          <p>Si votre équipe avait besoin d'une application de la convention sur une plateforme donnée plus tôt que tard, ouvrez une issue sur le dépôt et décrivez votre contexte&nbsp;: quelle plateforme, auto-hébergée ou non, et environ combien de dépôts seraient concernés. C'est ce type d'information qui sert à décider ce qui sera construit en premier.</p>
+          <p>Si votre équipe a besoin rapidement d'Enforce sur une plateforme donnée, ouvrez une issue sur le dépôt et décrivez votre contexte&nbsp;: plateforme utilisée, hébergement SaaS ou auto-hébergé, et ordre de grandeur du nombre de dépôts concernés. Ces informations aideront à déterminer les intégrations à traiter en priorité.</p>
         </section>
         <div class="pager"></div>
 </Docs>

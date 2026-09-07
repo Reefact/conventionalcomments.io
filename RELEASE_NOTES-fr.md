@@ -18,12 +18,13 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ### 🔧 Améliorations
 
-- **Le site vend maintenant l'extension, pas un serveur à faire tourner soi-même.** Assist
-  et warn sont présentés comme disponibles dès aujourd'hui, uniquement via l'extension
-  navigateur. Enforce — une vérification de fusion qui ferait autorité au niveau de la
-  plateforme — est présenté comme une direction sur la feuille de route plutôt que comme un
-  backend livré ou requis, et l'ancienne page « déployer le serveur » explique désormais
-  pourquoi rien n'y est encore livré, au lieu de détailler un déploiement Docker.
+- **Le site présente désormais l'extension telle qu'elle existe aujourd'hui, sans serveur
+  à déployer.** Assist et warn sont disponibles dès aujourd'hui via l'extension navigateur.
+  Enforce — c'est-à-dire, à terme, un contrôle de fusion exécuté au niveau de la plateforme
+  — est désormais clairement présenté comme une évolution prévue et non comme un backend
+  déjà disponible ou nécessaire. L'ancienne page consacrée au déploiement du serveur devient
+  une page de feuille de route qui explique l'objectif d'Enforce sans imposer d'architecture
+  à ce stade.
 
 ## release/2026-09-07T08-30-31Z — 7 septembre 2026
 

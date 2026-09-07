@@ -7,13 +7,13 @@ const page = 'howitworks' as const;
 ---
 <Base lang={lang} page={page}
   title="Comment ça marche"
-  description="L'extension aide à rédiger les commentaires et garde la trace de ce qui reste en suspens, directement dans le navigateur. Découvrez ce qu'elle fait aujourd'hui, et où mène la suite.">
+  description="L'extension aide à rédiger les commentaires et suit les points bloquants directement dans le navigateur. Découvrez ce qu'elle fait aujourd'hui et ce qu'Enforce ajoutera à terme au niveau de la plateforme.">
 <section class="hband">
       <div class="in">
         <div class="stack g18 measure">
           <span class="eyebrow acc">comment ça marche&nbsp;:</span>
-          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">L'extension vous aide à écrire. Elle compte aussi les points.</h1>
-          <p class="lede">L'extension navigateur facilite l'utilisation de Conventional Comments pendant la revue&nbsp;: barre d'outils, raccourcis clavier et validation au fil de la saisie. Elle garde aussi la trace des commentaires bloquants non résolus directement sur la pull request, entièrement par elle-même. Une vérification qui ferait autorité au niveau de la plateforme fait partie de la direction visée, mais elle ne fait pas partie de ce que vous installez aujourd'hui.</p>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">L'extension vous aide à écrire. Elle suit aussi les points bloquants.</h1>
+          <p class="lede">L'extension navigateur facilite l'utilisation de Conventional Comments pendant la revue&nbsp;: barre d'outils, raccourcis clavier et validation au fil de la saisie. Elle repère aussi les fils bloquants qui restent ouverts et affiche leur nombre directement sur la pull request. À terme, Enforce ajoutera un contrôle de fusion exécuté au niveau de la plateforme, indépendant du navigateur. Cette capacité n'est pas encore disponible.</p>
         </div>
       </div>
     </section>
@@ -53,7 +53,7 @@ const page = 'howitworks' as const;
           <div>
             <h3>Des badges sur les commentaires publiés</h3>
             <p>Une fois les commentaires publiés, leurs labels sont affichés sous forme de badges sans modifier le contenu réellement enregistré par la plateforme. Un bandeau en haut de la pull request indique le nombre de fils bloquants encore non résolus et permet d'accéder directement à chacun d'eux.</p>
-            <p>Ce nombre est calculé par l'extension elle-même, directement à partir du fil tel qu'il s'affiche — sans aucun serveur.</p>
+            <p>Ce nombre est calculé directement par l'extension à partir des fils affichés dans la page, sans aucun serveur.</p>
           </div>
         </div>
       </div>
@@ -81,7 +81,7 @@ const page = 'howitworks' as const;
         <div class="callout acc">
           <span class="ct">quel est donc le rôle de l'extension&nbsp;?</span>
           <h4>Un garde-fou, pas une barrière infranchissable.</h4>
-          <p>L'extension évite les erreurs d'inattention, qui représentent le cas courant. Elle n'a pas pour objectif d'empêcher quelqu'un de la contourner volontairement. C'est précisément ce que la vérification au niveau de la plateforme est censée combler&nbsp;: évaluer la pull request indépendamment du navigateur de chaque relecteur. Cette partie n'existe pas encore&nbsp;: elle fait partie de la feuille de route, pas de l'extension.</p>
+          <p>L'extension évite les erreurs d'inattention, qui représentent le cas courant. Elle n'a pas vocation à empêcher quelqu'un de la contourner volontairement. C'est le rôle qu'aura, à terme, le contrôle au niveau de la plateforme&nbsp;: évaluer la pull request indépendamment du navigateur de chaque relecteur. Cette capacité fait partie de la feuille de route et n'est pas encore disponible.</p>
         </div>
       </div>
     </section>
@@ -107,7 +107,7 @@ const page = 'howitworks' as const;
         <div class="stack g14 measure">
           <span class="eyebrow">sur la feuille de route&nbsp;:</span>
           <h2>Ce qu'une vérification faisant autorité évaluerait</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Cette partie n'existe pas encore&nbsp;: rien ci-dessous n'est quelque chose que vous pouvez installer ou activer aujourd'hui. Elle décrit la direction visée&nbsp;: une évaluation qui s'exécute indépendamment du navigateur d'un relecteur en particulier, et sur laquelle les règles de fusion d'une plateforme pourraient s'appuyer. Sur le principe, elle poserait les deux mêmes questions que l'extension pose déjà localement.</p>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Les capacités décrites ci-dessous ne sont pas encore disponibles&nbsp;: vous ne pouvez aujourd'hui ni les installer ni les activer. Elles décrivent l'objectif d'Enforce&nbsp;: évaluer la pull request indépendamment du navigateur afin que les règles de fusion de la plateforme puissent s'appuyer sur ce résultat. Sur le fond, ce contrôle répondrait aux deux mêmes questions que l'extension sait déjà évaluer localement.</p>
         </div>
         <div class="duo">
           <div>
@@ -122,7 +122,7 @@ const page = 'howitworks' as const;
             <p class="guar">C'est ce critère qui pourrait, à terme, empêcher une fusion.</p>
           </div>
         </div>
-        <p class="small measure">Le plan par défaut est le mécanisme le plus simple et le plus natif à chaque plateforme — pas un backend générique. Un service dédié n'entrerait en jeu que si un besoin concret montrait un jour qu'une intégration propre à la plateforme ne suffit vraiment pas. Rien ici n'est présenté comme une capacité concrète tant que ce n'est pas réellement disponible.</p>
+        <p class="small measure">L'approche envisagée consiste à privilégier les mécanismes les plus simples et les plus natifs de chaque plateforme, plutôt qu'un backend générique imposé à toutes. Un service dédié ne serait envisagé que si un besoin concret montrait qu'une intégration propre à la plateforme ne suffit pas. Tant que cette implémentation n'existe pas, le site doit la présenter comme une direction et non comme une capacité disponible.</p>
       </div>
     </section>
 
@@ -131,7 +131,7 @@ const page = 'howitworks' as const;
         <div class="stack g14 measure">
           <span class="eyebrow">pensé pour la suite, pas seulement pour aujourd'hui&nbsp;:</span>
           <h2>Un seul moteur de validation, pas deux implémentations à maintenir en phase.</h2>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Les vérifications de l'extension ne sont pas une réimplémentation ponctuelle des règles. Elles s'appuient sur <strong>un unique package de validation</strong>, et aucune règle de validation n'existe ailleurs. Ce qui évaluera un jour une pull request au niveau de la plateforme s'appuiera sur ce même package&nbsp;: les résultats ne divergeront donc pas discrètement de ce que l'extension vous indique déjà.</p>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">L'extension ne possède pas sa propre implémentation séparée des règles. Elle s'appuie sur <strong>un unique package de validation</strong>, et aucune règle de validation n'existe ailleurs. Le futur contrôle au niveau de la plateforme devra s'appuyer sur ce même package afin de produire les mêmes résultats que l'extension.</p>
           <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">La bibliothèque de validation ne dépend ni du navigateur ni du réseau. Toutes les informations dont elle a besoin lui sont fournies sous forme de données, et les actions à effectuer sont renvoyées à l'appelant. Cette séparation permet au même moteur de validation de fonctionner directement dans le navigateur — et rend également possible le <em>playground</em>.</p>
         </div>
       </div>

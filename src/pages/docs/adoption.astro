@@ -11,14 +11,14 @@ const page = 'adoption' as const;
 <div class="dhead stack g12">
           <p class="crumb"><b>docs</b> / adoption</p>
           <h1>Adoption: assist → warn → enforce</h1>
-          <p class="lede measure">The safest way to bring a convention to a team is gradual: help first, then make progress visible, then decide together whether — and how — to hold it firmly. Assist and warn work today through the extension alone. Enforce, as an authoritative, platform-level requirement, is still on the roadmap — see <a href={href('server', 'en')}>what's coming</a> for that part.</p>
+          <p class="lede measure">The safest way to introduce a convention is to roll it out gradually: help first, make unresolved points visible next, then decide together whether — and how — to enforce it. Assist and warn work today through the extension alone. Enforce, as an authoritative, platform-level requirement, is still on the roadmap — see <a href={href('server', 'en')}>the Enforce roadmap</a> for that part.</p>
         </div>
 
         <section class="dsec">
           <h2>The rollout sequence</h2>
           <div class="timeline">
             <div class="tcell" style="--st:var(--fg-faint)"><span class="wk">week 0–2</span><span class="md">assist</span><span class="ds">Install the extension and let people use it. No status is published anywhere. Nothing is measured centrally, unless your organization has explicitly enabled telemetry.</span></div>
-            <div class="tcell" style="--st:var(--warn)"><span class="wk">week 2–6</span><span class="md">warn</span><span class="ds">Unresolved blocking points become visible directly on the pull request, without anyone being rejected. You can now talk about compliance without changing anyone's day-to-day workflow.</span></div>
+            <div class="tcell" style="--st:var(--warn)"><span class="wk">week 2–6</span><span class="md">warn</span><span class="ds">Unresolved blocking points become visible directly on the pull request without rejecting comments or blocking merges.</span></div>
             <div class="tcell" style="--st:var(--block)"><span class="wk">later</span><span class="md">enforce</span><span class="ds">Not available yet as an authoritative, platform-level requirement. Track the roadmap for GitHub, Azure DevOps, and other platforms.</span></div>
           </div>
           <div class="scroller">
@@ -28,11 +28,11 @@ const page = 'adoption' as const;
                 <tr><td class="m">off</td><td class="d">Does nothing.</td><td class="d">None.</td></tr>
                 <tr><td class="m">assist</td><td class="d">Helps reviewers write compliant comments and reports diagnostics. Never blocks.</td><td class="d">None.</td></tr>
                 <tr><td class="m" style="color:var(--warn)">warn</td><td class="d">Same as <code>assist</code>, plus a visible count of unresolved blocking threads.</td><td class="d">Visible, never blocking.</td></tr>
-                <tr><td class="m" style="color:var(--block)">enforce</td><td class="d">Can refuse to submit a malformed comment locally, in the browser.</td><td class="d">No authoritative merge gate yet — that part isn't built.</td></tr>
+                <tr><td class="m" style="color:var(--block)">enforce</td><td class="d">Can refuse to submit a malformed comment locally, in the browser.</td><td class="d">There is no authoritative platform-level merge gate yet; that capability is still on the roadmap.</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="small">Because nothing here depends on a server, moving from one stage to the next is a configuration change your team can make and reverse on its own — there's no separate infrastructure to bring up or tear down.</p>
+          <p class="small">Because these stages currently depend only on the extension, moving between them is just a configuration change. There is no separate infrastructure to deploy, restart, or remove.</p>
         </section>
 
         <section class="dsec">
@@ -51,8 +51,8 @@ const page = 'adoption' as const;
         </section>
 
         <section class="dsec">
-          <h2>Configuration for each phase</h2>
-          <p>Only one setting needs to change as you move from one phase to the next: <code>mode</code>. Everything else should already be in place.</p>
+          <h2>Configuration for each stage</h2>
+          <p>Only one setting needs to change as you move from one stage to the next: <code>mode</code>. Everything else should already be in place.</p>
           <pre class="code"><span class="tk-k">&#123;</span>
   <span class="tk-k">"version"</span>: <span class="tk-v">1</span>,
   <span class="tk-k">"mode"</span>: <span class="tk-v">"warn"</span>,                    <span class="tk-cm">// assist → warn → enforce</span>
