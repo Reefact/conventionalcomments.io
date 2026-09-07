@@ -7,65 +7,65 @@ const page = 'install' as const;
 ---
 <Docs lang={lang} page={page}
   title="Install the extension"
-  description="From your browser store, from a release zip with no build chain, or from source.">
+  description="Install it from your browser's extension store, from a ready-to-use release archive with no build tools, or directly from source.">
 <div class="dhead stack g12">
           <p class="crumb"><b>docs</b> / install</p>
           <h1>Install the extension</h1>
-          <p class="lede measure">Three ways in, depending on what your machine lets you do. The first takes five minutes and needs nothing installed.</p>
+          <p class="lede measure">There are three ways to install the extension, depending on what your machine allows. You can try it without installing Node, Git, or any other development tools.</p>
         </div>
 
         <section class="dsec">
-          <h2>From your browser's store — coming</h2>
-          <p>Submission to the Chrome Web Store and to Firefox Add-ons has not happened yet, so there is nothing to link to and no listing to install from. Until then, the release zip below is the route.</p>
+          <h2>From your browser's extension store — coming soon</h2>
+          <p>The extension hasn't been submitted to the Chrome Web Store or Firefox Add-ons yet, so there is no store listing to install from today. Until those listings are available, use the release archive described below.</p>
           <div class="callout warn">
-            <span class="ct">why it matters, and not only for convenience</span>
-            <h4>The store is the only channel that updates itself.</h4>
-            <p>An extension loaded from a zip stays on the version you loaded until you repeat the operation by hand. For a team, that is the difference between everyone running the same version and nobody knowing who runs what — which is why this page says the channel is coming rather than quietly leaving it out.</p>
+            <span class="ct">why this matters — and not just for convenience</span>
+            <h4>Store-installed extensions update automatically.</h4>
+            <p>An extension loaded manually from a ZIP stays on that version until you update it yourself. For an individual trial, that may be fine. For a team, it can quickly mean different people running different versions without realizing it. That's why the store installation is listed here even though it isn't available yet: it will be the recommended distribution method for teams.</p>
           </div>
         </section>
 
         <section class="dsec">
-          <h2>From a release zip — no Node, no Git</h2>
-          <p>For a locked-down machine where you can't install a build chain. Every tagged release ships a ready-to-load zip, one for Chromium and one for Firefox.</p>
+          <h2>From a release ZIP — no Node, no Git</h2>
+          <p>This is the simplest option for a locked-down machine where installing a development toolchain isn't possible. Every tagged release includes two ready-to-load archives: one for Chromium-based browsers and one for Firefox.</p>
           <ul class="tick">
-            <li><span class="mk">1</span><b>Download the bundle for your browser</b><span class="tx">From the <a href="https://github.com/Reefact/conventional-comments-toolkit/releases" rel="noopener noreferrer" target="_blank">releases list</a> — the list, not <code>/releases/latest</code>, which skips prereleases. Take <code>…-chromium.zip</code> or <code>…-firefox.zip</code>.</span></li>
-            <li><span class="mk">2</span><b>Unzip it somewhere other than Downloads</b><span class="tx">The browser re-reads that folder at every start, and deleting it disables the extension.</span></li>
-            <li><span class="mk">3</span><b>Chrome, Edge, Brave…</b><span class="tx"><code>chrome://extensions</code> → <b>Developer mode</b> → <b>Load unpacked</b> → the unzipped folder, the one that directly contains <code>manifest.json</code>.</span></li>
-            <li><span class="mk">4</span><b>Firefox — a different path</b><span class="tx"><code>about:debugging#/runtime/this-firefox</code> → <b>Load Temporary Add-on</b> → the <code>manifest.json</code> itself, not the folder. A temporary add-on is removed when Firefox closes.</span></li>
+            <li><span class="mk">1</span><b>Download the archive for your browser</b><span class="tx">Go to the <a href="https://github.com/Reefact/conventional-comments-toolkit/releases" rel="noopener noreferrer" target="_blank">releases list</a> — use the full list rather than <code>/releases/latest</code>, because the latter does not include prereleases. Download either <code>…-chromium.zip</code> or <code>…-firefox.zip</code>.</span></li>
+            <li><span class="mk">2</span><b>Extract it somewhere permanent</b><span class="tx">Don't leave the extracted extension in your Downloads folder. Chromium-based browsers load the extension from that folder whenever they start. If you move or delete it later, the extension will stop working.</span></li>
+            <li><span class="mk">3</span><b>Chrome, Edge, Brave, and other Chromium-based browsers</b><span class="tx">Open <code>chrome://extensions</code>. Enable <b>Developer mode</b>, choose <b>Load unpacked</b>, then select the extracted folder that directly contains <code>manifest.json</code>.</span></li>
+            <li><span class="mk">4</span><b>Firefox</b><span class="tx">Open <code>about:debugging#/runtime/this-firefox</code>. Choose <b>Load Temporary Add-on</b>, then select the <code>manifest.json</code> file itself — not the folder. Firefox removes temporary add-ons when the browser closes.</span></li>
           </ul>
           <div class="callout blk">
-            <span class="ct">the one thing to know</span>
-            <h4>An extension loaded this way never updates itself.</h4>
-            <p>This route is for trying it out, and for machines where the build chain can't be installed. It is not a distribution channel: you'll be on that version until you repeat the operation by hand. For a team, go through the stores.</p>
+            <span class="ct">one important limitation</span>
+            <h4>An extension installed this way does not update automatically.</h4>
+            <p>This method is ideal for trying the extension or for machines where you can't install the build toolchain. It is not intended as a long-term distribution channel. You will remain on the version you installed until you repeat the process manually. For team-wide deployment, use the browser stores once the listings are available.</p>
           </div>
         </section>
 
         <section class="dsec">
           <h2>From source</h2>
-          <p>If you want to read what you're running, or you're contributing.</p>
+          <p>Use this method if you want to inspect the code you're running or contribute to the project.</p>
           <pre class="code">git clone https://github.com/reefact/conventional-comments-toolkit
 cd conventional-comments-toolkit
 
 npm ci
 npm run build:extension     <span class="tk-cm">// → packages/extension/dist-ext</span></pre>
-          <p>Then load <code>dist-ext</code> the way your browser wants it: step 3 above for Chromium, step 4 for Firefox. The Firefox variant is built alongside it, in its own subfolder.</p>
-          <p class="small">Node 20 or later. There's a step-by-step Windows/PowerShell walkthrough in the repository, from installing Node to loading the extension.</p>
+          <p>Then load <code>dist-ext</code> using the instructions for your browser: step 3 above for Chromium-based browsers, or step 4 for Firefox. The Firefox version is built at the same time in its own subfolder.</p>
+          <p class="small">Requires Node 20 or later. The repository also includes a step-by-step Windows/PowerShell guide covering everything from installing Node to loading the extension in your browser.</p>
         </section>
 
         <section class="dsec">
           <h2>Beyond github.com</h2>
-          <p>Out of the box the extension only runs on github.com. Azure DevOps, a GitHub Enterprise Server instance, or an internal configuration host each need a permission you grant yourself.</p>
+          <p>By default, the extension only has permission to run on github.com. Azure DevOps, a GitHub Enterprise Server instance, or an internal configuration host each require an additional permission that you explicitly grant.</p>
           <ul class="tick">
-            <li><span class="mk">1</span><b>Open the options page</b><span class="tx">From the extension's icon in the toolbar.</span></li>
-            <li><span class="mk">2</span><b>Add the domain, and say which platform it is</b><span class="tx">The extension can't guess whether <code>devops.acme.internal</code> is an Azure DevOps or a GitHub Enterprise instance — tagging it is what activates the right adapter.</span></li>
-            <li><span class="mk">3</span><b>Confirm the permission your browser asks for</b><span class="tx">It's your browser asking, not the extension. You can revoke it there at any time.</span></li>
+            <li><span class="mk">1</span><b>Open the extension's settings</b><span class="tx">Use the extension icon in your browser toolbar to open the options page.</span></li>
+            <li><span class="mk">2</span><b>Add the domain and select its platform</b><span class="tx">The extension can't know whether <code>devops.acme.internal</code> is running Azure DevOps or GitHub Enterprise Server. Selecting the platform tells it which adapter to use.</span></li>
+            <li><span class="mk">3</span><b>Approve the browser permission</b><span class="tx">Your browser asks whether the extension may access that domain. You decide whether to grant the permission, and you can revoke it at any time from your browser settings.</span></li>
           </ul>
         </section>
 
         <section class="dsec">
           <h2>Check that it works</h2>
-          <p>Open any pull request and start a review comment. You should see the label row appear above the box, and a status dot below it. Type <code>?i</code> then <code>Tab</code>: it should expand to <code>issue:</code>.</p>
-          <p>If nothing appears, the troubleshooting page covers the three usual reasons.</p>
+          <p>Open any pull request and start writing a review comment. A row of labels should appear above the comment box, with a status indicator below it. Type <code>?i</code>, then press <code>Tab</code>. It should expand to <code>issue:</code>.</p>
+          <p>If nothing appears, the troubleshooting page covers the three most common causes.</p>
         </section>
         <div class="pager"></div>
 </Docs>
