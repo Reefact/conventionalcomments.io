@@ -7,7 +7,7 @@ const page = 'privacy' as const;
 ---
 <Base lang={lang} page={page}
   title="Confidentialité"
-  description="L'extension ne collecte ni ne transmet le contenu de vos commentaires, de votre code ou de vos diffs. Découvrez précisément ce qui reste dans le navigateur, ce qui peut être synchronisé et ce que conserve le serveur auto-hébergé optionnel.">
+  description="L'extension ne collecte ni ne transmet le contenu de vos commentaires, de votre code ou de vos diffs. Découvrez précisément ce qui reste dans le navigateur et ce qui peut être synchronisé.">
 <section class="hband">
       <div class="in">
         <div class="stack g18 measure">
@@ -17,7 +17,7 @@ const page = 'privacy' as const;
         </div>
         <div class="callout">
           <span class="ct">périmètre</span>
-          <p style="margin:0">Cette première partie concerne l'<strong>extension navigateur</strong>, distribuée par les stores d'extensions. Le <strong>serveur</strong> est un composant distinct et facultatif, déployé et exploité par votre organisation. Ses propres données persistées sont décrites plus bas.</p>
+          <p style="margin:0">Cette page concerne l'<strong>extension navigateur</strong>, distribuée par les stores d'extensions — le seul composant du produit disponible aujourd'hui. Un mécanisme d'application au niveau de la plateforme fait partie de la feuille de route&nbsp;; cette page sera complétée par sa propre section sur les données une fois qu'il sera réellement disponible.</p>
         </div>
       </div>
     </section>
@@ -95,27 +95,6 @@ const page = 'privacy' as const;
     </section>
 
     <section class="hband sunk">
-      <div class="in">
-        <div class="stack g14 measure">
-          <span class="eyebrow">le serveur&nbsp;:</span>
-          <h2>Si votre organisation déploie le serveur, elle est responsable du traitement.</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Le serveur n'est pas nécessaire pour utiliser l'extension navigateur. Lorsqu'il est déployé, il fonctionne sur l'infrastructure contrôlée par votre organisation et conserve les informations nécessaires à son fonctionnement. Ces données comprennent notamment&nbsp;:</p>
-        </div>
-        <ul class="bul measure">
-          <li>Le <strong>journal des exemptions de pull request</strong>&nbsp;: identifiant, action, personne à l'origine de la demande, horodatage et <strong>motif en texte libre lorsqu'un motif est saisi</strong>. Ce journal peut donc contenir des données à caractère personnel.</li>
-          <li>Des <strong>enregistrements d'évaluation</strong> par pull request, comprenant un <strong>court extrait</strong> — jusqu'à environ 80 caractères — du commentaire racine de chaque fil bloquant non résolu, ainsi que l'identifiant de son auteur.</li>
-          <li>Des <strong>compteurs agrégés</strong> par dépôt et par pull request. Ils sont indépendants du réglage de télémétrie de l'extension&nbsp;: il s'agit de deux mécanismes distincts.</li>
-          <li>L'<strong>état opérationnel</strong> nécessaire au fonctionnement du serveur.</li>
-        </ul>
-        <div class="callout blk">
-          <span class="ct">à retenir</span>
-          <h4>Cette liste décrit les catégories de données concernées. Elle n'a pas vocation à être exhaustive.</h4>
-          <p>Le serveur évolue au fil des versions. L'organisation qui le déploie et l'exploite est le <strong>responsable du traitement</strong> au sens du RGPD, ou assume le rôle équivalent prévu par la législation locale applicable. C'est à cette organisation — et non à cette page — de fournir l'information relative à la confidentialité applicable à son propre déploiement, notamment les finalités du traitement et les durées de conservation retenues. La durée de conservation du journal des exemptions est configurable et fixée à douze mois par défaut.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="hband">
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">ce que l'extension ne fait pas&nbsp;:</span>

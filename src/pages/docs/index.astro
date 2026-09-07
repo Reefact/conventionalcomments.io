@@ -7,7 +7,7 @@ const page = 'docsindex' as const;
 ---
 <Docs lang={lang} page={page}
   title="Documentation"
-  description="Three paths: trying it out, setting it up for a repository, deploying it for an organization.">
+  description="Three paths: trying it out, setting it up for a repository, and seeing where platform-level enforcement is headed.">
 <div class="dhead stack g12">
           <p class="crumb"><b>docs</b></p>
           <h1>Documentation</h1>
@@ -33,11 +33,11 @@ const page = 'docsindex' as const;
         </section>
 
         <section class="dsec">
-          <h2>I'm deploying it across the organization</h2>
-          <p>You want the convention applied consistently, regardless of who has installed what.</p>
+          <h2>I'm wondering what happens next</h2>
+          <p>You want the convention applied consistently, regardless of who has installed what — and you're curious where enforcement is headed.</p>
           <div class="paths">
-            <a class="path" href={href('server', 'en')}><span class="pn">The server</span><span class="pd">Docker, environment variables, storage, platform integrations, and making the check required.</span></a>
-            <a class="path" href={href('troubleshooting', 'en')}><span class="pn">Troubleshooting</span><span class="pd">Understand the banners, neutral statuses, and the few common surprises you're likely to run into the first time.</span></a>
+            <a class="path" href={href('server', 'en')}><span class="pn">Enforce (roadmap)</span><span class="pd">Why platform-level enforcement isn't shipped yet, what already works without it, and how the eventual implementation is being kept open.</span></a>
+            <a class="path" href={href('troubleshooting', 'en')}><span class="pn">Troubleshooting</span><span class="pd">Understand the banners and the few common surprises you're likely to run into the first time.</span></a>
           </div>
         </section>
 

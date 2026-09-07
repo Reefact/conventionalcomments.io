@@ -7,78 +7,47 @@ const page = 'adoption' as const;
 ---
 <Docs lang={lang} page={page}
   title="Adoption: assist → warn → enforce"
-  description="A safe path from assist to enforce: the rollout sequence, five prerequisites, rollback procedure, and the metrics to watch before making compliance mandatory.">
+  description="Assist and warn are available today through the extension. See how teams roll the convention out gradually, what changes at each stage, and where enforce — still on the roadmap — fits in.">
 <div class="dhead stack g12">
           <p class="crumb"><b>docs</b> / adoption</p>
           <h1>Adoption: assist → warn → enforce</h1>
-          <p class="lede measure">Making the convention a merge requirement is an operational decision, not just a configuration change. The safest approach is gradual: help first, measure second, enforce only when the prerequisites are in place and rollback has been tested.</p>
+          <p class="lede measure">The safest way to bring a convention to a team is gradual: help first, then make progress visible, then decide together whether — and how — to hold it firmly. Assist and warn work today through the extension alone. Enforce, as an authoritative, platform-level requirement, is still on the roadmap — see <a href={href('server', 'en')}>what's coming</a> for that part.</p>
         </div>
 
         <section class="dsec">
           <h2>The rollout sequence</h2>
           <div class="timeline">
-            <div class="tcell" style="--st:var(--fg-faint)"><span class="wk">week 0–2</span><span class="md">assist</span><span class="ds">Install the extension and let people use it. No status is published. Nothing is measured.</span></div>
-            <div class="tcell" style="--st:var(--warn)"><span class="wk">week 2–6</span><span class="md">warn</span><span class="ds">The server starts publishing a status that never fails. You can now measure compliance without changing the reviewer's day-to-day experience.</span></div>
-            <div class="tcell" style="--st:var(--block)"><span class="wk">then</span><span class="md">enforce</span><span class="ds">Start with a single pilot repository. All prerequisites should be met, and the rollback procedure should already have been rehearsed.</span></div>
-            <div class="tcell" style="--st:var(--accent)"><span class="wk">after that</span><span class="md">rollout</span><span class="ds">Expand repository by repository, based on what you learned from the pilot.</span></div>
+            <div class="tcell" style="--st:var(--fg-faint)"><span class="wk">week 0–2</span><span class="md">assist</span><span class="ds">Install the extension and let people use it. No status is published anywhere. Nothing is measured beyond what each reviewer sees in their own browser.</span></div>
+            <div class="tcell" style="--st:var(--warn)"><span class="wk">week 2–6</span><span class="md">warn</span><span class="ds">Unresolved blocking points become visible directly on the pull request, without anyone being rejected. You can now talk about compliance without changing anyone's day-to-day workflow.</span></div>
+            <div class="tcell" style="--st:var(--block)"><span class="wk">later</span><span class="md">enforce</span><span class="ds">Not available yet as an authoritative, platform-level requirement. Track the roadmap for GitHub, Azure DevOps, and other platforms.</span></div>
           </div>
           <div class="scroller">
             <table class="t">
-              <thead><tr><th>Mode</th><th>Extension</th><th>Server</th><th>Effect on the pull request</th></tr></thead>
+              <thead><tr><th>Mode</th><th>What the extension does</th><th>Effect on the pull request</th></tr></thead>
               <tbody>
-                <tr><td class="m">off</td><td class="d">Does nothing.</td><td class="d">Publishes nothing.</td><td class="d">None.</td></tr>
-                <tr><td class="m">assist</td><td class="d">Helps reviewers and reports diagnostics. Never blocks.</td><td class="d">Publishes nothing.</td><td class="d">None.</td></tr>
-                <tr><td class="m" style="color:var(--warn)">warn</td><td class="d">Behaves exactly like <code>assist</code>.</td><td class="d">Publishes a status that always passes while reporting non-compliance in its summary.</td><td class="d">Visible, never blocking.</td></tr>
-                <tr><td class="m" style="color:var(--block)">enforce</td><td class="d">Prevents non-compliant comments from being submitted.</td><td class="d">Publishes a required status that fails while an unresolved blocking thread remains.</td><td class="d">Merge blocked.</td></tr>
+                <tr><td class="m">off</td><td class="d">Does nothing.</td><td class="d">None.</td></tr>
+                <tr><td class="m">assist</td><td class="d">Helps reviewers write compliant comments and reports diagnostics. Never blocks.</td><td class="d">None.</td></tr>
+                <tr><td class="m" style="color:var(--warn)">warn</td><td class="d">Same as <code>assist</code>, plus a visible count of unresolved blocking threads.</td><td class="d">Visible, never blocking.</td></tr>
+                <tr><td class="m" style="color:var(--block)">enforce</td><td class="d">Can refuse to submit a malformed comment locally, in the browser.</td><td class="d">No authoritative merge gate yet — that part isn't built.</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="small">For reviewers, <code>assist</code> and <code>warn</code> behave exactly the same. The only difference is on the server side. That makes <code>warn</code> a genuine measurement phase: you can observe how the convention is being followed without changing anyone's workflow and distorting the results.</p>
+          <p class="small">Because nothing here depends on a server, moving from one stage to the next is a configuration change your team can make and reverse on its own — there's no separate infrastructure to bring up or tear down.</p>
         </section>
 
         <section class="dsec">
-          <h2>Prerequisites for <code style="font-size:.9em">enforce</code></h2>
-          <p>Three requirements apply everywhere. Azure DevOps adds two more.</p>
-          <ul class="tick">
-            <li><span class="mk">1</span><b>Configure <code>resolverOverrideGroup</code></b><span class="tx">An authorized group must be defined before enabling <code>enforce</code>. Without one, neither resolution override is available: nobody can record a <code>decision</code>, and nobody can exempt a pull request. If the author of a blocking thread is unavailable, that thread can leave the pull request permanently blocked. Whenever an <code>enforce</code> repository resolves to an empty group, the server emits a <code>config-warning</code>.</span></li>
-            <li><span class="mk">2</span><b>Document the rollback procedure and assign an owner</b><span class="tx">“We'll work it out if something goes wrong” is not a rollback plan. Name the person responsible and make sure they have access to both the organization configuration channel and the server's administration endpoint.</span></li>
-            <li><span class="mk">3</span><b>Make the check required and disable bypass</b><span class="tx">On GitHub, enable <em>Require status checks to pass</em> for <code>conventional-comments</code>, and also enable <em>Do not allow bypassing the above settings</em>. On Azure DevOps, configure a <em>Status checks</em> branch policy for <code>conventional-comments/compliance</code> and set it to <em>Block</em>, not <em>Warn</em>. Requiring the check without disabling bypass leaves administrators outside the guarantee.</span></li>
-            <li><span class="mk n">4</span><b>Azure DevOps: request exemptions through the server</b><span class="tx">Azure DevOps does not report who applied a label. To preserve an audit trail, the server applies the exemption label itself and records who requested it. There is nothing extra to configure, but exemptions must be requested through the administration endpoint rather than applied manually in the UI.</span></li>
-            <li><span class="mk n">5</span><b>Azure DevOps: keep detection latency at 60 seconds or less</b><span class="tx">Either provide an event channel or set <code>reconcileIntervalSeconds</code> to <code>60</code> or less. In <code>enforce</code>, the server emits a <code>config-warning</code> when the interval is greater than 60 seconds.</span></li>
-          </ul>
+          <h2>One prerequisite worth setting early</h2>
+          <p><strong>Configure <code>resolverOverrideGroup</code></strong> before relying on <code>decision</code> replies to close out blocking threads. This defines who may record a <code>decision</code> when the original author of a blocking comment is unavailable. Left empty, nobody can use that escape hatch, and a blocking thread can get stuck with no way to close it.</p>
         </section>
 
         <section class="dsec">
-          <h2>Rollback</h2>
-          <div class="callout blk">
-            <span class="ct">the rule to remember</span>
-            <h4>Roll back to <code>warn</code>. Never to <code>assist</code>, and never to <code>off</code>.</h4>
-            <p>In <code>warn</code>, the server keeps publishing a status, but that status always passes. That means every pull request becomes unblocked immediately, without changing branch protection. <code>assist</code> and <code>off</code> are different: the server publishes no status at all. If <code>conventional-comments</code> is still configured as a required check, switching from <code>enforce</code> to either of those modes leaves every pull request waiting for a status that will never arrive. You would then have to remove the requirement repository by repository. During an incident, switching to <code>off</code> can turn the rollback itself into a second incident.</p>
-          </div>
-          <ul class="tick">
-            <li><span class="mk">1</span><b>Set <code>mode</code> to <code>warn</code> in the organization configuration</b><span class="tx">Moving to a less restrictive mode is applied to pull requests that are already open. You do not need to wait for them to close.</span></li>
-            <li><span class="mk">2</span><b>Let cache invalidation propagate</b><span class="tx">The organization configuration is checked every 60 seconds independently of the normal cache. As soon as the observed mode becomes less restrictive than the previous one, the entire configuration cache is invalidated automatically. If you need the change immediately, call <code>POST /admin/cache/invalidate</code>.</span></li>
-            <li><span class="mk">3</span><b>Verify the result on a real pull request</b><span class="tx">Confirm that a green <code>warn</code> status appears on a witness pull request. Check the behaviour itself, not just the configuration file.</span></li>
-          </ul>
-          <p class="small">The target defined by the specification is simple: rollback every repository within minutes, without touching repositories individually. If your rollback procedure requires looping over repositories, it is not sufficient.</p>
+          <h2>Rolling back</h2>
+          <p>Every stage here is a single <code>mode</code> change in your configuration, applied through the same three-level system described in <a href={href('configure', 'en')}>configuration</a>. Moving back from <code>warn</code> to <code>assist</code>, or from <code>enforce</code>'s local strict mode to <code>warn</code>, takes effect the next time the extension reads the configuration — there's no separate service to restart or branch-protection setting to unwind, because none of these stages touch your platform's own merge rules yet.</p>
         </section>
 
         <section class="dsec">
-          <h2>What <code style="font-size:.9em">warn</code> measures</h2>
-          <p>There are six indicators. The first two help determine whether moving to <code>enforce</code> is reasonable. The last one helps detect whether enforcement is being routinely bypassed.</p>
-          <div class="scroller">
-            <table class="t">
-              <thead><tr><th>Indicator</th><th>What it tells you</th></tr></thead>
-              <tbody>
-                <tr><td class="m">complianceRate</td><td class="d">Percentage of human comments with no error-severity diagnostic. This is the primary figure to examine before enabling <code>enforce</code>.</td></tr>
-                <tr><td class="m">warningRate</td><td class="d">Percentage of human comments that produce warnings but no errors. A high but stable value may be perfectly acceptable because warnings never block.</td></tr>
-                <tr><td class="m">labelDistribution</td><td class="d">Number of comments using each label. If usage collapses mostly onto <code>note</code> and <code>nitpick</code>, reviewers may be avoiding labels that can become blocking.</td></tr>
-                <tr><td class="m">serviceAccountShare</td><td class="d">Percentage of comments written by bots or service accounts. Helps verify that <code>toolCommands</code> and <code>exemptUsers</code> are configured appropriately.</td></tr>
-                <tr><td class="m">totalHumanComments</td><td class="d">The sample size behind the percentages. A rate calculated from twelve comments tells you very little.</td></tr>
-                <tr><td class="m" style="color:var(--warn)">decisionsInBlockingThreads</td><td class="d">How often blocking threads are resolved through an override. A steadily rising value can indicate that enforcement is being bypassed rather than followed. Check it before expanding the rollout.</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <h2>What to watch before going further</h2>
+          <p>There's no organization-wide dashboard today — that kind of aggregate reporting is part of what an authoritative, platform-level check would eventually enable. In the meantime, what's worth watching is qualitative: are reviewers finding the right labels, are blocking threads getting resolved instead of stalling, and does the <code>warn</code>-stage count on a pull request usually reach zero before it merges. Uneven label use or blocking counts that never quite hit zero are both signals to slow down rather than push toward stricter enforcement.</p>
         </section>
 
         <section class="dsec">
@@ -90,24 +59,16 @@ const page = 'adoption' as const;
   <span class="tk-k">"resolverOverrideGroup"</span>: [<span class="tk-v">"acme/tech-leads"</span>],
   <span class="tk-k">"formatSeverity"</span>: <span class="tk-v">"warn"</span>,          <span class="tk-cm">// formatting issues do not block</span>
   <span class="tk-k">"exemptUsers"</span>: [<span class="tk-v">"dependabot[bot]"</span>, <span class="tk-v">"github-actions[bot]"</span>],
-  <span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>],
-  <span class="tk-k">"server"</span>: <span class="tk-k">&#123;</span>
-    <span class="tk-k">"gracePeriodSeconds"</span>: <span class="tk-v">900</span>,
-    <span class="tk-k">"reconcileIntervalSeconds"</span>: <span class="tk-v">60</span>
-  <span class="tk-k">&#125;</span>
+  <span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>]
 <span class="tk-k">&#125;</span></pre>
           <div class="callout">
-            <span class="ct">why 60 seconds</span>
-            <p style="margin:0"><code>reconcileIntervalSeconds</code> is set to <strong>60 here, not 900</strong>. On Azure DevOps, prerequisite 5 requires a value of 60 seconds or less when using <code>enforce</code>. Since moving between phases should only require changing <code>mode</code>, this value must already be correct before enforcement is enabled. On GitHub, thread state is covered by an event channel, so a value of 900 is acceptable.</p>
-          </div>
-          <div class="callout">
             <span class="ct">worth checking before you enable it</span>
-            <p style="margin:0"><code>toolCommands</code> is <strong>empty by default</strong>. In <code>enforce</code>, a bare <code>/rebase</code> is rejected like any other non-compliant comment unless it has been declared. Adding <code>"/*"</code> exempts all slash commands.</p>
+            <p style="margin:0"><code>toolCommands</code> is <strong>empty by default</strong>. In <code>enforce</code>'s local strict mode, a bare <code>/rebase</code> is rejected like any other non-compliant comment unless it has been declared. Adding <code>"/*"</code> exempts all slash commands.</p>
           </div>
         </section>
 
         <div class="pager">
           <a class="pgl" href={href('labels', 'en')}><span class="dir">← previous</span><span class="ttl">Labels &amp; decorations</span></a>
-          <a class="pgl" href={href('server', 'en')} style="text-align:right"><span class="dir">next →</span><span class="ttl">Server companion</span></a>
+          <a class="pgl" href={href('server', 'en')} style="text-align:right"><span class="dir">next →</span><span class="ttl">Enforce (roadmap)</span></a>
         </div>
 </Docs>

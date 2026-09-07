@@ -7,7 +7,7 @@ const page = 'home' as const;
 ---
 <Base lang={lang} page={page}
   title="Conventional Comments Toolkit"
-  description="Review comments that say what they expect. A browser extension and a server companion that make the Conventional Comments convention hold.">
+  description="Review comments that say what they expect. A browser extension that makes the Conventional Comments convention easy to follow, with platform-level enforcement on the roadmap.">
 <section class="hband">
       <div class="in">
         <div class="hero-g">
@@ -188,19 +188,19 @@ const page = 'home' as const;
 
         <div class="duo">
           <div>
-            <span class="tag" style="color:var(--fg-muted)">in the browser</span>
+            <span class="tag" style="color:var(--fg-muted)">as you write</span>
             <h3>An extension that does the typing</h3>
             <p>A row of buttons sits above the comment box on GitHub. Type <code>?n</code> and the extension inserts <code>nitpick:</code>. Hover over a button and it reminds you what the label means. Choosing the right label becomes effortless — which is exactly why people are still doing it weeks later.</p>
           </div>
           <div>
-            <span class="tag" style="color:var(--accent)">on your server</span>
-            <h3>A reminder that never gets tired</h3>
-            <p>A small service that you host re-checks the pull request's comments and flags unresolved comments marked as blocking. Your team can choose to make that check a requirement for merging.</p>
+            <span class="tag" style="color:var(--accent)">once it's published</span>
+            <h3>A count that doesn't let go</h3>
+            <p>The extension keeps track of unresolved blocking comments directly on the pull request and shows how many remain. Nobody has to scroll back through the thread to check.</p>
             <p class="guar">It isn't there to police anyone. It's a safety net: <strong style="color:var(--fg)">an important point doesn't get lost somewhere in the thread.</strong></p>
           </div>
         </div>
 
-        <p class="small measure">And if your team wants neither a server nor a merge gate, that's fine too. The extension works perfectly well on its own. The convention itself needs no tooling at all. The tooling simply makes it easier to use consistently.</p>
+        <p class="small measure">And if your team wants nothing more than that, it's already enough. The extension works perfectly well on its own. The convention itself needs no tooling at all. The tooling simply makes it easier to use consistently.</p>
       </div>
     </section>
 
@@ -208,23 +208,23 @@ const page = 'home' as const;
       <div class="in">
         <div class="split">
           <div class="stack g14">
-            <span class="eyebrow">at your own pace:</span>
-            <h2 style="font-size:24px">Nothing blocks anyone until you decide it should.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">There are three modes. You start with the first, where the tooling only helps. Moving further is a team decision, never an installation default.</p>
+            <span class="eyebrow">the direction:</span>
+            <h2 style="font-size:24px">Assist and warn are here today. Enforce is where this is heading.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The extension already covers the first two stages. The third — an authoritative, platform-level merge gate — is on the roadmap, not in your browser today.</p>
             <a class="btn btn-p" href={href('adoption', 'en')} style="align-self:flex-start">How teams adopt it</a>
           </div>
           <div class="traj">
             <div class="step" style="--st:var(--fg-faint)">
-              <span class="sn">assist</span><span class="sw">the default</span>
+              <span class="sn">assist</span><span class="sw">available today</span>
               <span class="sd">The extension helps the people who install it. Nobody is blocked. Nothing is measured.</span>
             </div>
             <div class="step" style="--st:var(--warn)">
-              <span class="sn">warn</span><span class="sw">see where you stand</span>
-              <span class="sd">The team can see how things are going without anything being rejected.</span>
+              <span class="sn">warn</span><span class="sw">available today</span>
+              <span class="sd">The extension surfaces unresolved blocking points on the pull request without rejecting anything.</span>
             </div>
             <div class="step" style="--st:var(--block)">
-              <span class="sn">enforce</span><span class="sw">only if you want it</span>
-              <span class="sd">An unresolved blocking point prevents the merge. You can roll back in minutes.</span>
+              <span class="sn">enforce</span><span class="sw">on the roadmap</span>
+              <span class="sd">An authoritative merge gate on GitHub, Azure DevOps, and other platforms — not yet available, and not tied to one architecture.</span>
             </div>
           </div>
         </div>
@@ -257,7 +257,7 @@ const page = 'home' as const;
       <div class="cta-in">
         <div class="stack g8">
           <h2>Start with one label in front of one sentence.</h2>
-          <p class="small" style="color:var(--fg-2)">That's it. Everything else — the extension, the server, the settings — exists only to make that habit easy to keep.</p>
+          <p class="small" style="color:var(--fg-2)">That's it. Everything else — the extension and its settings — exists only to make that habit easy to keep.</p>
         </div>
         <div class="hero-btns">
           <a class="btn btn-p" href={href('labels', 'en')}>See all 13 labels</a>

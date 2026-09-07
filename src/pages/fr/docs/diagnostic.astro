@@ -7,7 +7,7 @@ const page = 'troubleshooting' as const;
 ---
 <Docs lang={lang} page={page}
   title="Diagnostic"
-  description="Sept problèmes courants, leur cause et les actions à effectuer lorsque l'extension ou le serveur ne se comporte pas comme prévu.">
+  description="Cinq problèmes courants, leur cause et les actions à effectuer lorsque l'extension ne se comporte pas comme prévu.">
 <div class="dhead stack g12">
           <p class="crumb"><b>doc</b> / diagnostic</p>
           <h1>Quand quelque chose ne fonctionne pas comme prévu</h1>
@@ -33,12 +33,6 @@ const page = 'troubleshooting' as const;
         </section>
 
         <section class="dsec">
-          <h2>« Configuration décalée par rapport au serveur »</h2>
-          <p>L'extension et le serveur publient chacun une empreinte de la configuration qu'ils appliquent. Lorsque ces empreintes diffèrent, l'extension <strong>cesse de bloquer l'envoi des commentaires</strong> et vous signale que les deux composants ne sont plus synchronisés.</p>
-          <p>Cette situation est normalement temporaire. Une configuration plus stricte peut par exemple être encore en cours de propagation. Une pull request déjà ouverte peut également rester associée à la configuration utilisée lors de sa première évaluation. Si l'écart persiste, l'extension et le serveur utilisent peut-être des versions différentes de la bibliothèque partagée. <code>coreMinVersion</code> permet d'imposer une version compatible à l'échelle de l'organisation. L'empreinte, elle, sert uniquement à détecter la divergence.</p>
-        </section>
-
-        <section class="dsec">
           <h2><code>/rebase</code> est refusé</h2>
           <p>C'est le comportement attendu&nbsp;: <code>toolCommands</code> est vide par défaut, donc rien n'est exempté tant que le dépôt ne l'a pas déclaré.</p>
           <pre class="code"><span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>]</pre>
@@ -49,17 +43,6 @@ const page = 'troubleshooting' as const;
           <h2>Les commentaires d'un bot font échouer la vérification</h2>
           <p>Ajoutez son identifiant sur la plateforme à <code>exemptUsers</code>. La comparaison ne tient pas compte de la casse et utilise <strong>l'identifiant de connexion</strong>, jamais le nom affiché.</p>
           <p class="small">Les entrées générées directement par la plateforme — événements de timeline, mises à jour de branche, notifications système — sont automatiquement exemptées et n'ont pas besoin d'être déclarées. Une approbation envoyée <strong>sans aucun texte</strong> est également toujours exemptée. Sans cette règle, approuver simplement une pull request sans écrire de commentaire provoquerait une erreur de validation que l'auteur de la PR ne pourrait même pas corriger, puisqu'il ne peut pas modifier la revue de quelqu'un d'autre.</p>
-        </section>
-
-        <section class="dsec">
-          <h2>La vérification est grise au lieu d'être rouge ou verte</h2>
-          <p>Un statut neutre signifie que le serveur n'a pas réussi à lire l'état courant de la pull request pendant une durée supérieure au délai de grâce configuré. Pendant ce délai, il continue de publier le dernier verdict connu. Ce n'est qu'une fois le délai dépassé qu'il passe à un état neutre, plutôt que d'inventer un résultat à partir d'informations potentiellement obsolètes.</p>
-          <p>Commencez par vérifier le token de la plateforme&nbsp;:</p>
-          <ul class="bul">
-            <li>Est-il expiré&nbsp;?</li>
-            <li>Dispose-t-il toujours des permissions nécessaires&nbsp;?</li>
-          </ul>
-          <p>Vérifiez ensuite le secret du webhook.</p>
         </section>
 
         <section class="dsec">

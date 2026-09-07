@@ -38,8 +38,8 @@ const page = 'configure' as const;
             </table>
           </div>
           <div class="callout acc">
-            <span class="ct">le plancher passe par deux canaux, qui doivent rester cohérents</span>
-            <p style="margin:0">L'extension récupère le plancher depuis la politique d'entreprise du navigateur. Le serveur récupère le même plancher depuis sa propre configuration de déploiement. Cette duplication est volontaire. Un serveur n'a pas de navigateur et ne peut donc pas lire sa politique d'entreprise. Si le plancher n'était défini qu'à cet endroit, le serveur serait incapable de le faire respecter — alors que l'extension est, par conception, un composant que l'utilisateur peut contourner. Le serveur publie donc une empreinte de la configuration qu'il applique. Si les deux canaux divergent, l'écart devient visible au lieu de passer inaperçu.</p>
+            <span class="ct">qui applique le plancher aujourd'hui</span>
+            <p style="margin:0">Aujourd'hui, c'est l'extension qui applique le plancher, en le lisant depuis la politique d'entreprise du navigateur. Un futur mécanisme d'application au niveau de la plateforme n'aurait pas de navigateur pour lire cette politique&nbsp;: il lui faudrait son propre canal vers ce même plancher — l'une des raisons pour lesquelles ce mécanisme n'est pas encore documenté ici comme une capacité livrée.</p>
           </div>
         </section>
 
@@ -50,14 +50,14 @@ const page = 'configure' as const;
             <table class="t wide">
               <thead><tr><th>Clé</th><th>Valeur par défaut</th><th>Rôle</th></tr></thead>
               <tbody>
-                <tr><td class="m">mode</td><td class="m d">assist</td><td class="d"><code>off</code> · <code>assist</code> · <code>warn</code> · <code>enforce</code>. Consultez le guide d'adoption avant de passer au-delà de <code>warn</code>.</td></tr>
+                <tr><td class="m">mode</td><td class="m d">assist</td><td class="d"><code>off</code> · <code>assist</code> · <code>warn</code> · <code>enforce</code>. Assist et warn prennent effet dès aujourd'hui via l'extension. Enforce est la direction visée, pas encore appuyée par une vérification faisant autorité au niveau de la plateforme — consultez le guide d'adoption pour savoir ce que ça signifie concrètement pour l'instant.</td></tr>
                 <tr><td class="m">formatSeverity</td><td class="m d">warn</td><td class="d">Détermine si un commentaire mal formé peut faire échouer la vérification. La plupart des équipes conservent cette valeur&nbsp;: en règle générale, ce sont les points bloquants non résolus qui doivent empêcher une fusion, pas une erreur de format.</td></tr>
                 <tr><td class="m">resolverOverrideGroup</td><td class="m d">vide</td><td class="d">Définit qui peut passer outre une résolution et enregistrer une <code>decision</code>. <strong>Ce paramètre doit être configuré avant d'utiliser <code>enforce</code>.</strong> Lorsqu'il est vide, les deux mécanismes permettant de sortir d'une situation bloquée sont indisponibles.</td></tr>
                 <tr><td class="m">exemptUsers</td><td class="m d">vide</td><td class="d">Liste les utilisateurs dont les commentaires ne sont jamais validés. La comparaison se fait avec leur identifiant sur la plateforme, sans tenir compte de la casse.</td></tr>
                 <tr><td class="m">toolCommands</td><td class="m d">vide</td><td class="d">Définit les commentaires destinés à des bots ou à des outils. Voir le point d'attention ci-dessous.</td></tr>
                 <tr><td class="m">labels</td><td class="m d">13 labels</td><td class="d">Permet de modifier le comportement de certains labels. Ne déclarez que ceux que vous souhaitez personnaliser.</td></tr>
                 <tr><td class="m">severities</td><td class="m d">valeurs du produit</td><td class="d">Permet de modifier, diagnostic par diagnostic, leur niveau de sévérité ou de les désactiver.</td></tr>
-                <tr><td class="m">coreMinVersion</td><td class="m d">1.0.0</td><td class="d">Permet d'imposer une version minimale du moteur dans toute l'organisation. À ne pas confondre avec l'empreinte, qui sert uniquement à détecter une divergence.</td></tr>
+                <tr><td class="m">coreMinVersion</td><td class="m d">1.0.0</td><td class="d">Permet d'imposer une version minimale du moteur dans toute l'organisation.</td></tr>
               </tbody>
             </table>
           </div>

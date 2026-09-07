@@ -7,13 +7,13 @@ const page = 'howitworks' as const;
 ---
 <Base lang={lang} page={page}
   title="Comment ça marche"
-  description="L'extension aide à rédiger les commentaires pendant la revue. Le serveur optionnel vérifie ensuite la pull request de manière indépendante. Découvrez le rôle de chaque composant.">
+  description="L'extension aide à rédiger les commentaires et garde la trace de ce qui reste en suspens, directement dans le navigateur. Découvrez ce qu'elle fait aujourd'hui, et où mène la suite.">
 <section class="hband">
       <div class="in">
         <div class="stack g18 measure">
           <span class="eyebrow acc">comment ça marche&nbsp;:</span>
-          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">L'extension vous aide à écrire. Le serveur vérifie ensuite.</h1>
-          <p class="lede">L'extension navigateur facilite l'utilisation de Conventional Comments pendant la revue&nbsp;: barre d'outils, raccourcis clavier et validation au fil de la saisie. Le serveur est facultatif. Si votre organisation choisit de le déployer, il réévalue indépendamment la pull request et publie une vérification de conformité. Les deux composants ont donc des rôles différents.</p>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">L'extension vous aide à écrire. Elle compte aussi les points.</h1>
+          <p class="lede">L'extension navigateur facilite l'utilisation de Conventional Comments pendant la revue&nbsp;: barre d'outils, raccourcis clavier et validation au fil de la saisie. Elle garde aussi la trace des commentaires bloquants non résolus directement sur la pull request, entièrement par elle-même. Une vérification qui ferait autorité au niveau de la plateforme fait partie de la direction visée, mais elle ne fait pas partie de ce que vous installez aujourd'hui.</p>
         </div>
       </div>
     </section>
@@ -53,7 +53,7 @@ const page = 'howitworks' as const;
           <div>
             <h3>Des badges sur les commentaires publiés</h3>
             <p>Une fois les commentaires publiés, leurs labels sont affichés sous forme de badges sans modifier le contenu réellement enregistré par la plateforme. Un bandeau en haut de la pull request indique le nombre de fils bloquants encore non résolus et permet d'accéder directement à chacun d'eux.</p>
-            <p>Ce nombre provient du résumé publié par le serveur&nbsp;: le bandeau et la vérification de conformité reflètent donc toujours le même état.</p>
+            <p>Ce nombre est calculé par l'extension elle-même, directement à partir du fil tel qu'il s'affiche — sans aucun serveur.</p>
           </div>
         </div>
       </div>
@@ -81,7 +81,7 @@ const page = 'howitworks' as const;
         <div class="callout acc">
           <span class="ct">quel est donc le rôle de l'extension&nbsp;?</span>
           <h4>Un garde-fou, pas une barrière infranchissable.</h4>
-          <p>L'extension évite les erreurs d'inattention, qui représentent le cas courant. Elle n'a pas pour objectif d'empêcher quelqu'un de la contourner volontairement. C'est précisément le rôle du serveur&nbsp;: lui fonctionne indépendamment du navigateur de chaque relecteur.</p>
+          <p>L'extension évite les erreurs d'inattention, qui représentent le cas courant. Elle n'a pas pour objectif d'empêcher quelqu'un de la contourner volontairement. C'est précisément ce que la vérification au niveau de la plateforme est censée combler&nbsp;: évaluer la pull request indépendamment du navigateur de chaque relecteur. Cette partie n'existe pas encore&nbsp;: elle fait partie de la feuille de route, pas de l'extension.</p>
         </div>
       </div>
     </section>
@@ -90,25 +90,24 @@ const page = 'howitworks' as const;
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">avant que l'extension puisse bloquer&nbsp;:</span>
-          <h2>Quatre conditions doivent être réunies</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Le simple fait d'être en mode strict ne suffit pas. Si l'une des quatre conditions suivantes manque, l'extension affiche ses diagnostics mais autorise tout de même l'envoi du commentaire.</p>
+          <h2>Trois conditions doivent être réunies</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Le simple fait d'être en mode strict ne suffit pas. Si l'une des trois conditions suivantes manque, l'extension affiche ses diagnostics mais autorise tout de même l'envoi du commentaire.</p>
         </div>
         <ul class="tick">
           <li><span class="mk">1</span><b>Le mode strict est réellement actif</b><span class="tx">Le mode effectif est déterminé à partir de la configuration de l'organisation. L'extension ne le suppose jamais localement.</span></li>
           <li><span class="mk">2</span><b>La pull request fait partie du périmètre</b><span class="tx">Si un dépôt commence à appliquer la convention à partir d'une date donnée, les pull requests plus anciennes ne deviennent pas rétroactivement bloquantes.</span></li>
-          <li><span class="mk">3</span><b>L'extension et le serveur appliquent la même configuration</b><span class="tx">Tous deux publient une empreinte de la configuration utilisée. Si les empreintes diffèrent — par exemple pendant la propagation d'un durcissement des règles — l'extension cesse de bloquer les envois et signale la divergence.</span></li>
-          <li><span class="mk">4</span><b>La configuration a pu être lue correctement</b><span class="tx">Si le fichier de configuration n'est pas accessible, l'extension ne refuse aucun commentaire. Personne ne doit être bloqué au nom d'une règle que l'extension elle-même n'a pas réussi à lire.</span></li>
+          <li><span class="mk">3</span><b>La configuration a pu être lue correctement</b><span class="tx">Si le fichier de configuration n'est pas accessible, l'extension ne refuse aucun commentaire. Personne ne doit être bloqué au nom d'une règle que l'extension elle-même n'a pas réussi à lire.</span></li>
         </ul>
-        <p class="small measure">Les trois dernières conditions répondent au même principe&nbsp;: <strong>l'extension ne doit jamais refuser localement ce que l'évaluation de référence aurait accepté.</strong></p>
+        <p class="small measure">Ces conditions répondent au même principe&nbsp;: <strong>l'extension ne doit jamais refuser un commentaire pour lequel elle ne peut pas confirmer que la règle s'applique réellement.</strong></p>
       </div>
     </section>
 
     <section class="hband">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">sur le serveur&nbsp;:</span>
-          <h2>Ce que vérifie réellement le check de conformité</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Deux choses. Pas davantage.</p>
+          <span class="eyebrow">sur la feuille de route&nbsp;:</span>
+          <h2>Ce qu'une vérification faisant autorité évaluerait</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Cette partie n'existe pas encore&nbsp;: rien ci-dessous n'est quelque chose que vous pouvez installer ou activer aujourd'hui. Elle décrit la direction visée&nbsp;: une évaluation qui s'exécute indépendamment du navigateur d'un relecteur en particulier, et sur laquelle les règles de fusion d'une plateforme pourraient s'appuyer. Sur le principe, elle poserait les deux mêmes questions que l'extension pose déjà localement.</p>
         </div>
         <div class="duo">
           <div>
@@ -120,26 +119,19 @@ const page = 'howitworks' as const;
             <span class="tag" style="color:var(--accent)">la seconde</span>
             <h3>Tous les points bloquants ont-ils été résolus&nbsp;?</h3>
             <p>Un fil devient bloquant lorsque le commentaire qui l'a ouvert aboutit à un verdict bloquant. Une fois dans cet état, il le reste jusqu'à ce que le fil soit résolu, ou qu'une personne autorisée enregistre une <code>decision</code> expliquant pourquoi le point ne sera pas traité.</p>
-            <p class="guar">C'est ce critère qui peut empêcher la fusion.</p>
+            <p class="guar">C'est ce critère qui pourrait, à terme, empêcher une fusion.</p>
           </div>
         </div>
-        <div class="check">
-          <div class="cr">
-            <span class="ic" style="background:var(--pass)"></span>
-            <span class="tx"><b>conventional-comments</b> — tous les points bloquants sont résolus<span>Requise · la fusion est autorisée</span></span>
-          </div>
-          <div class="mach">cc/1 core=1.0.0 mode=enforce blocking=0 fmt=ok fp=7f3c…a91</div>
-        </div>
-        <p class="small measure">La dernière ligne est destinée aux outils. Elle indique la version du moteur qui a effectué l'évaluation, le mode utilisé, le nombre de points bloquants encore non résolus et l'empreinte de la configuration appliquée. Cette empreinte permet notamment à l'extension de détecter qu'elle et le serveur n'évaluent plus la pull request avec la même configuration.</p>
+        <p class="small measure">La manière dont cela sera concrètement mis en œuvre reste volontairement ouverte. GitHub, Azure DevOps et d'autres plateformes pourraient recourir à des mécanismes différents&nbsp;: une intégration légère et propre à la plateforme, un petit service hébergé ou auto-hébergé, ou toute autre approche. Rien ici n'est présenté comme une capacité concrète tant que ce n'est pas réellement disponible.</p>
       </div>
     </section>
 
     <section class="hband sunk">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">pourquoi les deux restent cohérents&nbsp;:</span>
-          <h2>Ils exécutent le même code de validation.</h2>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Il ne s'agit pas de deux implémentations distinctes des mêmes règles qu'il faudrait maintenir synchronisées. L'extension et le serveur utilisent <strong>exactement le même package de validation</strong>, et aucune règle de validation n'existe ailleurs. À configuration identique, un commentaire accepté par l'extension l'est également par le serveur, et inversement.</p>
+          <span class="eyebrow">pensé pour la suite, pas seulement pour aujourd'hui&nbsp;:</span>
+          <h2>Un seul moteur de validation, pas deux implémentations à maintenir en phase.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Les vérifications de l'extension ne sont pas une réimplémentation ponctuelle des règles. Elles s'appuient sur <strong>un unique package de validation</strong>, et aucune règle de validation n'existe ailleurs. Ce qui évaluera un jour une pull request au niveau de la plateforme s'appuiera sur ce même package&nbsp;: les résultats ne divergeront donc pas discrètement de ce que l'extension vous indique déjà.</p>
           <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">La bibliothèque de validation ne dépend ni du navigateur ni du réseau. Toutes les informations dont elle a besoin lui sont fournies sous forme de données, et les actions à effectuer sont renvoyées à l'appelant. Cette séparation permet au même moteur de validation de fonctionner directement dans le navigateur — et rend également possible le <em>playground</em>.</p>
         </div>
       </div>
@@ -149,11 +141,11 @@ const page = 'howitworks' as const;
       <div class="cta-in">
         <div class="stack g8">
           <h2>L'extension suffit pour commencer.</h2>
-          <p class="small" style="color:var(--fg-2)">Déployez le serveur lorsque votre équipe souhaite que le respect de la convention soit vérifié indépendamment du navigateur de chaque relecteur.</p>
+          <p class="small" style="color:var(--fg-2)">Assist et warn fonctionnent dès aujourd'hui, entièrement dans votre navigateur. Enforce, au niveau de la plateforme, fait partie de la feuille de route.</p>
         </div>
         <div class="hero-btns">
           <a class="btn btn-p" href={href('install', 'fr')}>Installer l'extension</a>
-          <a class="btn btn-s" href={href('server', 'fr')}>Déployer le serveur</a>
+          <a class="btn btn-s" href={href('server', 'fr')}>Voir la feuille de route</a>
         </div>
       </div>
     </section>
