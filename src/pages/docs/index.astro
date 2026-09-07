@@ -11,43 +11,43 @@ const page = 'docsindex' as const;
 <div class="dhead stack g12">
           <p class="crumb"><b>docs</b></p>
           <h1>Documentation</h1>
-          <p class="lede measure">Three paths. Pick the one that matches where you are, not the order the menu happens to be in.</p>
+          <p class="lede measure">Three ways in. Start with the one that fits what you're trying to do.</p>
         </div>
 
         <section class="dsec">
           <h2>I'm trying it out</h2>
-          <p>You want to see what it does, on your own pull requests, without asking anyone's permission.</p>
+          <p>You want to see how it works on your own pull requests, without needing anyone else's permission.</p>
           <div class="paths">
-            <a class="path" href={href('install', 'en')}><span class="pn">Install the extension</span><span class="pd">From your browser's store, or from a release zip if your machine can't build anything. Five minutes.</span></a>
-            <a class="path" href={href('labels', 'en')}><span class="pn">Labels &amp; decorations</span><span class="pd">The thirteen labels, what each one says, and the rule that decides whether a comment blocks.</span></a>
+            <a class="path" href={href('install', 'en')}><span class="pn">Install the extension</span><span class="pd">Get it from your browser's extension store, or use a release archive if building locally isn't an option. You'll be up and running in minutes.</span></a>
+            <a class="path" href={href('labels', 'en')}><span class="pn">Labels &amp; decorations</span><span class="pd">Meet the thirteen labels, learn what each one means, and understand when a comment becomes blocking.</span></a>
           </div>
         </section>
 
         <section class="dsec">
           <h2>I'm setting it up for a repository</h2>
-          <p>The team is convinced and you want everyone on the same rules.</p>
+          <p>Your team is on board. Now you want everyone following the same rules.</p>
           <div class="paths">
-            <a class="path" href={href('configure', 'en')}><span class="pn">Configure</span><span class="pd">One file on the default branch. Which keys matter, which ones bite, and how three levels of configuration combine.</span></a>
-            <a class="path" href={href('adoption', 'en')}><span class="pn">Adoption</span><span class="pd">assist → warn → enforce. What each step buys you, and how to get back out in minutes.</span></a>
+            <a class="path" href={href('configure', 'en')}><span class="pn">Configure</span><span class="pd">One file on the default branch. Learn which settings matter, which gotchas to watch for, and how the three levels of configuration work together.</span></a>
+            <a class="path" href={href('adoption', 'en')}><span class="pn">Adoption</span><span class="pd">assist → warn → enforce. See what changes at each stage and how to roll back quickly if you need to.</span></a>
           </div>
         </section>
 
         <section class="dsec">
-          <h2>I'm deploying it for the organization</h2>
-          <p>You want the convention to hold without depending on who installed what.</p>
+          <h2>I'm deploying it across the organization</h2>
+          <p>You want the convention applied consistently, regardless of who has installed what.</p>
           <div class="paths">
-            <a class="path" href={href('server', 'en')}><span class="pn">The server</span><span class="pd">Docker, environment variables, storage, wiring the platforms, and making the check required.</span></a>
-            <a class="path" href={href('troubleshooting', 'en')}><span class="pn">Troubleshooting</span><span class="pd">The banners, the neutral statuses, and the two or three things that surprise everyone once.</span></a>
+            <a class="path" href={href('server', 'en')}><span class="pn">The server</span><span class="pd">Docker, environment variables, storage, platform integrations, and making the check required.</span></a>
+            <a class="path" href={href('troubleshooting', 'en')}><span class="pn">Troubleshooting</span><span class="pd">Understand the banners, neutral statuses, and the few common surprises you're likely to run into the first time.</span></a>
           </div>
         </section>
 
         <section class="dsec">
           <h2>Reference</h2>
-          <p>Machine-readable, and stable.</p>
+          <p>Stable references designed for tools as well as people.</p>
           <ul class="bul">
-            <li><strong>The configuration schema</strong> at <code>conventionalcomments.io/schema/v1.json</code> — put it in your file's <code>$schema</code> and your editor completes the keys and underlines mistakes.</li>
-            <li><strong>The convention itself</strong> lives at <a href="https://conventionalcomments.org/">conventionalcomments.org</a>. This site is tooling for it, and doesn't speak for it.</li>
-            <li><strong>The source</strong>, Apache-2.0, with the normative specification and every acceptance criterion.</li>
+            <li><strong>The configuration schema</strong> is available at <code>conventionalcomments.io/schema/v1.json</code>. Add it to your file's <code>$schema</code> to get autocompletion and inline validation in your editor.</li>
+            <li><strong>The Conventional Comments specification</strong> lives at <a href="https://conventionalcomments.org/">conventionalcomments.org</a>. This site provides independent tooling around it and does not define or represent the specification.</li>
+            <li><strong>The source code</strong> is available under Apache-2.0 and includes the normative specification and the full set of acceptance criteria.</li>
           </ul>
         </section>
         <div class="pager"></div>

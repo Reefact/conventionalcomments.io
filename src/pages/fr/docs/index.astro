@@ -11,43 +11,43 @@ const page = 'docsindex' as const;
 <div class="dhead stack g12">
           <p class="crumb"><b>doc</b></p>
           <h1>Documentation</h1>
-          <p class="lede measure">Trois parcours. Prenez celui qui correspond à où vous en êtes, pas l'ordre du menu.</p>
+          <p class="lede measure">Trois façons de commencer. Choisissez directement celle qui correspond à votre besoin.</p>
         </div>
 
         <section class="dsec">
-          <h2>J'essaie</h2>
-          <p>Vous voulez voir ce que ça donne, sur vos propres pull requests, sans demander la permission à personne.</p>
+          <h2>Je veux l'essayer</h2>
+          <p>Vous voulez voir comment ça fonctionne sur vos propres pull requests, sans avoir besoin de demander la permission à qui que ce soit.</p>
           <div class="paths">
-            <a class="path" href={href('install', 'fr')}><span class="pn">Installer l'extension</span><span class="pd">Depuis le store de votre navigateur, ou depuis un zip de release si votre poste ne peut rien compiler. Cinq minutes.</span></a>
-            <a class="path" href={href('labels', 'fr')}><span class="pn">Labels et décorations</span><span class="pd">Les treize étiquettes, ce que chacune dit, et la règle qui décide si un commentaire bloque.</span></a>
+            <a class="path" href={href('install', 'fr')}><span class="pn">Installer l'extension</span><span class="pd">Installez-la depuis le store d'extensions de votre navigateur, ou utilisez l'archive d'une release si vous ne pouvez pas compiler localement. Quelques minutes suffisent.</span></a>
+            <a class="path" href={href('labels', 'fr')}><span class="pn">Labels et indications visuelles</span><span class="pd">Découvrez les treize labels, leur signification et la règle qui détermine si un commentaire est bloquant.</span></a>
           </div>
         </section>
 
         <section class="dsec">
           <h2>Je configure un dépôt</h2>
-          <p>L'équipe est convaincue et vous voulez que tout le monde soit sur les mêmes règles.</p>
+          <p>L'équipe est convaincue. Vous voulez maintenant que tout le monde suive les mêmes règles.</p>
           <div class="paths">
-            <a class="path" href={href('configure', 'fr')}><span class="pn">Configuration</span><span class="pd">Un fichier sur la branche par défaut. Quelles clés comptent, lesquelles piègent, et comment trois niveaux se combinent.</span></a>
-            <a class="path" href={href('adoption', 'fr')}><span class="pn">Adoption</span><span class="pd">assist → warn → enforce. Ce que chaque étape vous apporte, et comment revenir en arrière en quelques minutes.</span></a>
+            <a class="path" href={href('configure', 'fr')}><span class="pn">Configuration</span><span class="pd">Un seul fichier sur la branche par défaut. Voyez quelles options sont importantes, quels pièges éviter et comment les trois niveaux de configuration s'articulent.</span></a>
+            <a class="path" href={href('adoption', 'fr')}><span class="pn">Adoption</span><span class="pd">assist → warn → enforce. Comprenez ce que change chaque étape et comment revenir rapidement en arrière si nécessaire.</span></a>
           </div>
         </section>
 
         <section class="dsec">
-          <h2>Je déploie pour l'organisation</h2>
-          <p>Vous voulez que la convention tienne sans dépendre de qui a installé quoi.</p>
+          <h2>Je déploie à l'échelle de l'organisation</h2>
+          <p>Vous voulez que la convention s'applique de manière cohérente partout, indépendamment de ce que chacun a installé.</p>
           <div class="paths">
-            <a class="path" href={href('server', 'fr')}><span class="pn">Le serveur</span><span class="pd">Docker, variables d'environnement, stockage, branchement des plateformes, et déclaration de la vérification obligatoire.</span></a>
-            <a class="path" href={href('troubleshooting', 'fr')}><span class="pn">Diagnostic</span><span class="pd">Les bandeaux, les statuts neutres, et les deux ou trois choses qui surprennent tout le monde une fois.</span></a>
+            <a class="path" href={href('server', 'fr')}><span class="pn">Le serveur</span><span class="pd">Docker, variables d'environnement, stockage, intégration aux plateformes et mise en place d'une vérification obligatoire.</span></a>
+            <a class="path" href={href('troubleshooting', 'fr')}><span class="pn">Diagnostic</span><span class="pd">Comprenez les bandeaux, les statuts neutres et les quelques comportements qui surprennent souvent lors de la première utilisation.</span></a>
           </div>
         </section>
 
         <section class="dsec">
           <h2>Référence</h2>
-          <p>Lisible par une machine, et stable.</p>
+          <p>Des références stables, conçues pour être exploitées aussi bien par les outils que par les développeurs.</p>
           <ul class="bul">
-            <li><strong>Le schéma de configuration</strong> sur <code>conventionalcomments.io/schema/v1.json</code> — mettez-le dans le <code>$schema</code> de votre fichier et votre éditeur complète les clés et souligne les fautes.</li>
-            <li><strong>La convention elle-même</strong> vit sur <a href="https://conventionalcomments.org/">conventionalcomments.org</a>. Ce site en est l'outillage, et ne parle pas en son nom.</li>
-            <li><strong>Le code source</strong>, sous Apache-2.0, avec la spécification normative et tous les critères d'acceptation.</li>
+            <li><strong>Le schéma de configuration</strong> est disponible sur <code>conventionalcomments.io/schema/v1.json</code>. Ajoutez-le à la propriété <code>$schema</code> de votre fichier pour bénéficier de l'autocomplétion et voir les erreurs directement dans votre éditeur.</li>
+            <li><strong>La spécification Conventional Comments</strong> est disponible sur <a href="https://conventionalcomments.org/">conventionalcomments.org</a>. Ce site propose des outils indépendants autour de celle-ci, mais ne définit ni ne représente la spécification.</li>
+            <li><strong>Le code source</strong> est disponible sous licence Apache-2.0 et contient la spécification normative ainsi que l'ensemble des critères d'acceptation.</li>
           </ul>
         </section>
         <div class="pager"></div>
