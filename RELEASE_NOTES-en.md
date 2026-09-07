@@ -16,7 +16,16 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
-_Nothing pending yet._
+### 🐛 Fixed
+
+- **Guessing a page's address in the wrong language, or under `/en/`, no longer 404s.**
+  `/fr/docs/install/`, `/docs/installation/` (missing the `/fr/` prefix), and any
+  `/en/`-prefixed address — which the site never actually uses — now redirect to the right
+  page instead of a dead end.
+- **The configure and adoption pages no longer describe a `toolCommands` history that never
+  happened.** They said slash commands "used to be recognized through a built-in list" that
+  "no longer exists" — a claim about a past version the extension has never had. They now
+  simply state the current default.
 
 ## release/2026-09-07T05-34-29Z — September 7, 2026
 
