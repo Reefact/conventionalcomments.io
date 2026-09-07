@@ -122,7 +122,7 @@ const page = 'howitworks' as const;
             <p class="guar">This is the criterion that would eventually be able to prevent a merge.</p>
           </div>
         </div>
-        <p class="small measure">How this gets implemented is deliberately left open. GitHub, Azure DevOps, and other platforms may end up using different mechanisms — a lightweight platform-native integration, a small hosted or self-hosted service, or something else entirely. Nothing here is documented as a concrete capability until it actually ships.</p>
+        <p class="small measure">The default plan is the simplest, most platform-native mechanism for each platform — not a general-purpose backend. A dedicated service only enters the picture if a concrete requirement later shows that a platform-native integration genuinely isn't enough. Nothing here is documented as a concrete capability until it actually ships.</p>
       </div>
     </section>
 

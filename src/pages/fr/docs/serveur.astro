@@ -16,14 +16,13 @@ const page = 'server' as const;
 
         <section class="dsec">
           <h2>Pourquoi rien n'est encore livré ici</h2>
-          <p>Une vérification qui fait autorité doit s'exécuter ailleurs que dans le navigateur d'un relecteur, et cet « ailleurs » reste à préciser — sans qu'il faille nécessairement une seule et même réponse pour chaque plateforme&nbsp;:</p>
+          <p>Une vérification qui fait autorité doit s'exécuter ailleurs que dans le navigateur d'un relecteur, et le plan par défaut consiste à utiliser le mécanisme le plus simple et le plus natif à chaque plateforme — pas à mettre en place un backend générique&nbsp;:</p>
           <ul class="bul">
-            <li>GitHub pourrait être couvert par une intégration légère, propre à GitHub.</li>
-            <li>Azure DevOps pourrait avoir besoin d'un mécanisme entièrement différent.</li>
-            <li>Un petit service hébergé ou auto-hébergé peut rester pertinent là où il est réellement nécessaire.</li>
-            <li>D'autres approches propres à une plateforme donnée pourraient s'avérer plus adaptées le moment venu.</li>
+            <li>GitHub utiliserait par défaut le mécanisme natif à GitHub, ou léger, le plus simple disponible.</li>
+            <li>Azure DevOps utiliserait par défaut le mécanisme natif à Azure DevOps, ou léger, le plus simple disponible.</li>
+            <li>Un backend CCT ne fait pas partie du plan par défaut. Il n'entrerait en jeu que si un besoin concret montrait un jour qu'une intégration propre à la plateforme ne suffit vraiment pas.</li>
           </ul>
-          <p class="small">S'engager dès maintenant sur une architecture serveur générique, avant que rien de tout cela n'ait été validé face à une plateforme réelle, risquerait d'enfermer le projet dans une forme qui ne conviendrait pas à toutes. Cette page nomme donc une destination, pas un mécanisme.</p>
+          <p class="small">S'engager dès maintenant sur une architecture serveur générique, avant que rien de tout cela n'ait été validé face à une plateforme réelle, risquerait d'enfermer le projet dans une forme dont la plupart des plateformes n'ont pas besoin. Cette page nomme donc une destination, pas un mécanisme — et aucun serveur n'est présumé en chemin.</p>
         </section>
 
         <section class="dsec">

@@ -16,14 +16,13 @@ const page = 'server' as const;
 
         <section class="dsec">
           <h2>Why nothing ships here yet</h2>
-          <p>An authoritative check has to run somewhere other than a reviewer's browser, and what that "somewhere" looks like isn't settled — nor does it need to be the same answer for every platform:</p>
+          <p>An authoritative check has to run somewhere other than a reviewer's browser, and the default plan is to use whatever is simplest and most native to each platform — not to stand up one general-purpose backend:</p>
           <ul class="bul">
-            <li>GitHub may end up served by a lightweight, GitHub-specific integration.</li>
-            <li>Azure DevOps may need a different mechanism entirely.</li>
-            <li>A small hosted or self-hosted service may still make sense wherever one is genuinely required.</li>
-            <li>Other platform-native approaches may turn out to be the better fit once we get there.</li>
+            <li>GitHub would default to the simplest GitHub-native or lightweight mechanism available.</li>
+            <li>Azure DevOps would default to the simplest Azure DevOps-native or lightweight mechanism available.</li>
+            <li>A CCT backend isn't part of the plan by default. It would only enter the picture if a concrete requirement later shows that a platform-native integration genuinely can't do the job.</li>
           </ul>
-          <p class="small">Committing to one generic server architecture now, before any of this is validated against a real platform, would lock the project into a shape that might not fit all of them. So this page names a destination, not a mechanism.</p>
+          <p class="small">Committing to one generic server architecture now, before any of this is validated against a real platform, would lock the project into a shape most platforms don't need. So this page names a destination, not a mechanism — and no server is assumed along the way.</p>
         </section>
 
         <section class="dsec">
