@@ -2,9 +2,14 @@
 import Base from '../layouts/Base.astro';
 import { href } from '../i18n/routes';
 import BuildFacts from '../components/BuildFacts.astro';
+import SiteReleaseCard from '../components/SiteReleaseCard.astro';
+import { siteRelease, siteReleaseIn, previousSiteReleasesIn } from '../site-release';
 
 const lang = 'en' as const;
 const page = 'version' as const;
+
+const latest = siteReleaseIn(lang);
+const previous = previousSiteReleasesIn(lang);
 ---
 <Base lang={lang} page={page} noindex
   title="Version"
@@ -26,10 +31,10 @@ const page = 'version' as const;
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">what it changed:</span>
-          <h2>Nothing to report yet</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">This section names what the release above brought. There is no release above — the <code>release</code> row is empty — so there is nothing to name. It fills itself the day a <code>release/*</code> tag is pushed.</p>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The toolkit's own release notes, which are a different thing and do exist, are at <a href={href('releasenotes', 'en')}>release notes</a>.</p>
+          <h2>Latest release</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">This section names what the release above brought — read from this repository's own <code>RELEASE_NOTES-en.md</code>, not from the toolkit. The toolkit's own release notes, which are a different thing, are at <a href={href('releasenotes', 'en')}>release notes</a>.</p>
         </div>
+        <SiteReleaseCard locale={lang} release={latest} />
       </div>
     </section>
 
@@ -38,9 +43,15 @@ const page = 'version' as const;
         <div class="stack g14 measure">
           <span class="eyebrow">previous releases:</span>
           <h2>What came before</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Nothing yet. No <code>release/*</code> tag has been pushed, so this site has no release history to show — and inventing one on the page whose whole job is to state facts about the build would be the worst place for it.</p>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Once tags exist they are listed on <a href="https://github.com/Reefact/conventionalcomments.io/tags" rel="noopener noreferrer" target="_blank">the repository's tag page ↗</a>, and the <code>release</code> row above names the one this build came from.</p>
         </div>
+        {previous.length > 0 ? (
+          <div class="stack g18">
+            {previous.map((release) => <SiteReleaseCard locale={lang} release={release} />)}
+          </div>
+        ) : (
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">This is the first release — there is nothing before it.</p>
+        )}
+        <p class="small measure">{siteRelease.moreTag !== null ? 'Earlier releases exist beyond this list.' : 'Every release this site has ever pushed is shown above.'} All of them are listed on <a href="https://github.com/Reefact/conventionalcomments.io/tags" rel="noopener noreferrer" target="_blank">the repository's tag page ↗</a>.</p>
       </div>
     </section>
 </Base>
