@@ -16,6 +16,12 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
+### ✨ New
+
+- **`/version` now shows this site's own release history**, instead of the placeholder text it
+  had shown since before any release existed. The latest release and up to five before it are
+  read straight from this file, in your own language.
+
 ### 🐛 Fixed
 
 - **Guessing a page's address in the wrong language, or under `/en/`, no longer 404s.**
