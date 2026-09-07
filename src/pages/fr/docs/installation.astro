@@ -7,65 +7,65 @@ const page = 'install' as const;
 ---
 <Docs lang={lang} page={page}
   title="Installer l'extension"
-  description="Depuis le store de votre navigateur, depuis un zip de release sans rien compiler, ou depuis les sources.">
+  description="Installez l'extension depuis le store de votre navigateur, depuis une archive de release prête à l'emploi sans outils de compilation, ou directement depuis les sources.">
 <div class="dhead stack g12">
           <p class="crumb"><b>doc</b> / installation</p>
           <h1>Installer l'extension</h1>
-          <p class="lede measure">Trois chemins, selon ce que votre poste vous autorise. Le premier prend cinq minutes et ne demande rien d'installé.</p>
+          <p class="lede measure">Trois méthodes sont possibles, selon les contraintes de votre poste. Vous pouvez notamment essayer l'extension sans installer Node, Git ni aucun autre outil de développement.</p>
         </div>
 
         <section class="dsec">
-          <h2>Depuis le store de votre navigateur — à venir</h2>
-          <p>La soumission au Chrome Web Store et à Firefox Add-ons n'a pas encore eu lieu : il n'y a donc rien à lier, et aucune fiche depuis laquelle installer. En attendant, le zip de release ci-dessous est la voie.</p>
+          <h2>Depuis le store d'extensions de votre navigateur — bientôt disponible</h2>
+          <p>L'extension n'a pas encore été soumise au Chrome Web Store ni à Firefox Add-ons. Il n'existe donc pour l'instant aucune fiche permettant de l'installer directement depuis un store. En attendant leur publication, utilisez l'archive de release décrite ci-dessous.</p>
           <div class="callout warn">
-            <span class="ct">pourquoi ça compte, et pas seulement pour le confort</span>
-            <h4>Le store est le seul canal qui se met à jour tout seul.</h4>
-            <p>Une extension chargée depuis un zip reste sur la version chargée jusqu'à ce que vous refassiez l'opération à la main. Pour une équipe, c'est la différence entre tout le monde sur la même version et personne qui sait qui a quoi — d'où cette section, qui annonce le canal plutôt que de le passer sous silence.</p>
+            <span class="ct">pourquoi c'est important — et pas seulement plus pratique</span>
+            <h4>Une extension installée depuis un store se met à jour automatiquement.</h4>
+            <p>Une extension chargée manuellement depuis une archive ZIP reste sur la version installée tant que vous ne la mettez pas à jour vous-même. Pour un essai individuel, ce n'est généralement pas gênant. À l'échelle d'une équipe, en revanche, on peut rapidement se retrouver avec plusieurs versions différentes sans même s'en rendre compte. C'est pour cette raison que l'installation depuis les stores figure déjà ici&nbsp;: dès qu'elle sera disponible, ce sera la méthode recommandée pour un déploiement en équipe.</p>
           </div>
         </section>
 
         <section class="dsec">
-          <h2>Depuis un zip de release — sans Node, sans Git</h2>
-          <p>Pour un poste verrouillé où vous ne pouvez pas installer de chaîne de compilation. Chaque version publiée embarque un zip prêt à charger, un pour Chromium et un pour Firefox.</p>
+          <h2>Depuis une archive ZIP de release — sans Node ni Git</h2>
+          <p>C'est la méthode la plus simple sur un poste verrouillé où vous ne pouvez pas installer d'environnement de développement. Chaque release taguée fournit deux archives prêtes à charger&nbsp;: une pour les navigateurs basés sur Chromium et une pour Firefox.</p>
           <ul class="tick">
-            <li><span class="mk">1</span><b>Télécharger le bundle de votre navigateur</b><span class="tx">Depuis la <a href="https://github.com/Reefact/conventional-comments-toolkit/releases" rel="noopener noreferrer" target="_blank">liste des releases</a> — la liste, et non <code>/releases/latest</code>, qui saute les pré-versions. Prenez <code>…-chromium.zip</code> ou <code>…-firefox.zip</code>.</span></li>
-            <li><span class="mk">2</span><b>Décompresser ailleurs que dans les téléchargements</b><span class="tx">Le navigateur relit ce dossier à chaque démarrage, et le supprimer désactive l'extension.</span></li>
-            <li><span class="mk">3</span><b>Chrome, Edge, Brave…</b><span class="tx"><code>chrome://extensions</code> → <b>Mode développeur</b> → <b>Charger l'extension non empaquetée</b> → le dossier décompressé, celui qui contient directement <code>manifest.json</code>.</span></li>
-            <li><span class="mk">4</span><b>Firefox — un autre chemin</b><span class="tx"><code>about:debugging#/runtime/this-firefox</code> → <b>Charger un module temporaire</b> → le <code>manifest.json</code> lui-même, pas le dossier. Un module temporaire est retiré à la fermeture de Firefox.</span></li>
+            <li><span class="mk">1</span><b>Téléchargez l'archive correspondant à votre navigateur</b><span class="tx">Ouvrez la <a href="https://github.com/Reefact/conventional-comments-toolkit/releases" rel="noopener noreferrer" target="_blank">liste des releases</a> — utilisez bien la liste complète plutôt que <code>/releases/latest</code>, qui n'inclut pas les préversions. Téléchargez <code>…-chromium.zip</code> ou <code>…-firefox.zip</code>.</span></li>
+            <li><span class="mk">2</span><b>Décompressez l'archive dans un emplacement permanent</b><span class="tx">Évitez de laisser le dossier extrait dans vos téléchargements. Les navigateurs basés sur Chromium chargent l'extension depuis ce dossier à chaque démarrage. Si vous le déplacez ou le supprimez par la suite, l'extension cessera de fonctionner.</span></li>
+            <li><span class="mk">3</span><b>Chrome, Edge, Brave et les autres navigateurs basés sur Chromium</b><span class="tx">Ouvrez <code>chrome://extensions</code>. Activez le <b>Mode développeur</b>, choisissez <b>Charger l'extension non empaquetée</b>, puis sélectionnez le dossier extrait qui contient directement <code>manifest.json</code>.</span></li>
+            <li><span class="mk">4</span><b>Firefox</b><span class="tx">Ouvrez <code>about:debugging#/runtime/this-firefox</code>. Choisissez <b>Charger un module temporaire</b>, puis sélectionnez directement le fichier <code>manifest.json</code> — pas le dossier. Firefox supprime les modules temporaires lorsque le navigateur est fermé.</span></li>
           </ul>
           <div class="callout blk">
-            <span class="ct">la chose à savoir</span>
-            <h4>Une extension chargée ainsi ne se met jamais à jour.</h4>
-            <p>Ce chemin sert à essayer, et aux postes où la chaîne de compilation ne peut pas être installée. Ce n'est pas un canal de distribution&nbsp;: vous resterez sur cette version jusqu'à ce que vous refassiez l'opération à la main. Pour une équipe, passez par les stores.</p>
+            <span class="ct">une limite importante</span>
+            <h4>Une extension installée de cette manière ne se met pas à jour automatiquement.</h4>
+            <p>Cette méthode convient parfaitement pour essayer l'extension ou pour les postes sur lesquels vous ne pouvez pas installer les outils de compilation. En revanche, ce n'est pas une solution de distribution à long terme. Vous resterez sur la version installée jusqu'à ce que vous répétiez manuellement la procédure. Pour un déploiement à l'échelle d'une équipe, privilégiez les stores dès que les fiches seront disponibles.</p>
           </div>
         </section>
 
         <section class="dsec">
           <h2>Depuis les sources</h2>
-          <p>Si vous voulez lire ce que vous faites tourner, ou si vous contribuez.</p>
+          <p>Choisissez cette méthode si vous voulez examiner le code que vous exécutez ou contribuer au projet.</p>
           <pre class="code">git clone https://github.com/reefact/conventional-comments-toolkit
 cd conventional-comments-toolkit
 
 npm ci
 npm run build:extension     <span class="tk-cm">// → packages/extension/dist-ext</span></pre>
-          <p>Puis chargez <code>dist-ext</code> comme votre navigateur l'attend&nbsp;: l'étape 3 ci-dessus pour Chromium, l'étape 4 pour Firefox. La variante Firefox est construite en même temps, dans son propre sous-dossier.</p>
-          <p class="small">Node 20 ou plus récent. Le dépôt contient un guide pas à pas Windows/PowerShell, de l'installation de Node au chargement de l'extension.</p>
+          <p>Chargez ensuite <code>dist-ext</code> en suivant la procédure correspondant à votre navigateur&nbsp;: l'étape 3 ci-dessus pour les navigateurs basés sur Chromium, ou l'étape 4 pour Firefox. La version Firefox est générée en même temps, dans son propre sous-dossier.</p>
+          <p class="small">Node 20 ou une version plus récente est nécessaire. Le dépôt contient également un guide Windows/PowerShell détaillé, depuis l'installation de Node jusqu'au chargement de l'extension dans le navigateur.</p>
         </section>
 
         <section class="dsec">
           <h2>Au-delà de github.com</h2>
-          <p>Par défaut l'extension ne tourne que sur github.com. Azure DevOps, une instance GitHub Enterprise Server ou un serveur de configuration interne demandent chacun une autorisation que vous accordez vous-même.</p>
+          <p>Par défaut, l'extension n'est autorisée à fonctionner que sur github.com. Azure DevOps, une instance GitHub Enterprise Server ou un serveur de configuration interne nécessitent chacun une autorisation supplémentaire que vous accordez explicitement.</p>
           <ul class="tick">
-            <li><span class="mk">1</span><b>Ouvrir la page de réglages</b><span class="tx">Depuis l'icône de l'extension dans la barre d'outils.</span></li>
-            <li><span class="mk">2</span><b>Ajouter le domaine, et dire de quelle plateforme il s'agit</b><span class="tx">L'extension ne peut pas deviner si <code>devops.acme.interne</code> est une instance Azure DevOps ou GitHub Enterprise — c'est ce marquage qui active le bon adaptateur.</span></li>
-            <li><span class="mk">3</span><b>Confirmer l'autorisation que le navigateur demande</b><span class="tx">C'est le navigateur qui demande, pas l'extension. Vous pouvez la retirer là à tout moment.</span></li>
+            <li><span class="mk">1</span><b>Ouvrez les réglages de l'extension</b><span class="tx">Utilisez l'icône de l'extension dans la barre d'outils de votre navigateur pour ouvrir la page de configuration.</span></li>
+            <li><span class="mk">2</span><b>Ajoutez le domaine et indiquez la plateforme correspondante</b><span class="tx">L'extension ne peut pas savoir si <code>devops.acme.internal</code> héberge Azure DevOps ou GitHub Enterprise Server. Le choix de la plateforme lui permet d'activer l'adaptateur approprié.</span></li>
+            <li><span class="mk">3</span><b>Accordez l'autorisation demandée par le navigateur</b><span class="tx">C'est votre navigateur qui vous demande si l'extension peut accéder à ce domaine. Vous choisissez de l'autoriser ou non, et vous pouvez retirer cette autorisation à tout moment depuis les réglages du navigateur.</span></li>
           </ul>
         </section>
 
         <section class="dsec">
-          <h2>Vérifier que ça marche</h2>
-          <p>Ouvrez n'importe quelle pull request et commencez un commentaire de revue. La rangée d'étiquettes doit apparaître au-dessus du champ, et une pastille en dessous. Tapez <code>?i</code> puis <code>Tab</code>&nbsp;: ça doit se déplier en <code>issue:</code>.</p>
-          <p>Si rien n'apparaît, la page de diagnostic couvre les trois raisons habituelles.</p>
+          <h2>Vérifier que tout fonctionne</h2>
+          <p>Ouvrez une pull request et commencez à rédiger un commentaire de revue. Une rangée de labels doit apparaître au-dessus du champ de saisie, accompagnée d'un indicateur d'état en dessous. Tapez <code>?i</code>, puis appuyez sur <code>Tab</code>. Le raccourci doit être remplacé par&nbsp;: <code>issue:</code>.</p>
+          <p>Si rien n'apparaît, la page de diagnostic présente les trois causes les plus fréquentes.</p>
         </section>
         <div class="pager"></div>
 </Docs>
