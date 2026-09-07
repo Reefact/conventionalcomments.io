@@ -40,7 +40,7 @@ const page = 'troubleshooting' as const;
 
         <section class="dsec">
           <h2><code>/rebase</code> is being rejected</h2>
-          <p>This is expected after upgrading from versions that automatically exempted slash commands. That built-in exemption list no longer exists, and <code>toolCommands</code> is empty by default.</p>
+          <p>This is expected: <code>toolCommands</code> is empty by default, so nothing is exempted until the repository declares it.</p>
           <pre class="code"><span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>]</pre>
           <p><code>"/*"</code> recognizes every slash command as a tool command. Bot handles are declared individually and matched against the complete first token. For example, <code>@codex review</code> is recognized as a command, while <code>@codexplains why</code> is not.</p>
         </section>
