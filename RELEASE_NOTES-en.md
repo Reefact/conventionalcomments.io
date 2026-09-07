@@ -16,6 +16,10 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
+_Nothing pending yet._
+
+## release/2026-09-07T05-34-29Z — September 7, 2026
+
 ### 🔧 Improved
 
 - **The docs table of contents stays put while you scroll.** The left-hand navigation on
