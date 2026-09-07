@@ -27,7 +27,7 @@
         "enforce"
       ],
       "default": "assist",
-      "description": "off — nothing happens. assist — the extension helps and diagnoses, the server publishes nothing. warn — same for the reviewer, but the server publishes a status that never fails, whose summary shows non-compliance. enforce — the check can fail and, if declared required, blocks the merge. Read the adoption guide before going past warn: enforce has five prerequisites."
+      "description": "off — nothing happens. assist — the extension helps and diagnoses, and never blocks. warn — same as assist, plus a visible count of unresolved blocking threads computed by the extension alone. Platform-level status publishing is not currently available. enforce — the extension can refuse to submit a non-compliant comment locally, in the browser. Platform-level merge enforcement is not currently available. See the adoption guide for what these modes mean in practice today."
     },
     "formatSeverity": {
       "enum": [
@@ -408,25 +408,25 @@
     "server": {
       "type": "object",
       "additionalProperties": false,
-      "description": "Server companion tuning. Ignored by the extension.",
+      "description": "Reserved for future platform-level enforcement. Ignored by the browser extension. These settings have no effect in the extension available today.",
       "properties": {
         "coalesceWindowSeconds": {
           "type": "integer",
           "minimum": 0,
           "default": 10,
-          "description": "Window over which triggers for the same pull request are merged into one evaluation."
+          "description": "Reserved for future platform-level enforcement; currently unused by the browser extension."
         },
         "gracePeriodSeconds": {
           "type": "integer",
           "minimum": 0,
           "default": 900,
-          "description": "How long the server keeps its last verdict when it cannot read the current state, before publishing a neutral grace-expired status."
+          "description": "Reserved for future platform-level enforcement; currently unused by the browser extension."
         },
         "reconcileIntervalSeconds": {
           "type": "integer",
           "minimum": 0,
           "default": 900,
-          "description": "How often the server re-checks pull requests on its own. On Azure DevOps this must be 60 or below in enforce mode until an event channel is established, or the server emits a config-warning."
+          "description": "Reserved for future platform-level enforcement; currently unused by the browser extension."
         },
         "statusTargetUrl": {
           "type": [
@@ -434,7 +434,7 @@
             "null"
           ],
           "default": null,
-          "description": "Where the published status links. Required on platforms that render no status body."
+          "description": "Reserved for future platform-level enforcement; currently unused by the browser extension."
         }
       }
     },

@@ -24,6 +24,10 @@ the wrong moment to discover that nobody wrote what it contains.
   rather than a shipped or required backend. The former server deployment page is now an
   Enforce roadmap page that explains the goal without committing to a specific
   architecture.
+- **The served configuration schema no longer implies that platform-level enforcement is
+  available today.** The `mode` and `server` descriptions shown by editors now distinguish
+  the extension behavior available today from future platform-level enforcement. Reserved
+  `server` settings are explicitly marked as having no effect in the browser extension.
 
 ## release/2026-09-07T08-30-31Z — September 7, 2026
 
