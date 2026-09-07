@@ -4,12 +4,18 @@ import { href } from '../../i18n/routes';
 import BuildFacts from '../../components/BuildFacts.astro';
 import SiteReleaseCard from '../../components/SiteReleaseCard.astro';
 import { siteRelease, siteReleaseIn, previousSiteReleasesIn } from '../../site-release';
+import version from '../../generated/version.json';
 
 const lang = 'fr' as const;
 const page = 'version' as const;
 
 const latest = siteReleaseIn(lang);
 const previous = previousSiteReleasesIn(lang);
+/* `version.release` is null on any build that did not come from a release tag — every
+   branch build. On such a build the card below is the site's most recent shipped release,
+   not a description of what this particular build brought: it must not be captioned as if
+   the two were the same thing. */
+const isCurrentBuildsRelease = version.release !== null;
 ---
 <Base lang={lang} page={page} noindex
   title="Version"
@@ -31,8 +37,12 @@ const previous = previousSiteReleasesIn(lang);
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">ce qu'elle a changé&nbsp;:</span>
-          <h2>Dernière release</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Cette section nomme ce que la release ci-dessus a apporté — lu depuis le <code>RELEASE_NOTES-fr.md</code> de ce dépôt, pas celui du toolkit. Les notes de version du toolkit, qui sont autre chose, sont sur <a href={href('releasenotes', 'fr')}>notes de version</a>.</p>
+          <h2>{isCurrentBuildsRelease ? 'Dernière release' : 'La dernière release du site'}</h2>
+          {isCurrentBuildsRelease ? (
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Cette section nomme ce que la release ci-dessus a apporté — lu depuis le <code>RELEASE_NOTES-fr.md</code> de ce dépôt, pas celui du toolkit. Les notes de version du toolkit, qui sont autre chose, sont sur <a href={href('releasenotes', 'fr')}>notes de version</a>.</p>
+          ) : (
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Ce build ne vient pas d'un tag de release — la ligne <code>release</code> ci-dessus est vide — il n'a donc pas apporté ce qui est nommé ci-dessous. Ce qui est montré est la dernière release réellement publiée par ce site, lue depuis le <code>RELEASE_NOTES-fr.md</code> de ce dépôt, pas celui du toolkit. Les notes de version du toolkit, qui sont autre chose, sont sur <a href={href('releasenotes', 'fr')}>notes de version</a>.</p>
+          )}
         </div>
         <SiteReleaseCard locale={lang} release={latest} />
       </div>

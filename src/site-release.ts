@@ -72,9 +72,11 @@ export function previousSiteReleasesIn(locale: Locale): readonly LocalisedSiteRe
 
 /** Where a tag of this repository is read on GitHub.
  *
- * `/tree/<tag>`, not `/releases/tag/<tag>`: `release.yml` pushes the tag and deploys — it
- * creates no GitHub Release — so a Release-page URL would 404 on every tag this site has ever
- * pushed. `BuildFacts.astro` links the current build's tag the same way, for the same reason. */
+ * `/tree/<tag>`, not `/releases/tag/<tag>`: `release.yml` does publish a GitHub Release for
+ * every `release/*` tag, but only in its `notes` job, which runs after the tag has already
+ * deployed — so for the short window between the tag existing and that job completing, a
+ * Release-page URL 404s while `/tree/<tag>` already resolves. `BuildFacts.astro` links the
+ * current build's tag the same way, for the same reason. */
 export function releaseTreeUrl(tag: string): string {
   return `https://github.com/Reefact/conventionalcomments.io/tree/${tag}`;
 }

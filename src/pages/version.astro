@@ -4,12 +4,18 @@ import { href } from '../i18n/routes';
 import BuildFacts from '../components/BuildFacts.astro';
 import SiteReleaseCard from '../components/SiteReleaseCard.astro';
 import { siteRelease, siteReleaseIn, previousSiteReleasesIn } from '../site-release';
+import version from '../generated/version.json';
 
 const lang = 'en' as const;
 const page = 'version' as const;
 
 const latest = siteReleaseIn(lang);
 const previous = previousSiteReleasesIn(lang);
+/* `version.release` is null on any build that did not come from a release tag — every
+   branch build. On such a build the card below is the site's most recent shipped release,
+   not a description of what this particular build brought: it must not be captioned as if
+   the two were the same thing. */
+const isCurrentBuildsRelease = version.release !== null;
 ---
 <Base lang={lang} page={page} noindex
   title="Version"
@@ -31,8 +37,12 @@ const previous = previousSiteReleasesIn(lang);
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">what it changed:</span>
-          <h2>Latest release</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">This section names what the release above brought — read from this repository's own <code>RELEASE_NOTES-en.md</code>, not from the toolkit. The toolkit's own release notes, which are a different thing, are at <a href={href('releasenotes', 'en')}>release notes</a>.</p>
+          <h2>{isCurrentBuildsRelease ? 'Latest release' : "The site's most recent release"}</h2>
+          {isCurrentBuildsRelease ? (
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">This section names what the release above brought — read from this repository's own <code>RELEASE_NOTES-en.md</code>, not from the toolkit. The toolkit's own release notes, which are a different thing, are at <a href={href('releasenotes', 'en')}>release notes</a>.</p>
+          ) : (
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">This build did not come from a release tag — the <code>release</code> row above is empty — so it did not ship what is named below. Shown instead is the most recent release this site has actually published, read from this repository's own <code>RELEASE_NOTES-en.md</code>, not from the toolkit. The toolkit's own release notes, which are a different thing, are at <a href={href('releasenotes', 'en')}>release notes</a>.</p>
+          )}
         </div>
         <SiteReleaseCard locale={lang} release={latest} />
       </div>
