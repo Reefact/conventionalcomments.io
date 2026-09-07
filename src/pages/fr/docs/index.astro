@@ -7,7 +7,7 @@ const page = 'docsindex' as const;
 ---
 <Docs lang={lang} page={page}
   title="Documentation"
-  description="Trois parcours : essayer, configurer un dépôt, et voir où mène l'application de la convention au niveau des plateformes.">
+  description="Trois parcours : essayer l'extension, configurer un dépôt et découvrir la feuille de route d'Enforce.">
 <div class="dhead stack g12">
           <p class="crumb"><b>doc</b></p>
           <h1>Documentation</h1>
@@ -33,10 +33,10 @@ const page = 'docsindex' as const;
         </section>
 
         <section class="dsec">
-          <h2>Je me demande ce qui vient ensuite</h2>
-          <p>Vous voulez que la convention s'applique de manière cohérente partout, indépendamment de ce que chacun a installé — et vous êtes curieux de savoir où mène l'application au niveau des plateformes.</p>
+          <h2>Je veux savoir ce qui est prévu ensuite</h2>
+          <p>Vous voulez que la convention puisse, à terme, être appliquée indépendamment de ce que chacun a installé dans son navigateur. Découvrez comment Enforce est envisagé et pourquoi son implémentation reste volontairement ouverte.</p>
           <div class="paths">
-            <a class="path" href={href('server', 'fr')}><span class="pn">Enforce (feuille de route)</span><span class="pd">Pourquoi l'application au niveau des plateformes n'est pas encore livrée, ce qui fonctionne déjà sans elle, et comment sa mise en œuvre future reste volontairement ouverte.</span></a>
+            <a class="path" href={href('server', 'fr')}><span class="pn">Enforce (feuille de route)</span><span class="pd">Pourquoi le contrôle au niveau de la plateforme n'est pas encore disponible, ce que l'extension sait déjà faire sans lui et pourquoi son implémentation future n'est pas encore figée.</span></a>
             <a class="path" href={href('troubleshooting', 'fr')}><span class="pn">Diagnostic</span><span class="pd">Comprenez les bandeaux et les quelques comportements qui surprennent souvent lors de la première utilisation.</span></a>
           </div>
         </section>

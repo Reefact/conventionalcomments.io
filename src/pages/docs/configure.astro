@@ -39,7 +39,7 @@ const page = 'configure' as const;
           </div>
           <div class="callout acc">
             <span class="ct">who applies the floor today</span>
-            <p style="margin:0">Today, the extension is what applies the floor, reading it from your browser's enterprise policy. A future platform-level enforcement mechanism would have no browser to read that policy from, so it would need its own channel to the same floor — one of the reasons that mechanism isn't documented here as a shipped capability yet.</p>
+            <p style="margin:0">Today, the extension is the only component that applies the floor, reading it from the browser's enterprise policy. A future platform-level enforcement mechanism could not read that browser policy directly, so it would need another way to receive the same constraint. That mechanism is intentionally left open until Enforce is designed for each platform.</p>
           </div>
         </section>
 
@@ -50,7 +50,7 @@ const page = 'configure' as const;
             <table class="t wide">
               <thead><tr><th>Key</th><th>Default</th><th>What it controls</th></tr></thead>
               <tbody>
-                <tr><td class="m">mode</td><td class="m d">assist</td><td class="d"><code>off</code> · <code>assist</code> · <code>warn</code> · <code>enforce</code>. Assist and warn take effect through the extension today. Enforce is the direction, not yet backed by an authoritative platform-level check — read the adoption guide for what it means right now.</td></tr>
+                <tr><td class="m">mode</td><td class="m d">assist</td><td class="d"><code>off</code> · <code>assist</code> · <code>warn</code> · <code>enforce</code>. Assist and warn are fully supported by the extension today. Enforce already provides local strict-mode behavior in the browser; the authoritative platform-level merge gate is still on the roadmap. See the adoption guide for details.</td></tr>
                 <tr><td class="m">formatSeverity</td><td class="m d">warn</td><td class="d">Whether malformed comments can cause the check to fail. Most teams leave this unchanged: unresolved blocking points, rather than formatting mistakes, should normally be what prevents a merge.</td></tr>
                 <tr><td class="m">resolverOverrideGroup</td><td class="m d">empty</td><td class="d">Defines who may override a resolution and record a <code>decision</code>. <strong>Required before using <code>enforce</code>.</strong> When left empty, both escape hatches are unavailable.</td></tr>
                 <tr><td class="m">exemptUsers</td><td class="m d">empty</td><td class="d">Users whose comments are never validated. Values are matched against platform logins case-insensitively.</td></tr>

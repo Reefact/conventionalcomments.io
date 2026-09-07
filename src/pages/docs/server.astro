@@ -7,27 +7,27 @@ const page = 'server' as const;
 ---
 <Docs lang={lang} page={page}
   title="Enforce: what's coming"
-  description="Enforce is the direction, not a shipped product: an authoritative, platform-level merge check. See what's planned for GitHub and Azure DevOps, and why no single server architecture is promised yet.">
+  description="Enforce is not yet available at the platform level. The goal is an authoritative merge check that runs independently of the browser. See what is being considered for GitHub and Azure DevOps, and why no single architecture has been chosen yet.">
 <div class="dhead stack g12">
           <p class="crumb"><b>docs</b> / enforce</p>
           <h1>Enforce: what's coming</h1>
-          <p class="lede measure"><strong>Assist</strong> and <strong>warn</strong> are here today, entirely through the extension. <strong>Enforce</strong> — an authoritative merge check that runs at the platform level, independently of any reviewer's browser — is the direction this is heading, not something you can install today. This page describes the intent, not a product.</p>
+          <p class="lede measure"><strong>Assist</strong> and <strong>warn</strong> are available today through the extension. <strong>Enforce</strong> is intended to add an authoritative merge check that runs at the platform level, independently of each reviewer's browser. That capability is not available yet. This page describes the goal and current design direction, not a shipped implementation.</p>
         </div>
 
         <section class="dsec">
-          <h2>Why nothing ships here yet</h2>
+          <h2>Why platform-level enforcement is not defined yet</h2>
           <p>An authoritative check has to run somewhere other than a reviewer's browser, and the default plan is to use whatever is simplest and most native to each platform — not to stand up one general-purpose backend:</p>
           <ul class="bul">
             <li>GitHub would default to the simplest GitHub-native or lightweight mechanism available.</li>
             <li>Azure DevOps would default to the simplest Azure DevOps-native or lightweight mechanism available.</li>
             <li>A CCT backend isn't part of the plan by default. It would only enter the picture if a concrete requirement later shows that a platform-native integration genuinely can't do the job.</li>
           </ul>
-          <p class="small">Committing to one generic server architecture now, before any of this is validated against a real platform, would lock the project into a shape most platforms don't need. So this page names a destination, not a mechanism — and no server is assumed along the way.</p>
+          <p class="small">Committing to a generic server architecture before validating the actual needs of each platform would be premature. This page therefore defines the goal of Enforce without assuming a particular implementation. A dedicated service remains an option, not the default starting point.</p>
         </section>
 
         <section class="dsec">
-          <h2>What already works without it</h2>
-          <p>The extension doesn't wait for enforce to be useful. In its strict mode, it can already refuse to submit a malformed comment — a guardrail in the browser, not a merge gate on the platform. See <a href={href('howitworks', 'en')}>how it works</a> for the distinction between what the extension can stop today and what only a platform-level check will eventually be able to guarantee.</p>
+          <h2>What the extension already does</h2>
+          <p>The extension is already useful without platform-level enforcement. In strict mode, it can refuse to submit a malformed comment: that is a guardrail in the browser, not a merge requirement enforced by the platform. See <a href={href('howitworks', 'en')}>how it works</a> for the distinction between what the extension can prevent today and what will eventually require a check that runs independently of the browser.</p>
         </section>
 
         <section class="dsec">

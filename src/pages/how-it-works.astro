@@ -12,8 +12,8 @@ const page = 'howitworks' as const;
       <div class="in">
         <div class="stack g18 measure">
           <span class="eyebrow acc">how it works:</span>
-          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">The extension helps you write. It also keeps score.</h1>
-          <p class="lede">The browser extension makes Conventional Comments easy to use while you're reviewing: a toolbar, keyboard shortcuts, and feedback as you type. It also tracks unresolved blocking comments directly on the pull request, entirely on its own. An authoritative, platform-level check is part of where this is heading, but it isn't part of what you install today. Here's what the extension actually does.</p>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">The extension helps you write. It also tracks blocking points.</h1>
+          <p class="lede">The browser extension makes Conventional Comments easy to use while you're reviewing: a toolbar, keyboard shortcuts, and feedback as you type. It also tracks unresolved blocking threads and shows their count directly on the pull request. Enforce is intended to add an authoritative platform-level merge check that runs independently of the browser. That capability is not available yet.</p>
         </div>
       </div>
     </section>
@@ -53,7 +53,7 @@ const page = 'howitworks' as const;
           <div>
             <h3>Badges on published comments</h3>
             <p>Once comments are published, their labels are rendered as badges without modifying the stored comment itself. A banner at the top of the pull request shows how many unresolved blocking threads remain and links directly to them.</p>
-            <p>That count is computed by the extension itself, straight from the thread as it renders — no server involved.</p>
+            <p>That count is computed directly by the extension from the threads currently displayed on the page — no server involved.</p>
           </div>
         </div>
       </div>
@@ -107,7 +107,7 @@ const page = 'howitworks' as const;
         <div class="stack g14 measure">
           <span class="eyebrow">on the roadmap:</span>
           <h2>What an authoritative check would evaluate</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">This part isn't built yet, so nothing below is something you can install or turn on today. It describes the direction: an evaluation that runs independently of any single reviewer's browser, and that a platform's own merge rules could rely on. Conceptually, it would still ask the same two questions the extension already asks locally.</p>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The capabilities described below are not available yet, so there is nothing to install or enable today. It describes the direction: an evaluation that runs independently of any single reviewer's browser, and that a platform's own merge rules could rely on. Conceptually, it would still ask the same two questions the extension already asks locally.</p>
         </div>
         <div class="duo">
           <div>
@@ -131,7 +131,7 @@ const page = 'howitworks' as const;
         <div class="stack g14 measure">
           <span class="eyebrow">built for later, not just for now:</span>
           <h2>One validation engine, not two implementations to keep in sync.</h2>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">The extension's checks aren't a one-off reimplementation of the rules. They run on <strong>a single validation package</strong>, and no validation rule exists outside it. Whatever eventually evaluates a pull request at the platform level will consume the same package, so results won't quietly diverge from what the extension already tells you.</p>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">The extension does not maintain a separate implementation of the validation rules. It uses <strong>a single validation package</strong>, and no validation rule exists outside it. Whatever eventually evaluates a pull request at the platform level will consume the same package, so results won't quietly diverge from what the extension already tells you.</p>
           <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">The validation library itself knows nothing about browsers or networks. Everything it needs is passed in as data, and everything it wants the caller to do comes back as a list of actions. That separation is also why the same validation engine can run directly in the browser — and why the <em>playground</em> is possible.</p>
         </div>
       </div>
