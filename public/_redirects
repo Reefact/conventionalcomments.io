@@ -1,12 +1,25 @@
 # Redirections Cloudflare, lues au déploiement et jamais servies elles-mêmes.
 # https://developers.cloudflare.com/workers/static-assets/redirects/
 #
-# `src/i18n/routes.ts` traduit les segments d'URL plutôt que de les préfixer
-# (/docs/configure/ ↔ /fr/docs/configuration/) : quelqu'un qui devine l'adresse
-# dans l'autre langue tombe sur une 404. Chaque paire ci-dessous redirige les
-# deux sens — le mot anglais sous /fr/, et le mot français sans préfixe — vers
-# l'adresse réelle de `routes.ts`. Un segment de plus dans cette table demande
-# la même paire ici ; rien ne les garde synchronisés automatiquement.
+# Deux façons de se tromper d'adresse, et ce fichier corrige les deux :
+#
+# 1. Le mot dans la mauvaise langue. `src/i18n/routes.ts` traduit les segments
+#    d'URL plutôt que de les préfixer (/docs/configure/ ↔ /fr/docs/configuration/),
+#    donc deviner l'adresse dans l'autre langue tombe sur une 404. Chaque paire
+#    ci-dessous redirige les deux sens — le mot anglais sous /fr/, et le mot
+#    français sans préfixe — vers l'adresse réelle de `routes.ts`.
+#
+# 2. Le préfixe /en/. L'anglais n'en a jamais eu (`prefixDefaultLocale: false`
+#    dans astro.config.mjs) : il vit à la racine. Les huit lignes qui suivent
+#    évitent un double saut quand quelqu'un tape à la fois /en/ ET le mot
+#    français ; la règle générique tout en bas absorbe tout le reste — y
+#    compris les pages dont le mot est identique dans les deux langues
+#    (/en/docs/, /en/labels/, /en/adoption/, /en/version/, /en/).
+#
+# Un segment de plus dans `routes.ts` demande la même paire ici ; rien ne les
+# garde synchronisés automatiquement.
+
+# --- mot dans la mauvaise langue ---
 
 /fr/how-it-works/          /fr/comment-ca-marche/       301
 /comment-ca-marche/        /how-it-works/               301
@@ -31,3 +44,18 @@
 
 /fr/release-notes/v1/      /fr/notes-de-version/v1/     301
 /notes-de-version/v1/      /release-notes/v1/           301
+
+# --- /en/ explicite + mot français : direction directe, sans double saut ---
+
+/en/comment-ca-marche/     /how-it-works/               301
+/en/plateformes/           /platforms/                  301
+/en/confidentialite/       /privacy/                    301
+/en/docs/installation/     /docs/install/               301
+/en/docs/configuration/    /docs/configure/             301
+/en/docs/serveur/          /docs/server/                301
+/en/docs/diagnostic/       /docs/troubleshooting/       301
+/en/notes-de-version/v1/   /release-notes/v1/           301
+
+# --- /en/ explicite, tout le reste : l'anglais n'a jamais eu de préfixe ---
+
+/en/*                      /:splat                      301
