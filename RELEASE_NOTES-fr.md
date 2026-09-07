@@ -16,7 +16,17 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
-_Rien en attente pour l'instant._
+### 🐛 Corrections
+
+- **Deviner l'adresse d'une page dans la mauvaise langue, ou sous `/en/`, ne tombe plus sur
+  une 404.** `/fr/docs/install/`, `/docs/installation/` (sans le préfixe `/fr/`), et toute
+  adresse préfixée par `/en/` — que le site n'utilise jamais — redirigent désormais vers la
+  bonne page au lieu d'une impasse.
+- **Les pages de configuration et d'adoption ne décrivent plus un historique de
+  `toolCommands` qui n'a jamais existé.** Elles disaient que les commandes slash « étaient
+  auparavant reconnues grâce à une liste intégrée » qui « n'existe plus » — une affirmation
+  sur une version passée que l'extension n'a jamais connue. Elles se contentent désormais
+  d'indiquer le comportement actuel.
 
 ## release/2026-09-07T05-34-29Z — 7 septembre 2026
 
