@@ -10,52 +10,86 @@
 #    français sans préfixe — vers l'adresse réelle de `routes.ts`.
 #
 # 2. Le préfixe /en/. L'anglais n'en a jamais eu (`prefixDefaultLocale: false`
-#    dans astro.config.mjs) : il vit à la racine. Les huit lignes qui suivent
+#    dans astro.config.mjs) : il vit à la racine. Les lignes /en/<mot français>
 #    évitent un double saut quand quelqu'un tape à la fois /en/ ET le mot
 #    français ; la règle générique tout en bas absorbe tout le reste — y
 #    compris les pages dont le mot est identique dans les deux langues
 #    (/en/docs/, /en/labels/, /en/adoption/, /en/version/, /en/).
 #
-# Un segment de plus dans `routes.ts` demande la même paire ici ; rien ne les
-# garde synchronisés automatiquement.
+# Chaque adresse existe en deux variantes, avec et sans la barre oblique finale
+# — Cloudflare distingue `/chemin` de `/chemin/` dans ce fichier, et seule la
+# forme réellement servie (`trailingSlash: 'always'` dans astro.config.mjs)
+# bénéficie d'un rattrapage automatique côté assets statiques. Sans la ligne
+# sans barre, `/docs/installation` (mot français, sans le `/fr/`) reste en 404
+# alors que `/docs/installation/` redirige. Les deux variantes sont donc
+# systématiques ci-dessous, jamais une seule.
+#
+# Un segment de plus dans `routes.ts` demande la même paire ici (les deux
+# variantes) ; rien ne les garde synchronisés automatiquement.
 
 # --- mot dans la mauvaise langue ---
 
-/fr/how-it-works/          /fr/comment-ca-marche/       301
-/comment-ca-marche/        /how-it-works/               301
+/fr/how-it-works /fr/comment-ca-marche/ 301
+/fr/how-it-works/ /fr/comment-ca-marche/ 301
+/comment-ca-marche /how-it-works/ 301
+/comment-ca-marche/ /how-it-works/ 301
 
-/fr/platforms/             /fr/plateformes/             301
-/plateformes/              /platforms/                  301
+/fr/platforms /fr/plateformes/ 301
+/fr/platforms/ /fr/plateformes/ 301
+/plateformes /platforms/ 301
+/plateformes/ /platforms/ 301
 
-/fr/privacy/               /fr/confidentialite/         301
-/confidentialite/          /privacy/                    301
+/fr/privacy /fr/confidentialite/ 301
+/fr/privacy/ /fr/confidentialite/ 301
+/confidentialite /privacy/ 301
+/confidentialite/ /privacy/ 301
 
-/fr/docs/install/          /fr/docs/installation/       301
-/docs/installation/        /docs/install/               301
+/fr/docs/install /fr/docs/installation/ 301
+/fr/docs/install/ /fr/docs/installation/ 301
+/docs/installation /docs/install/ 301
+/docs/installation/ /docs/install/ 301
 
-/fr/docs/configure/        /fr/docs/configuration/      301
-/docs/configuration/       /docs/configure/             301
+/fr/docs/configure /fr/docs/configuration/ 301
+/fr/docs/configure/ /fr/docs/configuration/ 301
+/docs/configuration /docs/configure/ 301
+/docs/configuration/ /docs/configure/ 301
 
-/fr/docs/server/           /fr/docs/serveur/            301
-/docs/serveur/             /docs/server/                301
+/fr/docs/server /fr/docs/serveur/ 301
+/fr/docs/server/ /fr/docs/serveur/ 301
+/docs/serveur /docs/server/ 301
+/docs/serveur/ /docs/server/ 301
 
-/fr/docs/troubleshooting/  /fr/docs/diagnostic/         301
-/docs/diagnostic/          /docs/troubleshooting/       301
+/fr/docs/troubleshooting /fr/docs/diagnostic/ 301
+/fr/docs/troubleshooting/ /fr/docs/diagnostic/ 301
+/docs/diagnostic /docs/troubleshooting/ 301
+/docs/diagnostic/ /docs/troubleshooting/ 301
 
-/fr/release-notes/v1/      /fr/notes-de-version/v1/     301
-/notes-de-version/v1/      /release-notes/v1/           301
+/fr/release-notes/v1 /fr/notes-de-version/v1/ 301
+/fr/release-notes/v1/ /fr/notes-de-version/v1/ 301
+/notes-de-version/v1 /release-notes/v1/ 301
+/notes-de-version/v1/ /release-notes/v1/ 301
 
 # --- /en/ explicite + mot français : direction directe, sans double saut ---
 
-/en/comment-ca-marche/     /how-it-works/               301
-/en/plateformes/           /platforms/                  301
-/en/confidentialite/       /privacy/                    301
-/en/docs/installation/     /docs/install/               301
-/en/docs/configuration/    /docs/configure/             301
-/en/docs/serveur/          /docs/server/                301
-/en/docs/diagnostic/       /docs/troubleshooting/       301
-/en/notes-de-version/v1/   /release-notes/v1/           301
+/en/comment-ca-marche /how-it-works/ 301
+/en/comment-ca-marche/ /how-it-works/ 301
+/en/plateformes /platforms/ 301
+/en/plateformes/ /platforms/ 301
+/en/confidentialite /privacy/ 301
+/en/confidentialite/ /privacy/ 301
+/en/docs/installation /docs/install/ 301
+/en/docs/installation/ /docs/install/ 301
+/en/docs/configuration /docs/configure/ 301
+/en/docs/configuration/ /docs/configure/ 301
+/en/docs/serveur /docs/server/ 301
+/en/docs/serveur/ /docs/server/ 301
+/en/docs/diagnostic /docs/troubleshooting/ 301
+/en/docs/diagnostic/ /docs/troubleshooting/ 301
+/en/notes-de-version/v1 /release-notes/v1/ 301
+/en/notes-de-version/v1/ /release-notes/v1/ 301
 
 # --- /en/ explicite, tout le reste : l'anglais n'a jamais eu de préfixe ---
 
-/en/*                      /:splat                      301
+/en / 301
+/en/ / 301
+/en/* /:splat 301
