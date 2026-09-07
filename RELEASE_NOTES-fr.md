@@ -16,6 +16,10 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
+_Rien en attente pour l'instant._
+
+## release/2026-09-07T05-34-29Z — 7 septembre 2026
+
 ### 🔧 Amélioré
 
 - **La table des matières de la doc reste en place pendant le défilement.** La navigation de
