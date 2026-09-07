@@ -37,7 +37,7 @@ type Dict = {
 export const UI: Record<Locale, Dict> = {
   en: {
     nav: { howitworks: 'how it works:', platforms: 'platforms:', docs: 'docs:' },
-    cta: 'Adopt it in your team',
+    cta: 'Bring it to your team',
     github: 'github ↗',
     brandAria: 'conventionalcomments.io — home',
     docsGroup: 'docs:',
@@ -57,8 +57,8 @@ export const UI: Record<Locale, Dict> = {
       'conventionalcomments.io — "Is that feedback, or a dig?" Below, a review comment '
       + 'prefixed nitpick (non-blocking): this variable name says nothing.',
     releaseNotes: 'Release notes',
-    footerIndependent: 'Independent tooling. The specification lives on',
-    footerSpec: '; this site does not speak for it.',
+    footerIndependent: 'Independent tooling for Conventional Comments. The specification lives at',
+    footerSpec: '; this site does not define or represent it.',
     privacyLink: 'privacy',
     releaseNotesLink: 'release notes',
     skipToContent: 'Skip to content',
@@ -70,7 +70,7 @@ export const UI: Record<Locale, Dict> = {
       platforms: `plateformes${NBSP}:`,
       docs: `doc${NBSP}:`,
     },
-    cta: 'Adoptez-le dans votre équipe',
+    cta: "L'adopter dans mon équipe",
     github: 'github ↗',
     brandAria: 'conventionalcomments.io — accueil',
     docsGroup: `doc${NBSP}:`,
@@ -90,8 +90,8 @@ export const UI: Record<Locale, Dict> = {
       'conventionalcomments.io — « C\'est une remarque, ou un reproche ? » Dessous, un '
       + 'commentaire de revue préfixé nitpick (non-blocking) : ce nom de variable ne veut rien dire.',
     releaseNotes: 'Notes de version',
-    footerIndependent: 'Outillage indépendant. La spécification vit sur',
-    footerSpec: `${NBSP}; ce site ne parle pas en son nom.`,
+    footerIndependent: 'Des outils indépendants pour Conventional Comments. La spécification officielle est publiée sur',
+    footerSpec: `${NBSP}; ce site ne la définit pas et ne la représente pas.`,
     privacyLink: 'confidentialité',
     releaseNotesLink: 'notes de version',
     skipToContent: 'Aller au contenu',
