@@ -119,10 +119,9 @@ const previous = Array.from({ length: Math.min(PREVIOUS_COUNT, total - 1) }, (_u
 
 // Null once every release this file holds is already shown between `latest` and `previous` —
 // the common case today, with only a handful of releases behind this one. Once a release
-// exists beyond what's shown, this names it; but the "view more" link never anchors on it
-// (unlike justdummies.io, this repository's release.yml pushes a tag and deploys without
-// creating a GitHub Release — see BuildFacts.astro — so there is no #release-<tag> anchor to
-// land on, only /tags).
+// exists beyond what's shown, this names it; but /version does not paginate its history and
+// has no per-release anchor to send that link to — going further means the tag list, at
+// /tags, which is what the page links to instead.
 const shown = 1 + previous.length;
 const moreTag = shown < total ? allReleases.en[shown].tag : null;
 
