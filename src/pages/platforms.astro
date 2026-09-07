@@ -7,13 +7,13 @@ const page = 'platforms' as const;
 ---
 <Base lang={lang} page={page}
   title="Supported platforms"
-  description="GitHub and Azure DevOps, hosted and self-hosted, in mainstream browsers. What works today and what is still to come.">
+  description="GitHub and Azure DevOps, hosted or self-hosted, in all major browsers. See what's supported today and what's coming next.">
 <section class="hband">
       <div class="in">
         <div class="stack g18 measure">
           <span class="eyebrow acc">compatibility:</span>
           <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Supported platforms</h1>
-          <p class="lede">The extension works in mainstream browsers, on code review platforms both hosted and self-hosted.</p>
+          <p class="lede">The extension works in all major browsers across both hosted and self-hosted code review platforms.</p>
         </div>
 
         <div class="avail">
@@ -39,7 +39,7 @@ const page = 'platforms' as const;
             <span class="av-tag ok">available</span>
             <h3>Browsers</h3>
             <ul class="av-list">
-              <li>Chrome, Edge, Brave <span class="av-note">and other Chromium browsers</span></li>
+              <li>Chrome, Edge, Brave <span class="av-note">and other Chromium-based browsers</span></li>
               <li>Firefox <span class="av-note">separate build</span></li>
             </ul>
           </div>
@@ -52,13 +52,13 @@ const page = 'platforms' as const;
         <div class="stack g14 measure">
           <span class="eyebrow">not yet:</span>
           <h2>Other platforms</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The convention itself works anywhere — it's a way of writing a comment. What isn't built yet is the tooling: the toolbar, the validation, the check.</p>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The convention itself works anywhere — it's simply a way of writing comments. What isn't available everywhere yet is the tooling: the toolbar, validation, and the pull request check.</p>
         </div>
         <div class="avail">
           <div class="av-card soon">
             <span class="av-tag">to come</span>
             <h3>GitLab</h3>
-            <p class="av-p">Merge requests, self-managed and gitlab.com.</p>
+            <p class="av-p">Merge requests on gitlab.com and self-managed instances.</p>
           </div>
           <div class="av-card soon">
             <span class="av-tag">to come</span>
@@ -67,11 +67,11 @@ const page = 'platforms' as const;
           </div>
           <div class="av-card soon">
             <span class="av-tag">tell us</span>
-            <h3>Something else?</h3>
-            <p class="av-p">Open an issue on the repository saying which platform and roughly how many people it would serve. That's what decides the order.</p>
+            <h3>Need another platform?</h3>
+            <p class="av-p">Open an issue on the repository and tell us which platform you use and roughly how many people would benefit from it. We use that information to decide what to support next.</p>
           </div>
         </div>
-        <p class="small measure">No dates are promised. A platform appears above only once it actually works.</p>
+        <p class="small measure">We don't promise dates. A platform is only listed as available once it actually works.</p>
       </div>
     </section>
 
@@ -80,19 +80,19 @@ const page = 'platforms' as const;
         <div class="split">
           <div class="stack g14">
             <span class="eyebrow">what you need:</span>
-            <h2 style="font-size:24px">The extension alone needs nothing.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Load it and it works on the spot: the toolbar, the shortcuts, the live feedback. No account, no server, no configuration. The store listings are not published yet, so today that means the release zip — the install page has the steps, per browser.</p>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The check on the pull request is the part that needs a server — a small service you host, once, for the whole organization. Only a team that wants the convention to become a merge condition needs it.</p>
+            <h2 style="font-size:24px">The extension needs no infrastructure.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Install it and it works immediately: the toolbar, shortcuts, and live feedback. No account, no server, no configuration required. The store listings haven't been published yet, so for now the extension is installed from a release archive. The installation page provides browser-specific instructions.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The pull request check is the only part that requires a server: a small service you host once for the entire organization. You only need it if your team wants to make the convention a merge requirement.</p>
             <div class="hero-btns">
               <a class="btn btn-p" href={href('install', 'en')}>Install the extension</a>
-              <a class="btn btn-s" href={href('adoption', 'en')}>The server, and when it's worth it</a>
+              <a class="btn btn-s" href={href('adoption', 'en')}>When the server is worth it</a>
             </div>
           </div>
           <div class="stack g14">
-            <span class="eyebrow">and where it looks:</span>
-            <h2 style="font-size:24px">github.com, and nowhere else by default.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">No “all sites” permission. One declared domain. Azure DevOps, a self-hosted GitHub, an internal host — each needs its own permission, which your browser asks you for and you grant, or don't.</p>
-            <p class="small">Two permissions in total: one to remember your preferences, one to work inside the page. No account, no token stored. The extension can't load code from anywhere else — locked technically, and re-verified on every release.</p>
+            <span class="eyebrow">and where it runs:</span>
+            <h2 style="font-size:24px">github.com only, by default.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The extension doesn't request access to every site. By default, it has access to one domain: github.com. Azure DevOps, a self-hosted GitHub instance, or an internal host each requires separate permission. Your browser asks for that permission, and you choose whether to grant it.</p>
+            <p class="small">Two permissions in total: one to remember your preferences and one to work inside the page. No account. No stored token. The extension cannot load code from anywhere else. That restriction is enforced technically and verified again with every release.</p>
           </div>
         </div>
       </div>
@@ -101,8 +101,8 @@ const page = 'platforms' as const;
     <section class="cta-band">
       <div class="cta-in">
         <div class="stack g8">
-          <h2>If your platform is on the list, you can start today.</h2>
-          <p class="small" style="color:var(--fg-2)">Nothing blocks anyone until you decide it should.</p>
+          <h2>If your platform is listed, you can start today.</h2>
+          <p class="small" style="color:var(--fg-2)">Nothing becomes blocking until your team decides it should.</p>
         </div>
         <div class="hero-btns">
           <a class="btn btn-p" href={href('install', 'en')}>Install the extension</a>
