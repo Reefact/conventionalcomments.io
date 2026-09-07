@@ -1,0 +1,11 @@
+{
+  "$schema": "https://conventionalcomments.io/schema/v1.json",
+  "version": 1,
+  "mode": "warn",
+  "formatSeverity": "warn",
+  "exemptUsers": ["dependabot[bot]", "github-actions[bot]"],
+  "toolCommands": ["/*"],
+  "labels": [
+    { "id": "typo", "enabled": true }
+  ]
+}
