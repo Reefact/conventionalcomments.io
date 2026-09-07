@@ -16,6 +16,12 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
+### ✨ Nouveautés
+
+- **`/version` affiche maintenant l'historique des releases de ce site**, à la place du texte
+  d'attente qu'elle montrait depuis avant même qu'une release existe. La dernière release et
+  jusqu'à cinq précédentes sont lues directement depuis ce fichier, dans votre langue.
+
 ### 🐛 Corrections
 
 - **Deviner l'adresse d'une page dans la mauvaise langue, ou sous `/en/`, ne tombe plus sur
