@@ -1,0 +1,33 @@
+# Redirections Cloudflare, lues au déploiement et jamais servies elles-mêmes.
+# https://developers.cloudflare.com/workers/static-assets/redirects/
+#
+# `src/i18n/routes.ts` traduit les segments d'URL plutôt que de les préfixer
+# (/docs/configure/ ↔ /fr/docs/configuration/) : quelqu'un qui devine l'adresse
+# dans l'autre langue tombe sur une 404. Chaque paire ci-dessous redirige les
+# deux sens — le mot anglais sous /fr/, et le mot français sans préfixe — vers
+# l'adresse réelle de `routes.ts`. Un segment de plus dans cette table demande
+# la même paire ici ; rien ne les garde synchronisés automatiquement.
+
+/fr/how-it-works/          /fr/comment-ca-marche/       301
+/comment-ca-marche/        /how-it-works/               301
+
+/fr/platforms/             /fr/plateformes/             301
+/plateformes/              /platforms/                  301
+
+/fr/privacy/               /fr/confidentialite/         301
+/confidentialite/          /privacy/                    301
+
+/fr/docs/install/          /fr/docs/installation/       301
+/docs/installation/        /docs/install/               301
+
+/fr/docs/configure/        /fr/docs/configuration/      301
+/docs/configuration/       /docs/configure/             301
+
+/fr/docs/server/           /fr/docs/serveur/            301
+/docs/serveur/             /docs/server/                301
+
+/fr/docs/troubleshooting/  /fr/docs/diagnostic/         301
+/docs/diagnostic/          /docs/troubleshooting/       301
+
+/fr/release-notes/v1/      /fr/notes-de-version/v1/     301
+/notes-de-version/v1/      /release-notes/v1/           301
