@@ -101,8 +101,8 @@ const page = 'adoption' as const;
             <p style="margin:0"><code>reconcileIntervalSeconds</code> vaut ici <strong>60, et non 900</strong>. Sur Azure DevOps, le cinquième prérequis impose une valeur inférieure ou égale à 60 secondes en mode <code>enforce</code>. Puisque le passage d'une phase à l'autre ne doit nécessiter que la modification de <code>mode</code>, cette valeur doit être correcte avant d'activer le blocage. Sur GitHub, l'état des fils est suivi par un canal événementiel&nbsp;; une valeur de 900 convient donc.</p>
           </div>
           <div class="callout">
-            <span class="ct">note de migration</span>
-            <p style="margin:0"><code>toolCommands</code> est <strong>vide par défaut</strong>. Auparavant, les commandes telles que <code>/rebase</code> étaient automatiquement reconnues grâce à une liste intégrée. Cette liste n'existe plus. En <code>enforce</code>, un <code>/rebase</code> utilisé seul est donc refusé comme n'importe quel autre commentaire non conforme tant qu'il n'a pas été déclaré. Ajouter <code>"/*"</code> permet d'exempter toutes les commandes commençant par <code>/</code>.</p>
+            <span class="ct">à vérifier avant d'activer enforce</span>
+            <p style="margin:0"><code>toolCommands</code> est <strong>vide par défaut</strong>. En <code>enforce</code>, un <code>/rebase</code> utilisé seul est refusé comme n'importe quel autre commentaire non conforme tant qu'il n'a pas été déclaré. Ajouter <code>"/*"</code> permet d'exempter toutes les commandes commençant par <code>/</code>.</p>
           </div>
         </section>
 

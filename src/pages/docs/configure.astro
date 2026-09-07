@@ -63,8 +63,8 @@ const page = 'configure' as const;
           </div>
           <div class="callout blk">
             <span class="ct">one setting deserves special attention</span>
-            <h4><code>toolCommands</code> is empty by default. That wasn't always the case.</h4>
-            <p>Slash commands such as <code>/rebase</code> were previously recognized through a built-in list. That list no longer exists. In strict mode, a bare <code>/rebase</code> is therefore treated like any other non-conforming comment unless the repository explicitly declares it. Adding <code>"/*"</code> exempts every slash command. Bot accounts are declared individually and must match exactly, for example <code>"@dependabot"</code>.</p>
+            <h4><code>toolCommands</code> is empty by default.</h4>
+            <p>In strict mode, a bare <code>/rebase</code> is treated like any other non-conforming comment unless the repository explicitly declares it. Adding <code>"/*"</code> exempts every slash command. Bot accounts are declared individually and must match exactly, for example <code>"@dependabot"</code>.</p>
           </div>
         </section>
 

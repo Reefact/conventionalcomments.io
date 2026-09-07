@@ -101,8 +101,8 @@ const page = 'adoption' as const;
             <p style="margin:0"><code>reconcileIntervalSeconds</code> is set to <strong>60 here, not 900</strong>. On Azure DevOps, prerequisite 5 requires a value of 60 seconds or less when using <code>enforce</code>. Since moving between phases should only require changing <code>mode</code>, this value must already be correct before enforcement is enabled. On GitHub, thread state is covered by an event channel, so a value of 900 is acceptable.</p>
           </div>
           <div class="callout">
-            <span class="ct">upgrade note</span>
-            <p style="margin:0"><code>toolCommands</code> is <strong>empty by default</strong>. Slash commands such as <code>/rebase</code> used to be recognized through a built-in exemption list. That list no longer exists. In <code>enforce</code>, a bare <code>/rebase</code> is therefore rejected like any other non-compliant comment unless it has been declared. Adding <code>"/*"</code> exempts all slash commands.</p>
+            <span class="ct">worth checking before you enable it</span>
+            <p style="margin:0"><code>toolCommands</code> is <strong>empty by default</strong>. In <code>enforce</code>, a bare <code>/rebase</code> is rejected like any other non-compliant comment unless it has been declared. Adding <code>"/*"</code> exempts all slash commands.</p>
           </div>
         </section>
 

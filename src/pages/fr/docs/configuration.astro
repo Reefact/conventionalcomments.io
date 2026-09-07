@@ -63,8 +63,8 @@ const page = 'configure' as const;
           </div>
           <div class="callout blk">
             <span class="ct">un paramètre mérite une attention particulière</span>
-            <h4><code>toolCommands</code> est vide par défaut. Cela n'a pas toujours été le cas.</h4>
-            <p>Les commandes telles que <code>/rebase</code> étaient auparavant reconnues grâce à une liste intégrée au produit. Cette liste n'existe plus. En mode strict, un <code>/rebase</code> utilisé seul est donc traité comme n'importe quel autre commentaire non conforme, sauf si le dépôt le déclare explicitement. Ajouter <code>"/*"</code> permet d'exempter toutes les commandes commençant par <code>/</code>. Les comptes de bots, eux, doivent être déclarés individuellement avec leur identifiant exact, par exemple <code>"@dependabot"</code>.</p>
+            <h4><code>toolCommands</code> est vide par défaut.</h4>
+            <p>En mode strict, un <code>/rebase</code> utilisé seul est traité comme n'importe quel autre commentaire non conforme, sauf si le dépôt le déclare explicitement. Ajouter <code>"/*"</code> permet d'exempter toutes les commandes commençant par <code>/</code>. Les comptes de bots, eux, doivent être déclarés individuellement avec leur identifiant exact, par exemple <code>"@dependabot"</code>.</p>
           </div>
         </section>
 

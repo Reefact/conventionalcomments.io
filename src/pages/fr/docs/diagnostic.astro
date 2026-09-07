@@ -40,7 +40,7 @@ const page = 'troubleshooting' as const;
 
         <section class="dsec">
           <h2><code>/rebase</code> est refusé</h2>
-          <p>C'est le comportement attendu après une mise à jour depuis une version qui exemptait automatiquement les commandes commençant par <code>/</code>. Cette liste intégrée n'existe plus et <code>toolCommands</code> est vide par défaut.</p>
+          <p>C'est le comportement attendu&nbsp;: <code>toolCommands</code> est vide par défaut, donc rien n'est exempté tant que le dépôt ne l'a pas déclaré.</p>
           <pre class="code"><span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>]</pre>
           <p><code>"/*"</code> permet de reconnaître toutes les commandes commençant par <code>/</code>. Les identifiants de bots sont déclarés individuellement et la comparaison porte sur l'intégralité du premier token. Par exemple, <code>@codex review</code> est reconnu comme une commande, contrairement à <code>@codexplique pourquoi</code>.</p>
         </section>
