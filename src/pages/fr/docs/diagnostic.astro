@@ -7,60 +7,70 @@ const page = 'troubleshooting' as const;
 ---
 <Docs lang={lang} page={page}
   title="Diagnostic"
-  description="Sept symptômes, leur cause, et s'il y a quelque chose à faire.">
+  description="Sept problèmes courants, leur cause et les actions à effectuer lorsque l'extension ou le serveur ne se comporte pas comme prévu.">
 <div class="dhead stack g12">
           <p class="crumb"><b>doc</b> / diagnostic</p>
-          <h1>Quand quelque chose cloche</h1>
-          <p class="lede measure">L'essentiel de ce qui surprend est délibéré. Chaque cas ci-dessous dit ce que vous voyez, pourquoi, et s'il y a quelque chose à faire.</p>
+          <h1>Quand quelque chose ne fonctionne pas comme prévu</h1>
+          <p class="lede measure">La plupart des comportements qui surprennent au premier abord sont intentionnels. Pour chaque cas ci-dessous, vous trouverez ce que vous observez, pourquoi cela se produit et ce que vous devez éventuellement faire.</p>
         </div>
 
         <section class="dsec">
-          <h2>La barre n'apparaît pas</h2>
+          <h2>La barre de labels n'apparaît pas</h2>
           <ul class="tick">
-            <li><span class="mk n">·</span><b>Vous n'êtes pas sur github.com</b><span class="tx">Par défaut l'extension ne tourne que là. Azure DevOps et les instances auto-hébergées demandent une autorisation à accorder dans les réglages, et un marquage disant de quelle plateforme il s'agit.</span></li>
-            <li><span class="mk n">·</span><b>La page a changé sous elle</b><span class="tx">Quand le balisage de la plateforme bouge, l'extension éteint la zone concernée plutôt que d'écrire dans un élément qu'elle a peut-être mal identifié. Les réglages gardent le journal des cinquante dernières fois — nom de la règle et horodatage, jamais de contenu.</span></li>
-            <li><span class="mk n">·</span><b>Le mode est <code>off</code></b><span class="tx">Votre organisation ou votre dépôt peut l'éteindre complètement.</span></li>
+            <li><span class="mk n">·</span><b>Vous n'êtes pas sur github.com</b><span class="tx">Par défaut, l'extension ne fonctionne que sur github.com. Azure DevOps et les instances auto-hébergées nécessitent une autorisation supplémentaire, accordée depuis les réglages de l'extension. Vous devez également indiquer quelle plateforme est hébergée sur le domaine afin que l'extension utilise le bon adaptateur.</span></li>
+            <li><span class="mk n">·</span><b>La structure de la page a changé</b><span class="tx">Si le balisage sur lequel s'appuie l'extension évolue, elle désactive la zone concernée plutôt que de risquer d'interagir avec le mauvais élément. La page de réglages conserve les cinquante derniers événements de ce type, avec uniquement le nom de la règle concernée et l'horodatage — jamais le contenu des revues.</span></li>
+            <li><span class="mk n">·</span><b>Le mode est <code>off</code></b><span class="tx">La configuration de l'organisation ou du dépôt peut désactiver complètement l'extension.</span></li>
           </ul>
         </section>
 
         <section class="dsec">
           <h2>Bandeau « configuration non lue »</h2>
-          <p>L'extension n'a pas pu récupérer <code>.conventional-comments.json</code>&nbsp;: elle assiste sans connaître vos règles et ne bloque jamais un envoi. C'est tout l'intérêt&nbsp;: on ne rejette personne au nom d'une règle qu'on n'a pas su lire.</p>
+          <p>L'extension n'a pas pu récupérer <code>.conventional-comments.json</code>. Elle continue de vous assister, mais puisqu'elle ne connaît pas les règles du dépôt, elle <strong>ne bloque jamais l'envoi d'un commentaire</strong>. Ce comportement est volontaire&nbsp;: personne ne doit être empêché de travailler au nom d'une règle que l'extension elle-même n'a pas réussi à lire.</p>
           <div class="callout">
-            <span class="ct">ce que ça ne veut pas dire</span>
-            <p style="margin:0">Un dépôt <strong>sans aucun fichier de configuration</strong> est un cas nominal, pas une dégradation — vous avez les valeurs du produit et aucun bandeau. Le bandeau signifie qu'il y avait quelque chose à lire et que la lecture a échoué. Sur un dépôt public, ou privé avec une session ouverte, il ne devrait pas apparaître&nbsp;; déconnecté, il dit quelque chose de vrai.</p>
+            <span class="ct">ce que ce bandeau ne signifie pas</span>
+            <p style="margin:0">Un dépôt qui ne contient <strong>aucun fichier <code>.conventional-comments.json</code></strong> n'est ni en erreur ni en mode dégradé. Dans ce cas, les valeurs par défaut du produit s'appliquent et aucun bandeau n'est affiché. Le bandeau apparaît uniquement lorsqu'une configuration est censée être accessible mais que l'extension ne parvient pas à la lire. Sur un dépôt public — ou sur un dépôt privé auquel vous êtes connecté — vous ne devriez normalement pas le voir. Si vous êtes déconnecté d'un dépôt privé, le bandeau indique simplement que la configuration n'est pas accessible.</p>
           </div>
         </section>
 
         <section class="dsec">
           <h2>« Configuration décalée par rapport au serveur »</h2>
-          <p>L'extension et le serveur publient chacun une empreinte de la configuration qu'ils appliquent. Quand elles diffèrent, l'extension <strong>cesse de bloquer les envois</strong> et le signale.</p>
-          <p>C'est normalement passager&nbsp;: un durcissement se propage, et une pull request déjà ouverte est jugée sur la configuration épinglée lors de sa première évaluation. Si ça dure, les deux composants tournent sur des versions différentes de la bibliothèque partagée — le levier pour ça est <code>coreMinVersion</code>, pas l'empreinte.</p>
+          <p>L'extension et le serveur publient chacun une empreinte de la configuration qu'ils appliquent. Lorsque ces empreintes diffèrent, l'extension <strong>cesse de bloquer l'envoi des commentaires</strong> et vous signale que les deux composants ne sont plus synchronisés.</p>
+          <p>Cette situation est normalement temporaire. Une configuration plus stricte peut par exemple être encore en cours de propagation. Une pull request déjà ouverte peut également rester associée à la configuration utilisée lors de sa première évaluation. Si l'écart persiste, l'extension et le serveur utilisent peut-être des versions différentes de la bibliothèque partagée. <code>coreMinVersion</code> permet d'imposer une version compatible à l'échelle de l'organisation. L'empreinte, elle, sert uniquement à détecter la divergence.</p>
         </section>
 
         <section class="dsec">
-          <h2><code>/rebase</code> se fait refuser</h2>
-          <p>C'est attendu, et c'est la surprise la plus fréquente après une montée de version. Les commandes slash étaient exemptées par une liste intégrée&nbsp;; cette liste a disparu et <code>toolCommands</code> est vide par défaut.</p>
+          <h2><code>/rebase</code> est refusé</h2>
+          <p>C'est le comportement attendu après une mise à jour depuis une version qui exemptait automatiquement les commandes commençant par <code>/</code>. Cette liste intégrée n'existe plus et <code>toolCommands</code> est vide par défaut.</p>
           <pre class="code"><span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>]</pre>
-          <p><code>"/*"</code> rétablit la reconnaissance de toutes les commandes slash. Les handles de robots se déclarent exactement, un par un — la comparaison porte sur le premier jeton entier, donc <code>@codex review</code> est une commande et <code>@codexplique pourquoi</code> n'en est pas une.</p>
+          <p><code>"/*"</code> permet de reconnaître toutes les commandes commençant par <code>/</code>. Les identifiants de bots sont déclarés individuellement et la comparaison porte sur l'intégralité du premier token. Par exemple, <code>@codex review</code> est reconnu comme une commande, contrairement à <code>@codexplique pourquoi</code>.</p>
         </section>
 
         <section class="dsec">
-          <h2>Les commentaires d'un robot font échouer la vérification</h2>
-          <p>Ajoutez son identifiant à <code>exemptUsers</code>. La comparaison porte sur l'identifiant de la plateforme, sans tenir compte de la casse — jamais sur le nom affiché.</p>
-          <p class="small">Les entrées générées par la plateforme — événements de timeline, mises à jour de branche, notifications système — sont exemptées structurellement et n'ont pas à être listées. De même pour une revue approuvée <strong>sans aucun texte</strong>&nbsp;: un corps vide est toujours exempté, sans quoi le geste le plus ordinaire d'une revue échouerait à chaque approbation, sans correction possible — on n'édite pas la revue d'un tiers.</p>
+          <h2>Les commentaires d'un bot font échouer la vérification</h2>
+          <p>Ajoutez son identifiant sur la plateforme à <code>exemptUsers</code>. La comparaison ne tient pas compte de la casse et utilise <strong>l'identifiant de connexion</strong>, jamais le nom affiché.</p>
+          <p class="small">Les entrées générées directement par la plateforme — événements de timeline, mises à jour de branche, notifications système — sont automatiquement exemptées et n'ont pas besoin d'être déclarées. Une approbation envoyée <strong>sans aucun texte</strong> est également toujours exemptée. Sans cette règle, approuver simplement une pull request sans écrire de commentaire provoquerait une erreur de validation que l'auteur de la PR ne pourrait même pas corriger, puisqu'il ne peut pas modifier la revue de quelqu'un d'autre.</p>
         </section>
 
         <section class="dsec">
-          <h2>La vérification est grise, ni rouge ni verte</h2>
-          <p>Un statut neutre signifie que le serveur n'a pas pu lire l'état courant au-delà de son délai de grâce, et qu'il le dit plutôt que de deviner. Il conserve d'abord son dernier verdict pendant ce délai&nbsp;; le statut ne devient neutre qu'ensuite.</p>
-          <p>Regardez d'abord le jeton de la plateforme — expiré, ou aux portées insuffisantes — puis le secret des webhooks.</p>
+          <h2>La vérification est grise au lieu d'être rouge ou verte</h2>
+          <p>Un statut neutre signifie que le serveur n'a pas réussi à lire l'état courant de la pull request pendant une durée supérieure au délai de grâce configuré. Pendant ce délai, il continue de publier le dernier verdict connu. Ce n'est qu'une fois le délai dépassé qu'il passe à un état neutre, plutôt que d'inventer un résultat à partir d'informations potentiellement obsolètes.</p>
+          <p>Commencez par vérifier le token de la plateforme&nbsp;:</p>
+          <ul class="bul">
+            <li>Est-il expiré&nbsp;?</li>
+            <li>Dispose-t-il toujours des permissions nécessaires&nbsp;?</li>
+          </ul>
+          <p>Vérifiez ensuite le secret du webhook.</p>
         </section>
 
         <section class="dsec">
-          <h2>Un point bloquant ne peut pas être refermé</h2>
-          <p>Seul l'auteur du commentaire, ou un membre du groupe désigné, peut résoudre un fil bloquant. Si personne ne le peut, c'est que le groupe est vide — et le désigner est une condition du mode strict précisément pour que cette situation n'arrive pas.</p>
-          <p>L'autre issue est une réponse <code>decision</code> disant pourquoi le point ne sera pas traité, en au moins vingt caractères. Elle est inscrite dans le fil, jamais silencieuse.</p>
+          <h2>Un point bloquant ne peut pas être résolu</h2>
+          <p>Un fil bloquant ne peut être résolu que par&nbsp;:</p>
+          <ul class="bul">
+            <li>l'auteur du commentaire bloquant, ou</li>
+            <li>un membre du groupe autorisé à passer outre une résolution.</li>
+          </ul>
+          <p>Si personne ne peut le résoudre, le groupe désigné est probablement vide. La présence de ce groupe est précisément un prérequis de <code>enforce</code>, afin qu'un fil bloquant ne puisse jamais se retrouver sans personne autorisée à intervenir.</p>
+          <p>L'autre possibilité consiste à répondre avec un <code>decision</code> expliquant pourquoi le point ne sera pas traité. Cette justification doit contenir au moins vingt caractères. Elle est enregistrée directement dans le fil&nbsp;: la dérogation reste donc toujours explicite et visible.</p>
         </section>
         <div class="pager"></div>
 </Docs>
