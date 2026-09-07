@@ -7,7 +7,7 @@ const page = 'troubleshooting' as const;
 ---
 <Docs lang={lang} page={page}
   title="Troubleshooting"
-  description="Seven common symptoms, what causes them, and what to do when the extension or server does not behave as expected.">
+  description="Five common symptoms, what causes them, and what to do when the extension does not behave as expected.">
 <div class="dhead stack g12">
           <p class="crumb"><b>docs</b> / troubleshooting</p>
           <h1>When something looks wrong</h1>
@@ -33,12 +33,6 @@ const page = 'troubleshooting' as const;
         </section>
 
         <section class="dsec">
-          <h2>“Configuration out of step with the server”</h2>
-          <p>The extension and the server each publish a fingerprint of the configuration they are applying. If those fingerprints differ, the extension <strong>stops blocking comment submission</strong> and tells you that the two sides are out of sync.</p>
-          <p>This is normally temporary. For example, a stricter configuration may still be propagating. An already-open pull request can also remain pinned to the configuration that was in effect when it was first evaluated. If the mismatch persists, the extension and server may be running different versions of the shared library. Use <code>coreMinVersion</code> to enforce a compatible version across the organization. The fingerprint itself only detects the mismatch.</p>
-        </section>
-
-        <section class="dsec">
           <h2><code>/rebase</code> is being rejected</h2>
           <p>This is expected: <code>toolCommands</code> is empty by default, so nothing is exempted until the repository declares it.</p>
           <pre class="code"><span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>]</pre>
@@ -49,17 +43,6 @@ const page = 'troubleshooting' as const;
           <h2>A bot's comments fail the check</h2>
           <p>Add the bot's platform login to <code>exemptUsers</code>. Matching is case-insensitive and uses the platform login, <strong>not</strong> the display name.</p>
           <p class="small">Platform-generated entries such as timeline events, branch updates, and system notifications are exempt automatically and do not need to be listed. An approval with <strong>no review text at all</strong> is also always exempt. Otherwise, simply approving a pull request without writing a comment would produce a validation failure — one the author of the pull request could not fix, because they cannot edit somebody else's review.</p>
-        </section>
-
-        <section class="dsec">
-          <h2>The check is grey instead of red or green</h2>
-          <p>A neutral status means the server has been unable to read the current pull request state for longer than the configured grace period. During the grace period, it keeps publishing the last known verdict. Only after that period expires does the status become neutral rather than guessing what the current result should be.</p>
-          <p>Check the platform token first:</p>
-          <ul class="bul">
-            <li>Has it expired?</li>
-            <li>Does it still have the required permissions?</li>
-          </ul>
-          <p>Then check the webhook secret.</p>
         </section>
 
         <section class="dsec">

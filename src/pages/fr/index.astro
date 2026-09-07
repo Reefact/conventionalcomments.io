@@ -7,7 +7,7 @@ const page = 'home' as const;
 ---
 <Base lang={lang} page={page}
   title="Conventional Comments Toolkit"
-  description="Des commentaires de revue qui disent ce qu'ils attendent. Une extension et un serveur pour que la convention Conventional Comments tienne.">
+  description="Des commentaires de revue qui disent ce qu'ils attendent. Une extension qui rend la convention Conventional Comments facile à suivre, avec une application au niveau des plateformes prévue à terme.">
 <section class="hband">
       <div class="in">
         <div class="hero-g">
@@ -188,19 +188,19 @@ const page = 'home' as const;
 
         <div class="duo">
           <div>
-            <span class="tag" style="color:var(--fg-muted)">dans le navigateur</span>
+            <span class="tag" style="color:var(--fg-muted)">à l'écriture</span>
             <h3>Une extension qui écrit pour vous</h3>
             <p>Une rangée de boutons apparaît au-dessus du champ de commentaire sur GitHub. Tapez <code>?n</code> et l'extension insère <code>nitpick:</code>. Survolez un bouton et elle vous rappelle à quoi sert le label correspondant. Choisir le bon label devient presque sans effort — et c'est précisément ce qui permet au réflexe de durer.</p>
           </div>
           <div>
-            <span class="tag" style="color:var(--accent)">sur votre serveur</span>
-            <h3>Un rappel qui ne se fatigue jamais</h3>
-            <p>Un petit service que vous hébergez relit les commentaires de la pull request et signale les points marqués comme bloquants qui n'ont pas été traités. L'équipe peut décider d'en faire une condition de fusion.</p>
+            <span class="tag" style="color:var(--accent)">une fois publié</span>
+            <h3>Un décompte qui ne lâche rien</h3>
+            <p>L'extension garde la trace des commentaires bloquants non résolus directement sur la pull request et affiche combien il en reste. Personne n'a besoin de remonter tout le fil pour vérifier.</p>
             <p class="guar">L'objectif n'est pas de faire la police. C'est un pense-bête&nbsp;: <strong style="color:var(--fg)">un point important ne se perd plus au milieu du fil de discussion.</strong></p>
           </div>
         </div>
 
-        <p class="small measure">Et si votre équipe ne veut ni serveur ni contrôle avant fusion, aucun problème. L'extension fonctionne très bien toute seule. La convention, elle, n'a besoin d'aucun outil. Les outils servent uniquement à la rendre plus facile à appliquer dans la durée.</p>
+        <p class="small measure">Et si votre équipe ne veut rien de plus, c'est déjà suffisant. L'extension fonctionne très bien toute seule. La convention, elle, n'a besoin d'aucun outil. Les outils servent uniquement à la rendre plus facile à appliquer dans la durée.</p>
       </div>
     </section>
 
@@ -208,23 +208,23 @@ const page = 'home' as const;
       <div class="in">
         <div class="split">
           <div class="stack g14">
-            <span class="eyebrow">à votre rythme&nbsp;:</span>
-            <h2 style="font-size:24px">Rien ne bloque tant que vous ne l'avez pas décidé.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Il existe trois modes. Vous commencez par le premier, où l'outil se contente d'aider. Passer aux suivants relève toujours d'une décision d'équipe, jamais d'un choix imposé à l'installation.</p>
+            <span class="eyebrow">la direction&nbsp;:</span>
+            <h2 style="font-size:24px">Assist et warn sont là aujourd'hui. Enforce, c'est la suite.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">L'extension couvre déjà les deux premières étapes. La troisième — un contrôle de fusion qui fait autorité au niveau de la plateforme — fait partie de la feuille de route, pas de votre navigateur aujourd'hui.</p>
             <a class="btn btn-p" href={href('adoption', 'fr')} style="align-self:flex-start">Comment l'adopter en équipe</a>
           </div>
           <div class="traj">
             <div class="step" style="--st:var(--fg-faint)">
-              <span class="sn">assist</span><span class="sw">par défaut</span>
+              <span class="sn">assist</span><span class="sw">disponible aujourd'hui</span>
               <span class="sd">L'extension aide les personnes qui l'ont installée. Personne n'est bloqué. Rien n'est mesuré.</span>
             </div>
             <div class="step" style="--st:var(--warn)">
-              <span class="sn">warn</span><span class="sw">pour voir où vous en êtes</span>
-              <span class="sd">L'équipe peut observer comment les choses se passent sans que rien soit refusé.</span>
+              <span class="sn">warn</span><span class="sw">disponible aujourd'hui</span>
+              <span class="sd">L'extension fait apparaître les points bloquants non résolus sur la pull request, sans rien refuser.</span>
             </div>
             <div class="step" style="--st:var(--block)">
-              <span class="sn">enforce</span><span class="sw">uniquement si vous le souhaitez</span>
-              <span class="sd">Un point bloquant non traité empêche la fusion. Un retour en arrière ne prend que quelques minutes.</span>
+              <span class="sn">enforce</span><span class="sw">sur la feuille de route</span>
+              <span class="sd">Un contrôle de fusion qui fait autorité sur GitHub, Azure DevOps et d'autres plateformes — pas encore disponible, et pas figé sur une seule architecture.</span>
             </div>
           </div>
         </div>
@@ -257,7 +257,7 @@ const page = 'home' as const;
       <div class="cta-in">
         <div class="stack g8">
           <h2>Commencez par un label devant une phrase.</h2>
-          <p class="small" style="color:var(--fg-2)">C'est tout. Le reste — l'extension, le serveur, les réglages — n'existe que pour vous aider à garder ce réflexe.</p>
+          <p class="small" style="color:var(--fg-2)">C'est tout. Le reste — l'extension et ses réglages — n'existe que pour vous aider à garder ce réflexe.</p>
         </div>
         <div class="hero-btns">
           <a class="btn btn-p" href={href('labels', 'fr')}>Voir les 13 labels</a>

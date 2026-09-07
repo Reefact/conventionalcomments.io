@@ -6,95 +6,34 @@ const lang = 'en' as const;
 const page = 'server' as const;
 ---
 <Docs lang={lang} page={page}
-  title="Deploy the server"
-  description="Deploy the self-hosted server with Docker, choose persistent storage, configure the required variables, and make the compliance check mandatory when your team is ready.">
+  title="Enforce: what's coming"
+  description="Enforce is the direction, not a shipped product: an authoritative, platform-level merge check. See what's planned for GitHub and Azure DevOps, and why no single server architecture is promised yet.">
 <div class="dhead stack g12">
-          <p class="crumb"><b>docs</b> / the server</p>
-          <h1>Deploy the server</h1>
-          <p class="lede measure">The server is a small service you host once for the entire organization. It re-evaluates pull requests and publishes the compliance check. There is no Reefact-hosted SaaS involved. <strong>Reefact operates no service for this and receives none of your data.</strong> The server runs entirely on your infrastructure. It communicates with your own code platform through its API, using credentials that you provide. If you configure an organization document through <code>configUrl</code>, it also fetches that document from wherever you choose to host it.</p>
+          <p class="crumb"><b>docs</b> / enforce</p>
+          <h1>Enforce: what's coming</h1>
+          <p class="lede measure"><strong>Assist</strong> and <strong>warn</strong> are here today, entirely through the extension. <strong>Enforce</strong> — an authoritative merge check that runs at the platform level, independently of any reviewer's browser — is the direction this is heading, not something you can install today. This page describes the intent, not a product.</p>
         </div>
 
         <section class="dsec">
-          <h2>Quick start</h2>
-          <pre class="code">docker build -t cct-server .
-
-docker run -d --name cct-server \
-  -p 8080:8080 \
-  -v cct-data:/data \
-  -e CCT_ADMIN_TOKEN=<span class="tk-v">'a-long-secret'</span> \
-  -e CCT_GITHUB_TOKEN=<span class="tk-v">'ghp_…'</span> \
-  -e CCT_GITHUB_WEBHOOK_SECRET=<span class="tk-v">'another-secret'</span> \
-  -e CCT_GITHUB_REPOS=<span class="tk-v">'my-org/repo-one,my-org/repo-two'</span> \
-  cct-server</pre>
-          <p>Without Docker:</p>
-          <pre class="code">npm ci &amp;&amp; npm run build
-CCT_… npm run server</pre>
-          <p>The service exposes <code>GET /healthz</code>, and the Docker image includes a matching health check.</p>
+          <h2>Why nothing ships here yet</h2>
+          <p>An authoritative check has to run somewhere other than a reviewer's browser, and what that "somewhere" looks like isn't settled — nor does it need to be the same answer for every platform:</p>
+          <ul class="bul">
+            <li>GitHub may end up served by a lightweight, GitHub-specific integration.</li>
+            <li>Azure DevOps may need a different mechanism entirely.</li>
+            <li>A small hosted or self-hosted service may still make sense wherever one is genuinely required.</li>
+            <li>Other platform-native approaches may turn out to be the better fit once we get there.</li>
+          </ul>
+          <p class="small">Committing to one generic server architecture now, before any of this is validated against a real platform, would lock the project into a shape that might not fit all of them. So this page names a destination, not a mechanism.</p>
         </section>
 
         <section class="dsec">
-          <h2>Persistence — read this before the first start</h2>
-          <div class="scroller">
-            <table class="t">
-              <thead><tr><th>Mount</th><th>Behaviour</th></tr></thead>
-              <tbody>
-                <tr><td class="m">Named volume<br><span class="av-note">-v cct-data:/data</span></td><td class="d"><strong>Recommended.</strong> State is stored in the volume and survives container recreation, including upgrades.</td></tr>
-                <tr><td class="m">Bind mount<br><span class="av-note">-v /srv/cct:/data</span></td><td class="d">The host directory must be writable by the container user, whose UID is fixed at <strong>10001</strong>. Run <code>chown -R 10001 /srv/cct</code> first. Otherwise, the service <strong>refuses to start</strong>. A write check runs at startup, so the server never starts in a state where it cannot persist data.</td></tr>
-                <tr><td class="m">No explicit volume</td><td class="d">Docker creates an anonymous volume for the container. State survives container restarts but is <strong>lost when the container is replaced during an image update</strong>. Suitable for demos only.</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <h2>What already works without it</h2>
+          <p>The extension doesn't wait for enforce to be useful. In its strict mode, it can already refuse to submit a malformed comment — a guardrail in the browser, not a merge gate on the platform. See <a href={href('howitworks', 'en')}>how it works</a> for the distinction between what the extension can stop today and what only a platform-level check will eventually be able to guarantee.</p>
         </section>
 
         <section class="dsec">
-          <h2>Storage</h2>
-          <p>One variable, <code>CCT_STORAGE</code>, selects between three storage backends.</p>
-          <div class="scroller">
-            <table class="t">
-              <thead><tr><th><code>CCT_STORAGE</code></th><th>Intended use</th></tr></thead>
-              <tbody>
-                <tr><td class="m">memory</td><td class="d">Trials and demos. Everything is lost when the process stops.</td></tr>
-                <tr><td class="m">file <span class="av-note">default</span></td><td class="d">Simple single-process deployments. State is stored as JSON using atomic writes.</td></tr>
-                <tr><td class="m">sqlite</td><td class="d">A real database in a single file, with no additional service to run. Uses Node's built-in SQLite support and requires Node 22.13 or later.</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="dsec">
-          <h2>Important environment variables</h2>
-          <div class="scroller">
-            <table class="t wide">
-              <thead><tr><th>Variable</th><th>Required</th><th>Purpose</th></tr></thead>
-              <tbody>
-                <tr><td class="m">CCT_ADMIN_TOKEN</td><td class="m" style="color:var(--block)">Yes</td><td class="d">Bearer token protecting the administration endpoint used for operations such as cache invalidation and exemptions.</td></tr>
-                <tr><td class="m">CCT_GITHUB_TOKEN</td><td class="m d">With GitHub</td><td class="d">API token. Required scopes are documented in the repository; grant only the permissions the server actually needs.</td></tr>
-                <tr><td class="m">CCT_GITHUB_WEBHOOK_SECRET</td><td class="m d">With GitHub</td><td class="d">HMAC secret used to verify webhook signatures.</td></tr>
-                <tr><td class="m">CCT_GITHUB_API_BASE</td><td class="m d">No</td><td class="d">Set to <code>https://&#123;ghes&#125;/api/v3</code> when using GitHub Enterprise Server.</td></tr>
-                <tr><td class="m">CCT_AZDO_ORG_URL<br>CCT_AZDO_PROJECT<br>CCT_AZDO_TOKEN</td><td class="m d">With Azure DevOps</td><td class="d">Organization URL or Azure DevOps Server collection, project, and personal access token.</td></tr>
-                <tr><td class="m">CCT_FLOOR_FILE</td><td class="m d">No</td><td class="d">Path to the organization floor. It is re-read for every evaluation. If it cannot be read at startup, the server refuses to start. If it later becomes invalid or unreadable, the last valid version remains in effect.</td></tr>
-                <tr><td class="m">CCT_EXEMPTION_LOG_RETENTION_MONTHS</td><td class="m d">No</td><td class="d">Exemption-log retention period. Defaults to twelve months. <code>0</code> means unlimited retention and must therefore be an explicit choice, because the log contains identifying information.</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="dsec">
-          <h2>Making the check required</h2>
-          <p>Deploying the server makes the compliance status available. It does <strong>not</strong> make that status blocking. Whether a pull request can merge without a successful check is controlled by your code platform's branch-protection settings, not by Conventional Comments itself.</p>
-          <div class="split">
-            <div class="callout">
-              <span class="ct">github</span>
-              <h4>Two settings, not one</h4>
-              <p>Require the <code>conventional-comments</code> status check with <em>Require status checks to pass</em>. Also enable <em>Do not allow bypassing the above settings</em>. Without the second setting, administrators can still merge while bypassing the check, so the enforcement guarantee does not apply to them.</p>
-            </div>
-            <div class="callout">
-              <span class="ct">azure devops</span>
-              <h4>Use Block, not Warn</h4>
-              <p>Create a <em>Status checks</em> branch policy for <code>conventional-comments/compliance</code>. Set the policy to <strong>Block</strong>. If it remains on <strong>Warn</strong>, Azure DevOps reports the failed check but still allows the pull request to complete.</p>
-            </div>
-          </div>
-          <p class="small">Only make the check mandatory once the adoption prerequisites are in place. In particular, have a documented and tested rollback procedure before enabling enforcement. A merge gate should never be introduced before you know exactly how to remove its blocking effect.</p>
+          <h2>Want to help shape it?</h2>
+          <p>If your team would need enforcement on a particular platform sooner rather than later, open an issue on the repository and describe your setup: which platform, self-hosted or not, and roughly how many repositories would be affected. That's the kind of information used to decide what gets built first.</p>
         </section>
         <div class="pager"></div>
 </Docs>

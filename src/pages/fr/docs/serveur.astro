@@ -6,95 +6,34 @@ const lang = 'fr' as const;
 const page = 'server' as const;
 ---
 <Docs lang={lang} page={page}
-  title="Déployer le serveur"
-  description="Déployez le serveur auto-hébergé avec Docker, configurez la persistance et les variables nécessaires, puis rendez la vérification obligatoire lorsque votre équipe est prête.">
+  title="Enforce : ce qui s'en vient"
+  description="Enforce est une direction, pas un produit livré : une vérification de fusion qui ferait autorité au niveau de la plateforme. Découvrez ce qui est prévu pour GitHub et Azure DevOps, et pourquoi aucune architecture serveur unique n'est promise pour l'instant.">
 <div class="dhead stack g12">
-          <p class="crumb"><b>doc</b> / le serveur</p>
-          <h1>Déployer le serveur</h1>
-          <p class="lede measure">Le serveur est un petit service que vous hébergez une seule fois pour toute l'organisation. Il réévalue les pull requests et publie la vérification de conformité. Il ne s'agit pas d'un service SaaS hébergé par Reefact. <strong>Reefact n'opère aucun service pour cette fonctionnalité et ne reçoit aucune de vos données.</strong> Le serveur s'exécute entièrement sur votre infrastructure. Il communique avec votre propre plateforme de code par son API, au moyen des identifiants que vous lui fournissez. Si vous définissez un document de configuration d'organisation avec <code>configUrl</code>, il récupère également ce document depuis l'emplacement où vous avez choisi de l'héberger.</p>
+          <p class="crumb"><b>doc</b> / enforce</p>
+          <h1>Enforce&nbsp;: ce qui s'en vient</h1>
+          <p class="lede measure"><strong>Assist</strong> et <strong>warn</strong> sont là dès aujourd'hui, entièrement via l'extension. <strong>Enforce</strong> — une vérification de fusion qui ferait autorité au niveau de la plateforme, indépendamment du navigateur d'un relecteur en particulier — est la direction visée, pas quelque chose que vous pouvez installer aujourd'hui. Cette page décrit une intention, pas un produit.</p>
         </div>
 
         <section class="dsec">
-          <h2>Démarrage rapide</h2>
-          <pre class="code">docker build -t cct-server .
-
-docker run -d --name cct-server \
-  -p 8080:8080 \
-  -v cct-data:/data \
-  -e CCT_ADMIN_TOKEN=<span class="tk-v">'un-secret-long'</span> \
-  -e CCT_GITHUB_TOKEN=<span class="tk-v">'ghp_…'</span> \
-  -e CCT_GITHUB_WEBHOOK_SECRET=<span class="tk-v">'un-autre-secret'</span> \
-  -e CCT_GITHUB_REPOS=<span class="tk-v">'mon-org/depot-un,mon-org/depot-deux'</span> \
-  cct-server</pre>
-          <p>Sans Docker&nbsp;:</p>
-          <pre class="code">npm ci &amp;&amp; npm run build
-CCT_… npm run server</pre>
-          <p>Le service expose <code>GET /healthz</code>, et l'image Docker intègre la sonde de santé correspondante.</p>
+          <h2>Pourquoi rien n'est encore livré ici</h2>
+          <p>Une vérification qui fait autorité doit s'exécuter ailleurs que dans le navigateur d'un relecteur, et cet « ailleurs » reste à préciser — sans qu'il faille nécessairement une seule et même réponse pour chaque plateforme&nbsp;:</p>
+          <ul class="bul">
+            <li>GitHub pourrait être couvert par une intégration légère, propre à GitHub.</li>
+            <li>Azure DevOps pourrait avoir besoin d'un mécanisme entièrement différent.</li>
+            <li>Un petit service hébergé ou auto-hébergé peut rester pertinent là où il est réellement nécessaire.</li>
+            <li>D'autres approches propres à une plateforme donnée pourraient s'avérer plus adaptées le moment venu.</li>
+          </ul>
+          <p class="small">S'engager dès maintenant sur une architecture serveur générique, avant que rien de tout cela n'ait été validé face à une plateforme réelle, risquerait d'enfermer le projet dans une forme qui ne conviendrait pas à toutes. Cette page nomme donc une destination, pas un mécanisme.</p>
         </section>
 
         <section class="dsec">
-          <h2>Persistance — à lire avant le premier démarrage</h2>
-          <div class="scroller">
-            <table class="t">
-              <thead><tr><th>Montage</th><th>Comportement</th></tr></thead>
-              <tbody>
-                <tr><td class="m">Volume nommé<br><span class="av-note">-v cct-data:/data</span></td><td class="d"><strong>Recommandé.</strong> Les données sont stockées dans le volume et survivent à la recréation du conteneur, notamment lors d'une mise à jour.</td></tr>
-                <tr><td class="m">Bind mount<br><span class="av-note">-v /srv/cct:/data</span></td><td class="d">Le répertoire de l'hôte doit être accessible en écriture par l'utilisateur du conteneur, dont l'UID est fixé à <strong>10001</strong>. Exécutez d'abord <code>chown -R 10001 /srv/cct</code>. Dans le cas contraire, le service <strong>refuse de démarrer</strong>. Un test d'écriture est effectué au démarrage afin que le serveur ne puisse jamais fonctionner sans être capable de persister ses données.</td></tr>
-                <tr><td class="m">Aucun volume explicite</td><td class="d">Docker crée un volume anonyme pour le conteneur. Les données survivent aux redémarrages du conteneur, mais sont <strong>perdues lorsque celui-ci est remplacé lors d'une mise à jour de l'image</strong>. À réserver aux démonstrations.</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <h2>Ce qui fonctionne déjà sans lui</h2>
+          <p>L'extension n'attend pas qu'enforce existe pour être utile. Dans son mode strict, elle peut déjà refuser l'envoi d'un commentaire mal formé&nbsp;: un garde-fou dans le navigateur, pas un contrôle de fusion au niveau de la plateforme. Consultez <a href={href('howitworks', 'fr')}>comment ça marche</a> pour la distinction entre ce que l'extension peut bloquer aujourd'hui et ce qu'une vérification au niveau de la plateforme sera seule, un jour, à pouvoir garantir.</p>
         </section>
 
         <section class="dsec">
-          <h2>Stockage</h2>
-          <p>La variable <code>CCT_STORAGE</code> permet de choisir entre trois modes de stockage.</p>
-          <div class="scroller">
-            <table class="t">
-              <thead><tr><th><code>CCT_STORAGE</code></th><th>Usage</th></tr></thead>
-              <tbody>
-                <tr><td class="m">memory</td><td class="d">Essais et démonstrations. Toutes les données disparaissent à l'arrêt du processus.</td></tr>
-                <tr><td class="m">file <span class="av-note">par défaut</span></td><td class="d">Déploiement simple avec un seul processus. Les données sont stockées en JSON avec des écritures atomiques.</td></tr>
-                <tr><td class="m">sqlite</td><td class="d">Une véritable base de données dans un seul fichier, sans service supplémentaire à déployer. Utilise le support SQLite intégré à Node et nécessite Node 22.13 ou une version plus récente.</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="dsec">
-          <h2>Principales variables d'environnement</h2>
-          <div class="scroller">
-            <table class="t wide">
-              <thead><tr><th>Variable</th><th>Obligatoire</th><th>Rôle</th></tr></thead>
-              <tbody>
-                <tr><td class="m">CCT_ADMIN_TOKEN</td><td class="m" style="color:var(--block)">Oui</td><td class="d">Token Bearer protégeant le point d'administration utilisé notamment pour invalider le cache et gérer les exemptions.</td></tr>
-                <tr><td class="m">CCT_GITHUB_TOKEN</td><td class="m d">Avec GitHub</td><td class="d">Token d'accès à l'API. Les permissions nécessaires sont documentées dans le dépôt&nbsp;; n'accordez que celles dont le serveur a réellement besoin.</td></tr>
-                <tr><td class="m">CCT_GITHUB_WEBHOOK_SECRET</td><td class="m d">Avec GitHub</td><td class="d">Secret HMAC utilisé pour vérifier la signature des webhooks.</td></tr>
-                <tr><td class="m">CCT_GITHUB_API_BASE</td><td class="m d">Non</td><td class="d">À définir sur <code>https://&#123;ghes&#125;/api/v3</code> avec GitHub Enterprise Server.</td></tr>
-                <tr><td class="m">CCT_AZDO_ORG_URL<br>CCT_AZDO_PROJECT<br>CCT_AZDO_TOKEN</td><td class="m d">Avec Azure DevOps</td><td class="d">URL de l'organisation ou de la collection Azure DevOps Server, projet et token d'accès personnel.</td></tr>
-                <tr><td class="m">CCT_FLOOR_FILE</td><td class="m d">Non</td><td class="d">Chemin vers le plancher de l'organisation. Il est relu à chaque évaluation. S'il est inaccessible au démarrage, le serveur refuse de démarrer. S'il devient ensuite invalide ou illisible, la dernière version valide continue de s'appliquer.</td></tr>
-                <tr><td class="m">CCT_EXEMPTION_LOG_RETENTION_MONTHS</td><td class="m d">Non</td><td class="d">Durée de conservation du journal des exemptions. Douze mois par défaut. <code>0</code> signifie une conservation illimitée et doit donc être un choix explicite, puisque ce journal contient des informations nominatives.</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="dsec">
-          <h2>Rendre la vérification obligatoire</h2>
-          <p>Le déploiement du serveur rend la vérification de conformité disponible. Il ne la rend <strong>pas</strong> automatiquement bloquante. C'est la protection de branche de votre plateforme qui décide si une pull request peut être fusionnée sans vérification réussie. Ce comportement n'est pas contrôlé par Conventional Comments.</p>
-          <div class="split">
-            <div class="callout">
-              <span class="ct">github</span>
-              <h4>Deux réglages sont nécessaires</h4>
-              <p>Rendez le statut <code>conventional-comments</code> obligatoire avec <em>Require status checks to pass</em>. Activez également <em>Do not allow bypassing the above settings</em>. Sans ce second réglage, les administrateurs peuvent toujours fusionner en contournant la vérification. La garantie apportée par <code>enforce</code> ne s'applique donc pas à eux.</p>
-            </div>
-            <div class="callout">
-              <span class="ct">azure devops</span>
-              <h4>Choisissez Block, pas Warn</h4>
-              <p>Ajoutez une stratégie de branche <em>Status checks</em> sur <code>conventional-comments/compliance</code>. Configurez-la sur <strong>Block</strong>. Avec <strong>Warn</strong>, Azure DevOps affiche l'échec de la vérification mais autorise tout de même la fusion de la pull request.</p>
-            </div>
-          </div>
-          <p class="small">Ne rendez cette vérification obligatoire qu'une fois tous les prérequis d'adoption réunis. En particulier, la procédure de retour arrière doit être documentée et testée avant d'activer <code>enforce</code>. On ne met pas en place une condition de fusion avant de savoir précisément comment lui retirer son caractère bloquant.</p>
+          <h2>Envie d'aider à en définir la forme&nbsp;?</h2>
+          <p>Si votre équipe avait besoin d'une application de la convention sur une plateforme donnée plus tôt que tard, ouvrez une issue sur le dépôt et décrivez votre contexte&nbsp;: quelle plateforme, auto-hébergée ou non, et environ combien de dépôts seraient concernés. C'est ce type d'information qui sert à décider ce qui sera construit en premier.</p>
         </section>
         <div class="pager"></div>
 </Docs>

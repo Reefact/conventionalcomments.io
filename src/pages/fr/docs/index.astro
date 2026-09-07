@@ -7,7 +7,7 @@ const page = 'docsindex' as const;
 ---
 <Docs lang={lang} page={page}
   title="Documentation"
-  description="Trois parcours : essayer, configurer un dépôt, déployer pour une organisation.">
+  description="Trois parcours : essayer, configurer un dépôt, et voir où mène l'application de la convention au niveau des plateformes.">
 <div class="dhead stack g12">
           <p class="crumb"><b>doc</b></p>
           <h1>Documentation</h1>
@@ -33,11 +33,11 @@ const page = 'docsindex' as const;
         </section>
 
         <section class="dsec">
-          <h2>Je déploie à l'échelle de l'organisation</h2>
-          <p>Vous voulez que la convention s'applique de manière cohérente partout, indépendamment de ce que chacun a installé.</p>
+          <h2>Je me demande ce qui vient ensuite</h2>
+          <p>Vous voulez que la convention s'applique de manière cohérente partout, indépendamment de ce que chacun a installé — et vous êtes curieux de savoir où mène l'application au niveau des plateformes.</p>
           <div class="paths">
-            <a class="path" href={href('server', 'fr')}><span class="pn">Le serveur</span><span class="pd">Docker, variables d'environnement, stockage, intégration aux plateformes et mise en place d'une vérification obligatoire.</span></a>
-            <a class="path" href={href('troubleshooting', 'fr')}><span class="pn">Diagnostic</span><span class="pd">Comprenez les bandeaux, les statuts neutres et les quelques comportements qui surprennent souvent lors de la première utilisation.</span></a>
+            <a class="path" href={href('server', 'fr')}><span class="pn">Enforce (feuille de route)</span><span class="pd">Pourquoi l'application au niveau des plateformes n'est pas encore livrée, ce qui fonctionne déjà sans elle, et comment sa mise en œuvre future reste volontairement ouverte.</span></a>
+            <a class="path" href={href('troubleshooting', 'fr')}><span class="pn">Diagnostic</span><span class="pd">Comprenez les bandeaux et les quelques comportements qui surprennent souvent lors de la première utilisation.</span></a>
           </div>
         </section>
 

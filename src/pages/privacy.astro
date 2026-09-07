@@ -7,7 +7,7 @@ const page = 'privacy' as const;
 ---
 <Base lang={lang} page={page}
   title="Privacy"
-  description="No comment, code, or diff content is collected or transmitted by the extension. See exactly what stays in your browser, what can be synced, and what the optional self-hosted server persists.">
+  description="No comment, code, or diff content is collected or transmitted by the extension. See exactly what stays in your browser and what can be synced.">
 <section class="hband">
       <div class="in">
         <div class="stack g18 measure">
@@ -17,7 +17,7 @@ const page = 'privacy' as const;
         </div>
         <div class="callout">
           <span class="ct">scope</span>
-          <p style="margin:0">This section covers the <strong>browser extension</strong> distributed through the extension stores. The <strong>server</strong> is a separate, optional component deployed and operated by your organization. It has its own persistence requirements, described further below.</p>
+          <p style="margin:0">This page covers the <strong>browser extension</strong> distributed through the extension stores — the only component of the product available today. A platform-level enforcement mechanism is on the roadmap; this page will be updated with its own data-handling section once one actually ships.</p>
         </div>
       </div>
     </section>
@@ -95,27 +95,6 @@ const page = 'privacy' as const;
     </section>
 
     <section class="hband sunk">
-      <div class="in">
-        <div class="stack g14 measure">
-          <span class="eyebrow">the server:</span>
-          <h2>If your organization deploys the server, your organization is the data controller.</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The server is not required to use the browser extension. When deployed, it runs on infrastructure controlled by your organization and persists the information it needs to provide its functionality. That includes categories such as:</p>
-        </div>
-        <ul class="bul measure">
-          <li>The <strong>pull request exemption log</strong>: identifier, action, requester, timestamp, and <strong>a free-text reason when one is provided</strong>. This information may therefore contain personal data.</li>
-          <li><strong>Evaluation records</strong> for pull requests, including a <strong>short excerpt</strong> — up to approximately 80 characters — from the root comment of each unresolved blocking thread, together with the author's identifier.</li>
-          <li><strong>Aggregate counters</strong> by repository and pull request. These are independent of the browser extension's telemetry setting; the two mechanisms are separate.</li>
-          <li>The current <strong>operational state</strong> required for the server to function.</li>
-        </ul>
-        <div class="callout blk">
-          <span class="ct">important</span>
-          <h4>This list describes the categories of data involved. It is not intended to be exhaustive.</h4>
-          <p>The server evolves over time. An organization that deploys and operates it is the <strong>data controller</strong> under the GDPR, or the equivalent role under applicable local law. That organization — not this page — is responsible for providing the privacy notice that applies to its own deployment, including its purposes for processing and applicable retention periods. Retention for the exemption log is configurable and defaults to twelve months.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="hband">
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">what the extension does not do:</span>

@@ -7,13 +7,13 @@ const page = 'howitworks' as const;
 ---
 <Base lang={lang} page={page}
   title="How it works"
-  description="The extension helps reviewers write Conventional Comments as they work. The optional server checks the pull request independently. See what each component does and why both exist.">
+  description="The extension helps reviewers write Conventional Comments and keeps track of what's still unresolved, directly in the browser. See what it does today, and where platform-level enforcement is headed.">
 <section class="hband">
       <div class="in">
         <div class="stack g18 measure">
           <span class="eyebrow acc">how it works:</span>
-          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">The extension helps you write. The server checks afterwards.</h1>
-          <p class="lede">The browser extension makes Conventional Comments easy to use while you're reviewing: a toolbar, keyboard shortcuts, and feedback as you type. The server is optional. If your organization deploys one, it independently re-evaluates the pull request and publishes a compliance check. They serve different purposes. Here's what each one actually does.</p>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">The extension helps you write. It also keeps score.</h1>
+          <p class="lede">The browser extension makes Conventional Comments easy to use while you're reviewing: a toolbar, keyboard shortcuts, and feedback as you type. It also tracks unresolved blocking comments directly on the pull request, entirely on its own. An authoritative, platform-level check is part of where this is heading, but it isn't part of what you install today. Here's what the extension actually does.</p>
         </div>
       </div>
     </section>
@@ -53,7 +53,7 @@ const page = 'howitworks' as const;
           <div>
             <h3>Badges on published comments</h3>
             <p>Once comments are published, their labels are rendered as badges without modifying the stored comment itself. A banner at the top of the pull request shows how many unresolved blocking threads remain and links directly to them.</p>
-            <p>That count comes from the summary published by the server, so the banner and the compliance check report the same state.</p>
+            <p>That count is computed by the extension itself, straight from the thread as it renders — no server involved.</p>
           </div>
         </div>
       </div>
@@ -81,7 +81,7 @@ const page = 'howitworks' as const;
         <div class="callout acc">
           <span class="ct">so what is the extension?</span>
           <h4>A guardrail, not a wall.</h4>
-          <p>The extension catches mistakes and lapses of attention — the common case. It is not intended to stop someone who deliberately chooses to bypass it. That's where the server matters: it runs independently of every reviewer's browser.</p>
+          <p>The extension catches mistakes and lapses of attention — the common case. It is not intended to stop someone who deliberately chooses to bypass it. Closing that gap is exactly what platform-level enforcement is meant to do: evaluate the pull request independently of every reviewer's browser. That part doesn't exist yet — it's on the roadmap, not in the extension.</p>
         </div>
       </div>
     </section>
@@ -90,25 +90,24 @@ const page = 'howitworks' as const;
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">when the extension is allowed to block:</span>
-          <h2>Four conditions must be met</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Strict mode alone is not enough. Unless all four conditions below are satisfied, the extension reports diagnostics but still allows the comment to be submitted.</p>
+          <h2>Three conditions must be met</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Strict mode alone is not enough. Unless all three conditions below are satisfied, the extension reports diagnostics but still allows the comment to be submitted.</p>
         </div>
         <ul class="tick">
           <li><span class="mk">1</span><b>Strict mode is actually in effect</b><span class="tx">The effective mode is resolved from the organization's configuration. It is never assumed locally.</span></li>
           <li><span class="mk">2</span><b>The pull request is within scope</b><span class="tx">If a repository starts enforcing the convention from a particular date, older pull requests do not suddenly become blocked retroactively.</span></li>
-          <li><span class="mk">3</span><b>The extension and server agree on the configuration</b><span class="tx">Both publish a fingerprint of the configuration they are applying. If the fingerprints differ — for example while a stricter configuration is still propagating — the extension stops blocking submissions and reports the mismatch.</span></li>
-          <li><span class="mk">4</span><b>The configuration was successfully read</b><span class="tx">If the configuration cannot be retrieved, the extension does not reject anything. A user should never be blocked in the name of a rule the extension itself could not read.</span></li>
+          <li><span class="mk">3</span><b>The configuration was successfully read</b><span class="tx">If the configuration cannot be retrieved, the extension does not reject anything. A user should never be blocked in the name of a rule the extension itself could not read.</span></li>
         </ul>
-        <p class="small measure">The last three conditions all protect the same principle: <strong>the extension must never reject locally what the authoritative evaluation would allow.</strong></p>
+        <p class="small measure">These conditions all protect the same principle: <strong>the extension must never reject something it cannot confirm the rules actually call for.</strong></p>
       </div>
     </section>
 
     <section class="hband">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">on the server:</span>
-          <h2>What the compliance check actually evaluates</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Two things. Nothing more.</p>
+          <span class="eyebrow">on the roadmap:</span>
+          <h2>What an authoritative check would evaluate</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">This part isn't built yet, so nothing below is something you can install or turn on today. It describes the direction: an evaluation that runs independently of any single reviewer's browser, and that a platform's own merge rules could rely on. Conceptually, it would still ask the same two questions the extension already asks locally.</p>
         </div>
         <div class="duo">
           <div>
@@ -120,26 +119,19 @@ const page = 'howitworks' as const;
             <span class="tag" style="color:var(--accent)">second</span>
             <h3>Have all blocking points been resolved?</h3>
             <p>A thread becomes blocking when its comment resolves to a blocking verdict. Once blocking, it remains blocking until either the thread is resolved, or an authorized person records a <code>decision</code> explaining why the point will not be addressed.</p>
-            <p class="guar">This is the criterion that can prevent the merge.</p>
+            <p class="guar">This is the criterion that would eventually be able to prevent a merge.</p>
           </div>
         </div>
-        <div class="check">
-          <div class="cr">
-            <span class="ic" style="background:var(--pass)"></span>
-            <span class="tx"><b>conventional-comments</b> — all blocking comments resolved<span>Required · merging is allowed</span></span>
-          </div>
-          <div class="mach">cc/1 core=1.0.0 mode=enforce blocking=0 fmt=ok fp=7f3c…a91</div>
-        </div>
-        <p class="small measure">The final line is machine-readable. It records which core version performed the evaluation, which mode was active, how many unresolved blocking points remain, and the fingerprint of the configuration that was applied. That fingerprint is what allows the extension to detect when it and the server are no longer evaluating against the same configuration.</p>
+        <p class="small measure">How this gets implemented is deliberately left open. GitHub, Azure DevOps, and other platforms may end up using different mechanisms — a lightweight platform-native integration, a small hosted or self-hosted service, or something else entirely. Nothing here is documented as a concrete capability until it actually ships.</p>
       </div>
     </section>
 
     <section class="hband sunk">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">why the two sides stay consistent:</span>
-          <h2>They run the same validation code.</h2>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">This isn't two separate implementations of the same rules that have to be kept in sync. The extension and server consume <strong>the same validation package</strong>, and no validation rule exists outside it. Given the same configuration, a comment accepted by the extension is accepted by the server, and vice versa.</p>
+          <span class="eyebrow">built for later, not just for now:</span>
+          <h2>One validation engine, not two implementations to keep in sync.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">The extension's checks aren't a one-off reimplementation of the rules. They run on <strong>a single validation package</strong>, and no validation rule exists outside it. Whatever eventually evaluates a pull request at the platform level will consume the same package, so results won't quietly diverge from what the extension already tells you.</p>
           <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">The validation library itself knows nothing about browsers or networks. Everything it needs is passed in as data, and everything it wants the caller to do comes back as a list of actions. That separation is also why the same validation engine can run directly in the browser — and why the <em>playground</em> is possible.</p>
         </div>
       </div>
@@ -149,11 +141,11 @@ const page = 'howitworks' as const;
       <div class="cta-in">
         <div class="stack g8">
           <h2>The extension is all you need to get started.</h2>
-          <p class="small" style="color:var(--fg-2)">Deploy the server when your team decides the convention should be checked independently of each reviewer's browser.</p>
+          <p class="small" style="color:var(--fg-2)">Assist and warn work today, entirely in your browser. Enforce, at the platform level, is on the roadmap.</p>
         </div>
         <div class="hero-btns">
           <a class="btn btn-p" href={href('install', 'en')}>Install the extension</a>
-          <a class="btn btn-s" href={href('server', 'en')}>Deploy the server</a>
+          <a class="btn btn-s" href={href('server', 'en')}>See the roadmap</a>
         </div>
       </div>
     </section>
