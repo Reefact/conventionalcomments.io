@@ -25,6 +25,11 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
   déjà disponible ou nécessaire. L'ancienne page consacrée au déploiement du serveur devient
   une page de feuille de route qui explique l'objectif d'Enforce sans imposer d'architecture
   à ce stade.
+- **Le schéma de configuration fourni par le site n'indique plus que le contrôle au niveau
+  de la plateforme est disponible aujourd'hui.** Les descriptions de `mode` et de `server`
+  affichées par l'éditeur distinguent désormais ce que l'extension sait faire aujourd'hui
+  de ce qui relève encore de la feuille de route. Les paramètres `server` sont explicitement
+  indiqués comme réservés et sans effet dans l'extension.
 
 ## release/2026-09-07T08-30-31Z — 7 septembre 2026
 
