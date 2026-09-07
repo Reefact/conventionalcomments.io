@@ -16,7 +16,13 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
-_Nothing pending yet._
+### 🔧 Improved
+
+- **The site now sells the extension, not a server you'd have to run.** Assist and warn are
+  described as available today through the browser extension alone. Enforce — an
+  authoritative, platform-level merge check — is presented as a roadmap direction rather
+  than a shipped or required backend, and the former "deploy the server" doc page now
+  explains why nothing ships there yet instead of walking through a Docker deployment.
 
 ## release/2026-09-07T08-30-31Z — September 7, 2026
 
