@@ -12,13 +12,17 @@ convention of the other Reefact repositories, so a maintainer moving between the
 does not have to remember which set of rules is in force.
 
 This was not always the rule: earlier revisions of this file asked for code
-comments in French, on the reasoning that the design producing them was written
-in French. That divergence from `justdummies.io` is dropped — keeping two
-languages of comments across Reefact repositories cost more than it bought.
-Existing French comments are not retroactively rewritten by this change alone —
-a diff whose only content is a translation is not worth reviewing on its own —
-but anything new, and anything touched in the course of other work, is written
-in English from here on.
+comments, design documents, the README, and workflow comments to be in French,
+on the reasoning that the design producing them was written in French. That
+divergence from `justdummies.io` is dropped — keeping two languages of internal
+content across Reefact repositories cost more than it bought.
+
+Existing French content of any of those kinds — comments, `docs/`, the README,
+workflow comments — is not retroactively rewritten by this change alone: a diff
+whose only content is a translation is not worth reviewing on its own. It stays
+in French until something else touches it, at which point the part actually
+touched goes to English rather than being left as a mixed-language file. Newly
+written content, in any of those places, is in English from here on.
 
 The site's own copy is a separate question, settled by the identity document:
 English at the root, French under `/fr/`, each written rather than translated.
