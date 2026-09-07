@@ -7,17 +7,17 @@ const page = 'privacy' as const;
 ---
 <Base lang={lang} page={page}
   title="Privacy"
-  description="No comment, code or diff content ever leaves your browser. Exactly what lives where, including the parts that are uncomfortable.">
+  description="No comment, code, or diff content is collected or transmitted by the extension. See exactly what stays in your browser, what can be synced, and what the optional self-hosted server persists.">
 <section class="hband">
       <div class="in">
         <div class="stack g18 measure">
           <span class="eyebrow acc">privacy:</span>
-          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">What you write in a review goes nowhere.</h1>
-          <p class="lede">A review comment is often more sensitive than the code — it says what you think of someone's work. <strong>The extension does not collect, store on a remote server, or transmit any code, comment or diff content.</strong> This page says exactly what lives where.</p>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">The extension doesn't send what you write in a review anywhere.</h1>
+          <p class="lede">Review comments can be more sensitive than the code itself: they contain not only technical information, but also what people think about someone else's work. <strong>The extension does not collect, remotely store, or transmit the content of your code, comments, or diffs.</strong> This page explains exactly what data exists, where it lives, and under what conditions anything can leave your browser.</p>
         </div>
         <div class="callout">
           <span class="ct">scope</span>
-          <p style="margin:0">What follows covers the <strong>browser extension</strong>, the part distributed through the stores. The <strong>server</strong> is a separate, optional component, hosted and operated by your organization: it has its own persistence, described further down.</p>
+          <p style="margin:0">This section covers the <strong>browser extension</strong> distributed through the extension stores. The <strong>server</strong> is a separate, optional component deployed and operated by your organization. It has its own persistence requirements, described further below.</p>
         </div>
       </div>
     </section>
@@ -25,7 +25,7 @@ const page = 'privacy' as const;
     <section class="hband sunk">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">the extension, line by line:</span>
+          <span class="eyebrow">the extension:</span>
           <h2>What lives where</h2>
         </div>
         <div class="scroller">
@@ -33,44 +33,44 @@ const page = 'privacy' as const;
             <thead><tr><th>Data</th><th>Where it lives</th><th>Does it leave the browser?</th></tr></thead>
             <tbody>
               <tr>
-                <td><strong>Your comments, the code, the diffs</strong></td>
-                <td class="d">In the page, in the platform's own editor.</td>
+                <td><strong>Your comments, code, and diffs</strong></td>
+                <td class="d">In the page, inside the code platform's own interface.</td>
                 <td><span class="st ok"><span class="dot"></span>never</span></td>
               </tr>
               <tr>
                 <td>Interface language and direct shortcuts</td>
                 <td class="d"><code>chrome.storage.sync</code></td>
-                <td><span class="st fb"><span class="dot"></span>synced</span><span class="why">By your browser's own sync, if you have it on — not by any server of ours. Those two preferences, nothing else.</span></td>
+                <td><span class="st fb"><span class="dot"></span>synced</span><span class="why">Only through your browser's own synchronization mechanism, if you have enabled it. No Reefact service is involved. Only these two preferences are synchronized.</span></td>
               </tr>
               <tr>
-                <td>Your login, and those of the comment authors on screen</td>
-                <td class="d">Tab memory, read from the page.</td>
-                <td><span class="st ok"><span class="dot"></span>no</span><span class="why">Neither written nor sent. Gone when the tab closes.</span></td>
+                <td>Your login and the logins of comment authors currently displayed</td>
+                <td class="d">In memory for the current tab, read from the page.</td>
+                <td><span class="st ok"><span class="dot"></span>no</span><span class="why">Neither stored nor transmitted. They disappear when the tab closes.</span></td>
               </tr>
               <tr>
-                <td>The displayed repository's configuration</td>
-                <td class="d">Fetched from the file with your session cookies; kept in memory per tab.</td>
-                <td><span class="st ok"><span class="dot"></span>no</span><span class="why">It's a read, on an address your session already allows — as if you opened it yourself.</span></td>
+                <td>Configuration for the repository being displayed</td>
+                <td class="d">Retrieved using your existing browser session; kept in memory for the tab.</td>
+                <td><span class="st ok"><span class="dot"></span>no</span><span class="why">The extension reads a resource your session is already allowed to access, just as your browser would if you opened it yourself.</span></td>
               </tr>
               <tr>
-                <td>Optional domains you granted</td>
-                <td class="d">Held by the browser, not by the extension.</td>
+                <td>Optional domains you have granted access to</td>
+                <td class="d">Managed by the browser.</td>
                 <td><span class="st ok"><span class="dot"></span>no</span></td>
               </tr>
               <tr>
-                <td>Local log of unrecognised page elements</td>
-                <td class="d">The last 50, on your device: rule name and timestamp, never content.</td>
-                <td><span class="st ok"><span class="dot"></span>no</span><span class="why">It's the diagnostic tool, readable from the options page.</span></td>
+                <td>Local log of unrecognized page elements</td>
+                <td class="d">The latest 50 entries on your device: rule name and timestamp only, never page content.</td>
+                <td><span class="st ok"><span class="dot"></span>no</span><span class="why">The log is available from the extension's options page for diagnostics.</span></td>
               </tr>
               <tr>
                 <td>Usage telemetry</td>
                 <td class="d">Nothing is emitted by default.</td>
-                <td><span class="st fb"><span class="dot"></span>only if you allow it</span><span class="why">See below: three conditions have to hold.</span></td>
+                <td><span class="st fb"><span class="dot"></span>only if you allow it</span><span class="why">Only if you explicitly allow it and all three conditions below are met.</span></td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p class="small measure">The extension stores <strong>no authentication token and no secret</strong>. It authenticates against no API: everything it reads outside the page goes through an address your browsing session already allows.</p>
+        <p class="small measure">The extension stores <strong>no authentication token and no secret</strong>. It does not authenticate directly against your code platform's API. Anything it needs to read outside the current page is accessed through URLs your existing browser session is already authorized to open.</p>
       </div>
     </section>
 
@@ -78,18 +78,18 @@ const page = 'privacy' as const;
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">telemetry:</span>
-          <h2>Three conditions, not a checkbox</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Nothing leaves until all three hold. Miss one, and the extension emits nothing.</p>
+          <h2>Telemetry requires three separate conditions.</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Nothing is sent unless <strong>all three</strong> conditions are satisfied. If any one of them is missing, the extension emits no telemetry.</p>
         </div>
         <ul class="tick">
-          <li><span class="mk">1</span><b>Your organization enabled it in its browser policy</b><span class="tx">Pushed by the browser itself, out of reach of any repository. A repository cannot switch telemetry on for you.</span></li>
-          <li><span class="mk">2</span><b>It declared an <code>https:</code> collection address</b><span class="tx">Its own. There is no default address, and none points anywhere near the extension's authors.</span></li>
-          <li><span class="mk">3</span><b>You ticked the box, on this device</b><span class="tx">The box shows the address, and your consent covers only that one. It stays local and <strong>does not sync</strong>. Unticking it disarms open tabs immediately.</span></li>
+          <li><span class="mk">1</span><b>Your organization enables telemetry through browser enterprise policy</b><span class="tx">That policy is distributed by the browser's management mechanism and cannot be changed by a repository. A repository cannot enable telemetry for you.</span></li>
+          <li><span class="mk">2</span><b>Your organization provides an <code>https:</code> collection endpoint</b><span class="tx">The endpoint belongs to your organization. There is no default collection endpoint, and the extension does not contain one pointing to Reefact or to the extension's authors.</span></li>
+          <li><span class="mk">3</span><b>You explicitly enable telemetry on that device</b><span class="tx">The consent control shows the collection endpoint it applies to. Your consent applies only to that endpoint, is stored locally on the device, and <strong>is not synchronized</strong> through browser sync. Disabling telemetry takes effect immediately for open tabs.</span></li>
         </ul>
         <div class="callout acc">
-          <span class="ct">and if all three hold</span>
-          <h4>What leaves is an aggregate, never text.</h4>
-          <p>The repository on screen, the configuration mode, and counters: labels used, diagnostic codes, degraded selector rules. <strong>No free text</strong> — a value that isn't of the expected shape is dropped rather than sent. The request carries neither cookie nor referrer, so the review page's address doesn't travel with it. A check measures that in a real browser on every run.</p>
+          <span class="ct">if all three conditions are met</span>
+          <h4>Only aggregated data is sent. Never free text.</h4>
+          <p>The payload may contain the repository being viewed, the active configuration mode, and counters such as labels used, diagnostic codes, and degraded selector rules. It contains <strong>no free-form text</strong>. If a value does not match the expected structure, the extension drops it rather than transmitting it. Telemetry requests include neither cookies nor a referrer, so the URL of the review page is not sent along with the request. This behaviour is verified in a real browser as part of the automated checks.</p>
         </div>
       </div>
     </section>
@@ -98,19 +98,19 @@ const page = 'privacy' as const;
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">the server:</span>
-          <h2>If your organization deploys one, your organization is the controller</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">It isn't required to use the extension. When deployed, it runs on your organization's own infrastructure — never on a third-party service — and persists what it needs:</p>
+          <h2>If your organization deploys the server, your organization is the data controller.</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The server is not required to use the browser extension. When deployed, it runs on infrastructure controlled by your organization and persists the information it needs to provide its functionality. That includes categories such as:</p>
         </div>
         <ul class="bul measure">
-          <li>The <strong>pull request exemption log</strong>: identifier, action, who asked, timestamp, and <strong>a free-text reason if they typed one</strong> — so it may contain personal information.</li>
-          <li><strong>Evaluation records</strong> per pull request, including a <strong>short excerpt</strong> — up to ~80 characters — of the root comment of each unresolved blocking thread, with its author's identifier.</li>
-          <li><strong>Aggregate counters</strong> per repository and per pull request, independent of the extension's telemetry setting: they are two separate mechanisms.</li>
-          <li>Current <strong>operational state</strong> needed for it to work.</li>
+          <li>The <strong>pull request exemption log</strong>: identifier, action, requester, timestamp, and <strong>a free-text reason when one is provided</strong>. This information may therefore contain personal data.</li>
+          <li><strong>Evaluation records</strong> for pull requests, including a <strong>short excerpt</strong> — up to approximately 80 characters — from the root comment of each unresolved blocking thread, together with the author's identifier.</li>
+          <li><strong>Aggregate counters</strong> by repository and pull request. These are independent of the browser extension's telemetry setting; the two mechanisms are separate.</li>
+          <li>The current <strong>operational state</strong> required for the server to function.</li>
         </ul>
         <div class="callout blk">
-          <span class="ct">don't misread this</span>
-          <h4>That list illustrates the categories. It is not exhaustive, and isn't meant to be.</h4>
-          <p>This component's code evolves, and an organization that deploys it is the <strong>data controller</strong> under GDPR or its local equivalent. It — not this page — has to provide the privacy policy that applies to its instance, with its own purpose and retention. Exemption log retention is configurable; it defaults to twelve months.</p>
+          <span class="ct">important</span>
+          <h4>This list describes the categories of data involved. It is not intended to be exhaustive.</h4>
+          <p>The server evolves over time. An organization that deploys and operates it is the <strong>data controller</strong> under the GDPR, or the equivalent role under applicable local law. That organization — not this page — is responsible for providing the privacy notice that applies to its own deployment, including its purposes for processing and applicable retention periods. Retention for the exemption log is configurable and defaults to twelve months.</p>
         </div>
       </div>
     </section>
@@ -119,23 +119,23 @@ const page = 'privacy' as const;
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">what the extension does not do:</span>
-          <h2>Four things, stated in the negative</h2>
+          <h2>Four explicit guarantees</h2>
         </div>
         <ul class="bul measure">
-          <li>It sends <strong>no comment, code or diff content</strong> to any third party or to its authors.</li>
-          <li>It runs <strong>no remote code</strong>: its security policy forbids any script not shipped inside it, and no dependency is loaded from a CDN.</li>
-          <li>It neither sells nor shares any data for advertising.</li>
-          <li>It does not track your browsing outside the review pages of supported platforms.</li>
+          <li>It sends <strong>no comment, code, or diff content</strong> to Reefact, the extension's authors, or any other third party.</li>
+          <li>It executes <strong>no remote code</strong>. Its security policy prevents scripts from being loaded unless they are packaged with the extension, and no dependency is loaded from a CDN.</li>
+          <li>It does not sell or share data for advertising purposes.</li>
+          <li>It does not track your browsing outside review pages on supported code platforms.</li>
         </ul>
-        <p class="small measure">The code is public and auditable under Apache-2.0. The permission-by-permission justification lives in the repository, and this page stands as the privacy policy for the stores.</p>
+        <p class="small measure">The source code is public and auditable under the Apache-2.0 license. The repository documents why each browser permission is required, and this page serves as the privacy policy for the extension-store listings.</p>
       </div>
     </section>
 
     <section class="cta-band">
       <div class="cta-in">
         <div class="stack g8">
-          <h2>None of this asks you to take our word for it.</h2>
-          <p class="small" style="color:var(--fg-2)">It's all verifiable in the code, and the published bundle is checked on every release.</p>
+          <h2>You don't have to take our word for any of this.</h2>
+          <p class="small" style="color:var(--fg-2)">The behaviour described here can be verified directly in the source code, and the published extension bundle is checked on every release.</p>
         </div>
         <div class="hero-btns">
           <a class="btn btn-p" href={href('install', 'en')}>Install the extension</a>
