@@ -1,0 +1,39 @@
+---
+/**
+ * One release of this site — the same markup and CSS classes as a toolkit release on
+ * `/release-notes/v1/` (`.rel`, `.rel-h`, `.rel-v`, `.rel-d`, `.rel-tag`, `.rel-sum`, `.rel-s`
+ * in base.css), so a reader who has seen one page recognises the other instead of meeting a
+ * second card design for the same idea.
+ *
+ * NO MATURITY PILL. `.rel-m` exists for a semver's own word about itself (`beta`, `stable`);
+ * a `release/<timestamp>` tag of this site carries no such claim, so the pill is simply never
+ * rendered here rather than filled with something invented.
+ */
+import { releaseTreeUrl, type LocalisedSiteRelease } from '../site-release';
+import { formatReleaseDate } from '../dates';
+import type { Locale } from '../i18n/routes';
+
+interface Props {
+  locale: Locale;
+  release: LocalisedSiteRelease;
+}
+
+const { locale, release } = Astro.props;
+const tagUrl = releaseTreeUrl(release.tag);
+---
+<article class="rel">
+  <div class="rel-h">
+    <span class="rel-v">{release.tag}</span>
+    <span class="rel-d"><time datetime={release.date}>{formatReleaseDate(release.date, locale)}</time></span>
+    <a class="rel-tag" href={tagUrl} rel="noopener noreferrer" target="_blank">tag ↗</a>
+  </div>
+  {release.summaryHtml.map((paragraph) => <p class="rel-sum" set:html={paragraph} />)}
+  {release.sections.map((section) => (
+    <div class="rel-s">
+      <h4>{section.label}</h4>
+      <ul>
+        {section.items.map((item) => <li set:html={item} />)}
+      </ul>
+    </div>
+  ))}
+</article>

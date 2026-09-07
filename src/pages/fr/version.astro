@@ -2,9 +2,14 @@
 import Base from '../../layouts/Base.astro';
 import { href } from '../../i18n/routes';
 import BuildFacts from '../../components/BuildFacts.astro';
+import SiteReleaseCard from '../../components/SiteReleaseCard.astro';
+import { siteRelease, siteReleaseIn, previousSiteReleasesIn } from '../../site-release';
 
 const lang = 'fr' as const;
 const page = 'version' as const;
+
+const latest = siteReleaseIn(lang);
+const previous = previousSiteReleasesIn(lang);
 ---
 <Base lang={lang} page={page} noindex
   title="Version"
@@ -26,10 +31,10 @@ const page = 'version' as const;
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">ce qu'elle a changé&nbsp;:</span>
-          <h2>Rien à signaler pour l'instant</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Cette section nomme ce que la release ci-dessus a apporté. Il n'y a pas de release ci-dessus — la ligne <code>release</code> est vide — donc rien à nommer. Elle se remplira le jour où un tag <code>release/*</code> sera poussé.</p>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Les notes de version du toolkit, qui sont autre chose et qui existent, sont sur <a href={href('releasenotes', 'fr')}>notes de version</a>.</p>
+          <h2>Dernière release</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Cette section nomme ce que la release ci-dessus a apporté — lu depuis le <code>RELEASE_NOTES-fr.md</code> de ce dépôt, pas celui du toolkit. Les notes de version du toolkit, qui sont autre chose, sont sur <a href={href('releasenotes', 'fr')}>notes de version</a>.</p>
         </div>
+        <SiteReleaseCard locale={lang} release={latest} />
       </div>
     </section>
 
@@ -38,9 +43,15 @@ const page = 'version' as const;
         <div class="stack g14 measure">
           <span class="eyebrow">releases précédentes&nbsp;:</span>
           <h2>Ce qui est venu avant</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Rien pour l'instant. Aucun tag <code>release/*</code> n'a été poussé, ce site n'a donc pas d'historique à montrer — et en inventer un sur la page dont le seul travail est de dire des faits sur le build serait le pire endroit pour le faire.</p>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Dès qu'il y aura des tags, ils seront listés sur <a href="https://github.com/Reefact/conventionalcomments.io/tags" rel="noopener noreferrer" target="_blank">la page des tags du dépôt ↗</a>, et la ligne <code>release</code> ci-dessus nommera celui d'où vient ce build.</p>
         </div>
+        {previous.length > 0 ? (
+          <div class="stack g18">
+            {previous.map((release) => <SiteReleaseCard locale={lang} release={release} />)}
+          </div>
+        ) : (
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">C'est la première release — il n'y a rien avant elle.</p>
+        )}
+        <p class="small measure">{siteRelease.moreTag !== null ? "Des releases plus anciennes existent au-delà de cette liste." : "Toutes les releases jamais poussées par ce site sont listées ci-dessus."} Elles sont toutes listées sur <a href="https://github.com/Reefact/conventionalcomments.io/tags" rel="noopener noreferrer" target="_blank">la page des tags du dépôt ↗</a>.</p>
       </div>
     </section>
 </Base>
