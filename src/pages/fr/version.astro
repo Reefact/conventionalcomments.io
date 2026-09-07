@@ -37,7 +37,7 @@ const isCurrentBuildsRelease = version.release !== null;
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">ce qu'elle a changé&nbsp;:</span>
-          <h2>{isCurrentBuildsRelease ? 'Dernière release' : 'La dernière release du site'}</h2>
+          <h2>Ce qui a été livré</h2>
           {isCurrentBuildsRelease ? (
             <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Cette section nomme ce que la release ci-dessus a apporté — lu depuis le <code>RELEASE_NOTES-fr.md</code> de ce dépôt, pas celui du toolkit. Les notes de version du toolkit, qui sont autre chose, sont sur <a href={href('releasenotes', 'fr')}>notes de version</a>.</p>
           ) : (
