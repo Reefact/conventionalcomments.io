@@ -7,13 +7,13 @@ const page = 'howitworks' as const;
 ---
 <Base lang={lang} page={page}
   title="How it works"
-  description="One half helps you write review comments, the other half checks them. What each component does, and why neither replaces the other.">
+  description="The extension helps reviewers write Conventional Comments as they work. The optional server checks the pull request independently. See what each component does and why both exist.">
 <section class="hband">
       <div class="in">
         <div class="stack g18 measure">
           <span class="eyebrow acc">how it works:</span>
-          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">One half helps you write. The other half checks.</h1>
-          <p class="lede">The extension makes the convention easy — a toolbar, keyboard expansions, feedback as you type. The server, if you deploy one, re-reads the pull request afterwards and publishes a check. This page is what each of them actually does, and why neither replaces the other.</p>
+          <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">The extension helps you write. The server checks afterwards.</h1>
+          <p class="lede">The browser extension makes Conventional Comments easy to use while you're reviewing: a toolbar, keyboard shortcuts, and feedback as you type. The server is optional. If your organization deploys one, it independently re-evaluates the pull request and publishes a compliance check. They serve different purposes. Here's what each one actually does.</p>
         </div>
       </div>
     </section>
@@ -22,29 +22,38 @@ const page = 'howitworks' as const;
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">in the editor:</span>
-          <h2>What the extension puts on the page</h2>
+          <h2>What the extension adds to the page</h2>
         </div>
 
         <div class="feat">
           <div>
-            <h3>A toolbar, in two rows</h3>
-            <p>Label buttons on the first row, decoration controls on the second. Never mixed, whatever the width — a label and a decoration are two different gestures, and a single wrapping strip eventually puts them side by side as if they were one.</p>
-            <p>Clicking a label <strong>inserts or replaces the prefix</strong> without destroying what you already typed. Click it again to remove it. Hover for the definition and an example.</p>
+            <h3>A two-row toolbar</h3>
+            <p>Labels are on the first row. Decorations are on the second. They stay separate regardless of the available width because choosing a label and qualifying it with a decoration are two different actions. Putting everything in one wrapping row would eventually place the two side by side as though they meant the same thing.</p>
+            <p>Clicking a label <strong>inserts or replaces the prefix</strong> without touching the rest of what you've written. Click the same label again to remove it. Hover over any label to see its definition and an example.</p>
           </div>
           <div>
-            <h3>Keyboard, if you prefer</h3>
-            <p>Type <code>/</code> or <code>:</code> at the start of the box and a filterable list opens: <code>↑</code> <code>↓</code> to move, <code>Enter</code> or <code>Tab</code> to pick, <code>Esc</code> to drop it.</p>
-            <p>Or expand an abbreviation with <code>Tab</code>: <code>?i</code> → <code>issue:</code>, <code>?ib</code> → <code>issue (blocking):</code>. Direct shortcuts too, like <code>Alt+I</code>.</p>
+            <h3>Keyboard controls</h3>
+            <p>If you prefer the keyboard, type <code>/</code> or <code>:</code> at the beginning of the comment box to open a filterable list. Use <code>↑</code> and <code>↓</code> to navigate, <code>Enter</code> or <code>Tab</code> to select, and <code>Esc</code> to close it.</p>
+            <p>You can also expand abbreviations with <code>Tab</code>:</p>
+            <pre class="code">?i  → issue:
+?ib → issue (blocking):</pre>
+            <p>Direct shortcuts such as <code>Alt+I</code> are available as well.</p>
           </div>
           <div>
-            <h3>A status dot under the box</h3>
-            <p>Compliant, compliant with warnings, or not compliant. When several things are wrong it lists <strong>all</strong> of them — showing one at a time would just make the next appear after each fix.</p>
-            <p>Validation is debounced at 150&nbsp;ms, and nothing on the page jumps while you type.</p>
+            <h3>Live validation below the comment box</h3>
+            <p>A status indicator tells you whether the comment is:</p>
+            <ul class="bul">
+              <li>compliant;</li>
+              <li>compliant with warnings; or</li>
+              <li>non-compliant.</li>
+            </ul>
+            <p>If several problems are present, the extension shows <strong>all of them at once</strong>. Showing only one would simply force you to fix issues one after another to discover what comes next.</p>
+            <p>Validation is debounced by 150&nbsp;ms, so the interface remains stable while you type.</p>
           </div>
           <div>
             <h3>Badges on published comments</h3>
-            <p>Labels already posted are rendered as badges, without touching what's stored. A banner at the top of the pull request counts the unresolved blocking threads and links to each one.</p>
-            <p>Its count comes from the server's published summary, so the banner and the check always agree.</p>
+            <p>Once comments are published, their labels are rendered as badges without modifying the stored comment itself. A banner at the top of the pull request shows how many unresolved blocking threads remain and links directly to them.</p>
+            <p>That count comes from the summary published by the server, so the banner and the compliance check report the same state.</p>
           </div>
         </div>
       </div>
@@ -53,26 +62,26 @@ const page = 'howitworks' as const;
     <section class="hband">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">a decision worth knowing:</span>
+          <span class="eyebrow">a deliberate choice:</span>
           <h2>There is no “publish anyway” button.</h2>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">In its strictest mode the extension can stop you sending a malformed comment. It offers no way to override that, and that's deliberate — for two reasons.</p>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">In its strictest mode, the extension can prevent a malformed comment from being submitted. There is no local override button. That's deliberate, for two reasons.</p>
         </div>
         <div class="duo">
           <div>
             <span class="tag" style="color:var(--fg-muted)">first</span>
-            <h3>It would control nothing</h3>
-            <p>A browser extension is disabled in two clicks. A bypass button adds no real capability to anyone determined to bypass — only a ceremony, a reason to type, a log nobody reads, and the illusion of control where there is none.</p>
+            <h3>A bypass button wouldn't provide real control</h3>
+            <p>A browser extension can be disabled in a couple of clicks. Someone determined to bypass it already can. Adding a dedicated bypass button would not create any meaningful new capability — only an extra ceremony, a reason field, another log, and the appearance of control where none actually exists.</p>
           </div>
           <div>
-            <span class="tag" style="color:var(--accent)">and this one matters more</span>
-            <h3>It would move the justification out of the conversation</h3>
-            <p>“We chose not to address this, for this reason” is a review act, not a technical escape hatch. Its place is a labelled comment in the thread, visible to everyone and kept with the pull request — not an external log.</p>
+            <span class="tag" style="color:var(--accent)">more importantly</span>
+            <h3>The justification belongs in the review</h3>
+            <p>“We decided not to address this point, and here's why” is part of the review itself. It should appear as a labelled comment in the thread, visible to everyone and preserved with the pull request. It should not disappear into a separate technical audit log.</p>
           </div>
         </div>
         <div class="callout acc">
-          <span class="ct">so what is it, then</span>
+          <span class="ct">so what is the extension?</span>
           <h4>A guardrail, not a wall.</h4>
-          <p>It catches the slip of attention, which is the common case. It never pretended to stop the determined person. That's the server's job — and the server doesn't run in anyone's browser.</p>
+          <p>The extension catches mistakes and lapses of attention — the common case. It is not intended to stop someone who deliberately chooses to bypass it. That's where the server matters: it runs independently of every reviewer's browser.</p>
         </div>
       </div>
     </section>
@@ -80,17 +89,17 @@ const page = 'howitworks' as const;
     <section class="hband sunk">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">and it holds back when it should:</span>
-          <h2>Four conditions before it blocks anything</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Strict mode isn't enough on its own. All four have to hold, or the extension simply shows its diagnostics and lets you publish.</p>
+          <span class="eyebrow">when the extension is allowed to block:</span>
+          <h2>Four conditions must be met</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Strict mode alone is not enough. Unless all four conditions below are satisfied, the extension reports diagnostics but still allows the comment to be submitted.</p>
         </div>
         <ul class="tick">
-          <li><span class="mk">1</span><b>The strict mode is actually in effect</b><span class="tx">Resolved from your organization's configuration, not assumed.</span></li>
-          <li><span class="mk">2</span><b>The pull request is within scope</b><span class="tx">A repository configured to start counting from a given date doesn't retroactively block older pull requests.</span></li>
-          <li><span class="mk">3</span><b>The extension and the server agree on the rules</b><span class="tx">Each publishes a fingerprint of the configuration it applies. If they differ — a tightening still propagating — the extension stops blocking and says so.</span></li>
-          <li><span class="mk">4</span><b>The rules could actually be read</b><span class="tx">If the configuration file couldn't be fetched, nothing is refused. You don't reject someone in the name of a rule you couldn't read.</span></li>
+          <li><span class="mk">1</span><b>Strict mode is actually in effect</b><span class="tx">The effective mode is resolved from the organization's configuration. It is never assumed locally.</span></li>
+          <li><span class="mk">2</span><b>The pull request is within scope</b><span class="tx">If a repository starts enforcing the convention from a particular date, older pull requests do not suddenly become blocked retroactively.</span></li>
+          <li><span class="mk">3</span><b>The extension and server agree on the configuration</b><span class="tx">Both publish a fingerprint of the configuration they are applying. If the fingerprints differ — for example while a stricter configuration is still propagating — the extension stops blocking submissions and reports the mismatch.</span></li>
+          <li><span class="mk">4</span><b>The configuration was successfully read</b><span class="tx">If the configuration cannot be retrieved, the extension does not reject anything. A user should never be blocked in the name of a rule the extension itself could not read.</span></li>
         </ul>
-        <p class="small measure">The last three exist for the same reason: never issue a rejection the source of truth wouldn't have issued.</p>
+        <p class="small measure">The last three conditions all protect the same principle: <strong>the extension must never reject locally what the authoritative evaluation would allow.</strong></p>
       </div>
     </section>
 
@@ -98,20 +107,20 @@ const page = 'howitworks' as const;
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">on the server:</span>
-          <h2>What the check actually measures</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Two things, and only two.</p>
+          <h2>What the compliance check actually evaluates</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Two things. Nothing more.</p>
         </div>
         <div class="duo">
           <div>
             <span class="tag" style="color:var(--fg-muted)">first</span>
-            <h3>Are the comments well formed?</h3>
-            <p>A comment is compliant when it raises no error-level diagnostic. Warnings are counted and shown, never a cause of failure. Most teams leave this one non-blocking.</p>
+            <h3>Are the comments correctly formed?</h3>
+            <p>A comment is compliant when it produces no error-level diagnostic. Warnings are reported and counted, but do not fail the check by themselves. Most teams keep formatting errors non-blocking.</p>
           </div>
           <div>
             <span class="tag" style="color:var(--accent)">second</span>
-            <h3>Are the blocking points handled?</h3>
-            <p>Every thread whose comment resolves to blocking is resolved. Blocking-ness is sticky: a thread that was blocking stays blocking until it's resolved, or until someone authorised records a <code>decision</code> saying why.</p>
-            <p class="guar">This is the one that stops the merge.</p>
+            <h3>Have all blocking points been resolved?</h3>
+            <p>A thread becomes blocking when its comment resolves to a blocking verdict. Once blocking, it remains blocking until either the thread is resolved, or an authorized person records a <code>decision</code> explaining why the point will not be addressed.</p>
+            <p class="guar">This is the criterion that can prevent the merge.</p>
           </div>
         </div>
         <div class="check">
@@ -121,17 +130,17 @@ const page = 'howitworks' as const;
           </div>
           <div class="mach">cc/1 core=1.0.0 mode=enforce blocking=0 fmt=ok fp=7f3c…a91</div>
         </div>
-        <p class="small measure">The last line is for machines: which version judged, in which mode, how many blocking points are left, and the fingerprint of the rules applied. It's what lets the extension notice that it and the server are no longer applying the same configuration.</p>
+        <p class="small measure">The final line is machine-readable. It records which core version performed the evaluation, which mode was active, how many unresolved blocking points remain, and the fingerprint of the configuration that was applied. That fingerprint is what allows the extension to detect when it and the server are no longer evaluating against the same configuration.</p>
       </div>
     </section>
 
     <section class="hband sunk">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">why they never contradict each other:</span>
-          <h2>Both run the same validation code.</h2>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Not “the same rules, kept in sync” — literally the same package, consumed identically on both sides, with no validation rule existing anywhere outside it. A comment the extension accepts is never rejected by the server, and the other way round.</p>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">That library touches no network and no page: everything it can't read itself is handed to it, and everything to be done comes back out as a list of actions. It's also why it can run in your browser — which is what makes the <em>playground</em> possible.</p>
+          <span class="eyebrow">why the two sides stay consistent:</span>
+          <h2>They run the same validation code.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">This isn't two separate implementations of the same rules that have to be kept in sync. The extension and server consume <strong>the same validation package</strong>, and no validation rule exists outside it. Given the same configuration, a comment accepted by the extension is accepted by the server, and vice versa.</p>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">The validation library itself knows nothing about browsers or networks. Everything it needs is passed in as data, and everything it wants the caller to do comes back as a list of actions. That separation is also why the same validation engine can run directly in the browser — and why the <em>playground</em> is possible.</p>
         </div>
       </div>
     </section>
@@ -139,8 +148,8 @@ const page = 'howitworks' as const;
     <section class="cta-band">
       <div class="cta-in">
         <div class="stack g8">
-          <h2>The extension is enough to start.</h2>
-          <p class="small" style="color:var(--fg-2)">The server is for the day a team decides the convention should hold on its own.</p>
+          <h2>The extension is all you need to get started.</h2>
+          <p class="small" style="color:var(--fg-2)">Deploy the server when your team decides the convention should be checked independently of each reviewer's browser.</p>
         </div>
         <div class="hero-btns">
           <a class="btn btn-p" href={href('install', 'en')}>Install the extension</a>
