@@ -16,6 +16,10 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
+_Rien en attente pour l'instant._
+
+## release/2026-09-08T10-40-39Z — 8 septembre 2026
+
 ### ✨ Nouveautés
 
 - **Les notes de version du toolkit couvrent désormais la 1.0.0-beta.12.**
