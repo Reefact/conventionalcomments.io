@@ -18,7 +18,7 @@ const page = 'troubleshooting' as const;
           <h2>The toolbar doesn't appear</h2>
           <ul class="tick">
             <li><span class="mk n">·</span><b>The domain isn't authorized yet</b><span class="tx">The extension runs only where you have allowed it, github.com included: a fresh install is active nowhere until you grant a first domain from its options page. For a domain the extension doesn't already know — a self-hosted instance, an internal host — you also need to specify which platform it is running so the extension can select the correct adapter.</span></li>
-            <li><span class="mk n">·</span><b>The platform's page structure has changed</b><span class="tx">If the markup the extension relies on changes, it disables the affected area rather than risk interacting with the wrong element. The options page keeps a log of the last fifty occurrences, containing only the rule name and timestamp — never review content.</span></li>
+            <li><span class="mk n">·</span><b>One of the extension's selectors found nothing</b><span class="tx">When the element a rule looks for isn't there, the extension disables the affected area rather than risk interacting with the wrong one. That can mean the platform changed its markup — or simply that the element is legitimately absent, like the merge button on a closed pull request. The options page's “Status” section keeps a log of the last fifty occurrences, containing only the rule name and timestamp — never review content.</span></li>
             <li><span class="mk n">·</span><b>The mode is <code>off</code></b><span class="tx">The organization or repository configuration can disable the extension entirely.</span></li>
           </ul>
         </section>

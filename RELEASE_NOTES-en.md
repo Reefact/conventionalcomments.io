@@ -35,13 +35,6 @@ the wrong moment to discover that nobody wrote what it contains.
   to a pull request where nothing happens, and leaves them looking for a bug rather than a
   button. The install page now walks through authorizing a domain, and warns anyone updating
   from an earlier version that github.com goes quiet until they do.
-- **The site no longer says the extension works on github.com out of the box.** It did, up
-  to toolkit 1.0.0-beta.10; from 1.0.0-beta.11 a fresh install is active nowhere until you
-  allow a first domain, github.com like any other. The install, platforms, troubleshooting
-  and home pages said the opposite in both languages — the kind of claim that sends someone
-  to a pull request where nothing happens, and leaves them looking for a bug rather than a
-  button. The install page now walks through authorizing a domain, and warns anyone updating
-  from an earlier version that github.com goes quiet until they do.
 - **The troubleshooting page no longer says the platform changed its markup.** Under "the
   toolbar doesn't appear", the second cause was headed "The platform's page structure has
   changed" — the same over-claim the toolkit removed from the extension in 1.0.0-beta.12.
