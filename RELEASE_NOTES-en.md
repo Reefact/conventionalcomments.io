@@ -16,7 +16,24 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
-_Nothing pending yet._
+### 🐛 Fixed
+
+- **The pages no longer explain themselves by contrast with a version you never saw.** The
+  home, platforms and install pages each singled out github.com in a sentence that had
+  already stated the rule — that the extension reaches only the domains you have allowed.
+  Naming one domain inside that rule only means something to a reader who knew github.com
+  used to be built in; to everyone else it suggests the domain is an exception, which is the
+  opposite of what the sentence says. The aside is gone from all three; the troubleshooting
+  entry keeps it, because someone whose toolbar is missing on github.com needs that
+  exception ruled out by name.
+- **Neither language talks about granting a domain any more.** What is granted is access to
+  a domain, not the domain itself, and both languages had lost that distinction. In French,
+  the troubleshooting page read "tant que vous ne lui accordez pas un premier domaine"; in
+  English, the install and platforms pages read "every domain is granted one at a time" and
+  the troubleshooting page "until you grant a first domain". All four now name what is
+  actually granted, and the install page's sentence introducing them says the extension
+  "has no permanent access to any site" rather than that it "holds" none. Review caught the French wording in the last release's notes and it was
+  fixed there; the page it came from was missed, and shipped.
 
 ## release/2026-09-08T10-40-39Z — September 8, 2026
 
