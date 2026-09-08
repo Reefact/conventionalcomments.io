@@ -16,7 +16,13 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
-_Rien en attente pour l'instant._
+### 🐛 Corrections
+
+- **La page de diagnostic ne parle plus d'accorder un domaine.** Sous « la barre de labels
+  n'apparaît pas », elle disait « tant que vous ne lui accordez pas un premier domaine » :
+  on n'accorde pas un domaine à une extension, on l'autorise à y accéder. La revue avait
+  relevé la même tournure dans les notes de la release précédente et elle y a été corrigée ;
+  la page dont elle venait est passée au travers, et est partie en ligne.
 
 ## release/2026-09-08T10-40-39Z — 8 septembre 2026
 

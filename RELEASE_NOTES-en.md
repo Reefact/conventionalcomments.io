@@ -16,7 +16,13 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
-_Nothing pending yet._
+### 🐛 Fixed
+
+- **The French troubleshooting page no longer talks about granting a domain.** Under "la
+  barre de labels n'apparaît pas", it read "tant que vous ne lui accordez pas un premier
+  domaine" — in French one does not grant a domain to an extension, one authorizes the
+  extension to reach it. Review caught the same wording in the last release's notes and it
+  was fixed there; the page that wording came from was missed, and shipped.
 
 ## release/2026-09-08T10-40-39Z — September 8, 2026
 
