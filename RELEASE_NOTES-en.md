@@ -16,6 +16,10 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
+_Nothing pending yet._
+
+## release/2026-09-08T10-40-39Z — September 8, 2026
+
 ### ✨ New
 
 - **The toolkit's release notes now cover 1.0.0-beta.12.** `/release-notes/v1/` gains the
