@@ -19,11 +19,13 @@ the wrong moment to discover that nobody wrote what it contains.
 ### 🐛 Fixed
 
 - **The pages no longer explain themselves by contrast with a version you never saw.** The
-  home, platforms and install pages each said the extension has access to nothing "—
-  github.com included". Singling out one domain in a sentence that already says "none" only
-  means something to a reader who knew github.com used to be built in. Where the sentence is
-  absolute, the aside is gone; the troubleshooting entry keeps it, because someone whose
-  toolbar is missing on github.com needs that exception ruled out by name.
+  home, platforms and install pages each singled out github.com in a sentence that had
+  already stated the rule — that the extension reaches only the domains you have allowed.
+  Naming one domain inside that rule only means something to a reader who knew github.com
+  used to be built in; to everyone else it suggests the domain is an exception, which is the
+  opposite of what the sentence says. The aside is gone from all three; the troubleshooting
+  entry keeps it, because someone whose toolbar is missing on github.com needs that
+  exception ruled out by name.
 - **The French troubleshooting page no longer talks about granting a domain.** Under "la
   barre de labels n'apparaît pas", it read "tant que vous ne lui accordez pas un premier
   domaine" — in French one does not grant a domain to an extension, one authorizes the

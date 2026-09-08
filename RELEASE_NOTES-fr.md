@@ -19,12 +19,14 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 ### 🐛 Corrections
 
 - **Les pages ne s'expliquent plus par contraste avec une version que vous n'avez pas
-  connue.** L'accueil, la page des plateformes et celle d'installation disaient chacune que
-  l'extension n'a accès à rien « — github.com compris ». Distinguer un domaine dans une
-  phrase qui dit déjà « aucun » ne parle qu'à ceux qui savaient que github.com était intégré
-  auparavant. Là où la phrase est absolue, l'incise disparaît ; la page de diagnostic la
-  garde, car quelqu'un qui ne voit pas sa barre de labels sur github.com a besoin que cette
-  exception soit explicitement écartée.
+  connue.** L'accueil, la page des plateformes et celle d'installation distinguaient chacune
+  github.com dans une phrase qui énonçait déjà la règle : l'extension n'atteint que les
+  domaines que vous avez autorisés. Nommer un domaine à l'intérieur de cette règle ne parle
+  qu'à ceux qui savaient que github.com était intégré auparavant ; pour les autres, cela
+  laisse croire que ce domaine fait exception, soit l'inverse de ce que la phrase dit.
+  L'incise disparaît des trois ; la page de diagnostic la garde, car quelqu'un qui ne voit
+  pas sa barre de labels sur github.com a besoin que cette exception soit explicitement
+  écartée.
 - **La page de diagnostic ne parle plus d'accorder un domaine.** Sous « la barre de labels
   n'apparaît pas », elle disait « tant que vous ne lui accordez pas un premier domaine » :
   on n'accorde pas un domaine à une extension, on l'autorise à y accéder. La revue avait
