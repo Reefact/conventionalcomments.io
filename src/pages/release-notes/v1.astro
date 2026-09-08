@@ -13,12 +13,13 @@ const page = 'releasenotes' as const;
         <p class="grp">release line:</p>
         <div class="rn-line">
           <span class="rn-ln">Toolkit 1.x</span>
-          <span class="rn-lv">1.0.0-beta.11</span>
-          <span class="rn-ld">September 8, 2026 · 11 releases</span>
+          <span class="rn-lv">1.0.0-beta.12</span>
+          <span class="rn-ld">September 8, 2026 · 12 releases</span>
         </div>
         <p class="grp">on this page:</p>
         <ul class="rn-jump">
-          <li><a href="#v1-0-0-beta-11" class="cur">1.0.0-beta.11</a></li>
+          <li><a href="#v1-0-0-beta-12" class="cur">1.0.0-beta.12</a></li>
+          <li><a href="#v1-0-0-beta-11">1.0.0-beta.11</a></li>
           <li><a href="#v1-0-0-beta-10">1.0.0-beta.10</a></li>
           <li><a href="#v1-0-0-beta-9">1.0.0-beta.9</a></li>
           <li><a href="#v1-0-0-beta-8">1.0.0-beta.8</a></li>
@@ -49,6 +50,18 @@ const page = 'releasenotes' as const;
         </div>
 
         <h2 class="rn-major">Version 1</h2>
+
+        <article class="rel" id="v1-0-0-beta-12">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.12</span><span class="rel-m">beta</span><span class="rel-d">September 8, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.12" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">The guided tour is legible at last — the page behind it really does go dark, and its card sits above it instead of blending in — and the “Status” section says what it observed rather than what that might mean.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li><strong>The “Status” section tells you what it is for.</strong> It was the only section of the options page whose heading had nothing under it, so you had to read the two lines it shows to work out what it covered.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li><strong>The guided tour now dims the page around the part it is pointing at.</strong> In the dark theme it barely dimmed at all — a dark veil over an already dark page changes almost nothing — so the tour looked like it was highlighting nothing, and its card, which had the same colour as the panels behind it, read as one more panel rather than as something floating above them. The rest of the page now goes properly dark in both themes, and the card carries a drop shadow you can actually see; in the dark theme it is also a lighter surface than the panels behind it.</li>
+            <li><strong>The “Status” section no longer suggests the extension changed your pages.</strong> It reported “pages whose structure changed under it”, which reads as an accusation and, either way, claims more than the extension knows: what it records is that one of its selectors found nothing on the page. That can mean the page changed — or simply that the element is legitimately absent, like the merge button on a closed pull request. Both the section and the tour step now report what was actually observed.</li>
+          </ul></div>
+        </article>
 
         <article class="rel" id="v1-0-0-beta-11">
           <div class="rel-h"><span class="rel-v">1.0.0-beta.11</span><span class="rel-m">beta</span><span class="rel-d">September 8, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.11" rel="noopener noreferrer" target="_blank">tag ↗</a></div>

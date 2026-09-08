@@ -18,6 +18,10 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ### ✨ Nouveautés
 
+- **Les notes de version du toolkit couvrent désormais la 1.0.0-beta.12.**
+  `/fr/notes-de-version/v1/` gagne la version qui rend la visite guidée lisible dans les deux
+  thèmes et empêche la section « État » de la page d'options d'affirmer plus que ce que
+  l'extension sait.
 - **Les notes de version du toolkit couvrent désormais la 1.0.0-beta.11.**
   `/fr/notes-de-version/v1/` gagne la version où toutes les plateformes — `github.com`
   compris — s'autorisent de la même façon, où la page d'options s'ouvre d'elle-même à la
@@ -35,6 +39,23 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
   chercher un bug plutôt qu'un bouton. La page d'installation détaille désormais comment
   autoriser un domaine, et prévient quiconque met à jour depuis une version antérieure que
   github.com se taira jusque-là.
+- **Le site n'affirme plus que l'extension fonctionne sur github.com dès l'installation.**
+  C'était vrai jusqu'au toolkit 1.0.0-beta.10 ; depuis la 1.0.0-beta.11, une extension
+  fraîchement installée n'est active nulle part tant que vous ne lui accordez pas un premier
+  domaine, github.com comme un autre. Les pages d'installation, de plateformes, de
+  diagnostic et l'accueil affirmaient le contraire, dans les deux langues — le genre de
+  promesse qui envoie quelqu'un sur une pull request où rien ne se passe, et le laisse
+  chercher un bug plutôt qu'un bouton. La page d'installation détaille désormais comment
+  autoriser un domaine, et prévient quiconque met à jour depuis une version antérieure que
+  github.com se taira jusque-là.
+- **La page de diagnostic n'affirme plus que la plateforme a changé son balisage.** Sous
+  « la barre de labels n'apparaît pas », la deuxième cause s'intitulait « La structure de la
+  page a changé » — l'excès que le toolkit vient précisément de retirer de l'extension en
+  1.0.0-beta.12. Ce qui est réellement enregistré, c'est qu'un sélecteur de l'extension n'a
+  rien trouvé, ce qui peut signifier que le balisage a changé ou simplement que l'élément est
+  légitimement absent, comme le bouton de fusion sur une pull request fermée. Envoyer
+  quelqu'un chercher un changement de plateforme qui n'a jamais eu lieu est la pire réponse
+  que puisse donner une page de diagnostic.
 - **La page `/version` ne nomme plus deux fois la même release.** Sur un build issu d'un tag
   de release, le titre situé juste sous les informations de build répétait le titre de la
   page elle-même, « Dernière release ». Il affiche désormais « Ce qui a été livré », sur tout
