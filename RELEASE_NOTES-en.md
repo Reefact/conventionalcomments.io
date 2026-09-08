@@ -16,6 +16,13 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
+### ✨ New
+
+- **The toolkit's release notes now cover 1.0.0-beta.11.** `/release-notes/v1/` gains the
+  release in which every platform — `github.com` included — is authorized the same way, the
+  options page opens itself on a first install with a guided tour, and GitHub Enterprise
+  Cloud with data residency works at all.
+
 ### 🐛 Fixed
 
 - **The `/version` page no longer names the same release twice.** On a build that came from a

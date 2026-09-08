@@ -16,6 +16,14 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
+### ✨ Nouveautés
+
+- **Les notes de version du toolkit couvrent désormais la 1.0.0-beta.11.**
+  `/fr/notes-de-version/v1/` gagne la version où toutes les plateformes — `github.com`
+  compris — s'autorisent de la même façon, où la page d'options s'ouvre d'elle-même à la
+  première installation avec une visite guidée, et où GitHub Enterprise Cloud avec résidence
+  des données fonctionne, tout simplement.
+
 ### 🐛 Corrections
 
 - **La page `/version` ne nomme plus deux fois la même release.** Sur un build issu d'un tag
