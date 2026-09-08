@@ -13,12 +13,13 @@ const page = 'releasenotes' as const;
         <p class="grp">ligne de version&nbsp;:</p>
         <div class="rn-line">
           <span class="rn-ln">Toolkit 1.x</span>
-          <span class="rn-lv">1.0.0-beta.10</span>
-          <span class="rn-ld">5 septembre 2026 · 10 versions</span>
+          <span class="rn-lv">1.0.0-beta.11</span>
+          <span class="rn-ld">8 septembre 2026 · 11 versions</span>
         </div>
         <p class="grp">sur cette page&nbsp;:</p>
         <ul class="rn-jump">
-          <li><a href="#v1-0-0-beta-10" class="cur">1.0.0-beta.10</a></li>
+          <li><a href="#v1-0-0-beta-11" class="cur">1.0.0-beta.11</a></li>
+          <li><a href="#v1-0-0-beta-10">1.0.0-beta.10</a></li>
           <li><a href="#v1-0-0-beta-9">1.0.0-beta.9</a></li>
           <li><a href="#v1-0-0-beta-8">1.0.0-beta.8</a></li>
           <li><a href="#v1-0-0-beta-7">1.0.0-beta.7</a></li>
@@ -48,6 +49,29 @@ const page = 'releasenotes' as const;
         </div>
 
         <h2 class="rn-major">Version 1</h2>
+
+        <article class="rel" id="v1-0-0-beta-11">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.11</span><span class="rel-m">beta</span><span class="rel-d">8 septembre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.11" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">Vous autorisez désormais l'accès à toutes les plateformes de la même façon — <code>github.com</code> compris — et pouvez le révoquer à tout moment.</p>
+          <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+            <li><strong>Vous choisissez où l'extension travaille, et vous pouvez revenir sur ce choix.</strong> <code>github.com</code> était jusqu'ici intégré à l'extension&nbsp;: actif dès l'installation, sans aucun moyen de révoquer cet accès depuis l'extension elle-même. Il passe maintenant par la même autorisation en un clic que toutes les autres plateformes, et chaque domaine autorisé porte un bouton «&nbsp;Retirer&nbsp;». Les domaines imposés par la politique de votre organisation restent en place — ce n'est pas à cet écran d'en décider.</li>
+            <li><strong>La page d'options s'ouvre automatiquement la première fois et vous propose une visite guidée.</strong> Celle-ci présente chaque section et explique à quoi elle sert&nbsp;; vous pouvez l'interrompre à tout moment, la fermer avec <code>Échap</code>, et elle ne revient jamais d'elle-même. Un bouton «&nbsp;Revoir la visite guidée&nbsp;» en haut de page la rejoue quand vous voulez.</li>
+            <li><strong>La page d'options parle enfin français ou anglais, comme le reste de l'extension.</strong> Elle restait en français quel que soit votre choix&nbsp;: quelqu'un ayant réglé l'interface en anglais voyait de l'anglais partout, sauf sur la page de réglages où il venait de faire ce choix. Le changement de langue prend désormais effet immédiatement, et non au prochain rechargement.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li><strong>GitHub Enterprise Cloud avec résidence des données fonctionne, tout simplement.</strong> Un domaine autorisé sous la forme <code>*.ghe.com</code> était enregistré sous un nom déformé, si bien que l'extension ne reconnaissait jamais les pages pour lesquelles elle était autorisée. Le défaut est plus ancien que cette version, et aucun test ne pouvait le voir&nbsp;: il n'apparaît que dans un navigateur, et les tests tournaient là où il n'existe pas.</li>
+            <li><strong>Il n'est plus nécessaire de recharger l'onglet d'où vous venez.</strong> Autoriser un domaine depuis la page d'options laissait cet onglet inerte — précisément celui que vous alliez utiliser. L'extension y est désormais active immédiatement.</li>
+            <li><strong>Un retrait refusé par le navigateur n'est plus présenté comme réussi.</strong> L'écran affichait ensuite le domaine parmi les non configurés — une anomalie qu'il venait de créer lui-même, alors que l'accès était toujours accordé. Il ne change plus rien et dit pourquoi.</li>
+            <li><strong>Retirer l'autorisation depuis <code>chrome://extensions</code> efface désormais aussi la plateforme enregistrée.</strong> Elle restait auparavant en place, si bien que réautoriser le domaine de la même façon rétablissait silencieusement l'ancien choix au lieu de vous le redemander.</li>
+            <li><strong>L'extension ne se charge plus sur des pages qu'elle ne prend pas en charge.</strong> Si vous aviez accordé l'accès à tous les sites depuis les contrôles du navigateur, son code était injecté sur toutes les pages <code>https</code>, où il ne pouvait de toute façon rien faire. Un motif qui ne désigne aucun hôte concret n'apparaît plus non plus dans votre liste comme un domaine à configurer.</li>
+            <li><strong>L'interface n'apparaît plus en double sur une page couverte par deux de vos autorisations</strong>, et un onglet laissé ouvert longtemps n'accumule plus une copie de la feuille de style de l'extension.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Modifications</h4><ul>
+            <li><strong>Après cette mise à jour, l'extension se tait sur <code>github.com</code> jusqu'à ce que vous l'autorisiez.</strong> Un clic sur «&nbsp;Activer&nbsp;» dans la page d'options suffit. Cette étape ne peut pas être automatisée&nbsp;: le navigateur n'accorde cette permission qu'à la suite d'une action explicite de votre part. La page s'ouvre d'elle-même pour le dire — mais seulement si la mise à jour ne vous laisse aucun domaine en service&nbsp;; si vous en aviez déjà un autre configuré, l'extension continue d'y fonctionner et rien ne signale qu'elle n'est plus active sur <code>github.com</code>.</li>
+            <li><strong>L'écran des options est refait autour des états réels d'un accès</strong>&nbsp;: les domaines que l'extension connaît déjà, où un clic autorise et classe à la fois&nbsp;; tout autre domaine, où vous indiquez à quelle plateforme il correspond avant d'accorder l'accès&nbsp;; la liste de ce qui est configuré&nbsp;; et, seulement quand elle n'est pas vide, les domaines autorisés depuis le navigateur plutôt que depuis cet écran, où l'extension n'est donc pas encore active.</li>
+            <li><strong>Chaque organisation <code>visualstudio.com</code> s'autorise désormais individuellement</strong> depuis le champ libre, avec Azure DevOps pré-rempli. L'entrée de catalogue qu'elle remplace demandait d'un coup toutes les organisations hébergées sur ces adresses historiques, quand un poste n'en sert qu'une.</li>
+          </ul></div>
+        </article>
 
         <article class="rel" id="v1-0-0-beta-10">
           <div class="rel-h"><span class="rel-v">1.0.0-beta.10</span><span class="rel-m">beta</span><span class="rel-d">5 septembre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.10" rel="noopener noreferrer" target="_blank">tag ↗</a></div>

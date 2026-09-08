@@ -13,12 +13,13 @@ const page = 'releasenotes' as const;
         <p class="grp">release line:</p>
         <div class="rn-line">
           <span class="rn-ln">Toolkit 1.x</span>
-          <span class="rn-lv">1.0.0-beta.10</span>
-          <span class="rn-ld">September 5, 2026 · 10 releases</span>
+          <span class="rn-lv">1.0.0-beta.11</span>
+          <span class="rn-ld">September 8, 2026 · 11 releases</span>
         </div>
         <p class="grp">on this page:</p>
         <ul class="rn-jump">
-          <li><a href="#v1-0-0-beta-10" class="cur">1.0.0-beta.10</a></li>
+          <li><a href="#v1-0-0-beta-11" class="cur">1.0.0-beta.11</a></li>
+          <li><a href="#v1-0-0-beta-10">1.0.0-beta.10</a></li>
           <li><a href="#v1-0-0-beta-9">1.0.0-beta.9</a></li>
           <li><a href="#v1-0-0-beta-8">1.0.0-beta.8</a></li>
           <li><a href="#v1-0-0-beta-7">1.0.0-beta.7</a></li>
@@ -48,6 +49,29 @@ const page = 'releasenotes' as const;
         </div>
 
         <h2 class="rn-major">Version 1</h2>
+
+        <article class="rel" id="v1-0-0-beta-11">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.11</span><span class="rel-m">beta</span><span class="rel-d">September 8, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.11" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">You now authorize every platform the same way — <code>github.com</code> included — so the extension asks before it works anywhere, and you can revoke that access at any time.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li><strong>You choose where the extension works, and you can change your mind.</strong> <code>github.com</code> used to be built into the extension: active from the moment you installed it, with no way to revoke that access from the extension itself. It now goes through the same one-click authorization as every other platform, and every domain you have allowed carries a “Withdraw” button. Domains authorized by your organisation's policy stay as they are — that is not this screen's call.</li>
+            <li><strong>The options page opens automatically the first time and offers you a guided tour.</strong> It introduces each section and explains what it is for; you can skip it at any point, close it with <code>Escape</code>, and it never comes back on its own. A “Replay the guided tour” button in the page header replays it whenever you want.</li>
+            <li><strong>The options page now speaks French or English, like the rest of the extension.</strong> It stayed in French whatever you had chosen — so someone who had set the interface to English saw English everywhere except on the settings page where they made that choice. The new language now takes effect immediately, rather than at the next reload.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li><strong>GitHub Enterprise Cloud with data residency now works at all.</strong> A domain allowed as <code>*.ghe.com</code> was recorded under a mangled name, so the extension never recognised the pages it was authorized for. This is older than this release, and no test could see it: the flaw only appears in a browser, and the tests ran where it does not.</li>
+            <li><strong>You no longer need to reload the tab you came from.</strong> Allowing a domain from the options page left that tab inert — precisely the tab you were about to use. The extension now activates there immediately.</li>
+            <li><strong>A failed revocation is no longer reported as successful.</strong> When the browser refuses to remove an access, the screen used to report the domain as unconfigured afterwards — an anomaly it had created itself, while the access was in fact still granted. It now changes nothing and says why.</li>
+            <li><strong>Revoking access from <code>chrome://extensions</code> now also clears the saved platform.</strong> The platform you had chosen for that domain used to stay behind, so granting it again the same way silently restored the old choice instead of asking you.</li>
+            <li><strong>The extension no longer loads itself on pages it does not support.</strong> If you had granted access to all sites from the browser's own controls, its code was injected into every <code>https</code> page, where it could do nothing anyway. Patterns that do not identify a concrete host no longer appear as domains to configure either.</li>
+            <li><strong>The interface no longer appears twice on a page covered by two of your authorizations</strong>, and a tab left open for a long time no longer accumulates a copy of the extension's stylesheet.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changed</h4><ul>
+            <li><strong>After this update, the extension is silent on <code>github.com</code> until you allow it.</strong> One click on “Activate” in the options page is enough. This step cannot be automated: the browser only grants a site permission after an explicit action from you. The page opens by itself to say so — but only if the update left you with no working domain at all; if you already had another one configured, the extension keeps working there and nothing tells you it is no longer active on <code>github.com</code>.</li>
+            <li><strong>The options screen is rebuilt around the actual access states</strong>: domains the extension already knows, where one click both authorizes and classifies; any other domain, where you say which platform it belongs to before granting; the list of what is configured; and, only when it is not empty, the domains you allowed from the browser rather than from this screen, where the extension is not active yet.</li>
+            <li><strong>Each <code>visualstudio.com</code> organisation is now authorized individually</strong> through the free-form field, with Azure DevOps pre-filled. The catalog entry it replaces asked for every organisation on those legacy addresses at once, when a workstation uses one.</li>
+          </ul></div>
+        </article>
 
         <article class="rel" id="v1-0-0-beta-10">
           <div class="rel-h"><span class="rel-v">1.0.0-beta.10</span><span class="rel-m">beta</span><span class="rel-d">September 5, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.10" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
