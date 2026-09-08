@@ -19,19 +19,22 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 ### 🐛 Corrections
 
 - **Les pages ne s'expliquent plus par contraste avec une version que vous n'avez pas
-  connue.** L'accueil, la page des plateformes et celle d'installation distinguaient chacune
-  github.com dans une phrase qui énonçait déjà la règle : l'extension n'atteint que les
+  connue.** L'accueil, la page des plateformes et celle d'installation mentionnaient chacune
+  github.com dans une phrase qui énonçait déjà la règle : l'extension n'accède qu'aux
   domaines que vous avez autorisés. Nommer un domaine à l'intérieur de cette règle ne parle
   qu'à ceux qui savaient que github.com était intégré auparavant ; pour les autres, cela
   laisse croire que ce domaine fait exception, soit l'inverse de ce que la phrase dit.
-  L'incise disparaît des trois ; la page de diagnostic la garde, car quelqu'un qui ne voit
+  L'incise disparaît dans les trois pages ; la page de diagnostic la garde, car quelqu'un qui ne voit
   pas sa barre de labels sur github.com a besoin que cette exception soit explicitement
   écartée.
-- **La page de diagnostic ne parle plus d'accorder un domaine.** Sous « la barre de labels
-  n'apparaît pas », elle disait « tant que vous ne lui accordez pas un premier domaine » :
-  on n'accorde pas un domaine à une extension, on l'autorise à y accéder. La revue avait
-  relevé la même tournure dans les notes de la release précédente et elle y a été corrigée ;
-  la page d'origine a échappé à la correction et a été mise en ligne telle quelle.
+- **Aucune des deux langues ne parle plus d'accorder un domaine.** Ce qui s'accorde, c'est
+  l'accès à un domaine, pas le domaine lui-même, et les deux langues avaient perdu cette
+  distinction. En français, la page de diagnostic disait « tant que vous ne lui accordez pas
+  un premier domaine » ; en anglais, les pages d'installation et de plateformes disaient
+  « every domain is granted one at a time » et celle de diagnostic « until you grant a first
+  domain ». Les quatre nomment désormais ce qui est réellement accordé. La revue avait relevé
+  la tournure française dans les notes de la release précédente et elle y a été corrigée ; la
+  page d'origine a échappé à la correction et a été mise en ligne telle quelle.
 
 ## release/2026-09-08T10-40-39Z — 8 septembre 2026
 
