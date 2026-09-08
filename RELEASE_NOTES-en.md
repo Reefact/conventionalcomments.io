@@ -18,6 +18,9 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ### ✨ New
 
+- **The toolkit's release notes now cover 1.0.0-beta.12.** `/release-notes/v1/` gains the
+  release that makes the guided tour legible in both themes and stops the options page's
+  "Status" section claiming more than the extension knows.
 - **The toolkit's release notes now cover 1.0.0-beta.11.** `/release-notes/v1/` gains the
   release in which every platform — `github.com` included — is authorized the same way, the
   options page opens itself on a first install with a guided tour, and GitHub Enterprise
@@ -32,6 +35,20 @@ the wrong moment to discover that nobody wrote what it contains.
   to a pull request where nothing happens, and leaves them looking for a bug rather than a
   button. The install page now walks through authorizing a domain, and warns anyone updating
   from an earlier version that github.com goes quiet until they do.
+- **The site no longer says the extension works on github.com out of the box.** It did, up
+  to toolkit 1.0.0-beta.10; from 1.0.0-beta.11 a fresh install is active nowhere until you
+  allow a first domain, github.com like any other. The install, platforms, troubleshooting
+  and home pages said the opposite in both languages — the kind of claim that sends someone
+  to a pull request where nothing happens, and leaves them looking for a bug rather than a
+  button. The install page now walks through authorizing a domain, and warns anyone updating
+  from an earlier version that github.com goes quiet until they do.
+- **The troubleshooting page no longer says the platform changed its markup.** Under "the
+  toolbar doesn't appear", the second cause was headed "The platform's page structure has
+  changed" — the same over-claim the toolkit removed from the extension in 1.0.0-beta.12.
+  What is actually recorded is that one of the extension's selectors found nothing, which
+  may mean the markup changed or simply that the element is legitimately absent, like the
+  merge button on a closed pull request. Sending someone to hunt for a platform change that
+  never happened is the worst answer a troubleshooting page can give.
 - **The `/version` page no longer names the same release twice.** On a build that came from a
   release tag, the heading right below the build facts repeated the page's own title,
   "Latest release". It now reads "What shipped" instead, on every build — naming the
