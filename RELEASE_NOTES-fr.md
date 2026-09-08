@@ -32,7 +32,9 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
   distinction. En français, la page de diagnostic disait « tant que vous ne lui accordez pas
   un premier domaine » ; en anglais, les pages d'installation et de plateformes disaient
   « every domain is granted one at a time » et celle de diagnostic « until you grant a first
-  domain ». Les quatre nomment désormais ce qui est réellement accordé. La revue avait relevé
+  domain ». Les quatre nomment désormais ce qui est réellement accordé, et la phrase de la
+  page d'installation qui les introduit dit que l'extension « ne dispose d'aucun accès
+  permanent » plutôt qu'elle n'en « détient ». La revue avait relevé
   la tournure française dans les notes de la release précédente et elle y a été corrigée ; la
   page d'origine a échappé à la correction et a été mise en ligne telle quelle.
 
