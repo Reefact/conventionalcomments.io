@@ -81,7 +81,7 @@ const page = 'platforms' as const;
           <div class="stack g14">
             <span class="eyebrow">what you need:</span>
             <h2 style="font-size:24px">The extension needs no infrastructure.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Install it and it works immediately: the toolbar, shortcuts, and live feedback. No account, no server, no configuration required. The store listings haven't been published yet, so for now the extension is installed from a release archive. The installation page provides browser-specific instructions.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Install it, allow the domains where you review, and it works: the toolbar, shortcuts, and live feedback. No account, no server, no configuration required. The store listings haven't been published yet, so for now the extension is installed from a release archive. The installation page provides browser-specific instructions.</p>
             <p style="font-size:15px;color:var(--fg-2);line-height:1.6">An authoritative, platform-level merge check is on the roadmap, but isn't part of the extension today. There's nothing to deploy to get started.</p>
             <div class="hero-btns">
               <a class="btn btn-p" href={href('install', 'en')}>Install the extension</a>
@@ -90,8 +90,8 @@ const page = 'platforms' as const;
           </div>
           <div class="stack g14">
             <span class="eyebrow">and where it runs:</span>
-            <h2 style="font-size:24px">github.com only, by default.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The extension doesn't request access to every site. By default, it has access to one domain: github.com. Azure DevOps, a self-hosted GitHub instance, or an internal host each requires separate permission. Your browser asks for that permission, and you choose whether to grant it.</p>
+            <h2 style="font-size:24px">Only the domains you allow.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The extension doesn't request access to every site. A fresh install has access to none — github.com included. Every domain is granted one at a time: your browser asks for that permission, you choose whether to grant it, and you can withdraw it afterwards from the extension's own options page.</p>
             <p class="small">Two permissions in total: one to remember your preferences and one to work inside the page. No account. No stored token. The extension cannot load code from anywhere else. That restriction is enforced technically and verified again with every release.</p>
           </div>
         </div>

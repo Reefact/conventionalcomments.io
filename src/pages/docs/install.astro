@@ -53,18 +53,24 @@ npm run build:extension     <span class="tk-cm">// → packages/extension/dist-e
         </section>
 
         <section class="dsec">
-          <h2>Beyond github.com</h2>
-          <p>By default, the extension only has permission to run on github.com. Azure DevOps, a GitHub Enterprise Server instance, or an internal configuration host each require an additional permission that you explicitly grant.</p>
+          <h2>Authorize the domains where you review</h2>
+          <p>A freshly installed extension is active nowhere — github.com included. It holds no permanent access to any site: every domain is granted one at a time, and can be withdrawn the same way. The options page opens by itself the first time to say so, and offers a guided tour you can skip at any point or replay later.</p>
           <ul class="tick">
-            <li><span class="mk">1</span><b>Open the extension's settings</b><span class="tx">Use the extension icon in your browser toolbar to open the options page.</span></li>
-            <li><span class="mk">2</span><b>Add the domain and select its platform</b><span class="tx">The extension can't know whether <code>devops.acme.internal</code> is running Azure DevOps or GitHub Enterprise Server. Selecting the platform tells it which adapter to use.</span></li>
-            <li><span class="mk">3</span><b>Approve the browser permission</b><span class="tx">Your browser asks whether the extension may access that domain. You decide whether to grant the permission, and you can revoke it at any time from your browser settings.</span></li>
+            <li><span class="mk">1</span><b>Open the extension's settings</b><span class="tx">The page opens on its own right after installation. You can reopen it at any time from the extension icon in your browser toolbar.</span></li>
+            <li><span class="mk">2</span><b>Activate a domain the extension already knows</b><span class="tx">github.com and Azure DevOps Services each have a card of their own: one click both grants the domain and tells the extension which platform serves it.</span></li>
+            <li><span class="mk">3</span><b>Add any other domain, and select its platform</b><span class="tx">A GitHub Enterprise Server instance, an Azure DevOps Server, a <code>visualstudio.com</code> organization, or an internal configuration host is typed in by hand. The extension can't know whether <code>devops.acme.internal</code> is running Azure DevOps or GitHub Enterprise Server. Selecting the platform tells it which adapter to use.</span></li>
+            <li><span class="mk">4</span><b>Approve the browser permission</b><span class="tx">Your browser asks whether the extension may access that domain. You decide whether to grant it. Every domain you have allowed then carries a “Withdraw” button on the options page, and your browser's own controls still revoke it too.</span></li>
           </ul>
+          <div class="callout warn">
+            <span class="ct">if you are updating from 1.0.0-beta.10 or earlier</span>
+            <h4>The extension goes quiet on github.com until you allow it.</h4>
+            <p>Earlier versions carried a built-in permission on github.com, active from the moment you installed the extension and revocable from nowhere inside it. That domain now goes through the same one-click authorization as every other, and no update can grant it on your behalf: a browser only gives a site permission after an explicit action from you. The options page opens by itself to say so — but only if the update leaves you with no working domain at all. If you already had another one configured, the extension keeps working there, and nothing announces that github.com has gone silent.</p>
+          </div>
         </section>
 
         <section class="dsec">
           <h2>Check that it works</h2>
-          <p>Open any pull request and start writing a review comment. A row of labels should appear above the comment box, with a status indicator below it. Type <code>?i</code>, then press <code>Tab</code>. It should expand to <code>issue:</code>.</p>
+          <p>Open any pull request on a domain you have authorized and start writing a review comment. A row of labels should appear above the comment box, with a status indicator below it. Type <code>?i</code>, then press <code>Tab</code>. It should expand to <code>issue:</code>.</p>
           <p>If nothing appears, the troubleshooting page covers the three most common causes.</p>
         </section>
         <div class="pager"></div>
