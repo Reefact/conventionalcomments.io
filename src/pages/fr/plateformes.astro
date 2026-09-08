@@ -81,7 +81,7 @@ const page = 'platforms' as const;
           <div class="stack g14">
             <span class="eyebrow">ce qu'il vous faut&nbsp;:</span>
             <h2 style="font-size:24px">L'extension n'a besoin d'aucune infrastructure.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Installez-la et elle fonctionne immédiatement&nbsp;: barre de labels, raccourcis et retours en temps réel. Aucun compte, aucun serveur, aucune configuration. Les fiches ne sont pas encore publiées sur les stores. Pour l'instant, l'installation se fait donc depuis l'archive d'une release. La page d'installation détaille la procédure pour chaque navigateur.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Installez-la, autorisez les domaines où vous faites vos revues, et elle fonctionne&nbsp;: barre de labels, raccourcis et retours en temps réel. Aucun compte, aucun serveur, aucune configuration. Les fiches ne sont pas encore publiées sur les stores. Pour l'instant, l'installation se fait donc depuis l'archive d'une release. La page d'installation détaille la procédure pour chaque navigateur.</p>
             <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Un contrôle de fusion exécuté au niveau de la plateforme fait partie de la feuille de route d'Enforce, mais cette capacité n'est pas encore disponible. Rien d'autre que l'extension n'est à déployer pour commencer.</p>
             <div class="hero-btns">
               <a class="btn btn-p" href={href('install', 'fr')}>Installer l'extension</a>
@@ -90,8 +90,8 @@ const page = 'platforms' as const;
           </div>
           <div class="stack g14">
             <span class="eyebrow">et où elle s'exécute&nbsp;:</span>
-            <h2 style="font-size:24px">github.com uniquement, par défaut.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">L'extension ne demande pas l'autorisation d'accéder à tous les sites. Par défaut, elle n'a accès qu'à github.com. Azure DevOps, une instance GitHub auto-hébergée ou un serveur interne nécessitent chacun une autorisation distincte. Votre navigateur vous la demande, et vous choisissez de l'accorder ou non.</p>
+            <h2 style="font-size:24px">Uniquement les domaines que vous autorisez.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">L'extension ne demande pas l'autorisation d'accéder à tous les sites. Fraîchement installée, elle n'a accès à aucun — github.com compris. Chaque domaine s'accorde un par un&nbsp;: votre navigateur vous demande la permission, vous choisissez de l'accorder ou non, et vous pouvez la retirer ensuite depuis la page d'options de l'extension elle-même.</p>
             <p class="small">Deux permissions au total&nbsp;: l'une pour mémoriser vos préférences, l'autre pour s'intégrer à la page. Aucun compte. Aucun jeton stocké. L'extension ne peut pas charger de code depuis une autre source. Cette restriction est imposée techniquement et vérifiée de nouveau à chaque release.</p>
           </div>
         </div>

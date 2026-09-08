@@ -26,6 +26,15 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ### 🐛 Corrections
 
+- **Le site n'affirme plus que l'extension fonctionne sur github.com dès l'installation.**
+  C'était vrai jusqu'au toolkit 1.0.0-beta.10 ; depuis la 1.0.0-beta.11, une extension
+  fraîchement installée n'est active nulle part tant que vous ne lui accordez pas un premier
+  domaine, github.com comme un autre. Les pages d'installation, de plateformes, de
+  diagnostic et l'accueil affirmaient le contraire, dans les deux langues — le genre de
+  promesse qui envoie quelqu'un sur une pull request où rien ne se passe, et le laisse
+  chercher un bug plutôt qu'un bouton. La page d'installation détaille désormais comment
+  autoriser un domaine, et prévient quiconque met à jour depuis une version antérieure que
+  github.com se taira jusque-là.
 - **La page `/version` ne nomme plus deux fois la même release.** Sur un build issu d'un tag
   de release, le titre situé juste sous les informations de build répétait le titre de la
   page elle-même, « Dernière release ». Il affiche désormais « Ce qui a été livré », sur tout
