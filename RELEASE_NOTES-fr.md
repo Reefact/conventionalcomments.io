@@ -39,15 +39,6 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
   chercher un bug plutôt qu'un bouton. La page d'installation détaille désormais comment
   autoriser un domaine, et prévient quiconque met à jour depuis une version antérieure que
   github.com se taira jusque-là.
-- **Le site n'affirme plus que l'extension fonctionne sur github.com dès l'installation.**
-  C'était vrai jusqu'au toolkit 1.0.0-beta.10 ; depuis la 1.0.0-beta.11, une extension
-  fraîchement installée n'est active nulle part tant que vous ne lui accordez pas un premier
-  domaine, github.com comme un autre. Les pages d'installation, de plateformes, de
-  diagnostic et l'accueil affirmaient le contraire, dans les deux langues — le genre de
-  promesse qui envoie quelqu'un sur une pull request où rien ne se passe, et le laisse
-  chercher un bug plutôt qu'un bouton. La page d'installation détaille désormais comment
-  autoriser un domaine, et prévient quiconque met à jour depuis une version antérieure que
-  github.com se taira jusque-là.
 - **La page de diagnostic n'affirme plus que la plateforme a changé son balisage.** Sous
   « la barre de labels n'apparaît pas », la deuxième cause s'intitulait « La structure de la
   page a changé » — l'excès que le toolkit vient précisément de retirer de l'extension en
