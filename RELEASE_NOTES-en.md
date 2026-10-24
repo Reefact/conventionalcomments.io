@@ -31,9 +31,12 @@ the wrong moment to discover that nobody wrote what it contains.
   the troubleshooting page read "tant que vous ne lui accordez pas un premier domaine"; in
   English, the install and platforms pages read "every domain is granted one at a time" and
   the troubleshooting page "until you grant a first domain". All four now name what is
-  actually granted, and the install page's sentence introducing them says the extension
-  "has no permanent access to any site" rather than that it "holds" none. Review caught the French wording in the last release's notes and it was
-  fixed there; the page it came from was missed, and shipped.
+  actually granted. Both install pages open that section with the same sentence, and it was
+  reworded in the same pass: in English, "has no permanent access to any site" replaces
+  "holds no permanent access to any site"; in French, "ne dispose d'aucun accès permanent"
+  replaces "ne détient d'accès permanent à aucun site". Review caught the French wording in
+  the last release's notes and it was fixed there; the page it came from was missed, and
+  shipped.
 
 ## release/2026-09-08T10-40-39Z — September 8, 2026
 
