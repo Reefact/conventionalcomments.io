@@ -29,6 +29,12 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
   portait la même étiquette verte « disponible » que GitHub, alors que sa prise en charge
   reste imparfaite. Il porte désormais une étiquette orange « bêta » : utilisable, mais pas
   encore au niveau de GitHub.
+- **L'accueil n'affirme plus que l'extension n'envoie jamais rien.** Son bloc de
+  confidentialité disait « Rien n'est envoyé. Pas de télémétrie. », alors que la page de
+  confidentialité décrit la télémétrie qu'une organisation peut mettre en place, avec
+  l'accord de chacun. Il dit désormais que rien n'est envoyé par défaut. Le bloc voisin ne
+  range plus les navigateurs parmi les plateformes et marque Azure DevOps comme bêta, au lieu
+  de renvoyer à des « limitations documentées » que le site ne documentait nulle part.
 - **Les pages de confidentialité et de diagnostic décrivent le journal que l'extension
   tient réellement.** Elles annonçaient « les 50 dernières entrées : nom de la règle et horodatage
   uniquement ». Depuis le toolkit 1.0.0-beta.13, le journal enregistre aussi l'adresse de la
