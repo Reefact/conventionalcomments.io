@@ -24,12 +24,13 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ### 🐛 Fixed
 
-- **The privacy page describes the diagnostic log the extension actually keeps.** It said
+- **The privacy and troubleshooting pages describe the diagnostic log the extension actually
+  keeps.** They said
   "the latest 50 entries: rule name and timestamp only". Since toolkit 1.0.0-beta.13 the log
   also records the address of the page where each rule failed, and it does not keep the last
-  50 entries: one line per rule, fifty at most, each with its latest observation. The
-  page now says so, adds that the log clears in one click, and that telemetry, when allowed,
-  sends the rule's name and never the address.
+  50 entries: one line per rule, fifty at most, each with its latest observation. Both pages
+  now say so and add that the log clears in one click; the privacy page also says that
+  telemetry, when allowed, sends the rule's name and never the address.
 
 ### 🔧 Improved
 
