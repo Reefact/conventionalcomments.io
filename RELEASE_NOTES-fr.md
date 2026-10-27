@@ -25,13 +25,14 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ### 🐛 Corrections
 
-- **La page de confidentialité décrit le journal de diagnostic que l'extension tient
-  réellement.** Elle annonçait « les 50 dernières entrées : nom de la règle et horodatage
+- **Les pages de confidentialité et de diagnostic décrivent le journal que l'extension
+  tient réellement.** Elles annonçaient « les 50 dernières entrées : nom de la règle et horodatage
   uniquement ». Depuis le toolkit 1.0.0-beta.13, le journal enregistre aussi l'adresse de la
   page où chaque règle a échoué, et il ne garde pas les 50 dernières entrées : une ligne par
-  règle, cinquante au plus, chacune avec son dernier relevé. La page le dit désormais,
-  précise que le journal s'efface d'un clic, et que la télémétrie, si vous l'autorisez,
-  transmet le nom de la règle et jamais l'adresse.
+  règle, cinquante au plus, chacune avec son dernier relevé. Les deux pages le disent
+  désormais et précisent que le journal s'efface d'un clic ; la page de confidentialité
+  ajoute que la télémétrie, si vous l'autorisez, transmet le nom de la règle et jamais
+  l'adresse.
 
 ### 🔧 Améliorations
 
