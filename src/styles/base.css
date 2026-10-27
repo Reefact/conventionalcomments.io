@@ -319,6 +319,9 @@ a.pgl:hover, .pgl:hover { border-color:var(--line-strong); }
            font-size:14.5px; color:var(--fg-2); }
 .av-note { color:var(--fg-faint); font-size:12.5px; }
 .av-p { font-size:14px; color:var(--fg-muted); line-height:1.55; }
+.av-browsers { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px 28px;
+               font-size:14.5px; color:var(--fg-2); }
+.av-browsers b { font-weight:600; color:var(--fg); }
 
 /* --- how it works : quatre encarts --- */
 .feat { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1px;

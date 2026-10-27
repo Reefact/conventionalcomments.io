@@ -7,13 +7,13 @@ const page = 'platforms' as const;
 ---
 <Base lang={lang} page={page}
   title="Plateformes prises en charge"
-  description="GitHub et Azure DevOps, hébergés ou auto-hébergés, dans les principaux navigateurs. Découvrez ce qui est disponible aujourd'hui et ce qui est prévu ensuite.">
+  description="GitHub et Azure DevOps, hébergés ou auto-hébergés. Découvrez ce qui est disponible aujourd'hui, ce qui est prévu ensuite et les navigateurs pris en charge.">
 <section class="hband">
       <div class="in">
         <div class="stack g18 measure">
           <span class="eyebrow acc">compatibilité&nbsp;:</span>
           <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Plateformes prises en charge</h1>
-          <p class="lede">L'extension fonctionne dans les principaux navigateurs, aussi bien sur des plateformes de revue de code hébergées qu'auto-hébergées.</p>
+          <p class="lede">L'extension fonctionne aussi bien sur des plateformes de revue de code hébergées qu'auto-hébergées. Voici ce qui est disponible aujourd'hui, ce qui est prévu ensuite, et les navigateurs dans lesquels elle s'installe.</p>
         </div>
 
         <div class="avail">
@@ -35,14 +35,15 @@ const page = 'platforms' as const;
               <li>Server <span class="av-note">auto-hébergé</span></li>
             </ul>
           </div>
-          <div class="av-card">
-            <span class="av-tag ok">disponible</span>
-            <h3>Navigateurs</h3>
-            <ul class="av-list">
-              <li>Chrome, Edge, Brave <span class="av-note">ainsi que les autres navigateurs basés sur Chromium</span></li>
-              <li>Firefox <span class="av-note">version dédiée</span></li>
-            </ul>
-          </div>
+        </div>
+
+        <div class="stack g12">
+          <span class="eyebrow">et côté poste de travail&nbsp;:</span>
+          <h2 style="font-size:20px">Navigateurs pris en charge</h2>
+          <ul class="av-browsers">
+            <li><b>Chrome, Edge, Brave</b> <span class="av-note">ainsi que les autres navigateurs basés sur Chromium</span></li>
+            <li><b>Firefox</b> <span class="av-note">version dédiée</span></li>
+          </ul>
         </div>
       </div>
     </section>
