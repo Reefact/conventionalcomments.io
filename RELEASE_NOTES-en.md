@@ -27,6 +27,11 @@ the wrong moment to discover that nobody wrote what it contains.
 - **The platforms page no longer presents Azure DevOps as fully available.** It carried the
   same green "available" tag as GitHub, while its support is still rough. It now carries an
   orange "beta" tag: usable, but not yet to the standard GitHub support has reached.
+- **The home page no longer says the extension sends nothing, ever.** Its privacy block read
+  "Nothing is sent anywhere. No telemetry.", while the privacy page explains the opt-in
+  telemetry an organization can set up. It now says nothing is sent by default. The block
+  next to it also stops listing browsers as a platform and marks Azure DevOps as beta,
+  instead of pointing to "documented limitations" the site never documented.
 - **The privacy and troubleshooting pages describe the diagnostic log the extension actually
   keeps.** They said
   "the latest 50 entries: rule name and timestamp only". Since toolkit 1.0.0-beta.13 the log
