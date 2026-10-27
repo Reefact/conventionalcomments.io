@@ -16,7 +16,13 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
-_Rien en attente pour l'instant._
+### 🔧 Améliorations
+
+- **La page des plateformes ne range plus les navigateurs parmi les plateformes.** Chrome,
+  Edge, Brave et Firefox figuraient dans la même grille que GitHub et Azure DevOps, comme
+  s'ils répondaient à la même question. Ils ont désormais leur propre rubrique, sous les
+  plateformes : d'un côté là où vous faites vos revues, de l'autre là où l'extension
+  s'installe.
 
 ## release/2026-09-08T10-40-39Z — 8 septembre 2026
 
