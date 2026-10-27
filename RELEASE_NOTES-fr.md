@@ -25,6 +25,10 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ### 🐛 Corrections
 
+- **La page des plateformes ne présente plus Azure DevOps comme pleinement disponible.** Il
+  portait la même étiquette verte « disponible » que GitHub, alors que sa prise en charge
+  reste imparfaite. Il porte désormais une étiquette orange « bêta » : utilisable, mais pas
+  encore au niveau de GitHub.
 - **Les pages de confidentialité et de diagnostic décrivent le journal que l'extension
   tient réellement.** Elles annonçaient « les 50 dernières entrées : nom de la règle et horodatage
   uniquement ». Depuis le toolkit 1.0.0-beta.13, le journal enregistre aussi l'adresse de la
