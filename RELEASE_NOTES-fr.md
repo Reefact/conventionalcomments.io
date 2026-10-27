@@ -16,6 +16,13 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
+### ✨ Nouveautés
+
+- **Les notes de version du toolkit couvrent désormais la 1.0.0-beta.13.**
+  `/fr/notes-de-version/v1/` gagne la version où chaque ligne du journal de la section
+  « État » dit sur quelle page son sélecteur a échoué, et où le journal s'efface d'un clic
+  depuis la page d'options.
+
 ### 🔧 Améliorations
 
 - **La page des plateformes ne range plus les navigateurs parmi les plateformes.** Chrome,

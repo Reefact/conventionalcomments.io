@@ -13,12 +13,13 @@ const page = 'releasenotes' as const;
         <p class="grp">release line:</p>
         <div class="rn-line">
           <span class="rn-ln">Toolkit 1.x</span>
-          <span class="rn-lv">1.0.0-beta.12</span>
-          <span class="rn-ld">September 8, 2026 · 12 releases</span>
+          <span class="rn-lv">1.0.0-beta.13</span>
+          <span class="rn-ld">September 8, 2026 · 13 releases</span>
         </div>
         <p class="grp">on this page:</p>
         <ul class="rn-jump">
-          <li><a href="#v1-0-0-beta-12" class="cur">1.0.0-beta.12</a></li>
+          <li><a href="#v1-0-0-beta-13" class="cur">1.0.0-beta.13</a></li>
+          <li><a href="#v1-0-0-beta-12">1.0.0-beta.12</a></li>
           <li><a href="#v1-0-0-beta-11">1.0.0-beta.11</a></li>
           <li><a href="#v1-0-0-beta-10">1.0.0-beta.10</a></li>
           <li><a href="#v1-0-0-beta-9">1.0.0-beta.9</a></li>
@@ -50,6 +51,19 @@ const page = 'releasenotes' as const;
         </div>
 
         <h2 class="rn-major">Version 1</h2>
+
+        <article class="rel" id="v1-0-0-beta-13">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.13</span><span class="rel-m">beta</span><span class="rel-d">September 8, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.13" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">The journal in the “Status” section now says which page each selector failed on, and clears in one click so you can measure again.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li><strong>Every line of the journal says which page it came from.</strong> It recorded which selector failed and when, never where: faced with four lines stamped within the same second, nothing told you whether they came from one page or four. Each line now starts with a six-character mark — same mark, same page — and clicking it opens the exact recorded address in a new tab. That address stays on your device: when you have allowed telemetry, it still sends nothing but the selector's name. Lines already in the journal before this update have no address — it was not being recorded — and carry a neutral mark until their selector fails again, or until you clear the journal.</li>
+            <li><strong>The journal clears from the options page.</strong> A button empties it; tabs you already have open start measuring again straight away, and the section updates itself when one of them writes, without a reload.</li>
+            <li><strong>The options page carries the extension's icon</strong> before its title. The guided tour's button now reads “Guided tour”, its full wording moving to the tooltip.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li><strong>The privacy policy described a history the extension does not keep.</strong> It announced “the last 50 times” an element was not recognised, while the journal keeps only one line per selection rule — fifty at most, each with its most recent observation. It now describes what is actually kept, the page address included.</li>
+          </ul></div>
+        </article>
 
         <article class="rel" id="v1-0-0-beta-12">
           <div class="rel-h"><span class="rel-v">1.0.0-beta.12</span><span class="rel-m">beta</span><span class="rel-d">September 8, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.12" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
