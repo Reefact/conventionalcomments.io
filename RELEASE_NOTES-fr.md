@@ -18,10 +18,11 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ### ✨ Nouveautés
 
-- **Les notes de version du toolkit couvrent désormais la 1.0.0-beta.13.**
-  `/fr/notes-de-version/v1/` gagne la version où chaque ligne du journal de la section
-  « État » dit sur quelle page son sélecteur a échoué, et où le journal s'efface d'un clic
-  depuis la page d'options.
+- **Les notes de version du toolkit annoncent la 1.0.0-beta.13 à venir.**
+  `/fr/notes-de-version/v1/` montre les notes que le toolkit a déjà rédigées pour elle —
+  chaque ligne du journal de la section « État » dit sur quelle page son sélecteur a échoué,
+  et le journal s'efface d'un clic — mais marque la version « à venir », hors du compte des
+  versions publiées, tant que le toolkit ne l'a pas taguée.
 
 ### 🐛 Corrections
 
@@ -36,13 +37,12 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
   range plus les navigateurs parmi les plateformes et marque Azure DevOps comme bêta, au lieu
   de renvoyer à des « limitations documentées » que le site ne documentait nulle part.
 - **Les pages de confidentialité et de diagnostic décrivent le journal que l'extension
-  tient réellement.** Elles annonçaient « les 50 dernières entrées : nom de la règle et horodatage
-  uniquement ». Depuis le toolkit 1.0.0-beta.13, le journal enregistre aussi l'adresse de la
-  page où chaque règle a échoué, et il ne garde pas les 50 dernières entrées : une ligne par
-  règle, cinquante au plus, chacune avec son dernier relevé. Les deux pages le disent
-  désormais et précisent que le journal s'efface d'un clic ; la page de confidentialité
-  ajoute que la télémétrie, si vous l'autorisez, transmet le nom de la règle et jamais
-  l'adresse.
+  tient réellement.** Elles annonçaient « les 50 dernières entrées », alors que le journal
+  garde une ligne par règle, cinquante au plus, chacune avec son dernier relevé. Les deux
+  pages le disent désormais, et préviennent qu'à partir de la 1.0.0-beta.13 du toolkit, à
+  venir, chaque ligne enregistre aussi l'adresse de la page où la règle a échoué, et que le
+  journal s'efface d'un clic. La page de confidentialité ajoute que la télémétrie, si vous
+  l'autorisez, transmet le nom de la règle et jamais l'adresse.
 
 ### 🔧 Améliorations
 

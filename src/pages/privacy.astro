@@ -59,8 +59,8 @@ const page = 'privacy' as const;
               </tr>
               <tr>
                 <td>Local log of unrecognized page elements</td>
-                <td class="d">One line per selector rule, fifty at most, on your device. Each keeps only that rule's most recent observation: its name, a timestamp, and the page's address at that moment, query parameters included. Never page content.</td>
-                <td><span class="st ok"><span class="dot"></span>no</span><span class="why">The log is available from the extension's options page for diagnostics, and clears in one click. If you allowed telemetry, only the rule's name is sent, never the address.</span></td>
+                <td class="d">One line per selector rule, fifty at most, on your device. Each keeps only that rule's most recent observation: its name and a timestamp. Never page content. From the upcoming 1.0.0-beta.13, each line also records the page's address at that moment, query parameters included.</td>
+                <td><span class="st ok"><span class="dot"></span>no</span><span class="why">The log is available from the extension's options page for diagnostics; from 1.0.0-beta.13 it clears in one click. If you allowed telemetry, only the rule's name is sent, never the address.</span></td>
               </tr>
               <tr>
                 <td>Usage telemetry</td>
