@@ -18,9 +18,10 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ### ✨ New
 
-- **The toolkit's release notes now cover 1.0.0-beta.13.** `/release-notes/v1/` gains the
-  release in which each line of the "Status" journal says which page its selector failed
-  on, and the journal clears in one click from the options page.
+- **The toolkit's release notes announce the upcoming 1.0.0-beta.13.** `/release-notes/v1/`
+  shows the notes the toolkit has already written for it — each line of the "Status"
+  journal says which page its selector failed on, and the journal clears in one click — but
+  marks the version "upcoming", outside the count of releases, until the toolkit tags it.
 
 ### 🐛 Fixed
 
@@ -33,12 +34,11 @@ the wrong moment to discover that nobody wrote what it contains.
   next to it also stops listing browsers as a platform and marks Azure DevOps as beta,
   instead of pointing to "documented limitations" the site never documented.
 - **The privacy and troubleshooting pages describe the diagnostic log the extension actually
-  keeps.** They said
-  "the latest 50 entries: rule name and timestamp only". Since toolkit 1.0.0-beta.13 the log
-  also records the address of the page where each rule failed, and it does not keep the last
-  50 entries: one line per rule, fifty at most, each with its latest observation. Both pages
-  now say so and add that the log clears in one click; the privacy page also says that
-  telemetry, when allowed, sends the rule's name and never the address.
+  keeps.** They said "the latest 50 entries", while the log keeps one line per rule, fifty at
+  most, each with its latest observation. Both pages now say so, and warn that from the
+  upcoming toolkit 1.0.0-beta.13 each line also records the address of the page where the
+  rule failed, and the log clears in one click. The privacy page adds that telemetry, when
+  allowed, sends the rule's name and never the address.
 
 ### 🔧 Improved
 

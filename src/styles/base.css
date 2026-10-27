@@ -366,6 +366,7 @@ a.path:hover, .path:hover { border-color:var(--accent); }
 .rel-v { font-family:var(--font-mono); font-size:20px; font-weight:600; letter-spacing:-.02em; color:var(--fg); }
 .rel-m { font-family:var(--font-mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase;
          border:1px solid var(--warn); color:var(--warn); border-radius:2px; padding:1px 7px 2px; }
+.rel-m.up { border-style:dashed; border-color:var(--line-strong); color:var(--fg-muted); }
 .rel-d { font-size:13px; color:var(--fg-muted); }
 /* Une vraie ancre depuis la revue : c'était un <span> avec un chevron sortant,
    donc un lien qui n'en était pas. Le curseur main venait de la maquette, où le
