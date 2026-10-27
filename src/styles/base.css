@@ -315,6 +315,7 @@ a.pgl:hover, .pgl:hover { border-color:var(--line-strong); }
 .av-tag { font-family:var(--font-mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase;
           padding:2px 8px 3px; border-radius:2px; border:1px solid var(--line-strong); color:var(--fg-faint); }
 .av-tag.ok { border-color:var(--pass); color:var(--pass); }
+.av-tag.beta { border-color:var(--warn); color:var(--warn); }
 .av-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:7px;
            font-size:14.5px; color:var(--fg-2); }
 .av-note { color:var(--fg-faint); font-size:12.5px; }

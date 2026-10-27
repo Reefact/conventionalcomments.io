@@ -24,6 +24,9 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ### 🐛 Fixed
 
+- **The platforms page no longer presents Azure DevOps as fully available.** It carried the
+  same green "available" tag as GitHub, while its support is still rough. It now carries an
+  orange "beta" tag: usable, but not yet to the standard GitHub support has reached.
 - **The privacy and troubleshooting pages describe the diagnostic log the extension actually
   keeps.** They said
   "the latest 50 entries: rule name and timestamp only". Since toolkit 1.0.0-beta.13 the log
