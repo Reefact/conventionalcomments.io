@@ -23,6 +23,16 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
   « État » dit sur quelle page son sélecteur a échoué, et où le journal s'efface d'un clic
   depuis la page d'options.
 
+### 🐛 Corrections
+
+- **La page de confidentialité décrit le journal de diagnostic que l'extension tient
+  réellement.** Elle annonçait « les 50 dernières entrées : nom de la règle et horodatage
+  uniquement ». Depuis le toolkit 1.0.0-beta.13, le journal enregistre aussi l'adresse de la
+  page où chaque règle a échoué, et il ne garde pas les 50 dernières entrées : une ligne par
+  règle, cinquante au plus, chacune avec son dernier relevé. La page le dit désormais,
+  précise que le journal s'efface d'un clic, et que la télémétrie, si vous l'autorisez,
+  transmet le nom de la règle et jamais l'adresse.
+
 ### 🔧 Améliorations
 
 - **La page des plateformes ne range plus les navigateurs parmi les plateformes.** Chrome,
