@@ -16,7 +16,12 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
-_Nothing pending yet._
+### 🔧 Improved
+
+- **The platforms page no longer lists browsers as a platform.** Chrome, Edge, Brave and
+  Firefox sat in the same grid as GitHub and Azure DevOps, as if they answered the same
+  question. They now have their own short section under the platforms: where you review
+  code on one side, where the extension installs on the other.
 
 ## release/2026-09-08T10-40-39Z — September 8, 2026
 
