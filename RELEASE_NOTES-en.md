@@ -22,6 +22,15 @@ the wrong moment to discover that nobody wrote what it contains.
   release in which each line of the "Status" journal says which page its selector failed
   on, and the journal clears in one click from the options page.
 
+### 🐛 Fixed
+
+- **The privacy page describes the diagnostic log the extension actually keeps.** It said
+  "the latest 50 entries: rule name and timestamp only". Since toolkit 1.0.0-beta.13 the log
+  also records the address of the page where each rule failed, and it does not keep the last
+  50 entries: one line per rule, fifty at most, each with its latest observation. The
+  page now says so, adds that the log clears in one click, and that telemetry, when allowed,
+  sends the rule's name and never the address.
+
 ### 🔧 Improved
 
 - **The platforms page no longer lists browsers as a platform.** Chrome, Edge, Brave and
