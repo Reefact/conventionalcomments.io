@@ -16,6 +16,12 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
+### ✨ New
+
+- **The toolkit's release notes now cover 1.0.0-beta.13.** `/release-notes/v1/` gains the
+  release in which each line of the "Status" journal says which page its selector failed
+  on, and the journal clears in one click from the options page.
+
 ### 🔧 Improved
 
 - **The platforms page no longer lists browsers as a platform.** Chrome, Edge, Brave and
