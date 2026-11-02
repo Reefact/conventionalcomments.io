@@ -16,8 +16,29 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
+### ✨ New
+
+- **The toolkit's release notes announce the upcoming 1.0.0-beta.13.** `/release-notes/v1/`
+  shows the notes the toolkit has already written for it — each line of the "Status"
+  journal says which page its selector failed on, and the journal clears in one click — but
+  marks the version "upcoming", outside the count of releases, until the toolkit tags it.
+
 ### 🐛 Fixed
 
+- **The platforms page no longer presents Azure DevOps as fully available.** It carried the
+  same green "available" tag as GitHub, while its support is still rough. It now carries an
+  orange "beta" tag: usable, but not yet to the standard GitHub support has reached.
+- **The home page no longer says the extension sends nothing, ever.** Its privacy block read
+  "Nothing is sent anywhere. No telemetry.", while the privacy page explains the opt-in
+  telemetry an organization can set up. It now says nothing is sent by default. The block
+  next to it also stops listing browsers as a platform and marks Azure DevOps as beta,
+  instead of pointing to "documented limitations" the site never documented.
+- **The privacy and troubleshooting pages describe the diagnostic log the extension actually
+  keeps.** They said "the latest 50 entries", while the log keeps one line per rule, fifty at
+  most, each with its latest observation. Both pages now say so, and warn that from the
+  upcoming toolkit 1.0.0-beta.13 each line also records the address of the page where the
+  rule failed, and the log clears in one click. The privacy page adds that telemetry, when
+  allowed, sends the rule's name and never the address.
 - **The pages no longer explain themselves by contrast with a version you never saw.** The
   home, platforms and install pages each singled out github.com in a sentence that had
   already stated the rule — that the extension reaches only the domains you have allowed.
@@ -37,6 +58,13 @@ the wrong moment to discover that nobody wrote what it contains.
   replaces "ne détient d'accès permanent à aucun site". Review caught the French wording in
   the last release's notes and it was fixed there; the page it came from was missed, and
   shipped.
+
+### 🔧 Improved
+
+- **The platforms page no longer lists browsers as a platform.** Chrome, Edge, Brave and
+  Firefox sat in the same grid as GitHub and Azure DevOps, as if they answered the same
+  question. They now have their own short section under the platforms: where you review
+  code on one side, where the extension installs on the other.
 
 ## release/2026-09-08T10-40-39Z — September 8, 2026
 

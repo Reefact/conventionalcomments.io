@@ -315,10 +315,14 @@ a.pgl:hover, .pgl:hover { border-color:var(--line-strong); }
 .av-tag { font-family:var(--font-mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase;
           padding:2px 8px 3px; border-radius:2px; border:1px solid var(--line-strong); color:var(--fg-faint); }
 .av-tag.ok { border-color:var(--pass); color:var(--pass); }
+.av-tag.beta { border-color:var(--warn); color:var(--warn); }
 .av-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:7px;
            font-size:14.5px; color:var(--fg-2); }
 .av-note { color:var(--fg-faint); font-size:12.5px; }
 .av-p { font-size:14px; color:var(--fg-muted); line-height:1.55; }
+.av-browsers { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px 28px;
+               font-size:14.5px; color:var(--fg-2); }
+.av-browsers b { font-weight:600; color:var(--fg); }
 
 /* --- how it works : quatre encarts --- */
 .feat { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1px;
@@ -362,6 +366,7 @@ a.path:hover, .path:hover { border-color:var(--accent); }
 .rel-v { font-family:var(--font-mono); font-size:20px; font-weight:600; letter-spacing:-.02em; color:var(--fg); }
 .rel-m { font-family:var(--font-mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase;
          border:1px solid var(--warn); color:var(--warn); border-radius:2px; padding:1px 7px 2px; }
+.rel-m.up { border-style:dashed; border-color:var(--line-strong); color:var(--fg-muted); }
 .rel-d { font-size:13px; color:var(--fg-muted); }
 /* Une vraie ancre depuis la revue : c'était un <span> avec un chevron sortant,
    donc un lien qui n'en était pas. Le curseur main venait de la maquette, où le

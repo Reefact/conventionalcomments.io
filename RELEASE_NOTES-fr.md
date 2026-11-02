@@ -16,8 +16,33 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
+### ✨ Nouveautés
+
+- **Les notes de version du toolkit annoncent la 1.0.0-beta.13 à venir.**
+  `/fr/notes-de-version/v1/` montre les notes que le toolkit a déjà rédigées pour elle —
+  chaque ligne du journal de la section « État » dit sur quelle page son sélecteur a échoué,
+  et le journal s'efface d'un clic — mais marque la version « à venir », hors du compte des
+  versions publiées, tant que le toolkit ne l'a pas taguée.
+
 ### 🐛 Corrections
 
+- **La page des plateformes ne présente plus Azure DevOps comme pleinement disponible.** Il
+  portait la même étiquette verte « disponible » que GitHub, alors que sa prise en charge
+  reste imparfaite. Il porte désormais une étiquette orange « bêta » : utilisable, mais pas
+  encore au niveau de GitHub.
+- **L'accueil n'affirme plus que l'extension n'envoie jamais rien.** Son bloc de
+  confidentialité disait « Rien n'est envoyé. Pas de télémétrie. », alors que la page de
+  confidentialité décrit la télémétrie qu'une organisation peut mettre en place, avec
+  l'accord de chacun. Il dit désormais que rien n'est envoyé par défaut. Le bloc voisin ne
+  range plus les navigateurs parmi les plateformes et marque Azure DevOps comme bêta, au lieu
+  de renvoyer à des « limitations documentées » que le site ne documentait nulle part.
+- **Les pages de confidentialité et de diagnostic décrivent le journal que l'extension
+  tient réellement.** Elles annonçaient « les 50 dernières entrées », alors que le journal
+  garde une ligne par règle, cinquante au plus, chacune avec son dernier relevé. Les deux
+  pages le disent désormais, et préviennent qu'à partir de la 1.0.0-beta.13 du toolkit, à
+  venir, chaque ligne enregistre aussi l'adresse de la page où la règle a échoué, et que le
+  journal s'efface d'un clic. La page de confidentialité ajoute que la télémétrie, si vous
+  l'autorisez, transmet le nom de la règle et jamais l'adresse.
 - **Les pages ne s'expliquent plus par contraste avec une version que vous n'avez pas
   connue.** L'accueil, la page des plateformes et celle d'installation mentionnaient chacune
   github.com dans une phrase qui énonçait déjà la règle : l'extension n'accède qu'aux
@@ -39,6 +64,14 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
   site » remplace « holds no permanent access to any site ». La revue avait relevé la
   tournure française dans les notes de la release précédente et elle y a été corrigée ; la
   page d'origine a échappé à la correction et a été mise en ligne telle quelle.
+
+### 🔧 Améliorations
+
+- **La page des plateformes ne range plus les navigateurs parmi les plateformes.** Chrome,
+  Edge, Brave et Firefox figuraient dans la même grille que GitHub et Azure DevOps, comme
+  s'ils répondaient à la même question. Ils ont désormais leur propre rubrique, sous les
+  plateformes : d'un côté là où vous faites vos revues, de l'autre là où l'extension
+  s'installe.
 
 ## release/2026-09-08T10-40-39Z — 8 septembre 2026
 
