@@ -13,12 +13,23 @@ const page = 'releasenotes' as const;
         <p class="grp">release line:</p>
         <div class="rn-line">
           <span class="rn-ln">Toolkit 1.x</span>
-          <span class="rn-lv">1.0.0-beta.12</span>
-          <span class="rn-ld">September 8, 2026 · 12 releases</span>
+          <span class="rn-lv">1.0.0-rc.2</span>
+          <span class="rn-ld">November 12, 2026 · 23 releases</span>
         </div>
         <p class="grp">on this page:</p>
         <ul class="rn-jump">
-          <li><a href="#v1-0-0-beta-12" class="cur">1.0.0-beta.12</a></li>
+          <li><a href="#v1-0-0-rc-2" class="cur">1.0.0-rc.2</a></li>
+          <li><a href="#v1-0-0-rc-1">1.0.0-rc.1</a></li>
+          <li><a href="#v1-0-0-beta-21">1.0.0-beta.21</a></li>
+          <li><a href="#v1-0-0-beta-20">1.0.0-beta.20</a></li>
+          <li><a href="#v1-0-0-beta-19">1.0.0-beta.19</a></li>
+          <li><a href="#v1-0-0-beta-18">1.0.0-beta.18</a></li>
+          <li><a href="#v1-0-0-beta-17">1.0.0-beta.17</a></li>
+          <li><a href="#v1-0-0-beta-16">1.0.0-beta.16</a></li>
+          <li><a href="#v1-0-0-beta-15">1.0.0-beta.15</a></li>
+          <li><a href="#v1-0-0-beta-14">1.0.0-beta.14</a></li>
+          <li><a href="#v1-0-0-beta-13">1.0.0-beta.13</a></li>
+          <li><a href="#v1-0-0-beta-12">1.0.0-beta.12</a></li>
           <li><a href="#v1-0-0-beta-11">1.0.0-beta.11</a></li>
           <li><a href="#v1-0-0-beta-10">1.0.0-beta.10</a></li>
           <li><a href="#v1-0-0-beta-9">1.0.0-beta.9</a></li>
@@ -45,11 +56,185 @@ const page = 'releasenotes' as const;
           <p class="lede measure">A release-by-release account of what actually changes when you use the toolkit: new capabilities, fixes, and behaviour you may notice. For the exhaustive technical record — including constraints, compatibility details, and edge cases — see the changelog.</p>
           <div class="callout">
             <span class="ct">one thing to keep in mind</span>
-            <p style="margin:0">The extension starts in <code>assist</code> mode. By default, it helps you write compliant comments and points out problems without preventing you from submitting them. Stricter behaviour is something your organization explicitly chooses to enable. When the server is deployed, it provides the authoritative pull-request compliance check.</p>
+            <p style="margin:0">The extension starts in <code>assist</code> mode. By default, it helps you write compliant comments and points out problems without preventing you from submitting them. Stricter behaviour is something your organization explicitly chooses to enable. A comment is only checked in the browser of someone who has the extension installed, and the extension never blocks a merge.</p>
           </div>
         </div>
 
         <h2 class="rn-major">Version 1</h2>
+
+        <article class="rel" id="v1-0-0-rc-2">
+          <div class="rel-h"><span class="rel-v">1.0.0-rc.2</span><span class="rel-m">rc</span><span class="rel-d">November 12, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-rc.2" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">Two fixes to the thread filter on GitHub's new Overview page.</p>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li><strong>On GitHub's Overview, the thread filter is no longer placed inside a thread.</strong> When the Comments section showed <code>Unresolved</code> or <code>Mine</code>, the filter's chips appeared in the middle of the first thread, between its code and its comment. They now sit above the first thread, as in <code>All</code>.</li>
+            <li><strong>On GitHub's Overview, filtering by label hides the whole thread.</strong> A thread that did not match the chosen label lost its comments but kept its file name and code on screen, as an empty box. It now disappears entirely, and comes back when you choose <code>all</code>.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changed</h4><ul>
+            <li><strong>The reviewer skill installs Slugger under its new name.</strong> The tool that <code>skills/review-pull-request</code> uses to name review sessions is now published as <code>Slugger</code> instead of <code>Slugger.Cli</code>; the command is still <code>slugger</code>. An installation made under the old name keeps working, and the skill's setup step says how to move to the new one.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-rc-1">
+          <div class="rel-h"><span class="rel-v">1.0.0-rc.1</span><span class="rel-m">rc</span><span class="rel-d">November 11, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-rc.1" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">The release candidate for 1.0.0: GitLab support, GitHub's new Overview page, a working Azure DevOps, review-session markers and a <code>summary</code> label; <code>enforce</code> now really blocks, after re-reading the configuration, and the verifier is retired for good.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li><strong>GitLab (gitlab.com) is supported, without blocking.</strong> Merge requests on gitlab.com get the toolbar, the badges, the thread filter and the banner. Enable gitlab.com from the settings page, like any other site. The extension cannot read a repository's configuration on GitLab yet, so it never blocks a comment there. GitLab Self-Managed and Dedicated are not supported yet.</li>
+            <li><strong>GitHub's new Overview page is supported.</strong> On the Overview, the extension did not recognise the new comment field, so nothing was blocked in <code>enforce</code> mode, and many comments got no badges. Both the Overview and the classic Conversation page now work. The banner sits under the pull request header, and the thread filter above the list of threads.</li>
+            <li><strong>Review-session markers.</strong> A line <code>[session:&lt;id&gt;]</code> in a comment says which review session wrote it, so that the comments of several agents or several runs can be told apart. The extension hides the line and shows a discreet <code>🤖 session: &lt;id&gt;</code> at the bottom of the comment; the marker never affects validation. Add a description after an em dash, <code>[session:&lt;id&gt; — <em>&lt;sentence&gt;</em>]</code>, and it appears when you hover the mention. Two markers in one comment show <code>#ERROR</code> and a warning that never blocks.</li>
+            <li><strong>A <code>summary</code> label to recap a review pass.</strong> <code>summary</code> (📋, typed as <code>?sum</code>) says what was checked and what is still open; it raises no point and answers none. It sits with <code>reviewed</code> in a new group of labels that say where a review stands, at the end of the toolbar's first row. A repository can add its own label to that group with <code>"kind": "status"</code>.</li>
+            <li><strong>Problems in your configuration are shown, in your language.</strong> When a key is unknown or retired, when the configuration is invalid, or when your organization's policy overrides a setting, the extension used to say nothing. It now lists these notices in the status pill and on the settings page, in English or French, naming where the problem comes from: your organization's policy, the organization's document or the repository's file. They inform; they never change whether a comment is accepted.</li>
+            <li><strong>The journal records comment fields the extension could not fully understand.</strong> A field whose send buttons were not found, or that the extension placed by default without recognising it, now leaves a line in the settings page's journal, so a page the extension misreads can be reported.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changed</h4><ul>
+            <li><strong>In <code>enforce</code> mode, non-compliant comments are now blocked on every pull request.</strong> Until now, <code>enforce</code> only blocked pull requests created after an activation date that was not set by default, so most installations in <code>enforce</code> never blocked anything. That condition is gone: if your repositories use <code>enforce</code>, expect comments to be blocked after this update. Before blocking, the extension re-reads the configuration, so a repository just switched back to <code>assist</code> is not blocked: the button is released and you are asked to send again.</li>
+            <li><strong>The verifier is retired, and its settings with it.</strong> The product reports the unresolved blocking threads of a pull request; it never blocks a merge, and no longer greys the merge button. The keys <code>formatSeverity</code>, <code>overrideLabel</code>, <code>resolverOverrideGroup</code>, <code>activation</code> and <code>docUrl</code> are no longer read, and are shown as unknown keys. The mode <code>warn</code> works as <code>assist</code>, with a notice saying the value is obsolete. If your configuration uses any of these, you can remove them.</li>
+            <li><strong>The banner is collapsed by default and shows the count of unresolved blocking threads alone.</strong></li>
+            <li><strong>Azure DevOps is supported on <code>dev.azure.com</code> only.</strong> Organizations on <code>&#123;org&#125;.visualstudio.com</code> or on Azure DevOps Server are not covered.</li>
+            <li><strong>If your configuration already defines a <code>summary</code> label, it needs one property to keep working as before.</strong> Your label now merges into the shipped one and becomes always non-blocking, so <code>summary (blocking):</code> is refused. Add <code>"alwaysNonBlocking": false</code> to restore it.</li>
+            <li><strong>Telemetry label counts say what kind of label was used.</strong> If your organization collects telemetry, each label count now carries its kind — <code>remark</code>, <code>status</code> or <code>reply</code> — so that replies and recaps can be counted apart. Nothing else is added.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li><strong>Azure DevOps works.</strong> The extension had never worked on Azure DevOps; it is rebuilt from real pages. Comment fields, send buttons and threads are recognised, the live preview gets its badges, the toolbar follows the Azure DevOps theme, a blocked button looks disabled, and the repository's configuration is read, so <code>enforce</code> applies there.</li>
+            <li><strong>Keyboard shortcuts no longer get around <code>enforce</code>.</strong> On Azure DevOps, pressing Enter, Ctrl+Enter or Space on the Comment button published a non-compliant comment. These keys are now blocked like a click.</li>
+            <li><strong>On GitHub, “Close with comment” and the Overview's Comment button no longer get around <code>enforce</code>.</strong></li>
+            <li><strong>A comment that quotes code or text before its label gets its badge.</strong></li>
+            <li><strong>A repository can ask for a shorter configuration cache than your organization's policy.</strong> The policy's cache duration was imposed as is, so a repository wanting fresher settings was forced back to it. It is now a maximum, as intended.</li>
+            <li><strong>On Azure DevOps, editing an existing comment is no longer mistaken for writing a new one.</strong></li>
+            <li><strong>The diagnostic journal keeps the evidence of a problem that never went away,</strong> instead of replacing it with a later observation.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-21">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.21</span><span class="rel-m">beta</span><span class="rel-d">November 2, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.21" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">The extension no longer goes silent on GitHub after you restart your browser.</p>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li><strong>The extension stays active after the browser restarts.</strong> After a browser restart, the extension could do nothing at all on GitHub — no badges, no banner, no toolbar, and no blocking even in <code>enforce</code> mode — until you opened its settings page. The browser was dropping the extension's script at restart, and nothing set it up again. The script now survives a restart, and the extension also sets it up again as soon as the browser starts. If you had to open the settings page after each restart to get the extension back, you no longer need to. The diagnostic archive now shows that start-up step too.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-20">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.20</span><span class="rel-m">beta</span><span class="rel-d">November 1, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.20" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">The diagnostic archive now shows how the extension was activated in your browser, to track down pages where it does nothing at all; two settings fields are easier to read.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li><strong>The diagnostic archive records how the extension's script was set up in your browser.</strong> On some GitHub pages the extension can be completely inactive — no badges, no toolbar, and nothing blocked even in <code>enforce</code> mode — until you open its settings page. Looking into it from outside repairs it, so the cause could not be seen. The extension now keeps a short history of each time it set up, updated or removed its script: what triggered it, which sites it covered, what the browser reported before and after, and any error. If the problem happens to you, download the diagnostic from the settings page before anything else and attach it to an issue; the download is offered even when the journal has no other line. The history holds no page address, and “Clear the log” clears it too.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changed</h4><ul>
+            <li><strong>The settings page's journal no longer shows the legend about page marks.</strong> The marks and their links work as before.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li><strong>The hints inside the “Direct shortcuts” and “Button order” fields are readable in both themes.</strong> They are quieter than what you type, but no longer too faint to read. The hint of the “Domain to allow” field is unchanged.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-19">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.19</span><span class="rel-m">beta</span><span class="rel-d">October 31, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.19" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">When a part of the page is not recognised, the journal now records what the page showed at that moment, and the whole diagnostic downloads as an archive to attach to a bug report; editing a comment on GitHub no longer writes a false alarm.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li><strong>The journal records what the page showed when something was not recognised.</strong> A line now says how far the extension got in the page, what it found there instead and when it happened; for the merge button and the PR creation date, it also says whether the element showed up a moment later. That is often enough for a developer to find the cause without asking you to capture the page. It keeps the page's structure and interface attributes only, never the page's text: not what you type, not comments or code. Attribute values are kept, though, and an interface label such as a button's accessible name, or an account name, can appear in them. It stays on your device.</li>
+            <li><strong>A skeleton of the page is kept from the moment of the problem, when your browser and storage allow it.</strong> It is the page's structure, without the page's text, taken at the instant something failed rather than afterwards. Skeletons take at most 1 MB of the extension's storage, the oldest go first, and the extension never lets them crowd out anything else. When the browser cannot compress a skeleton or storage is short, none is stored: the journal line still names it, and the archive simply lacks that file.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changed</h4><ul>
+            <li><strong>“Copy the whole log” becomes “Download the diagnostic (.zip)”.</strong> The archive holds the journal, the skeletons still stored and a README that says what each file contains; attach it to an issue. Copying a single line works as before, and “Clear the log” now clears the skeletons too. The archive holds the addresses of the pages involved, which on an enterprise server name a repository and a review: read the archive before you share it, keeping in mind that an interface label can name an account.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li><strong>Editing a comment on GitHub no longer writes a false alarm to the journal.</strong> A hidden field of GitHub's “Reference in new issue” dialog, which is not a comment field, was reported as a comment field not recognised although nothing was wrong.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-18">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.18</span><span class="rel-m">beta</span><span class="rel-d">October 30, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.18" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">The settings page's journal says what went wrong in a sentence, records the extension's own errors and can be copied for a bug report; filtering threads by label works on GitHub again.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li><strong>The journal on the settings page can be copied for a bug report.</strong> Each line has a copy icon, and a button copies the whole journal. What you paste into an issue carries the extension version, your browser and what a developer needs to reproduce the problem. Page content is not collected as a field of its own, but the address of the page is in the report, and the message and details of an error can contain snippets of what the extension was handling. Read the whole report, not only the address, before you paste it into a public issue.</li>
+            <li><strong>Each journal line says what went wrong in a sentence.</strong> “Merge button not found: it cannot be greyed out” instead of <code>merge-button</code>, with a level, <code>WARN</code> or <code>ERROR</code>. The technical name stays in the copy.</li>
+            <li><strong>The extension now records its own errors.</strong> A crash used to leave no trace. It now shows up as an <code>ERROR</code> line that says what the extension was doing, and the details are in the copy. They stay on your device.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li><strong>Filtering threads by label hides them on GitHub again.</strong> GitHub forced every thread to stay visible, so a thread you had filtered out stayed on screen. Selecting <code>praise</code> no longer leaves an <code>issue</code> thread showing.</li>
+            <li><strong>Clearing the filter gives a thread its original display back.</strong> A thread that already had a forced display setting lost it once the filter was cleared, and GitHub's own styling could override it again.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-17">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.17</span><span class="rel-m">beta</span><span class="rel-d">October 29, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.17" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">Two fields of the settings page no longer show up white in the dark theme.</p>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li><strong>The “Button order” field and the configuration block of the added labels now follow the dark theme.</strong> Both stayed white on a dark settings page, which made them hard to read and out of place next to the other fields. They now look like the rest of the page.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-16">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.16</span><span class="rel-m">beta</span><span class="rel-d">October 29, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.16" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">The settings page tells you which version you are running, and the GitHub adapter reads a pull request's merge button and resolved conversations correctly again.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li><strong>The settings page shows the extension's version next to its title.</strong> A release candidate reads <code>v1.0.0-beta.16</code>, where <code>chrome://extensions</code> shows <code>1.0.0</code> for every beta, so you can tell which build you are running before you report a problem. Firefox shows its own version number.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li><strong>The banner no longer counts resolved conversations as unresolved.</strong> On a pull request whose resolved conversations GitHub collapses, the banner listed them among the unresolved ones, <code>issue (blocking)</code> threads included. It now agrees with the Files changed view of the same pull request.</li>
+            <li><strong>The extension finds the merge button of an open pull request on github.com again.</strong> GitHub changed how the button is built and the extension no longer recognised it. Nothing changes on screen yet: the extension greys the button only when a verifier publishes a failing state, and none ships.</li>
+            <li><strong>The settings page no longer reports false selector failures.</strong> Its Status section listed searches that failed because there was nothing to find, such as the merge button of a merged pull request. They are no longer logged.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-15">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.15</span><span class="rel-m">beta</span><span class="rel-d">October 29, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.15" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">A label's badge now tells the reader what a comment means, and its button tells the writer when to use it.</p>
+          <div class="rel-s"><h4>🔧 Changed</h4><ul>
+            <li><strong>The badge and the button no longer show the same tooltip.</strong> Hovering the label badge of a published comment tells you what the comment means, without an example: <code>issue</code> reads “A problem spotted in this code; the comment explains which one.” Hovering the label's toolbar button tells you when to use it, then gives an example: “Flag a problem to fix, ideally with a lead.” Every shipped label has both texts, in English and French. A badge text never claims more than the label says: whether a point blocks is still shown by the decoration badge next to it.</li>
+            <li><strong>The reviewer skill shows priorities as coloured badges.</strong> An agent following <code>skills/review-pull-request</code> now marks each finding with a P0 to P3 badge; where the image does not show, the reader sees <code>[P1]</code> as before.</li>
+          </ul></div>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li><strong>A team can write each text: <code>labels[].usage</code> for the button.</strong> In <code>.conventional-comments.json</code>, <code>description</code> now goes to the badge and <code>usage</code> to the button. Written, each replaces the shipped text; setting it to an empty string (<code>""</code>) removes that tooltip. Without <code>usage</code>, the button shows <code>description</code>, so a configuration written for 1.0.0-beta.14 keeps showing the same text on both.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-14">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.14</span><span class="rel-m">beta</span><span class="rel-d">October 29, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.14" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">Labels explain themselves where you read them: a hover on a badge shows its definition, and a team can write its own. <code>quibble</code> steps aside for <code>nitpick</code>, and two skills let AI agents review the toolkit's way.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li><strong>A badge tells you what its label means.</strong> Hover the label badge of a published comment and you get the same tooltip as its toolbar button: the definition and an example, in the interface language. The badge also keeps the arrow cursor rather than the text-selection bar.</li>
+            <li><strong>Your team can define its labels: <code>labels[].description</code>.</strong> Write a description for a label you create, or for a shipped one such as <code>issue</code>, in <code>.conventional-comments.json</code>, and the tooltip of the button and the badge shows it. Written, it replaces the shipped definition and its example. Setting it to an empty string (<code>""</code>) removes the tooltip. Omitting it preserves the built-in label's default definition. It is shown as written, whatever the interface language.</li>
+            <li><strong>Two review skills for AI agents.</strong> <code>skills/review-pull-request</code> and <code>skills/respond-to-review</code> tell an agent how to review a pull request, or answer its review, with this toolkit's labels: findings followed up until verified, <code>reviewed:</code> once nothing is left, reply labels for the author, and never an approval or a merge. See the <a href="https://github.com/Reefact/conventional-comments-toolkit/blob/main/README.md#review-skills-for-ai-agents" rel="noopener noreferrer" target="_blank">README</a>.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changed</h4><ul>
+            <li><strong><code>quibble</code> is off by default.</strong> Conventional Comments itself describes it as “very much like nitpick”, so the toolbar showed two buttons for one meaning. Use <code>nitpick</code>, or bring <code>quibble</code> back with <code>&#123; "id": "quibble", "enabled": true &#125;</code> in <code>.conventional-comments.json</code>. Until you do, a <code>quibble:</code> comment is an unknown label where comments are validated.</li>
+            <li><strong><code>reviewed</code> now says when to use it.</strong> Its tooltip read “you have finished reading”; it now reads “your points are dealt with, you have nothing to add”. Post it once each of your points is fixed and checked, or set aside by a reply you accept. Any later change reopens your review. It still approves nothing.</li>
+            <li><strong>The extension's description no longer mentions the companion server</strong>, removed in 1.0.0-beta.13, in <code>chrome://extensions</code> and in the Release pages.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li><strong>A custom label no longer shows its internal key as a tooltip.</strong> Hovering the button of a label your repository created, such as <code>risk</code>, showed “label.risk”. It now shows its <code>description</code> if it has one, and nothing otherwise.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-13">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.13</span><span class="rel-m">beta</span><span class="rel-d">October 29, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.13" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">Labels for replying to a review, every shipped label enabled by default, GitHub's comment box recognised again on today's pages — and the companion server retired, with no verifier in its place yet.</p>
+          <div class="rel-s"><h4>✨ Features</h4><ul>
+            <li><strong>Labels for replying to a review.</strong> <code>thanks</code>, <code>done</code>, <code>ack</code> and <code>disagree</code> answer a point; <code>reviewed</code> closes your own review and approves nothing. They are the toolkit's own addition, not part of Conventional Comments, and they never block. <code>fixed</code> is accepted for <code>done</code>, <code>acknowledged</code> for <code>ack</code> and <code>thx</code> for <code>thanks</code>; <code>?thx</code> expands to <code>thanks: </code> and <code>?r</code> to <code>reviewed: </code>. They do not make replies require a label. A repository that wants to stick to Conventional Comments disables each of them with one <code>labels[]</code> entry: the options page shows that block and copies it for you.</li>
+            <li><strong>The toolbar puts the replies on a line of their own.</strong> Labels that raise a point come first; under a thin rule follow those that answer one — <code>thanks</code>, <code>done</code>, <code>ack</code>, <code>decision</code>, <code>disagree</code>, from the warmest to the firmest. A thin double rule separates the labels from the decorations.</li>
+            <li><strong>You choose the order of the label buttons.</strong> “Button order”, in the options, takes a comma-separated list: the labels you list come first, the others follow in the default order, and the completion list follows the same order. It is a personal preference.</li>
+            <li><strong>A label can say whether it raises a point or answers one</strong>, with <code>labels[].kind</code> (<code>"remark"</code> or <code>"reply"</code>). A label you declare is <code>"remark"</code> unless you say otherwise. It changes no verdict.</li>
+            <li><strong>Every line of the journal says which page it came from.</strong> It recorded which selector failed and when, never where: faced with four lines stamped within the same second, nothing told you whether they came from one page or four. Each line now starts with a six-character mark — same mark, same page — and clicking it opens the exact recorded address in a new tab. That address stays on your device: when you have allowed telemetry, it still sends nothing but the selector's name. Lines already in the journal before this update have no address — it was not being recorded — and carry a neutral mark until their selector fails again, or until you clear the journal.</li>
+            <li><strong>The journal clears from the options page.</strong> A button empties it; tabs you already have open start measuring again straight away, and the section updates itself when one of them writes, without a reload.</li>
+            <li><strong>The options page carries the extension's icon</strong> before its title. The guided tour's button now reads “Guided tour”, its full wording moving to the tooltip.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changed</h4><ul>
+            <li><strong>Every label the toolkit ships is enabled by default</strong>, Conventional Comments' <code>typo</code>, <code>polish</code> and <code>quibble</code> included. A repository disables the ones it does not want.</li>
+            <li><strong>If your configuration already defines <code>thanks</code>, <code>done</code>, <code>ack</code>, <code>disagree</code> or <code>reviewed</code>, it needs one property to keep working as before.</strong> Your label now merges into the shipped one and becomes always non-blocking, so <code>done (blocking):</code> is refused. Add <code>"alwaysNonBlocking": false</code> to restore it.</li>
+            <li><strong>New icons:</strong> <code>praise</code> is now 👏, <code>decision</code> is ⚖️, and 🎉 goes to <code>reviewed</code>.</li>
+            <li><strong>The check links to the toolkit's labels page by default</strong>, https://conventionalcomments.io/docs/labels/, instead of conventionalcomments.org, which documents none of the labels the toolkit adds. A <code>docUrl</code> you set yourself is kept.</li>
+            <li><strong>Two active labels can no longer share a name.</strong> An alias that repeats another active label's name is removed, and the removal is reported. Before, the order of the label list decided which label a comment meant.</li>
+            <li><strong>An enterprise floor no longer makes <code>decision</code> blocking.</strong> Listing it under <code>labels.minimum</code> used to force it blocking, so a bare <code>decision:</code> opened a blocking thread while <code>decision (blocking):</code> was refused. The floor now only keeps it enabled.</li>
+            <li><strong>A shipped abbreviation only expands to an enabled label.</strong> <code>?ty</code>, <code>?po</code> and <code>?qui</code> used to insert the prefix of a disabled label, which validation then rejected. An abbreviation your repository defines itself is unaffected.</li>
+            <li><strong>On Azure DevOps, the label prefix is no longer hidden and the subject no longer emphasised.</strong> Nobody has yet measured how Azure DevOps renders a comment body, and the extension stopped assuming it renders like GitHub's. Badges stay, and the body shows whole.</li>
+            <li><strong>The companion server is retired, and no verifier ships in its place.</strong> It was never deployed. The specification now calls for a verifier that runs inside the platform and keeps no state, and <a href="https://github.com/Reefact/conventional-comments-toolkit/issues/56" rel="noopener noreferrer" target="_blank">issue #56</a> tracks building one for GitHub. Until it exists, nothing checks comments after the fact and no status check is published: <code>enforce</code> still blocks a send in the extension, which anyone without it bypasses. The <code>server</code> and <code>exemptionLog</code> configuration blocks are now ignored, with a warning.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Bug fixes</h4><ul>
+            <li><strong>GitHub's “Files changed” view is recognised again.</strong> On pages as github.com serves them today, the extension found no button that publishes a comment, so under <code>enforce</code> a non-conforming comment could still be published there. It also treated editing a comment as writing a new one, treated the review summary as a line comment that can block the pull request, and gave no badges to threads. On the “Conversation” tab, editing a published comment was also treated as a line comment that can block. “Cancel” is still never intercepted.</li>
+            <li><strong>GitHub: the pull request's creation date is read from the pull request itself.</strong> That date decides whether a pull request predates <code>activatedAt</code>, and so whether the extension may block on it. It used to be the first date on the page — on a merged pull request, the merge date, so the same pull request could read two dates depending on the tab. When the date cannot be read, the extension does not block.</li>
+            <li><strong>The privacy policy described a history the extension does not keep.</strong> It announced “the last 50 times” an element was not recognised, while the journal keeps only one line per selection rule — fifty at most, each with its most recent observation. It now describes what is actually kept, the page address included.</li>
+          </ul></div>
+        </article>
 
         <article class="rel" id="v1-0-0-beta-12">
           <div class="rel-h"><span class="rel-v">1.0.0-beta.12</span><span class="rel-m">beta</span><span class="rel-d">September 8, 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.12" rel="noopener noreferrer" target="_blank">tag ↗</a></div>

@@ -7,7 +7,7 @@ const page = 'configure' as const;
 ---
 <Docs lang={lang} page={page}
   title="Configurer un dépôt"
-  description="Configurez un dépôt avec un seul fichier sur la branche par défaut. Comprenez les trois niveaux de configuration, les paramètres essentiels et les points d'attention.">
+  description="Configurez un dépôt avec un seul fichier sur la branche par défaut. Comprenez les trois niveaux de configuration, les paramètres essentiels, le moment où un changement prend effet et ce que l'extension vous signale quand le fichier pose un problème.">
 <div class="dhead stack g12">
           <p class="crumb"><b>doc</b> / configuration</p>
           <h1>Configurer un dépôt</h1>
@@ -31,49 +31,83 @@ const page = 'configure' as const;
             <table class="t">
               <thead><tr><th>Niveau</th><th>Qui le définit</th><th>À quoi il sert</th></tr></thead>
               <tbody>
-                <tr><td class="m">plancher</td><td class="d">L'organisation, au moment du déploiement — jamais depuis un fichier de dépôt.</td><td class="d">Impose un mode minimal et les règles qu'aucun dépôt ne peut désactiver. Un dépôt peut être plus strict, mais jamais plus permissif.</td></tr>
-                <tr><td class="m">organisation</td><td class="d">Un document de configuration partagé, récupéré depuis l'adresse définie par le plancher.</td><td class="d">Définit la base commune. Modifier <code>mode</code> à ce niveau prend effet dans toute l'organisation, y compris sur les pull requests déjà ouvertes.</td></tr>
-                <tr><td class="m">dépôt</td><td class="d">Le fichier <code>.conventional-comments.json</code> de la branche par défaut.</td><td class="d">Permet les ajustements locaux&nbsp;: exempter certains bots, activer un label optionnel ou désactiver un diagnostic.</td></tr>
+                <tr><td class="m">plancher</td><td class="d">L'organisation, par la politique d'entreprise de ses navigateurs — jamais depuis un fichier de dépôt.</td><td class="d">Impose un mode minimal et les règles qu'aucun dépôt ne peut assouplir. Un dépôt peut être plus strict, mais jamais plus permissif.</td></tr>
+                <tr><td class="m">organisation</td><td class="d">Un document de configuration partagé, récupéré depuis l'adresse définie par le plancher.</td><td class="d">Définit la base commune. Modifier <code>mode</code> à ce niveau prend effet dans tous les dépôts qui ne fixent pas le leur, y compris sur les pull requests déjà ouvertes.</td></tr>
+                <tr><td class="m">dépôt</td><td class="d">Le fichier <code>.conventional-comments.json</code> de la branche par défaut.</td><td class="d">Permet les ajustements locaux&nbsp;: exempter certains bots, désactiver un label ou faire taire un avertissement.</td></tr>
               </tbody>
             </table>
           </div>
           <div class="callout acc">
-            <span class="ct">qui applique le plancher aujourd'hui</span>
-            <p style="margin:0">Aujourd'hui, seule l'extension applique ce plancher, qu'elle lit dans la politique d'entreprise du navigateur. Un futur contrôle exécuté au niveau de la plateforme ne pourrait pas lire cette politique directement et devrait donc recevoir la même information par un autre mécanisme. Ce mécanisme n'est volontairement pas figé tant que l'implémentation d'Enforce n'a pas été définie pour chaque plateforme.</p>
+            <span class="ct">d'où vient le plancher</span>
+            <p style="margin:0">Le plancher n'a qu'un seul canal&nbsp;: la politique d'entreprise du navigateur, que l'extension lit sur chaque poste. Une organisation qui ne déploie aucune politique n'a pas de plancher&nbsp;: le document d'organisation et le fichier du dépôt décident alors seuls. Lorsqu'un fichier de dépôt tente de descendre sous le plancher, le réglage concerné est ignoré, et l'extension le signale. La page <a href={href('install', 'fr')}>Installation</a> décrit le déploiement de cette politique.</p>
           </div>
         </section>
 
         <section class="dsec">
           <h2>Les paramètres à connaître</h2>
-          <p>La configuration en compte vingt-cinq au total. Ceux-ci sont les principaux paramètres qui modifient le comportement du produit plutôt que son apparence.</p>
+          <p>Le fichier compte dix-neuf paramètres de premier niveau. Voici ceux qui modifient le comportement du produit plutôt que son apparence.</p>
           <div class="scroller">
             <table class="t wide">
               <thead><tr><th>Clé</th><th>Valeur par défaut</th><th>Rôle</th></tr></thead>
               <tbody>
-                <tr><td class="m">mode</td><td class="m d">assist</td><td class="d"><code>off</code> · <code>assist</code> · <code>warn</code> · <code>enforce</code>. Assist et warn sont pleinement pris en charge par l'extension aujourd'hui. Enforce ajoute déjà un mode strict local dans le navigateur&nbsp;; le contrôle de fusion au niveau de la plateforme reste, lui, sur la feuille de route. Consultez le guide d'adoption pour le détail.</td></tr>
-                <tr><td class="m">formatSeverity</td><td class="m d">warn</td><td class="d">Détermine si un commentaire mal formé peut faire échouer la vérification. La plupart des équipes conservent cette valeur&nbsp;: en règle générale, ce sont les points bloquants non résolus qui doivent empêcher une fusion, pas une erreur de format.</td></tr>
-                <tr><td class="m">resolverOverrideGroup</td><td class="m d">vide</td><td class="d">Définit qui peut passer outre une résolution et enregistrer une <code>decision</code>. <strong>Ce paramètre doit être configuré avant d'utiliser <code>enforce</code>.</strong> Lorsqu'il est vide, les deux mécanismes permettant de sortir d'une situation bloquée sont indisponibles.</td></tr>
+                <tr><td class="m">mode</td><td class="m d">assist</td><td class="d"><code>off</code> · <code>assist</code> · <code>enforce</code>. En <code>assist</code>, l'extension aide et signale, sans jamais bloquer. En <code>enforce</code>, elle refuse en plus l'envoi d'un commentaire non conforme, dans le navigateur où elle est installée&nbsp;; elle ne bloque jamais une fusion. Voir le <a href={href('adoption', 'fr')}>guide d'adoption</a> et la page <a href={href('enforce', 'fr')}>Enforce</a>.</td></tr>
                 <tr><td class="m">exemptUsers</td><td class="m d">vide</td><td class="d">Liste les utilisateurs dont les commentaires ne sont jamais validés. La comparaison se fait avec leur identifiant sur la plateforme, sans tenir compte de la casse.</td></tr>
                 <tr><td class="m">toolCommands</td><td class="m d">vide</td><td class="d">Définit les commentaires destinés à des bots ou à des outils. Voir le point d'attention ci-dessous.</td></tr>
-                <tr><td class="m">labels</td><td class="m d">13 labels</td><td class="d">Permet de modifier le comportement de certains labels. Ne déclarez que ceux que vous souhaitez personnaliser.</td></tr>
-                <tr><td class="m">severities</td><td class="m d">valeurs du produit</td><td class="d">Permet de modifier, diagnostic par diagnostic, leur niveau de sévérité ou de les désactiver.</td></tr>
-                <tr><td class="m">coreMinVersion</td><td class="m d">1.0.0</td><td class="d">Permet d'imposer une version minimale du moteur dans toute l'organisation.</td></tr>
+                <tr><td class="m">labels</td><td class="m d">19 labels, dont 18 activés</td><td class="d">Permet de modifier certains labels, la fusion se faisant par <code>id</code>. Ne déclarez que ceux que vous souhaitez personnaliser&nbsp;; pour en retirer un, passez son <code>enabled</code> à <code>false</code>.</td></tr>
+                <tr><td class="m">severities</td><td class="m d">valeurs du produit</td><td class="d">Modifie, diagnostic par diagnostic, le niveau de sévérité&nbsp;: <code>off</code>, <code>warn</code> ou <code>error</code>. Deux limites s'appliquent, décrites plus bas.</td></tr>
+                <tr><td class="m">scope.validateReplies</td><td class="m d">false</td><td class="d">Indique si les réponses à l'intérieur d'un fil sont validées elles aussi, et pas seulement les commentaires qui en ouvrent un.</td></tr>
+                <tr><td class="m">configCacheTtlSeconds</td><td class="m d">3600</td><td class="d">Durée, en secondes, pendant laquelle l'extension peut continuer de s'appuyer sur une configuration qu'elle a déjà lue. Voir «&nbsp;Quand un changement prend effet&nbsp;».</td></tr>
+                <tr><td class="m">sessionIcon</td><td class="m d">🤖</td><td class="d">Icône de la mention qui remplace un marqueur de session à l'affichage d'un commentaire. Voir <a href={href('aireview', 'fr')}>Revue assistée par IA</a>.</td></tr>
+                <tr><td class="m">coreMinVersion</td><td class="m d">1.0.0</td><td class="d">Impose une version <em>majeure</em> minimale du moteur. Seule la majeure est comparée&nbsp;: avec un moteur 1.x, <code>1.99.0</code> est accepté et <code>2.0.0</code> déclenche le repli. Il ne permet pas d'exiger une version mineure ou corrective plus récente.</td></tr>
               </tbody>
             </table>
           </div>
+          <p>Une entrée de <code>labels</code> ne sert pas seulement à activer un label ou à le rendre bloquant. Trois propriétés méritent d'être connues&nbsp;:</p>
+          <ul class="bul">
+            <li><strong><code>kind</code></strong> indique ce que le label fait d'un point&nbsp;: <code>"remark"</code> en ouvre un, <code>"reply"</code> y répond, <code>"status"</code> dit où en est la revue. Ce type décide de la place du bouton dans la barre d'outils et ne change jamais un verdict. Un label que vous créez est de type <code>"remark"</code>, sauf si vous écrivez autre chose.</li>
+            <li><strong><code>description</code></strong> dit ce que le label signifie. Ce texte s'affiche en infobulle sur le badge d'un commentaire publié.</li>
+            <li><strong><code>usage</code></strong> dit quand employer le label. Ce texte s'affiche en infobulle sur le bouton de la barre d'outils, qui reprend <code>description</code> lorsque <code>usage</code> est absent.</li>
+          </ul>
+          <p class="small">Ces deux textes s'affichent exactement comme vous les écrivez, quelle que soit la langue de l'interface. Une chaîne vide (<code>""</code>) supprime l'infobulle correspondante. Si la propriété est omise, le label conserve son texte par défaut. La page <a href={href('labels', 'fr')}>Labels</a> présente les dix-neuf labels et leur type.</p>
+          <p><code>severities</code> a deux limites qu'aucun niveau de configuration ne peut lever. Un diagnostic dont le code commence par <code>E-</code> peut être ramené à un avertissement, jamais désactivé. Et <code>W-SESSION-MULTIPLE</code>, l'avertissement émis quand un commentaire porte deux marqueurs de session, ne peut jamais devenir une erreur&nbsp;: une faute dans un marqueur ne doit pas bloquer un commentaire.</p>
           <div class="callout blk">
             <span class="ct">un paramètre mérite une attention particulière</span>
             <h4><code>toolCommands</code> est vide par défaut.</h4>
-            <p>En mode strict, un <code>/rebase</code> utilisé seul est traité comme n'importe quel autre commentaire non conforme, sauf si le dépôt le déclare explicitement. Ajouter <code>"/*"</code> permet d'exempter toutes les commandes commençant par <code>/</code>. Les comptes de bots, eux, doivent être déclarés individuellement avec leur identifiant exact, par exemple <code>"@dependabot"</code>.</p>
+            <p>En mode <code>enforce</code>, un <code>/rebase</code> utilisé seul est traité comme n'importe quel autre commentaire non conforme, jusqu'à ce que le dépôt ajoute <code>"/*"</code>, qui exempte toutes les commandes commençant par <code>/</code>. Il n'existe aucun moyen d'en exempter une seule&nbsp;: une entrée comme <code>"/rebase"</code> est ignorée, et signalée par un avis de configuration. Les comptes de bots, eux, doivent être déclarés individuellement avec leur identifiant exact, par exemple <code>"@dependabot"</code>.</p>
           </div>
         </section>
 
         <section class="dsec">
-          <h2>Deux comportements à connaître</h2>
+          <h2>Quand un changement prend effet</h2>
+          <p>Aucune configuration n'est figée&nbsp;: un changement s'applique aux pull requests déjà ouvertes dès que l'extension le lit. Elle conserve ce qu'elle a lu pendant <code>configCacheTtlSeconds</code> — une heure par défaut. La pastille d'état et les diagnostics peuvent donc accuser ce retard après un changement.</p>
+          <p>Le blocage fait exception. Avant de refuser l'envoi d'un commentaire, l'extension relit le fichier du dépôt et le document d'organisation sans tenir compte de son cache. Un commentaire n'est donc jamais bloqué au nom d'une configuration périmée&nbsp;: si vous venez d'assouplir le mode ou d'ajouter un label, la tentative d'envoi suivante passe.</p>
+          <p class="small">Le plancher peut lui aussi fixer <code>configCacheTtlSeconds</code>. Sa valeur est alors un maximum&nbsp;: un dépôt peut demander un cache plus court que celui de l'organisation, jamais plus long.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Quand la configuration pose un problème</h2>
+          <p>L'extension ne passe pas sous silence une configuration qu'elle n'a pas pu appliquer telle quelle. Elle affiche des <strong>avis de configuration</strong> dans la pastille d'état, sous la zone de saisie, et sur sa page de réglages, dans la langue de l'interface. Chaque avis nomme le niveau d'où il vient&nbsp;: la politique de l'organisation, le document d'organisation ou le fichier du dépôt. Un avis informe&nbsp;; il ne change jamais le sort d'un commentaire.</p>
+          <div class="scroller">
+            <table class="t wide">
+              <thead><tr><th>Avis</th><th>Ce qui s'est passé</th><th>Ce que fait l'extension</th></tr></thead>
+              <tbody>
+                <tr><td class="m">config-warning</td><td class="d">Une clé est inconnue ou retirée, une valeur est obsolète, ou une entrée d'une liste est inutilisable.</td><td class="d">Elle ignore cette clé ou cette entrée et applique tout le reste.</td></tr>
+                <tr><td class="m">floor-override</td><td class="d">Un réglage a tenté de descendre sous le plancher.</td><td class="d">Elle ignore ce réglage et conserve la valeur du plancher.</td></tr>
+                <tr><td class="m">invalid-config</td><td class="d">Le fichier n'est pas un JSON valide, ou une clé connue contient une valeur impossible, comme <code>"mode": "banana"</code>.</td><td class="d">Elle écarte le document entier, se replie sur le dernier niveau valide — l'organisation, puis les valeurs du produit — et indique la ligne fautive.</td></tr>
+                <tr><td class="m">unsupported-version</td><td class="d">Le fichier déclare une <code>version</code> supérieure à la version de schéma que l'extension sait lire (1 aujourd'hui), ou un <code>coreMinVersion</code> dont la majeure dépasse celle du moteur.</td><td class="d">Elle se replie sur <code>assist</code>, ou sur le plancher s'il est plus strict.</td></tr>
+              </tbody>
+            </table>
+          </div>
           <ul class="bul">
-            <li><strong>Une clé inconnue est ignorée et produit un avertissement&nbsp;; elle ne rend pas la configuration invalide.</strong> En revanche, si une clé reconnue contient une valeur impossible, l'ensemble du document est considéré comme invalide. Puisqu'il ne peut plus être interprété de manière fiable, aucune de ses règles n'est appliquée.</li>
-            <li><strong>Une propriété <code>configUrl</code> déclarée dans le fichier du dépôt est ignorée.</strong> L'adresse de la configuration de l'organisation provient exclusivement du plancher. Autoriser un dépôt à la redéfinir reviendrait à lui permettre de choisir lui-même les règles de l'organisation.</li>
+            <li><strong>Un fichier cassé ne désactive jamais la convention.</strong> L'extension se replie sur un niveau qu'elle sait lire, dans les limites du plancher, et vous dit pourquoi.</li>
+            <li><strong>Une propriété <code>configUrl</code> déclarée dans le fichier du dépôt est ignorée</strong>, et signalée par un <code>config-warning</code>. L'adresse de la configuration de l'organisation provient exclusivement du plancher. Autoriser un dépôt à la redéfinir reviendrait à lui permettre de choisir lui-même les règles de l'organisation.</li>
+            <li><strong>Une configuration que l'extension n'a pas pu lire du tout est un autre cas.</strong> Quand la requête échoue, la pastille d'état affiche «&nbsp;Configuration non lue&nbsp;», et l'extension assiste sans bloquer&nbsp;: elle ne refuse pas un commentaire au nom de règles qu'elle n'a pas pu lire. C'est toujours le cas sur GitLab, où l'extension ne sait pas encore lire la configuration d'un dépôt.</li>
           </ul>
+          <div class="callout warn">
+            <span class="ct">si votre fichier a été écrit pour une version antérieure</span>
+            <h4>Cinq clés sont retirées, et le mode <code>warn</code> aussi.</h4>
+            <p><code>formatSeverity</code>, <code>resolverOverrideGroup</code>, <code>overrideLabel</code>, <code>activation</code> et <code>docUrl</code> ne servaient qu'à un contrôle de fusion que le toolkit ne prévoit plus. Les blocs <code>server</code> et <code>exemptionLog</code> appartenaient au serveur compagnon, retiré plus tôt. Un fichier qui en contient encore reste lisible&nbsp;: chacune de ces clés est signalée comme inconnue et ignorée, et rien d'autre ne change. <code>"mode": "warn"</code> est lu comme <code>"assist"</code>, avec un avis indiquant que la valeur est obsolète. Retirez ces clés, écrivez <code>"assist"</code>, et les avis disparaissent.</p>
+          </div>
         </section>
         <div class="pager"></div>
 </Docs>

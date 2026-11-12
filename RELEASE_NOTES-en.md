@@ -16,7 +16,118 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
-_Nothing pending yet._
+### ✨ New
+
+- **The toolkit's release notes now run up to 1.0.0-rc.2.** `/release-notes/v1/` gains eleven
+  versions, from 1.0.0-beta.13 to the release candidate: labels for replying to a review,
+  GitLab support, review-session markers, an `enforce` mode that really blocks, and the
+  retirement of the verifier. Its introduction no longer mentions a server: the extension
+  never blocks a merge.
+- **The labels page covers the nineteen labels the toolkit ships.** `/docs/labels/` groups
+  them the way the toolbar does — remarks, review status, replies — and says which come from
+  Conventional Comments and which the toolkit adds. New sections explain how to reply to a
+  remark (`thanks`, `done`, `ack`, `disagree`, `decision`), how to say where a review stands
+  (`summary`, `reviewed`), and how a team that wants only the original list turns the rest
+  off.
+- **The Enforce page now describes the mode as it ships.** `/docs/enforce/` replaces the
+  former roadmap page: when the extension blocks a comment, why it re-reads the
+  configuration first, and why it never blocks a merge. The old `/docs/server/` address
+  redirects there.
+- **A new page covers AI-assisted review.** `/docs/ai-review/` explains the session marker
+  that tells apart the comments of several review sessions, and the two skills the toolkit
+  ships for agents that review a pull request or answer a review.
+- **GitLab appears among the supported platforms.** gitlab.com gets the toolbar, live
+  validation, badges, the thread filter and the banner; the extension never blocks a comment
+  there.
+- **"How it works" describes what the extension has gained:** the three-group toolbar and
+  personal button order, configuration notices, the collapsed banner, the thread filter and
+  review-session markers.
+- **The adoption guide follows the path the toolkit recommends.** `/docs/adoption/` goes from
+  `assist` to `enforce` on a pilot repository, then everywhere; it says what to prepare
+  before the switch and how to roll back in minutes.
+- **The configuration page explains what the extension tells you.** `/docs/configure/` gains
+  two sections: when a change takes effect, and the configuration notices shown in the
+  status pill.
+- **The installation page covers GitLab.com and organization-wide deployment:** forced
+  installation, domains authorized in advance, the floor and the telemetry endpoint.
+- **Troubleshooting covers what an update to 1.0.0-rc.1 brings.** Two new entries —
+  configuration notices that appear in the status pill, and comments that are suddenly
+  blocked in `enforce` — and a last section on downloading the diagnostic archive and
+  attaching it to an issue.
+
+### 🐛 Fixed
+
+- **The site no longer announces a platform-level merge check.** The home page, "How it
+  works", the platforms page, the adoption guide, the docs index and the privacy page all
+  presented it as on the roadmap. The toolkit has decided otherwise: the extension is the
+  whole product, it reports unresolved blocking threads and never blocks a merge. The
+  `warn` stage is gone with it.
+- **Azure DevOps is listed for dev.azure.com only.** The platforms page offered Azure DevOps
+  Server as supported; the extension acts on dev.azure.com and nowhere else. Bitbucket is
+  no longer announced as coming.
+- **The home page no longer says the extension sends nothing, ever.** Its privacy block read
+  "Nothing is sent anywhere. No telemetry.", while the privacy page explains the opt-in
+  telemetry an organization can set up. It now says nothing is sent by default. The block
+  next to it also stops listing browsers as a platform, and no longer points to "documented
+  limitations" the site never documented.
+- **The home page shows the right icons and the right shortcut.** `praise` is 👏, `decision`
+  is ⚖️, and `nitpick:` is typed `?ni`.
+- **The labels page shows the defaults the toolkit ships.** `typo` and `polish` are enabled,
+  only `quibble` is not; and the page no longer cites `formatSeverity`, or a group entitled
+  to record a `decision`, both retired.
+- **"How it works" gives the two real conditions for blocking a comment.** The activation
+  date is gone, and the page now says that the extension re-reads the configuration before
+  blocking.
+- **The docs no longer describe settings and a mode that are gone.** `warn`,
+  `formatSeverity` and `resolverOverrideGroup` are out of the configuration and adoption
+  pages, which now say what happens to a file that still carries them.
+- **The installation page no longer suggests authorizing Azure DevOps Server or
+  `visualstudio.com`,** where the extension does nothing.
+- **The privacy page lists everything the extension keeps.** Three synced preferences rather
+  than two, the configuration notices and the diagnostic journal as they are stored, and a
+  revision date. The journal was described as "the latest 50 entries"; it keeps one line
+  per rule, with the page where the rule failed.
+- **The troubleshooting page describes the extension as it is today.** "Configuration
+  unread" is a message of the status pill, permanent on GitLab; a blocking thread is
+  resolved on the platform, with no entitled group; and the journal is described as the
+  extension keeps it.
+- **The pages no longer explain themselves by contrast with a version you never saw.** The
+  home, platforms and install pages each singled out github.com in a sentence that had
+  already stated the rule — that the extension reaches only the domains you have allowed.
+  Naming one domain inside that rule only means something to a reader who knew github.com
+  used to be built in; to everyone else it suggests the domain is an exception, which is the
+  opposite of what the sentence says. The aside is gone from all three; the troubleshooting
+  entry keeps it, because someone whose toolbar is missing on github.com needs that
+  exception ruled out by name.
+- **Neither language talks about granting a domain any more.** What is granted is access to
+  a domain, not the domain itself, and both languages had lost that distinction. In French,
+  the troubleshooting page read "tant que vous ne lui accordez pas un premier domaine"; in
+  English, the install and platforms pages read "every domain is granted one at a time" and
+  the troubleshooting page "until you grant a first domain". All four now name what is
+  actually granted. The same pass reworded the second sentence of the domain-authorization
+  section on each install page: in English, "has no permanent access to any site" replaces
+  "holds no permanent access to any site"; in French, "ne dispose d'aucun accès permanent"
+  replaces "ne détient d'accès permanent à aucun site". Review caught the French wording in
+  the last release's notes and it was fixed there; the page it came from was missed, and
+  shipped.
+
+### 🔧 Improved
+
+- **Sentences that read as translations now read naturally, in both languages.** A full
+  language pass reworded the labels, how-it-works, adoption, configuration, install,
+  troubleshooting and AI-assisted review pages, the docs index, and a few toolkit release
+  notes: for instance, an author and maintainers "respond" to a remark rather than "carry"
+  the pull request, and a thread is resolved "using the platform's own controls".
+- **The configuration schema follows the toolkit's 1.0.0-rc.2.** `/schema/v1.json` now knows
+  `sessionIcon`, the `kind`, `description` and `usage` of a label, and the
+  `W-SESSION-MULTIPLE` diagnostic. It no longer offers the seven keys the toolkit retired
+  with the verifier — `formatSeverity`, `overrideLabel`, `resolverOverrideGroup`,
+  `activation`, `docUrl`, `server` and `exemptionLog` — so your editor now underlines them.
+  `"mode": "warn"` is still accepted, and flagged as obsolete.
+- **The platforms page no longer lists browsers as a platform.** Chrome, Edge, Brave and
+  Firefox sat in the same grid as GitHub and Azure DevOps, as if they answered the same
+  question. They now have their own short section under the platforms: where you review
+  code on one side, where the extension installs on the other.
 
 ## release/2026-09-08T10-40-39Z — September 8, 2026
 

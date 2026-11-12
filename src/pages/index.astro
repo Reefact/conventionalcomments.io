@@ -7,7 +7,7 @@ const page = 'home' as const;
 ---
 <Base lang={lang} page={page}
   title="Conventional Comments Toolkit"
-  description="Review comments that say what they expect. A browser extension that makes the Conventional Comments convention easy to follow, with platform-level enforcement on the roadmap.">
+  description="Review comments that say what they expect. A browser extension that makes the Conventional Comments convention easy to follow, and keeps unresolved blocking points in view on the pull request.">
 <section class="hband">
       <div class="in">
         <div class="hero-g">
@@ -135,7 +135,7 @@ const page = 'home' as const;
             <p>Putting <code>nitpick</code> in front of your own remark means acknowledging: “this is small.” The reviewer disarms the comment before it reaches the author.</p>
           </div>
           <div>
-            <span class="pill" style="--lc:var(--l-praise)">🎉 praise</span>
+            <span class="pill" style="--lc:var(--l-praise)">👏 praise</span>
             <p>People rarely remember to call out what went well. A button in a toolbar makes it easy. It's a simple mechanism, but it changes the tone of a review.</p>
           </div>
           <div>
@@ -143,8 +143,8 @@ const page = 'home' as const;
             <p>Marking something as blocking means owning that judgment. No more “anyway, I'll let you decide,” which commits nobody and leaves the author alone with the uncertainty.</p>
           </div>
           <div>
-            <span class="pill" style="--lc:var(--l-decision)">🏁 decision</span>
-            <p>Closing a point without acting on it means explaining why. A disagreement can't simply disappear in silence.</p>
+            <span class="pill" style="--lc:var(--l-decision)">⚖️ decision</span>
+            <p>Choosing not to act on a point means saying why, in the thread itself. A disagreement can't simply disappear in silence.</p>
           </div>
         </div>
       </div>
@@ -190,17 +190,18 @@ const page = 'home' as const;
           <div>
             <span class="tag" style="color:var(--fg-muted)">as you write</span>
             <h3>An extension that does the typing</h3>
-            <p>A row of buttons sits above the comment box on GitHub. Type <code>?n</code> and the extension inserts <code>nitpick:</code>. Hover over a button and it reminds you what the label means. Choosing the right label becomes effortless — which is exactly why people are still doing it weeks later.</p>
+            <p>A row of buttons sits above the comment box on GitHub, Azure DevOps and GitLab. Type <code>?ni</code>, press <code>Tab</code>, and the extension inserts <code>nitpick:</code>. Hover over a button and it tells you when to use that label, with an example. Choosing the right label becomes effortless — which is exactly why people are still doing it weeks later.</p>
           </div>
           <div>
             <span class="tag" style="color:var(--accent)">once it's published</span>
             <h3>Blocking points stay visible</h3>
-            <p>The extension keeps track of unresolved blocking comments directly on the pull request and shows how many remain. Nobody has to scroll back through the thread to check.</p>
+            <p>Each published label becomes a badge; hover over it and it says what the comment means. The extension also counts the unresolved blocking threads directly on the pull request and shows how many remain. Nobody has to scroll back through the discussion to check.</p>
             <p class="guar">It isn't there to police anyone. It's a safety net: <strong style="color:var(--fg)">an important point doesn't get lost somewhere in the thread.</strong></p>
           </div>
         </div>
 
-        <p class="small measure">The extension is all you need to get started. The convention itself needs no tooling at all. The tooling simply makes it easier to use consistently.</p>
+        <p class="small measure">The extension is all there is to install. The convention itself needs no tooling at all. The tooling simply makes it easier to use consistently.</p>
+        <p class="small measure"><strong style="color:var(--fg-2)">Reviewing with AI agents?</strong> The toolkit ships two agent skills — one to review a pull request, one to answer a review — and a session marker that tells one agent's comments from another's. See <a href={href('aireview', 'en')}>AI-assisted review</a>.</p>
       </div>
     </section>
 
@@ -208,23 +209,27 @@ const page = 'home' as const;
       <div class="in">
         <div class="split">
           <div class="stack g14">
-            <span class="eyebrow">the direction:</span>
-            <h2 style="font-size:24px">Assist and warn are available today. Enforce comes next.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The extension already covers the first two stages. Enforce will eventually add an authoritative, platform-level merge gate, independent of the browser. That capability is on the roadmap.</p>
-            <a class="btn btn-p" href={href('adoption', 'en')} style="align-self:flex-start">How teams adopt it</a>
+            <span class="eyebrow">the path:</span>
+            <h2 style="font-size:24px">Help first. Block only once your team decides to.</h2>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The extension has three modes: <code>off</code>, <code>assist</code> and <code>enforce</code>. In <code>assist</code>, the default, it helps and never blocks. In <code>enforce</code>, it refuses to send a malformed comment — in the browser of whoever has it installed.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">It never blocks a merge. A team that wants merges to wait for resolved conversations uses its platform's own setting for that.</p>
+            <div class="hero-btns">
+              <a class="btn btn-p" href={href('adoption', 'en')}>How teams adopt it</a>
+              <a class="btn btn-s" href={href('enforce', 'en')}>What enforce does</a>
+            </div>
           </div>
           <div class="traj">
             <div class="step" style="--st:var(--fg-faint)">
-              <span class="sn">assist</span><span class="sw">available today</span>
-              <span class="sd">The extension helps the people who install it. Nobody is blocked. No centralized tracking by default.</span>
+              <span class="sn">assist</span><span class="sw">the default</span>
+              <span class="sd">The extension helps the people who install it and shows the unresolved blocking threads on the pull request. Nobody is blocked. No centralized tracking by default.</span>
             </div>
             <div class="step" style="--st:var(--warn)">
-              <span class="sn">warn</span><span class="sw">available today</span>
-              <span class="sd">The extension surfaces unresolved blocking points on the pull request without rejecting anything.</span>
+              <span class="sn">enforce</span><span class="sw">on a pilot repository</span>
+              <span class="sd">One repository switches to <code>enforce</code>. There, the extension refuses to send a malformed comment. Everywhere else, nothing changes.</span>
             </div>
             <div class="step" style="--st:var(--block)">
-              <span class="sn">enforce</span><span class="sw">on the roadmap</span>
-              <span class="sd">Eventually, platform-level merge gates for GitHub, Azure DevOps, and other platforms could rely on the same rules. That capability isn't available yet, and its architecture isn't settled either.</span>
+              <span class="sn">enforce</span><span class="sw">rolled out</span>
+              <span class="sd">Once the pilot has proved successful, the other repositories follow, at the pace the team chooses.</span>
             </div>
           </div>
         </div>
@@ -237,16 +242,17 @@ const page = 'home' as const;
           <div class="stack g14">
             <span class="eyebrow">privacy:</span>
             <h2 style="font-size:24px">Your comments never leave your browser.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">What people write in a code review can be more sensitive than the code itself. The extension reads and checks everything locally. Nothing is sent anywhere. No telemetry. No account. No stored token. It runs only on the domains you have explicitly allowed — github.com included — and nowhere else.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">What people write in a code review can be more sensitive than the code itself. The extension reads and checks everything locally. Nothing is sent by default: telemetry stays off unless your organization has set it up and you have agreed to it. No account. No stored token. It runs only on the domains you have explicitly allowed, and nowhere else.</p>
             <p class="small"><strong style="color:var(--fg-2)">There is one exception:</strong> your own settings — such as language and shortcuts — can follow your browser's sync if you have it enabled. Settings only. Never review content.</p>
           </div>
           <div class="stack g12">
             <span class="eyebrow">where it works:</span>
             <div class="plat">
               <div><span class="ph">GitHub</span><span class="pl">github.com<br>Enterprise Cloud · EMU<br>Enterprise Server</span></div>
-              <div><span class="ph">Azure DevOps</span><span class="pl">Services<br>Server (self-hosted)<br><span style="color:var(--fg-faint)">with documented limitations</span></span></div>
-              <div><span class="ph">Browsers</span><span class="pl">Chrome, Edge, Brave<br>Firefox<br>Open source · Apache-2.0</span></div>
+              <div><span class="ph">Azure DevOps</span><span class="pl">Services<br>dev.azure.com</span></div>
+              <div><span class="ph">GitLab</span><span class="pl">gitlab.com<br>assistance only, no blocking</span></div>
             </div>
+            <p class="small">In Chrome, Edge, Brave and Firefox. Open source, under the Apache-2.0 license.</p>
             <a class="btn btn-s" href={href('platforms', 'en')} style="align-self:flex-start">See the details</a>
           </div>
         </div>
@@ -260,7 +266,7 @@ const page = 'home' as const;
           <p class="small" style="color:var(--fg-2)">That's it. Everything else — the extension and its settings — exists only to make that habit easy to keep.</p>
         </div>
         <div class="hero-btns">
-          <a class="btn btn-p" href={href('labels', 'en')}>See all 13 labels</a>
+          <a class="btn btn-p" href={href('labels', 'en')}>See all the labels</a>
           <a class="btn btn-s" href={href('adoption', 'en')}>Bring it to my team</a>
         </div>
       </div>

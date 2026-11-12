@@ -7,53 +7,96 @@ const page = 'troubleshooting' as const;
 ---
 <Docs lang={lang} page={page}
   title="Troubleshooting"
-  description="Five common symptoms, what causes them, and what to do when the extension does not behave as expected.">
+  description="Seven common symptoms, what causes them, and what to do when the extension does not behave as expected — and how to report the ones this page does not explain.">
 <div class="dhead stack g12">
           <p class="crumb"><b>docs</b> / troubleshooting</p>
           <h1>When something looks wrong</h1>
-          <p class="lede measure">Most of the behaviours that seem surprising at first are deliberate. For each case below, you'll find what you're seeing, why it happens, and what — if anything — you need to do.</p>
+          <p class="lede measure">Most of the behaviours that seem surprising at first are deliberate. For each case below, you'll find what you're seeing, why it happens, and what — if anything — you need to do. When none of them matches, the last section explains how to send a diagnostic.</p>
         </div>
 
         <section class="dsec">
           <h2>The toolbar doesn't appear</h2>
           <ul class="tick">
-            <li><span class="mk n">·</span><b>The domain isn't authorized yet</b><span class="tx">The extension runs only where you have allowed it, github.com included: a fresh install is active nowhere until you grant a first domain from its options page. For a domain the extension doesn't already know — a self-hosted instance, an internal host — you also need to specify which platform it is running so the extension can select the correct adapter.</span></li>
-            <li><span class="mk n">·</span><b>One of the extension's selectors found nothing</b><span class="tx">When the element a rule looks for isn't there, the extension disables the affected area rather than risk interacting with the wrong one. That can mean the platform changed its markup — or simply that the element is legitimately absent, like the merge button on a closed pull request. The options page's “Status” section keeps a log of the last fifty occurrences, containing only the rule name and timestamp — never review content.</span></li>
+            <li><span class="mk n">·</span><b>The domain isn't authorized yet</b><span class="tx">The extension runs only where you have allowed it, github.com included: a fresh install is active nowhere until you authorize access to a first domain from its options page. For a domain the extension doesn't already know — a GitHub Enterprise Server instance, for example — you also need to specify which platform it is running so the extension can select the correct adapter.</span></li>
+            <li><span class="mk n">·</span><b>The domain is authorized, but the platform isn't covered there</b><span class="tx">Authorizing a domain does not make it supported. Azure DevOps is covered on <code>dev.azure.com</code> only: an Azure DevOps Server, or an organization on <code>&#123;org&#125;.visualstudio.com</code>, gets nothing even once you have authorized access to it. GitLab is covered on gitlab.com only: GitLab Self-Managed and Dedicated are not supported yet.</span></li>
+            <li><span class="mk n">·</span><b>You are writing in GitLab's rich text editor</b><span class="tx">GitLab offers two editors under every comment field and remembers your choice for your account. The extension works in the Markdown editor. In the rich text editor it adds no toolbar and validates nothing: switch the field back to Markdown to get them.</span></li>
+            <li><span class="mk n">·</span><b>The extension did not recognize part of the page</b><span class="tx">When the element a rule looks for isn't there, the extension leaves the affected area alone rather than risk interacting with the wrong one. That usually means the platform changed its markup. Each case leaves a line in the journal of the options page — see <a href="#diagnostic">sending a diagnostic</a> below.</span></li>
             <li><span class="mk n">·</span><b>The mode is <code>off</code></b><span class="tx">The organization or repository configuration can disable the extension entirely.</span></li>
           </ul>
         </section>
 
         <section class="dsec">
-          <h2>“Configuration unread” banner</h2>
-          <p>The extension could not retrieve <code>.conventional-comments.json</code>. It continues to assist, but because it cannot determine the repository's rules, it <strong>never blocks a comment from being submitted</strong>. That behaviour is intentional: a user should not be prevented from working because of a rule the extension itself could not read.</p>
+          <h2>The status pill says “Configuration unread”</h2>
+          <p>Under the comment field, the status pill reads <em>Configuration unread: the extension assists without knowing the rules, and does not block sending.</em> The “Status” section of the options page says the same, with the reason. The extension tried to read <code>.conventional-comments.json</code> and could not. It continues to assist, but because it cannot determine the repository's rules, it <strong>never blocks a comment from being submitted</strong>. That behaviour is intentional: nobody should be prevented from working because of a rule the extension itself could not read.</p>
+          <ul class="tick">
+            <li><span class="mk n">·</span><b>On GitLab, the message is permanent</b><span class="tx">The extension cannot read a repository's configuration on GitLab yet. It assists there without the repository's rules, and never blocks a comment — whatever mode the repository asks for.</span></li>
+            <li><span class="mk n">·</span><b>Elsewhere, check that you are signed in</b><span class="tx">The extension reads the file with your own browser session, never with a token of its own. On a private repository you are signed out of — or on Azure DevOps without an open session, where the request is redirected to the sign-in page — there is nothing it is allowed to read, and the message says so accurately.</span></li>
+          </ul>
           <div class="callout">
-            <span class="ct">what this banner does not mean</span>
-            <p style="margin:0">A repository with <strong>no <code>.conventional-comments.json</code> file at all</strong> is not an error or degraded state. In that case, the product defaults apply and no banner is shown. The banner only appears when there is configuration to retrieve but the extension cannot read it. For a public repository — or a private repository while you're authenticated — you should not normally see it. If you're signed out and the repository is private, the banner is accurately reporting that the configuration cannot be accessed.</p>
+            <span class="ct">what this message does not mean</span>
+            <p style="margin:0">A repository with <strong>no <code>.conventional-comments.json</code> file at all</strong> is neither an error nor a degraded state. In that case the organization's configuration applies, then the product defaults, and the message is not shown. It only appears when the extension could not find out what the configuration says.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Configuration notices appeared after an update</h2>
+          <p>Since 1.0.0-rc.1, the extension tells you what it found when it read the configuration, where it used to say nothing. The notices are listed in the status pill and in the “Status” section of the options page, in the language of the interface, and each one names where the problem comes from: the enterprise floor, the organization's configuration, or the repository's file. <strong>They inform; they never change whether a comment is accepted.</strong></p>
+          <ul class="tick">
+            <li><span class="mk n">·</span><b>“Unknown key … ignored”</b><span class="tx">The most likely notice after an update. <code>formatSeverity</code>, <code>overrideLabel</code>, <code>resolverOverrideGroup</code>, <code>activation</code> and <code>docUrl</code> only served the verifier, which is retired; <code>server</code> and <code>exemptionLog</code> went with the companion server. None of them is read any more. Remove them from the file and the notice disappears.</span></li>
+            <li><span class="mk n">·</span><b>“Obsolete value "warn"”</b><span class="tx">The mode <code>warn</code> no longer exists. It is read as <code>assist</code>: replace it with <code>"mode": "assist"</code>.</span></li>
+            <li><span class="mk n">·</span><b>“Invalid configuration”</b><span class="tx">A known key holds a value the extension cannot interpret, or the file is not valid JSON; the notice names the key, or the line. The extension then falls back to the last valid level — the organization's configuration, then the product defaults — so an invalid file never silently removes the rules.</span></li>
+            <li><span class="mk n">·</span><b>“Enterprise floor: key … ignored”</b><span class="tx">The repository or the organization's document asks for something more lenient than your organization's browser policy allows. Nothing is wrong with your installation: the policy wins, and the notice says which setting it overrode.</span></li>
+          </ul>
+          <p class="small">The full list of settings, and what replaced the retired ones, is on the <a href={href('configure', 'en')}>configuration page</a>.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>My comments are suddenly blocked — or I'm asked to send again</h2>
+          <p>In <code>enforce</code> mode, a comment that does not follow the convention cannot be sent. Until 1.0.0-rc.1, that only applied to pull requests created after an activation date that nothing set by default, so most repositories in <code>enforce</code> never blocked anything. That condition is gone: <strong><code>enforce</code> now blocks on every pull request</strong>, whether you click the button or use the keyboard. If your repositories were already in <code>enforce</code>, the first blocked comments come with the update, not with a change of yours.</p>
+          <p>The status pill says what is wrong with the comment, and offers the fix when it can compute one. If the repository was never meant to block, its mode is the thing to change — see <a href={href('enforce', 'en')}>what <code>enforce</code> does</a>.</p>
+          <div class="callout">
+            <span class="ct">when the extension asks you to send again</span>
+            <p style="margin:0">Before it blocks anything, the extension reads the configuration again, bypassing its cache. If blocking is no longer warranted — the repository has just gone back to <code>assist</code>, say — it releases the button and tells you: <em>Configuration re-read: this comment is no longer blocked. Send it again.</em> It does not send the comment for you: press the button once more. The pill may keep displaying the previous mode until the cache expires (one hour by default); that delay blocks nothing.</p>
           </div>
         </section>
 
         <section class="dsec">
           <h2><code>/rebase</code> is being rejected</h2>
-          <p>This is expected: <code>toolCommands</code> is empty by default, so nothing is exempted until the repository declares it.</p>
+          <p>This is expected: <code>toolCommands</code> is empty by default, so nothing is exempted until the repository declares it. Slash commands are exempted all together, with <code>"/*"</code>; an entry such as <code>"/rebase"</code> is ignored, with a configuration notice.</p>
           <pre class="code"><span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>]</pre>
           <p><code>"/*"</code> recognizes every slash command as a tool command. Bot handles are declared individually and matched against the complete first token. For example, <code>@codex review</code> is recognized as a command, while <code>@codexplains why</code> is not.</p>
         </section>
 
         <section class="dsec">
-          <h2>A bot's comments fail the check</h2>
+          <h2>A bot's comments are flagged</h2>
           <p>Add the bot's platform login to <code>exemptUsers</code>. Matching is case-insensitive and uses the platform login, <strong>not</strong> the display name.</p>
           <p class="small">Platform-generated entries such as timeline events, branch updates, and system notifications are exempt automatically and do not need to be listed. An approval with <strong>no review text at all</strong> is also always exempt. Otherwise, simply approving a pull request without writing a comment would produce a validation failure — one the author of the pull request could not fix, because they cannot edit somebody else's review.</p>
         </section>
 
         <section class="dsec">
-          <h2>A blocking point can't be resolved</h2>
-          <p>A blocking thread can be resolved only by:</p>
-          <ul class="bul">
-            <li>the author of the blocking comment, or</li>
-            <li>a member of the group configured for resolution overrides.</li>
-          </ul>
-          <p>If nobody can resolve it, the designated group is probably empty. That group is a prerequisite for <code>enforce</code> precisely to prevent a blocking thread from becoming impossible to resolve.</p>
-          <p>The other option is a <code>decision</code> reply explaining why the point will not be addressed. A <code>decision</code> must contain at least twenty characters of justification. The explanation is recorded directly in the thread, so the override is always explicit and visible.</p>
+          <h2>A blocking thread stays in the count</h2>
+          <p>A thread is resolved with the platform's own controls, by anyone the platform allows to do so. The extension grants no permission and withholds none: it counts a blocking thread as resolved <strong>as the page shows it, whoever resolved it</strong>. If a thread is still listed in the banner, the page still shows it as unresolved — resolve it there, with the platform's own control.</p>
+          <p>Sometimes the pull request's author or maintainers decide, deliberately, not to make the change that was asked for. They say so in the thread with a <code>decision</code> reply, which must explain itself: at least twenty characters of justification, or <code>E-DECISION-SUBJECT</code> is raised. A <code>decision</code> records the choice where the discussion took place. It <strong>does not resolve the thread</strong>, and no authorized group is involved: the thread is then resolved on the platform, like any other.</p>
+          <p class="small">The count is information, not a gate: the extension never prevents a merge. A team that wants merging to wait for resolved conversations uses the setting its platform already provides — see <a href={href('enforce', 'en')}>what <code>enforce</code> does, and what it does not</a>.</p>
         </section>
-        <div class="pager"></div>
+
+        <section class="dsec" id="diagnostic">
+          <h2>None of the above: send a diagnostic</h2>
+          <p>The “Status” section of the options page keeps a journal of what the extension could not do. Each line is a sentence — <em>Submit button not found: it cannot be greyed out, nor its click stopped</em> — with a level, <code>WARN</code> or <code>ERROR</code>, and a mark that links to the page where it happened. It records three kinds of things:</p>
+          <ul class="bul">
+            <li><strong>page elements a rule did not find</strong> — one line per rule, fifty at most, each keeping that rule's most recent observation;</li>
+            <li><strong>comment fields the extension did not fully understand</strong> — a field whose send button was not found, or one it placed by default without recognizing where it sits;</li>
+            <li><strong>the extension's own errors</strong>, which used to leave no trace.</li>
+          </ul>
+          <ul class="tick">
+            <li><span class="mk">1</span><b>Open the options page and go to “Status”</b><span class="tx">The page shows the extension's version next to its title: it is the first thing a report needs.</span></li>
+            <li><span class="mk">2</span><b>Click “Download the diagnostic (.zip)”</b><span class="tx">The archive gathers the journal, the page skeletons recorded when a rule failed, the history of how the extension put its script in place in your browser, and a README describing each file. The download is offered even when the journal is empty — which matters when the extension does nothing at all on a page: download the diagnostic before trying anything else.</span></li>
+            <li><span class="mk">3</span><b>Read it before you share it</b><span class="tx">The archive never contains the text of a page, a comment, or code. It does contain the addresses of the pages concerned, which name repositories and reviews; an interface label can name an account, and an error message can quote what the extension was handling.</span></li>
+            <li><span class="mk">4</span><b>Attach it to an issue</b><span class="tx">Open an issue on the <a href="https://github.com/Reefact/conventional-comments-toolkit/issues" rel="noopener noreferrer" target="_blank">toolkit's repository</a> and attach the archive. A single line can also be copied on its own, with the icon next to it.</span></li>
+          </ul>
+          <p class="small">“Clear the log” erases the journal, the skeletons and the script history in one click. The journal stays on your device until you share it; if you allowed telemetry, only the name of a failing rule is counted. The <a href={href('privacy', 'en')}>privacy page</a> lists exactly what the journal keeps.</p>
+        </section>
+        <div class="pager">
+          <a class="pgl" href={href('aireview', 'en')}><span class="dir">← previous</span><span class="ttl">AI-assisted review</span></a>
+        </div>
 </Docs>

@@ -154,6 +154,32 @@ table.t td.m { font-family:var(--font-mono); font-size:12.5px; white-space:nowra
 table.t td.d { color:var(--fg-muted); }
 table.t .num { font-variant-numeric:tabular-nums; }
 
+/* The labels table, in three groups. Each group is a <tbody> opened by a title row (.grp)
+   that gives the kind (.gk), what it does (.gd) and where its labels come from (.go). The
+   groups the toolkit adds to Conventional Comments (.added) also get a background
+   (--bg-added) — a SURFACE, not a hue: only a verdict may fill with a colour
+   (identite-fr.md §3.1). That background never carries meaning on its own: the origin is
+   written out in the title row. */
+table.t tr.grp th { padding:9px 13px; font-weight:400; background:var(--bg-surface);
+                    border-top:1px solid var(--line); border-bottom:1px solid var(--line-soft); }
+table.t tbody:first-of-type tr.grp th { border-top:none; }
+table.t .gh { display:flex; flex-wrap:wrap; align-items:baseline; gap:3px 12px; }
+table.t .gk { font-family:var(--font-mono); font-size:11px; font-weight:600; letter-spacing:.1em;
+              text-transform:uppercase; color:var(--fg); }
+table.t .gd { font-size:13px; color:var(--fg-muted); }
+table.t .go { margin-left:auto; font-family:var(--font-mono); font-size:11px; letter-spacing:.03em;
+              color:var(--fg-muted); white-space:nowrap; }
+table.t tbody.added td, table.t tbody.added tr.grp th { background:var(--bg-added); }
+table.t tbody.added td { border-bottom-color:var(--line); }
+table.t tbody.added .go { color:var(--fg-2); }
+/* On a narrow screen the table scrolls sideways: pushed to the right, the origin left the
+   screen — the one mention that must never be missing. So the group title sticks to the
+   left edge and wraps within the visible width. */
+@media (max-width:860px){
+  table.t .gh { position:sticky; left:13px; width:max-content; max-width:calc(100vw - 72px); }
+  table.t .go { margin-left:0; white-space:normal; }
+}
+
 ul.tick { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:11px; }
 ul.tick li { display:grid; grid-template-columns:20px minmax(0,1fr); gap:3px 11px; font-size:14px;
              color:var(--fg-muted); line-height:1.52; }
@@ -315,12 +341,16 @@ a.pgl:hover, .pgl:hover { border-color:var(--line-strong); }
 .av-tag { font-family:var(--font-mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase;
           padding:2px 8px 3px; border-radius:2px; border:1px solid var(--line-strong); color:var(--fg-faint); }
 .av-tag.ok { border-color:var(--pass); color:var(--pass); }
+.av-tag.beta { border-color:var(--warn); color:var(--warn); }
 .av-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:7px;
            font-size:14.5px; color:var(--fg-2); }
 .av-note { color:var(--fg-faint); font-size:12.5px; }
 .av-p { font-size:14px; color:var(--fg-muted); line-height:1.55; }
+.av-browsers { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px 28px;
+               font-size:14.5px; color:var(--fg-2); }
+.av-browsers b { font-weight:600; color:var(--fg); }
 
-/* --- how it works : quatre encarts --- */
+/* --- how it works: the cards of "what the extension adds to the page" --- */
 .feat { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1px;
         background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
 .feat > div { background:var(--bg-surface); padding:22px 24px; display:flex; flex-direction:column; gap:10px; }
@@ -362,6 +392,7 @@ a.path:hover, .path:hover { border-color:var(--accent); }
 .rel-v { font-family:var(--font-mono); font-size:20px; font-weight:600; letter-spacing:-.02em; color:var(--fg); }
 .rel-m { font-family:var(--font-mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase;
          border:1px solid var(--warn); color:var(--warn); border-radius:2px; padding:1px 7px 2px; }
+.rel-m.up { border-style:dashed; border-color:var(--line-strong); color:var(--fg-muted); }
 .rel-d { font-size:13px; color:var(--fg-muted); }
 /* Une vraie ancre depuis la revue : c'était un <span> avec un chevron sortant,
    donc un lien qui n'en était pas. Le curseur main venait de la maquette, où le
