@@ -18,34 +18,121 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ### ✨ Nouveautés
 
-- **Les notes de version du toolkit annoncent la 1.0.0-beta.13 à venir.**
-  `/fr/notes-de-version/v1/` montre les notes que le toolkit a déjà rédigées pour elle —
-  chaque ligne du journal de la section « État » dit sur quelle page son sélecteur a échoué,
-  et le journal s'efface d'un clic — mais marque la version « à venir », hors du compte des
-  versions publiées, tant que le toolkit ne l'a pas taguée.
+- **Les notes de version du toolkit vont désormais jusqu'à la 1.0.0-rc.2.**
+  `/fr/notes-de-version/v1/` gagne onze versions, de la 1.0.0-beta.13 à la version
+  candidate : les labels pour répondre à une revue, la prise en charge de GitLab, les
+  marqueurs de session de revue, un mode `enforce` qui bloque vraiment, et le retrait du
+  vérificateur. Son introduction ne parle plus d'un serveur : l'extension ne bloque jamais
+  une fusion.
+- **La page des labels présente les dix-neuf labels que livre le toolkit.**
+  `/fr/docs/labels/` les range comme la barre d'outils — remarques, état de la revue,
+  réponses — et dit lesquels viennent de Conventional Comments et lesquels sont ajoutés par
+  le toolkit. De nouvelles sections expliquent comment répondre à une remarque (`thanks`,
+  `done`, `ack`, `disagree`, `decision`), comment dire où en est une revue (`summary`,
+  `reviewed`), et comment une équipe qui veut s'en tenir à la liste d'origine désactive le
+  reste.
+- **La page Enforce décrit désormais le mode tel qu'il est livré.** `/fr/docs/enforce/`
+  remplace l'ancienne page de feuille de route : quand l'extension bloque un commentaire,
+  pourquoi elle relit d'abord la configuration, et pourquoi elle ne bloque jamais une
+  fusion. L'ancienne adresse `/fr/docs/serveur/` y redirige.
+- **Une nouvelle page est consacrée à la revue assistée par IA.** `/fr/docs/revue-ia/`
+  présente le marqueur de session, qui permet de distinguer les commentaires de plusieurs
+  sessions de revue, et les deux skills que le toolkit fournit aux agents qui relisent une
+  pull request ou répondent à une revue.
+- **GitLab figure parmi les plateformes prises en charge.** gitlab.com reçoit la barre
+  d'outils, la validation en direct, les badges, le filtre des fils et le bandeau ;
+  l'extension n'y bloque jamais un commentaire.
+- **« Comment ça marche » décrit ce que l'extension a gagné :** la barre d'outils en trois
+  groupes et l'ordre personnel des boutons, les avis de configuration, le bandeau replié, le
+  filtre des fils et les marqueurs de session.
+- **Le guide d'adoption suit le parcours que recommande le toolkit.** `/fr/docs/adoption/`
+  va d'`assist` à `enforce` sur un dépôt pilote, puis partout ; il indique ce qu'il faut
+  préparer avant la bascule et comment revenir en arrière en quelques minutes.
+- **La page de configuration explique ce que l'extension vous signale.**
+  `/fr/docs/configuration/` gagne deux sections : le moment où un changement prend effet, et
+  les avis de configuration affichés dans la pastille d'état.
+- **La page d'installation couvre GitLab.com et le déploiement à l'échelle d'une
+  organisation :** l'installation forcée, les domaines autorisés d'avance, le plancher et le
+  point de collecte de la télémétrie.
+- **La page Diagnostic couvre ce qu'apporte la mise à jour vers la 1.0.0-rc.1.** Deux
+  nouvelles entrées — les avis de configuration qui apparaissent dans la pastille d'état, et
+  les commentaires soudain bloqués en `enforce` — et une dernière section pour télécharger
+  l'archive de diagnostic et la joindre à un ticket.
 
 ### 🐛 Corrections
 
-- **La page des plateformes ne présente plus Azure DevOps comme pleinement disponible.** Il
-  portait la même étiquette verte « disponible » que GitHub, alors que sa prise en charge
-  reste imparfaite. Il porte désormais une étiquette orange « bêta » : utilisable, mais pas
-  encore au niveau de GitHub.
+- **Le site n'annonce plus de contrôle de fusion au niveau de la plateforme.** L'accueil,
+  « Comment ça marche », la page des plateformes, le guide d'adoption, le sommaire de la
+  documentation et la page de confidentialité le présentaient tous comme étant sur la
+  feuille de route. Le toolkit en a décidé autrement : l'extension est tout le produit,
+  elle signale les fils bloquants non résolus et ne bloque jamais une fusion. L'étape
+  `warn` disparaît avec lui.
+- **Azure DevOps est annoncé pour dev.azure.com seulement.** La page des plateformes
+  présentait Azure DevOps Server comme pris en charge ; l'extension agit sur dev.azure.com
+  et nulle part ailleurs. Bitbucket n'est plus annoncé comme à venir.
 - **L'accueil n'affirme plus que l'extension n'envoie jamais rien.** Son bloc de
   confidentialité disait « Rien n'est envoyé. Pas de télémétrie. », alors que la page de
   confidentialité décrit la télémétrie qu'une organisation peut mettre en place, avec
   l'accord de chacun. Il dit désormais que rien n'est envoyé par défaut. Le bloc voisin ne
-  range plus les navigateurs parmi les plateformes et marque Azure DevOps comme bêta, au lieu
-  de renvoyer à des « limitations documentées » que le site ne documentait nulle part.
-- **Les pages de confidentialité et de diagnostic décrivent le journal que l'extension
-  tient réellement.** Elles annonçaient « les 50 dernières entrées », alors que le journal
-  garde une ligne par règle, cinquante au plus, chacune avec son dernier relevé. Les deux
-  pages le disent désormais, et préviennent qu'à partir de la 1.0.0-beta.13 du toolkit, à
-  venir, chaque ligne enregistre aussi l'adresse de la page où la règle a échoué, et que le
-  journal s'efface d'un clic. La page de confidentialité ajoute que la télémétrie, si vous
-  l'autorisez, transmet le nom de la règle et jamais l'adresse.
+  range plus les navigateurs parmi les plateformes, et ne renvoie plus à des « limitations
+  documentées » que le site ne documentait nulle part.
+- **L'accueil affiche les bonnes icônes et le bon raccourci.** `praise` porte 👏, `decision`
+  porte ⚖️, et `nitpick:` se tape `?ni`.
+- **La page des labels donne les réglages par défaut que livre le toolkit.** `typo` et
+  `polish` sont activés, seul `quibble` ne l'est pas ; et la page ne cite plus
+  `formatSeverity`, ni de groupe habilité à poser une `decision`, tous deux retirés.
+- **« Comment ça marche » donne les deux vraies conditions du blocage d'un commentaire.** La
+  date d'activation a disparu, et la page précise que l'extension relit la configuration
+  avant de bloquer.
+- **La documentation ne décrit plus des réglages et un mode qui ont disparu.** `warn`,
+  `formatSeverity` et `resolverOverrideGroup` sortent des pages de configuration et
+  d'adoption, qui disent maintenant ce qu'il advient d'un fichier qui les contient encore.
+- **La page d'installation ne propose plus d'autoriser Azure DevOps Server ni
+  `visualstudio.com`,** où l'extension ne fait rien.
+- **La page de confidentialité recense tout ce que l'extension conserve.** Trois préférences
+  synchronisées au lieu de deux, les avis de configuration et le journal de diagnostic tels
+  qu'ils sont stockés, et une date de révision. Le journal était décrit comme « les
+  50 dernières entrées » ; il garde une ligne par règle, avec la page où la règle a échoué.
+- **La page Diagnostic décrit l'extension telle qu'elle est aujourd'hui.** « Configuration
+  non lue » est un message de la pastille d'état, permanent sur GitLab ; un fil bloquant se
+  résout sur la plateforme, sans groupe habilité ; et le journal est décrit tel que
+  l'extension le tient.
+- **Les pages ne s'expliquent plus par contraste avec une version que vous n'avez pas
+  connue.** L'accueil, la page des plateformes et celle d'installation mentionnaient chacune
+  github.com dans une phrase qui énonçait déjà la règle : l'extension n'accède qu'aux
+  domaines que vous avez autorisés. Nommer un domaine à l'intérieur de cette règle ne parle
+  qu'à ceux qui savaient que github.com était intégré auparavant ; pour les autres, cela
+  laisse croire que ce domaine fait exception, soit l'inverse de ce que la phrase dit.
+  L'incise disparaît dans les trois pages ; la page de diagnostic la garde, car quelqu'un qui ne voit
+  pas sa barre de labels sur github.com a besoin que cette exception soit explicitement
+  écartée.
+- **Aucune des deux langues ne parle plus d'accorder un domaine.** Ce qui s'accorde, c'est
+  l'accès à un domaine, pas le domaine lui-même, et les deux langues avaient perdu cette
+  distinction. En français, la page de diagnostic disait « tant que vous ne lui accordez pas
+  un premier domaine » ; en anglais, les pages d'installation et de plateformes disaient
+  « every domain is granted one at a time » et celle de diagnostic « until you grant a first
+  domain ». Les quatre nomment désormais ce qui est réellement accordé. La même passe a
+  repris la deuxième phrase de la section d'autorisation des domaines, sur chacune des deux
+  pages d'installation : en français, « ne dispose d'aucun accès permanent » remplace « ne
+  détient d'accès permanent à aucun site » ; en anglais, « has no permanent access to any
+  site » remplace « holds no permanent access to any site ». La revue avait relevé la
+  tournure française dans les notes de la release précédente et elle y a été corrigée ; la
+  page d'origine a échappé à la correction et a été mise en ligne telle quelle.
 
 ### 🔧 Améliorations
 
+- **Les phrases qui sentaient la traduction se lisent désormais naturellement, dans les
+  deux langues.** Une relecture complète a repris les pages des labels, « Comment ça
+  marche », adoption, configuration, installation, diagnostic et revue assistée par IA, le
+  sommaire de la documentation et quelques notes de version du toolkit : un fil se marque
+  désormais « comme résolu avec la commande de la plateforme », et le pilote est « concluant »
+  plutôt que de « tenir ».
+- **Le schéma de configuration suit la 1.0.0-rc.2 du toolkit.** `/schema/v1.json` connaît
+  désormais `sessionIcon`, les propriétés `kind`, `description` et `usage` d'un label, et le
+  diagnostic `W-SESSION-MULTIPLE`. Il ne propose plus les sept clés que le toolkit a retirées
+  avec le vérificateur — `formatSeverity`, `overrideLabel`, `resolverOverrideGroup`,
+  `activation`, `docUrl`, `server` et `exemptionLog` : votre éditeur les souligne désormais.
+  `"mode": "warn"` reste accepté, et signalé comme obsolète.
 - **La page des plateformes ne range plus les navigateurs parmi les plateformes.** Chrome,
   Edge, Brave et Firefox figuraient dans la même grille que GitHub et Azure DevOps, comme
   s'ils répondaient à la même question. Ils ont désormais leur propre rubrique, sous les

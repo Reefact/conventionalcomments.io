@@ -1,0 +1,101 @@
+---
+import Docs from '../../../layouts/Docs.astro';
+import { href } from '../../../i18n/routes';
+
+const lang = 'fr' as const;
+const page = 'enforce' as const;
+---
+<Docs lang={lang} page={page}
+  title="Enforce : ce qu'il bloque, et ce qu'il ne bloque pas"
+  description="En mode enforce, l'extension refuse d'envoyer un commentaire qui ne respecte pas la convention. Voyez quand elle bloque, pourquoi elle relit d'abord la configuration, et pourquoi elle n'empêche jamais une fusion.">
+<div class="dhead stack g12">
+          <p class="crumb"><b>doc</b> / enforce</p>
+          <h1>Enforce&nbsp;: ce qu'il bloque, et ce qu'il ne bloque pas</h1>
+          <p class="lede measure"><code>enforce</code> est le plus strict des trois modes. En <code>assist</code>, l'extension vous signale qu'un commentaire ne respecte pas la convention et vous laisse l'envoyer quand même. En <code>enforce</code>, elle le retient tant qu'il n'est pas corrigé. C'est un garde-fou sur <strong>l'envoi</strong>, dans le navigateur de qui a installé l'extension. Ce n'est pas une condition de fusion, et cela n'a jamais eu vocation à le devenir.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>Quand un commentaire est bloqué</h2>
+          <p>Écrire <code>"mode": "enforce"</code> ne suffit pas. Deux conditions doivent être réunies au moment où vous envoyez&nbsp;:</p>
+          <ul class="tick">
+            <li><span class="mk">1</span><b>Le mode effectif est <code>enforce</code></b><span class="tx">Le mode résulte des trois niveaux de configuration — le plancher d'entreprise, le document de l'organisation, le fichier du dépôt. Il n'est jamais supposé localement.</span></li>
+            <li><span class="mk">2</span><b>La configuration a réellement été lue</b><span class="tx">Si l'extension n'a pas pu atteindre la configuration, elle ne refuse rien&nbsp;: personne n'est bloqué au nom d'une règle qu'on n'a pas pu lire. Un dépôt qui n'a tout simplement pas de fichier de configuration n'est pas dans ce cas.</span></li>
+          </ul>
+          <p>Si la configuration n'a pas pu être lue, l'extension se comporte comme en <code>assist</code>&nbsp;: elle affiche ses diagnostics et laisse passer le commentaire. Si le mode effectif est <code>assist</code>, elle fait de même. S'il est <code>off</code>, elle ne fait rien du tout&nbsp;: ni diagnostic, ni blocage. Rien d'autre n'entre en ligne de compte — ni l'ancienneté de la pull request, ni un quelconque état publié sur elle.</p>
+          <p>Quand les deux sont réunies, un commentaire qui comporte une <strong>erreur</strong> ne peut pas être envoyé. Le bouton d'envoi prend l'apparence d'un bouton désactivé, mais reste accessible au clavier, afin qu'un lecteur d'écran en annonce le motif&nbsp;: <em>Envoi bloqué&nbsp;: le commentaire n'est pas conforme</em>, suivi de ce qui ne va pas. Les avertissements, eux, ne bloquent jamais&nbsp;: ce sont des conseils.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th>Ce que vous faites</th><th>En <code>enforce</code></th></tr></thead>
+              <tbody>
+                <tr><td class="d">Cliquer sur le bouton d'envoi avec un commentaire non conforme</td><td class="m"><span class="deco b">Bloqué</span></td></tr>
+                <tr><td class="d">Publier au clavier — Ctrl+Entrée (ou ⌘+Entrée) dans le champ, par exemple</td><td class="m"><span class="deco b">Bloqué</span></td></tr>
+                <tr><td class="d">Envoyer un commentaire qui ne soulève que des avertissements</td><td class="m"><span class="deco nb">Envoyé</span></td></tr>
+                <tr><td class="d">Approuver une pull request sans rien écrire</td><td class="m"><span class="deco nb">Envoyé</span></td></tr>
+                <tr><td class="d">Envoyer une commande comme <code>/rebase</code>, avec <code>"/*"</code> dans <code>toolCommands</code></td><td class="m"><span class="deco nb">Envoyé</span></td></tr>
+                <tr><td class="d">Répondre dans un fil, tant que <code>validateReplies</code> reste désactivé</td><td class="m"><span class="deco nb">Envoyé</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small">Deux précisions sur ce tableau. <code>toolCommands</code> est vide par défaut&nbsp;: tant qu'un dépôt n'y a pas ajouté <code>"/*"</code>, un simple <code>/rebase</code> est un commentaire non conforme comme un autre. Une commande ne peut pas être exemptée seule&nbsp;: une entrée comme <code>"/rebase"</code> est ignorée, avec un avis de configuration, et <code>"/*"</code> les exempte toutes. Les bots, eux, s'exemptent un par un, par leur identifiant exact&nbsp;: <code>"@dependabot"</code>. Et une réponse qui commence par <code>decision:</code> est toujours vérifiée, quoi que dise <code>validateReplies</code>. Ces deux réglages sont décrits dans la page <a href={href('configure', 'fr')}>configuration</a>.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Elle relit la configuration avant de bloquer</h2>
+          <p>L'extension garde la configuration en cache — une heure par défaut — et n'a aucun moyen d'apprendre qu'un fichier distant a changé entre-temps. Un blocage décidé sur ce cache pourrait retenir un commentaire dans un dépôt revenu en <code>assist</code> dix minutes plus tôt.</p>
+          <p>Avant de bloquer quoi que ce soit, l'extension relit donc la configuration du dépôt et celle de l'organisation, sans passer par son cache. Si la configuration fraîchement lue ne justifie plus le blocage, elle libère le bouton et le dit&nbsp;:</p>
+          <pre class="code">Configuration relue : cet envoi n'est plus bloqué. Renvoyez votre commentaire.</pre>
+          <p>Elle n'envoie pas le commentaire à votre place&nbsp;: c'est à vous de cliquer de nouveau. La conséquence pratique concerne surtout qui pilote un déploiement&nbsp;: quitter <code>enforce</code> prend effet <strong>dès la tentative d'envoi suivante</strong>, sans attendre que le cache de chacun expire.</p>
+          <p class="small">Assouplir le document de l'organisation ne suffit pas toujours. Un dépôt qui écrit lui-même <code>"mode": "enforce"</code> dans son fichier le conserve, de même qu'un plancher d'entreprise qui l'impose. L'ordre du retour arrière est décrit dans la page <a href={href('adoption', 'fr')}>adoption</a>.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Il n'y a pas de bouton «&nbsp;envoyer quand même&nbsp;»</h2>
+          <p>C'est un choix. Une extension se désactive en deux clics&nbsp;: un bouton de contournement n'ajouterait donc aucun contrôle réel, seulement une cérémonie, et l'impression d'un garde-fou là où il n'y en a pas. Le blocage existe pour rattraper l'étourderie — le commentaire parti sans son label —, qui est le cas courant. Il n'a jamais prétendu arrêter quelqu'un de déterminé.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Ce qu'enforce ne fait pas</h2>
+          <div class="split">
+            <div class="callout">
+              <span class="ct">il ne vaut que dans les navigateurs où il tourne</span>
+              <h4>Il ne couvre pas toutes les façons de commenter</h4>
+              <p>Un commentaire publié par l'API de la plateforme, un outil en ligne de commande, un IDE, un autre navigateur ou un poste sans l'extension n'est vérifié par rien. Passer outre ne demande aucun droit particulier&nbsp;: il suffit de ne pas avoir l'extension.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">signalé, jamais empêché</span>
+              <h4>Il ne bloque jamais une fusion</h4>
+              <p>Le bandeau affiché en tête d'une pull request compte ses fils bloquants non résolus et en donne la liste. Il informe. L'extension ne publie aucun statut sur la pull request et ne touche pas au bouton de fusion, quel que soit le mode.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">gitlab.com</span>
+              <h4>Il ne bloque jamais sur GitLab</h4>
+              <p>L'extension ne sait pas encore lire la configuration d'un dépôt sur GitLab. La seconde condition ci-dessus n'y est donc jamais remplie&nbsp;: les merge requests reçoivent la barre d'outils, la validation en direct, les badges et le bandeau, et tous les commentaires partent.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Si vous voulez que la fusion attende les fils résolus</h2>
+          <p>C'est le rôle de votre plateforme, et elle le remplit avec ses propres réglages — exiger, par exemple, que les conversations soient résolues avant qu'une pull request puisse être fusionnée. Une telle règle vaut pour tout le monde, avec ou sans l'extension&nbsp;: c'est précisément ce qu'une extension de navigateur ne peut pas promettre.</p>
+          <p>Les deux se complètent. La convention dit quels fils sont bloquants, et l'extension les garde sous les yeux&nbsp;; la plateforme décide si un fil non résolu retient la fusion.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>L'activer</h2>
+          <p>Un seul réglage, au niveau que vous administrez&nbsp;: le fichier du dépôt pour un pilote, le document de l'organisation pour tout le monde.</p>
+          <pre class="code"><span class="tk-k">&#123;</span>
+  <span class="tk-k">"version"</span>: <span class="tk-v">1</span>,
+  <span class="tk-k">"mode"</span>: <span class="tk-v">"enforce"</span>
+<span class="tk-k">&#125;</span></pre>
+          <div class="callout warn">
+            <span class="ct">si un dépôt est déjà en enforce</span>
+            <p style="margin:0">Avant la 1.0.0-rc.1, <code>enforce</code> ne bloquait que les pull requests créées après une date d'activation, laquelle n'était pas définie par défaut&nbsp;: la plupart des installations en <code>enforce</code> ne bloquaient donc rien. Cette condition a disparu. Un dépôt qui écrit déjà <code>"mode": "enforce"</code> bloque les commentaires non conformes sur toutes ses pull requests dès que ses relecteurs mettent l'extension à jour.</p>
+          </div>
+          <p>La page <a href={href('adoption', 'fr')}>adoption</a> décrit le chemin qui mène jusqu'ici — <code>assist</code> partout, <code>enforce</code> sur un dépôt pilote, puis la généralisation — et ce qu'il faut préparer avant de basculer. La page <a href={href('configure', 'fr')}>configuration</a> explique d'où <code>mode</code> est lu et quel niveau l'emporte.</p>
+        </section>
+
+        <div class="pager">
+          <a class="pgl" href={href('adoption', 'fr')}><span class="dir">← précédent</span><span class="ttl">Adoption</span></a>
+          <a class="pgl" href={href('aireview', 'fr')} style="text-align:right"><span class="dir">suivant →</span><span class="ttl">Revue assistée par IA</span></a>
+        </div>
+</Docs>

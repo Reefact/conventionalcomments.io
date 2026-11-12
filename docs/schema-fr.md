@@ -68,48 +68,70 @@ c'est [`scripts/check-schema.mjs`](../scripts/check-schema.mjs) qui l'empêche d
 npm run check:schema -- ../conventional-comments-toolkit
 ```
 
-Il vérifie que le schéma compile, que dix fixtures sont acceptées ou rejetées comme prévu,
-que les 25 clés de premier niveau sont exactement celles du validateur, que les domaines de
-`mode` et des sévérités coïncident, que les bornes d'`allowlistPatterns` et
-`SUPPORTED_CONFIG_VERSION` sont les bonnes, et que l'exemple normatif du toolkit passe.
-Sortie non nulle au moindre écart.
+It checks that the schema compiles, that fifteen fixtures are accepted or rejected as
+expected, that the 19 top-level keys are exactly the validator's, that the domains of `mode`
+and of the severities match, that the deprecated mode is the one the validator still
+tolerates, that the bounds of `allowlistPatterns` and `SUPPORTED_CONFIG_VERSION` are right,
+and that the toolkit's normative example passes. It exits non-zero on the slightest gap.
+
+What it does not compare is kept by hand: the nested properties (those of a label, including
+`kind`, `description` and `usage`; decorations, rules, telemetry), the list of diagnostic
+codes, the default values and the descriptions. A change to the validator on those points
+does not make the script fail: it shows up in the toolkit's release notes, and has to be
+carried over here.
 
 Sans le chemin du toolkit, il ne joue que le schéma et les fixtures — utile en CI sur ce
 dépôt seul.
 
 ## Ce que le schéma n'impose pas
 
-Il a imposé deux contraintes que le validateur n'impose pas, et une revue les a relevées :
-`^#[0-9a-fA-F]{6}$` sur la couleur d'un label, et `format: "date-time"` sur `activatedAt`.
-Le toolkit ne vérifie dans les deux cas qu'`typeof === "string"`, et pour la date que
-`Date.parse` réussit. Une configuration que le produit accepte et applique était donc
-soulignée en rouge dans l'éditeur. **Un fichier qui se dit transcription ne peut pas
-refuser ce que la source accepte** — les deux contraintes sont retirées, et
-`scripts/fixtures/valid-runtime-widths.json` interdit la récidive.
+It once imposed two constraints the validator does not, and a review caught them:
+`^#[0-9a-fA-F]{6}$` on a label's colour, and `format: "date-time"` on the activation date — a
+key since retired, along with the verifier. In both cases the toolkit only checked
+`typeof === "string"`. A configuration the product accepted and applied was therefore
+underlined in red in the editor. **A file that calls itself a transcription cannot refuse
+what its source accepts** — both constraints are gone, and
+`scripts/fixtures/valid-runtime-widths.json` prevents them from coming back.
 
-L'écart existe aussi dans l'autre sens, et lui ne se corrige pas : JSON Schema ne sait pas
-exprimer « `Date.parse` réussit ». `"septembre 2026"` est donc accepté ici et refusé à
-l'exécution. Plutôt que de laisser cette lacune muette, elle porte un nom : les gabarits
-préfixés `loose-` désignent ce que le schéma accepte et que le validateur refuse. Sans ce
-troisième cas, on découvre la lacune en voyant un gabarit `invalid-` passer, et le réflexe
-est de durcir le schéma — c'est-à-dire de refaire le défaut qu'on vient de corriger.
+The same fixture covers two severities the product accepts without applying them as written:
+`"W-SESSION-MULTIPLE": "error"`, which it lowers to `warn`, and an `E-` code set to `off`,
+which it raises to `warn`. In both cases the extension applies the limit and reports it with
+a configuration notice; the schema therefore lets the value through, and the limit is stated
+in the key's description.
 
-## Trois écarts assumés
+The gap can also run the other way: a rule JSON Schema cannot express, which the schema
+accepts and the validator rejects. Rather than leave such a gap silent, it has a name: a
+fixture prefixed `loose-` marks what the schema accepts and the validator rejects. No
+fixture carries that prefix today — the only one that did was about the activation date —
+but `check-schema.mjs` still recognises it. Without this third case, the gap is discovered
+by watching an `invalid-` fixture pass, and the reflex is to tighten the schema — that is, to
+reintroduce the very defect that was just fixed.
 
-1. **Les clés inconnues sont refusées ici, seulement signalées à l'exécution.** Le toolkit
-   ignore une clé qu'il ne connaît pas avec un avertissement ; le schéma pose
-   `additionalProperties: false`, ce qui la souligne dans l'éditeur. Plus strict, mais
-   c'est le comportement utile : voir la faute de frappe pendant qu'on écrit plutôt que
-   dans les journaux du serveur.
+## Four deliberate gaps
 
-2. **Trois règles ne s'expriment pas en JSON Schema** et ne sont vérifiées qu'à l'exécution :
-   qu'un motif d'`allowlistPatterns` soit une expression régulière valide, qu'il ne
-   contienne pas de quantificateur imbriqué (la forme derrière l'essentiel des ReDoS
-   connus), et qu'un `configUrl` posé au niveau d'un dépôt soit ignoré — le schéma ne sait
-   pas à quel niveau il est appliqué.
+1. **Unknown keys are rejected here, and only reported at runtime.** The toolkit ignores a
+   key it does not know and reports it with a configuration notice; the schema sets
+   `additionalProperties: false`, which underlines it in the editor. Stricter, but it is the
+   useful behaviour: you see the typo while writing rather than afterwards, in the
+   extension's status pill. The keys retired with the verifier — `formatSeverity`,
+   `overrideLabel`, `resolverOverrideGroup`, `activation`, `docUrl`, and before them `server`
+   and `exemptionLog` — fall into this case: the product treats them as unknown keys, and so
+   does the schema.
 
-3. **Les descriptions sont en anglais**, alors que le site est bilingue. Un JSON Schema n'a
-   pas de mécanisme d'internationalisation, et il est lu par des éditeurs partout.
+2. **`"mode": "warn"` is accepted, and marked deprecated.** The validator still reads it as
+   `assist`, and reports it. Rejecting it here would underline in red a configuration the
+   product applies; accepting it silently would suggest that `warn` is a mode. `mode`
+   therefore has two branches: the product's three modes, and `warn` with
+   `deprecated: true` and a message. The editor strikes the value through and says what to
+   write instead.
+
+3. **Three rules cannot be expressed in JSON Schema** and are only checked at runtime: that
+   an `allowlistPatterns` entry is a valid regular expression, that it contains no nested
+   quantifier (the shape behind most known ReDoS), and that a `configUrl` set at repository
+   level is ignored — the schema does not know at which level it is applied.
+
+4. **The descriptions are in English**, although the site is bilingual. JSON Schema has no
+   internationalisation mechanism, and it is read by editors everywhere.
 
 ## Avant de mettre en ligne
 
@@ -120,7 +142,9 @@ toolkit ne contient aucun fichier de schéma. Faire pointer les dépôts ici dem
 changer la chaîne à deux endroits du dépôt toolkit :
 
 - `.conventional-comments.example.json`, ligne 2
-- `specifications-fr.md`, ligne 1005
+- `specifications-fr.md`, line 846 (the example in §8.2)
+
+The toolkit repository's own `.conventional-comments.json` carries the same string.
 
 Décision côté toolkit, pas côté site. Et les dépôts déjà configurés garderont l'ancienne
 URL jusqu'à ce que quelqu'un l'y change.

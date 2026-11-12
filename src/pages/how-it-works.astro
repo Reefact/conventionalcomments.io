@@ -7,13 +7,13 @@ const page = 'howitworks' as const;
 ---
 <Base lang={lang} page={page}
   title="How it works"
-  description="The extension helps reviewers write Conventional Comments and keeps track of what's still unresolved, directly in the browser. See what it does today, and where platform-level enforcement is headed.">
+  description="The extension helps reviewers write Conventional Comments and keeps unresolved blocking points in view, directly in the browser. See what it adds to the page, when it blocks a comment, and what it leaves to your platform.">
 <section class="hband">
       <div class="in">
         <div class="stack g18 measure">
           <span class="eyebrow acc">how it works:</span>
           <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">The extension helps you write. It also tracks blocking points.</h1>
-          <p class="lede">The browser extension makes Conventional Comments easy to use while you're reviewing: a toolbar, keyboard shortcuts, and feedback as you type. It also tracks unresolved blocking threads and shows their count directly on the pull request. Enforce is intended to add an authoritative platform-level merge check that runs independently of the browser. That capability is not available yet.</p>
+          <p class="lede">The browser extension makes Conventional Comments easy to use while you're reviewing: a toolbar, keyboard shortcuts, and feedback as you type. Once comments are published, it turns their labels into badges and counts the unresolved blocking threads directly on the pull request. The extension is the whole product: there is nothing else to deploy, and nothing in it blocks a merge.</p>
         </div>
       </div>
     </section>
@@ -27,33 +27,38 @@ const page = 'howitworks' as const;
 
         <div class="feat">
           <div>
-            <h3>A two-row toolbar</h3>
-            <p>Labels are on the first row. Decorations are on the second. They stay separate regardless of the available width because choosing a label and qualifying it with a decoration are two different actions. Putting everything in one wrapping row would eventually place the two side by side as though they meant the same thing.</p>
-            <p>Clicking a label <strong>inserts or replaces the prefix</strong> without touching the rest of what you've written. Click the same label again to remove it. Hover over any label to see its definition and an example.</p>
+            <h3>A toolbar in three groups</h3>
+            <p>First come the labels that raise a point — <code>issue</code>, <code>suggestion</code>, <code>question</code> and the others — followed by the two that say where the review stands, <code>summary</code> and <code>reviewed</code>. The labels that answer a point — <code>thanks</code>, <code>done</code>, <code>ack</code>, <code>decision</code>, <code>disagree</code> — always sit on a row of their own, under a thin rule. A double rule then separates the labels from the decorations, because choosing a label and qualifying it are two different actions.</p>
+            <p>Clicking a label <strong>inserts or replaces the prefix</strong> without touching the rest of what you've written. Click the same label again to remove it. Hover over a button and it tells you when to use that label, with an example. In the extension's options, <em>Button order</em> moves the labels you use most to the front of their group.</p>
           </div>
           <div>
             <h3>Keyboard controls</h3>
             <p>If you prefer the keyboard, type <code>/</code> or <code>:</code> at the beginning of the comment box to open a filterable list. Use <code>↑</code> and <code>↓</code> to navigate, <code>Enter</code> or <code>Tab</code> to select, and <code>Esc</code> to close it.</p>
             <p>You can also expand abbreviations with <code>Tab</code>:</p>
             <pre class="code">?i  → issue:
-?ib → issue (blocking):</pre>
+?ib → issue (blocking):
+?ni → nitpick:</pre>
             <p>Direct shortcuts such as <code>Alt+I</code> are available as well.</p>
           </div>
           <div>
             <h3>Live validation below the comment box</h3>
-            <p>A status indicator tells you whether the comment is:</p>
-            <ul class="bul">
-              <li>compliant;</li>
-              <li>compliant with warnings; or</li>
-              <li>non-compliant.</li>
-            </ul>
-            <p>If several problems are present, the extension shows <strong>all of them at once</strong>. Showing only one would simply force you to fix issues one after another to discover what comes next.</p>
-            <p>Validation is debounced by 150&nbsp;ms, so the interface remains stable while you type.</p>
+            <p>A status pill tells you whether the comment is compliant, compliant with warnings, or non-compliant. If several problems are present, it shows <strong>all of them at once</strong>: showing only one would force you to fix issues one after another to discover what comes next. Validation is debounced by 150&nbsp;ms, so the interface remains stable while you type.</p>
+            <p>The same indicator says what the extension knows about the rules. If it could not read the configuration, it tells you so instead of calling a comment compliant. And when the configuration has a problem — an unknown or retired key, an invalid value, a setting overridden by your organization's policy — it lists a notice for each one, in your language, naming where it comes from. These notices inform. They never change whether a comment is accepted.</p>
           </div>
           <div>
             <h3>Badges on published comments</h3>
-            <p>Once comments are published, their labels are rendered as badges without modifying the stored comment itself. A banner at the top of the pull request shows how many unresolved blocking threads remain and links directly to them.</p>
-            <p>That count is computed directly by the extension from the threads currently displayed on the page — no server involved.</p>
+            <p>Once comments are published, their labels are rendered as badges without modifying the stored comment itself. Hover over a badge and it says what the comment means, for the person reading it — a different text from the button's, which is written for the person about to comment.</p>
+            <p>A team can replace both texts with its own, label by label, in its configuration.</p>
+          </div>
+          <div>
+            <h3>A banner and a filter for the threads</h3>
+            <p>A banner at the top of the pull request counts the unresolved blocking threads. It is collapsed by default and shows the count alone; open it and it lists each thread — label, subject, author — with a link to it.</p>
+            <p>Above the threads, a row of labels filters the discussion: pick one and only the threads opened with that label stay on screen. Both are computed by the extension from the threads displayed on the page — no server involved.</p>
+          </div>
+          <div>
+            <h3>Review-session markers</h3>
+            <p>A line <code>[session:&lt;id&gt;]</code> in a comment says which review session wrote it — useful when several AI agents, or several runs, review the same pull request. The extension hides the line and shows a discreet <code>🤖 session: &lt;id&gt;</code> at the bottom of the comment. The marker never affects validation.</p>
+            <p>See <a href={href('aireview', 'en')}>AI-assisted review</a>.</p>
           </div>
         </div>
       </div>
@@ -64,7 +69,7 @@ const page = 'howitworks' as const;
         <div class="stack g14 measure">
           <span class="eyebrow">a deliberate choice:</span>
           <h2>There is no “publish anyway” button.</h2>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">In its strictest mode, the extension can prevent a malformed comment from being submitted. There is no local override button. That's deliberate, for two reasons.</p>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">In its strictest mode, <code>enforce</code>, the extension refuses to send a malformed comment. There is no local override button. That's deliberate, for two reasons.</p>
         </div>
         <div class="duo">
           <div>
@@ -75,13 +80,13 @@ const page = 'howitworks' as const;
           <div>
             <span class="tag" style="color:var(--accent)">more importantly</span>
             <h3>The justification belongs in the review</h3>
-            <p>“We decided not to address this point, and here's why” is part of the review itself. It should appear as a labelled comment in the thread, visible to everyone and preserved with the pull request. It should not disappear into a separate technical audit log.</p>
+            <p>“We decided not to address this point, and here's why” is part of the review itself. It should appear as a labelled comment in the thread — a <code>decision</code> — visible to everyone and preserved with the pull request. It should not disappear into a separate technical audit log.</p>
           </div>
         </div>
         <div class="callout acc">
           <span class="ct">so what is the extension?</span>
           <h4>A guardrail, not a wall.</h4>
-          <p>The extension catches mistakes and lapses of attention — the common case. It is not intended to stop someone who deliberately chooses to bypass it. Closing that gap is exactly what platform-level enforcement is meant to do: evaluate the pull request independently of every reviewer's browser. That part doesn't exist yet — it's on the roadmap, not in the extension.</p>
+          <p>The extension catches mistakes and lapses of attention — the common case. It is not intended to stop someone who deliberately chooses to bypass it, and nothing else in the toolkit is: it reports unresolved blocking threads and never prevents a merge. A team that wants merges to wait for resolved conversations turns on its platform's own rule for that, such as required conversation resolution.</p>
         </div>
       </div>
     </section>
@@ -90,49 +95,59 @@ const page = 'howitworks' as const;
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">when the extension is allowed to block:</span>
-          <h2>Three conditions must be met</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Strict mode alone is not enough. Unless all three conditions below are satisfied, the extension reports diagnostics but still allows the comment to be submitted.</p>
+          <h2>Two conditions must be met</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Writing <code>enforce</code> in a configuration is not enough: both conditions below must hold. If the configuration cannot be read, the extension assists without blocking. With a readable configuration, <code>assist</code> shows diagnostics and <code>off</code> shows none.</p>
         </div>
         <ul class="tick">
-          <li><span class="mk">1</span><b>Strict mode is actually in effect</b><span class="tx">The effective mode is resolved from the organization's configuration. It is never assumed locally.</span></li>
-          <li><span class="mk">2</span><b>The pull request is within scope</b><span class="tx">If a repository starts enforcing the convention from a particular date, older pull requests do not suddenly become blocked retroactively.</span></li>
-          <li><span class="mk">3</span><b>The configuration was successfully read</b><span class="tx">If the configuration cannot be retrieved, the extension does not reject anything. A user should never be blocked in the name of a rule the extension itself could not read.</span></li>
+          <li><span class="mk">1</span><b>The effective mode is <code>enforce</code></b><span class="tx">The mode is resolved from the configuration the extension has read — the repository's file, the organization's document and, where there is one, the organization's browser policy. It is never assumed locally.</span></li>
+          <li><span class="mk">2</span><b>The configuration was successfully read</b><span class="tx">If the configuration cannot be retrieved, the extension does not reject anything. A user should never be blocked in the name of a rule the extension itself could not read.</span></li>
         </ul>
-        <p class="small measure">These conditions all protect the same principle: <strong>the extension must never reject something it cannot confirm the rules actually call for.</strong></p>
+        <div class="duo">
+          <div>
+            <span class="tag" style="color:var(--accent)">just before blocking</span>
+            <h3>The extension reads the configuration again</h3>
+            <p>Before it refuses a comment, the extension re-reads the repository's and the organization's configuration, bypassing its cache. If the comment is no longer to be blocked — the repository went back to <code>assist</code>, a label was just added — it releases the button and says so: “Configuration re-read: this comment is no longer blocked. Send it again.”</p>
+          </div>
+          <div>
+            <span class="tag" style="color:var(--fg-muted)">and what it does not depend on</span>
+            <h3>Neither the pull request's age nor how you submit a comment</h3>
+            <p>Blocking applies to every pull request of a repository in <code>enforce</code>, old or new. The same blocking rules apply whether you submit a comment using the keyboard or by clicking the button. One platform is an exception: on GitLab, the extension cannot read a repository's configuration yet, so it never blocks there.</p>
+          </div>
+        </div>
+        <p class="small measure">All of this protects one principle: <strong>the extension must never reject something it cannot confirm the rules actually call for.</strong> The <a href={href('enforce', 'en')}>Enforce</a> page covers the mode in full.</p>
       </div>
     </section>
 
     <section class="hband">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">on the roadmap:</span>
-          <h2>What an authoritative check would evaluate</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The capabilities described below are not available yet, so there is nothing to install or enable today. This section describes the direction: an evaluation that runs independently of any single reviewer's browser, and that a platform's own merge rules could rely on. Conceptually, it would still ask the same two questions the extension already asks locally.</p>
+          <span class="eyebrow">what the banner counts:</span>
+          <h2>Blocking threads, as the page shows them</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The count rests on two definitions, and on nothing the extension would have to remember or decide for itself.</p>
         </div>
         <div class="duo">
           <div>
-            <span class="tag" style="color:var(--fg-muted)">first</span>
-            <h3>Are the comments correctly formed?</h3>
-            <p>A comment is compliant when it produces no error-level diagnostic. Warnings are reported and counted, but do not fail the check by themselves. Most teams keep formatting errors non-blocking.</p>
+            <span class="tag" style="color:var(--fg-muted)">blocking</span>
+            <h3>A thread is blocking if the comment that opened it is</h3>
+            <p><code>issue</code>, <code>todo</code> and <code>chore</code> block unless decorated otherwise, and the <code>blocking</code> decoration makes a comment blocking when its label allows it, for example <code>suggestion</code> or <code>question</code> — the <a href={href('labels', 'en')}>labels</a> page has the exact rules. Only the current text counts: edit an <code>issue:</code> into a <code>note:</code> and the thread stops being counted. The platform shows that the comment was edited; the extension keeps no history.</p>
           </div>
           <div>
-            <span class="tag" style="color:var(--accent)">second</span>
-            <h3>Have all blocking points been resolved?</h3>
-            <p>A thread becomes blocking when its comment resolves to a blocking verdict. Once blocking, it remains blocking until either the thread is resolved, or an authorized person records a <code>decision</code> explaining why the point will not be addressed.</p>
-            <p class="guar">This is the criterion that would eventually be able to prevent a merge.</p>
+            <span class="tag" style="color:var(--accent)">resolved</span>
+            <h3>A thread is resolved when the platform says so</h3>
+            <p>The extension reads the state the page displays, whoever resolved the thread. It does not decide who is allowed to. When the pull request's author or maintainers choose not to address a blocking point, they answer in the thread with a <code>decision</code> and its reason. That reply records the choice; the thread must still be resolved using the platform's own controls.</p>
+            <p class="guar">The count informs. It never prevents a merge.</p>
           </div>
         </div>
-        <p class="small measure">The default plan is the simplest, most platform-native mechanism for each platform — not a general-purpose backend. A dedicated service only enters the picture if a concrete requirement later shows that a platform-native integration genuinely isn't enough. Nothing here is documented as a concrete capability until it actually ships.</p>
       </div>
     </section>
 
     <section class="hband sunk">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">built for later, not just for now:</span>
-          <h2>One validation engine, not two implementations to keep in sync.</h2>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">The extension does not maintain a separate implementation of the validation rules. It uses <strong>a single validation package</strong>, and no validation rule exists outside it. Whatever eventually evaluates a pull request at the platform level will consume the same package, so results won't quietly diverge from what the extension already tells you.</p>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">The validation library itself knows nothing about browsers or networks. Everything it needs is passed in as data, and everything it wants the caller to do comes back as a list of actions. That separation is also why the same validation engine can run directly in the browser — and why the <em>playground</em> is possible.</p>
+          <span class="eyebrow">under the hood:</span>
+          <h2>One validation engine, and no rule outside it.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">The extension does not carry its own copy of the rules. Every validation rule lives in <strong>a single validation package</strong>, which the extension and its platform adapters consume. The toolbar, the live feedback, the badges and the banner therefore cannot disagree about what a comment means.</p>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">The validation library itself knows nothing about browsers, networks or platforms. Everything it needs is passed in as data, and everything it wants the caller to do comes back as a list of actions. That separation is why the same rules apply, unchanged, on GitHub, Azure DevOps and GitLab.</p>
         </div>
       </div>
     </section>
@@ -140,12 +155,12 @@ const page = 'howitworks' as const;
     <section class="cta-band">
       <div class="cta-in">
         <div class="stack g8">
-          <h2>The extension is all you need to get started.</h2>
-          <p class="small" style="color:var(--fg-2)">Assist and warn work today, entirely in your browser. Enforce, at the platform level, is on the roadmap.</p>
+          <h2>The extension is all there is to install.</h2>
+          <p class="small" style="color:var(--fg-2)">It works entirely in your browser, and helps from the first comment. Blocking comes later, if your team decides it should.</p>
         </div>
         <div class="hero-btns">
           <a class="btn btn-p" href={href('install', 'en')}>Install the extension</a>
-          <a class="btn btn-s" href={href('server', 'en')}>See the roadmap</a>
+          <a class="btn btn-s" href={href('enforce', 'en')}>What enforce does</a>
         </div>
       </div>
     </section>

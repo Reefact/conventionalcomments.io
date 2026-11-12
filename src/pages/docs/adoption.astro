@@ -6,48 +6,65 @@ const lang = 'en' as const;
 const page = 'adoption' as const;
 ---
 <Docs lang={lang} page={page}
-  title="Adoption: assist → warn → enforce"
-  description="Assist and warn are available today through the extension. See how teams roll the convention out gradually, what changes at each stage, and where enforce — still on the roadmap — fits in.">
+  title="Adoption: assist → enforce"
+  description="Start in assist, switch one pilot repository to enforce, then extend it. See what changes at each stage, the one thing to prepare before enforce, and how to roll back in minutes.">
 <div class="dhead stack g12">
           <p class="crumb"><b>docs</b> / adoption</p>
-          <h1>Adoption: assist → warn → enforce</h1>
-          <p class="lede measure">The safest way to introduce a convention is to roll it out gradually: help first, make unresolved points visible next, then decide together whether — and how — to enforce it. Assist and warn work today through the extension alone. Enforce, as an authoritative, platform-level requirement, is still on the roadmap — see <a href={href('server', 'en')}>the Enforce roadmap</a> for that part.</p>
+          <h1>Adoption: assist → enforce</h1>
+          <p class="lede measure">The safest way to introduce a convention is to roll it out gradually: help first, then — if the team wants it — refuse non-compliant comments on one pilot repository before doing so everywhere. Both stages run in the extension alone. Neither one touches your platform's merge rules: the extension reports unresolved blocking threads and never blocks a merge. The <a href={href('enforce', 'en')}>Enforce page</a> says exactly what the stricter mode does and does not do.</p>
         </div>
 
         <section class="dsec">
           <h2>The rollout sequence</h2>
           <div class="timeline">
-            <div class="tcell" style="--st:var(--fg-faint)"><span class="wk">week 0–2</span><span class="md">assist</span><span class="ds">Install the extension and let people use it. No status is published anywhere. Nothing is measured centrally, unless your organization has explicitly enabled telemetry.</span></div>
-            <div class="tcell" style="--st:var(--warn)"><span class="wk">week 2–6</span><span class="md">warn</span><span class="ds">Unresolved blocking points become visible directly on the pull request without rejecting comments or blocking merges.</span></div>
-            <div class="tcell" style="--st:var(--block)"><span class="wk">later</span><span class="md">enforce</span><span class="ds">Not available yet as an authoritative, platform-level requirement. Track the roadmap for GitHub, Azure DevOps, and other platforms.</span></div>
+            <div class="tcell" style="--st:var(--fg-faint)"><span class="wk">from day one</span><span class="md">assist</span><span class="ds">Install the extension and let people use it. Nothing is blocked and nothing is published. Nothing is measured centrally either, unless your organization has explicitly enabled telemetry.</span></div>
+            <div class="tcell" style="--st:var(--warn)"><span class="wk">when the team is ready</span><span class="md">enforce, one pilot</span><span class="ds">On a single repository, the extension refuses to send a comment that does not follow the convention. Every other repository stays in <code>assist</code>.</span></div>
+            <div class="tcell" style="--st:var(--block)"><span class="wk">once the pilot has proved successful</span><span class="md">enforce, everywhere</span><span class="ds">Move the mode to the organization configuration, so that it applies to every repository that does not set its own.</span></div>
           </div>
           <div class="scroller">
             <table class="t">
-              <thead><tr><th>Mode</th><th>What the extension does</th><th>Effect on the pull request</th></tr></thead>
+              <thead><tr><th>Mode</th><th>What the extension does</th><th>Can it stop a comment from being sent?</th></tr></thead>
               <tbody>
-                <tr><td class="m">off</td><td class="d">Does nothing.</td><td class="d">None.</td></tr>
-                <tr><td class="m">assist</td><td class="d">Helps reviewers write compliant comments and reports diagnostics. Never blocks.</td><td class="d">None.</td></tr>
-                <tr><td class="m" style="color:var(--warn)">warn</td><td class="d">Same as <code>assist</code>, plus a visible count of unresolved blocking threads.</td><td class="d">Visible, never blocking.</td></tr>
-                <tr><td class="m" style="color:var(--block)">enforce</td><td class="d">Can refuse to submit a malformed comment locally, in the browser.</td><td class="d">There is no authoritative platform-level merge gate yet; that capability is still on the roadmap.</td></tr>
+                <tr><td class="m">off</td><td class="d">Nothing.</td><td class="d">No.</td></tr>
+                <tr><td class="m">assist</td><td class="d">Helps reviewers write compliant comments, reports diagnostics as they type, and counts unresolved blocking threads in a banner on the pull request.</td><td class="d">No.</td></tr>
+                <tr><td class="m" style="color:var(--block)">enforce</td><td class="d">Everything <code>assist</code> does.</td><td class="d">Yes, when the comment is not compliant and the configuration could be read.</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="small">Because these stages currently depend only on the extension, moving between them is just a configuration change. There is no separate infrastructure to deploy, restart, or remove.</p>
+          <p class="small">No mode blocks a merge. Because both stages depend only on the extension, moving between them is a configuration change: there is no separate infrastructure to deploy, restart, or remove. Earlier versions had a <code>warn</code> mode between the two; it behaved exactly like <code>assist</code> and is retired. A configuration that still says <code>"warn"</code> is read as <code>"assist"</code>, with a notice asking you to replace it.</p>
         </section>
 
         <section class="dsec">
-          <h2>One prerequisite worth setting early</h2>
-          <p><strong>Configure <code>resolverOverrideGroup</code></strong> before relying on <code>decision</code> replies to close out blocking threads. This defines who may record a <code>decision</code> when the original author of a blocking comment is unavailable. Left empty, nobody can use that escape hatch, and a blocking thread can get stuck with no way to close it.</p>
+          <h2>Tighten the rules while you are still in assist</h2>
+          <p>A configuration change applies to pull requests that are already open. Enabling a blocking label, or raising a severity, can make a comment non-compliant after its author wrote it in good faith — and can turn threads blocking on every open pull request at once. So change the rules while nothing is refused: tighten them in <code>assist</code>, watch what the status pill and the banner report, and only then switch to <code>enforce</code>.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>One thing to prepare before enforce</h2>
+          <p><strong>Write the rollback procedure, and name the person who will run it.</strong> It must include the order of the operations and the list of repositories that write <code>"mode": "enforce"</code> in their own file: the organization configuration does not override them, so each one has to be changed by hand. Draw up that list before the switch, not during the incident.</p>
+          <p>That is the only prerequisite. Nobody needs to be entitled to anything: the <code>resolverOverrideGroup</code> setting that earlier versions of this page asked for is retired, along with the activation date. Two things are still worth checking on the pilot repository:</p>
+          <ul class="bul">
+            <li><strong>The platform.</strong> <code>enforce</code> applies on GitHub and on Azure DevOps. On GitLab, the extension cannot read a repository's configuration yet, so it never blocks there, whatever the mode.</li>
+            <li><strong>The comments meant for tools.</strong> <code>toolCommands</code> is empty by default — see the note at the bottom of this page.</li>
+          </ul>
         </section>
 
         <section class="dsec">
           <h2>Rolling back</h2>
-          <p>Every stage here is a single <code>mode</code> change in your configuration, applied through the same three-level system described in <a href={href('configure', 'en')}>configuration</a>. Moving back from <code>warn</code> to <code>assist</code>, or from <code>enforce</code>'s local strict mode to <code>warn</code>, takes effect the next time the extension reads the configuration — there's no separate service to restart or branch-protection setting to unwind, because none of these stages touch your platform's own merge rules yet.</p>
+          <p>Going from <code>enforce</code> back to <code>assist</code> should take minutes. The mode is resolved through the three levels described in <a href={href('configure', 'en')}>configuration</a>, and each of them can keep <code>enforce</code> in place on its own. Relax them in this order:</p>
+          <ul class="tick">
+            <li><span class="mk">1</span><b>The floor</b><span class="tx">If your browsers' enterprise policy imposes <code>enforce</code> as the minimum mode, relax it there first. Neither of the next two levels can do it in its place.</span></li>
+            <li><span class="mk">2</span><b>The organization configuration</b><span class="tx">Set its <code>mode</code> to <code>assist</code>. This covers every repository that does not write its own mode.</span></li>
+            <li><span class="mk">3</span><b>Each repository on your list</b><span class="tx">Edit the file of every repository that writes <code>"mode": "enforce"</code> itself.</span></li>
+          </ul>
+          <p>There is nothing to wait for and nothing to invalidate. Before it blocks a comment, the extension reads the configuration again, ignoring its cache. A relaxed mode therefore lifts the block at the very next attempt to send: the attempt is held while the configuration is re-read, then the button is released and a message asks the person to send again. The status pill may keep showing the old mode for up to an hour — the default cache duration — but that blocks nothing.</p>
+          <p class="small">To check: on a test pull request, send a comment with no label. It must go through.</p>
         </section>
 
         <section class="dsec">
           <h2>What to watch before going further</h2>
-          <p>There's no organization-wide dashboard today — that kind of aggregate reporting is part of what an authoritative, platform-level check would eventually enable. In the meantime, what's worth watching is qualitative: are reviewers finding the right labels, are blocking threads getting resolved instead of stalling, and does the <code>warn</code>-stage count on a pull request usually reach zero before it merges. Uneven label use or blocking counts that never quite hit zero are both signals to slow down rather than push toward stricter enforcement.</p>
+          <p>There is no organization-wide dashboard. The indicators that would tell you when a team is ready — the share of compliant comments, how labels are used — are meant to come from the extension's own telemetry, which is off by default and opt-in. They cannot be computed yet: the counters the extension emits today do not record how many comments were written. Until then, monitor the <code>assist</code> stage manually by watching the status pill and the banner.</p>
+          <p>What is worth watching is qualitative: are reviewers finding the right labels, are blocking threads getting resolved instead of stalling, and does the banner's count on a pull request usually reach zero before it merges. Uneven label use, or counts that never quite reach zero, are both reasons to slow down rather than switch to <code>enforce</code>.</p>
         </section>
 
         <section class="dsec">
@@ -55,20 +72,18 @@ const page = 'adoption' as const;
           <p>Only one setting needs to change as you move from one stage to the next: <code>mode</code>. Everything else should already be in place.</p>
           <pre class="code"><span class="tk-k">&#123;</span>
   <span class="tk-k">"version"</span>: <span class="tk-v">1</span>,
-  <span class="tk-k">"mode"</span>: <span class="tk-v">"warn"</span>,                    <span class="tk-cm">// assist → warn → enforce</span>
-  <span class="tk-k">"resolverOverrideGroup"</span>: [<span class="tk-v">"acme/tech-leads"</span>],
-  <span class="tk-k">"formatSeverity"</span>: <span class="tk-v">"warn"</span>,          <span class="tk-cm">// formatting issues do not block</span>
+  <span class="tk-k">"mode"</span>: <span class="tk-v">"assist"</span>,                  <span class="tk-cm">// assist → enforce</span>
   <span class="tk-k">"exemptUsers"</span>: [<span class="tk-v">"dependabot[bot]"</span>, <span class="tk-v">"github-actions[bot]"</span>],
   <span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>]
 <span class="tk-k">&#125;</span></pre>
           <div class="callout">
             <span class="ct">worth checking before you enable it</span>
-            <p style="margin:0"><code>toolCommands</code> is <strong>empty by default</strong>. In <code>enforce</code>'s local strict mode, a bare <code>/rebase</code> is rejected like any other non-compliant comment unless it has been declared. Adding <code>"/*"</code> exempts all slash commands.</p>
+            <p style="margin:0"><code>toolCommands</code> is <strong>empty by default</strong>. In <code>enforce</code> mode, a bare <code>/rebase</code> is rejected like any other non-compliant comment until <code>"/*"</code> is added, which exempts all slash commands. An entry for a single command, such as <code>"/rebase"</code>, is ignored.</p>
           </div>
         </section>
 
         <div class="pager">
-          <a class="pgl" href={href('labels', 'en')}><span class="dir">← previous</span><span class="ttl">Labels &amp; decorations</span></a>
-          <a class="pgl" href={href('server', 'en')} style="text-align:right"><span class="dir">next →</span><span class="ttl">Enforce (roadmap)</span></a>
+          <a class="pgl" href={href('configure', 'en')}><span class="dir">← previous</span><span class="ttl">Configure</span></a>
+          <a class="pgl" href={href('enforce', 'en')} style="text-align:right"><span class="dir">next →</span><span class="ttl">Enforce</span></a>
         </div>
 </Docs>

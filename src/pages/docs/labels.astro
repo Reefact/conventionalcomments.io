@@ -7,11 +7,11 @@ const page = 'labels' as const;
 ---
 <Docs lang={lang} page={page}
   title="Labels & decorations"
-  description="The thirteen labels, decorations, blocking precedence rules, and fifteen diagnostics that define how Conventional Comments are interpreted.">
+  description="The nineteen labels and their three kinds, what the toolkit adds to Conventional Comments, decorations, blocking precedence rules, and the sixteen diagnostics.">
 <div class="dhead stack g12">
           <p class="crumb"><b>docs</b> / labels &amp; decorations</p>
           <h1>Labels &amp; decorations</h1>
-          <p class="lede measure">Thirteen labels, three built-in decorations, and five precedence rules determine how a comment is interpreted — including whether it blocks a merge. This page is the reference for all of them.</p>
+          <p class="lede measure">Nineteen labels in three kinds, three built-in decorations, and five precedence rules determine how a comment is read — including whether its thread counts as blocking. Twelve of the labels come from Conventional Comments; seven are added by the toolkit, and this page says which. It is the reference for all of them.</p>
         </div>
 
         <section class="dsec">
@@ -31,15 +31,23 @@ const page = 'labels' as const;
         </section>
 
         <section class="dsec">
-          <h2>The thirteen labels</h2>
-          <p>Ten labels are enabled by default. Three more — <code>typo</code>, <code>polish</code>, and <code>quibble</code> — are available but disabled initially. They provide more specific alternatives to <code>todo</code>, <code>suggestion</code>, and <code>nitpick</code>, and repositories can enable them when useful.</p>
+          <h2>Nineteen labels, three kinds</h2>
+          <p>A review involves two roles that Conventional Comments does not distinguish: <strong>reviewers</strong>, who examine the pull request and raise points, and its <strong>author and maintainers</strong>, who respond. Every label has a <strong>kind</strong>, which says what the label does with a point:</p>
+          <ul class="bul">
+            <li><strong>A remark raises a point.</strong> Reviewers typically use these labels, which include every label defined by Conventional Comments.</li>
+            <li><strong>A reply responds to a remark.</strong> Authors and maintainers typically use these labels.</li>
+            <li><strong>A status label does neither.</strong> It says where the review itself stands: one pass done, or the whole review closed.</li>
+          </ul>
+          <p>The kind never changes a verdict: not what is valid, not what blocks, not whether a thread is resolved. It does two things. It decides where the button sits in the toolbar — remarks first, then status labels, which close the first row; replies always on a row of their own. And it keeps replies and status labels apart from remarks when label usage is counted, so that a thank-you or a recap never dilutes the share of <code>praise</code>. Nothing is reserved for anyone: every label is offered to everyone, and an author may perfectly well answer a <code>question</code> with a <code>note</code>.</p>
+          <p>The table follows the order of the toolbar. Every label ships enabled, with one exception: <code>quibble</code>, which Conventional Comments itself describes as a <code>nitpick</code> under another name. A repository that wants it enables it with one entry in its configuration.</p>
           <div class="scroller">
             <table class="t">
               <thead>
                 <tr><th>Label</th><th>What it means</th><th>Blocking</th><th>Shortcut</th></tr>
               </thead>
-              <tbody>
-                <tr><td class="m"><span class="pill" style="--lc:var(--l-praise)">🎉 praise</span></td><td class="d">Highlights something done well.</td><td class="m d">Depends on decoration</td><td class="m">?pr</td></tr>
+              <tbody data-kind="remark">
+                <tr class="grp"><th colspan="4" scope="rowgroup"><div class="gh"><span class="gk">Remarks</span><span class="gd">raise a point</span><span class="go">Conventional Comments · 12</span></div></th></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-praise)">👏 praise</span></td><td class="d">Highlights something done well.</td><td class="m d">Depends on decoration</td><td class="m">?pr</td></tr>
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-nitpick)">🔍 nitpick</span></td><td class="d">A minor preference with nothing significant at stake.</td><td class="m"><span class="deco nb">Never</span></td><td class="m">?ni</td></tr>
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-suggestion)">💡 suggestion</span></td><td class="d">A reasoned proposal for improving something.</td><td class="m d">Depends on decoration</td><td class="m">?su</td></tr>
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-issue)">🔨 issue</span></td><td class="d">Identifies a problem. Ideally accompanied by a suggestion.</td><td class="m"><span class="deco b">By default</span></td><td class="m">?i · ?ib</td></tr>
@@ -48,10 +56,22 @@ const page = 'labels' as const;
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-thought)">💭 thought</span></td><td class="d">An idea that came up during the review, with no action requested.</td><td class="m"><span class="deco nb">Never</span></td><td class="m">?th</td></tr>
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-chore)">🧹 chore</span></td><td class="d">A side task that should be completed before acceptance.</td><td class="m"><span class="deco b">By default</span></td><td class="m">?ch</td></tr>
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-note)">📝 note</span></td><td class="d">Information worth calling out.</td><td class="m"><span class="deco nb">Never</span></td><td class="m">?no</td></tr>
-                <tr><td class="m"><span class="pill" style="--lc:var(--l-decision)">🏁 decision</span></td><td class="d">Records the choice <em>not</em> to address a point and explains why.</td><td class="m"><span class="deco nb">Never</span></td><td class="m">?de</td></tr>
-                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-typo)">🔤 typo</span></td><td class="d">A typing mistake.</td><td class="m d">Disabled by default</td><td class="m">?ty</td></tr>
-                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-polish)">✨ polish</span></td><td class="d">A finishing improvement.</td><td class="m d">Disabled by default</td><td class="m">?po</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-typo)">🔤 typo</span></td><td class="d">A typing mistake.</td><td class="m d">Depends on decoration</td><td class="m">?ty</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-polish)">✨ polish</span></td><td class="d">A finishing improvement.</td><td class="m d">Depends on decoration</td><td class="m">?po</td></tr>
                 <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-quibble)">🪶 quibble</span></td><td class="d">A debatable detail.</td><td class="m d">Disabled by default</td><td class="m">?qui</td></tr>
+              </tbody>
+              <tbody class="added" data-kind="status">
+                <tr class="grp"><th colspan="4" scope="rowgroup"><div class="gh"><span class="gk">Review status</span><span class="gd">say where the review stands</span><span class="go">added by the toolkit · 2</span></div></th></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-summary)">📋 summary</span></td><td class="d">Recaps the review, or one pass of it: what was checked, what is still open.</td><td class="m"><span class="deco nb">Never</span></td><td class="m">?sum</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-reviewed)">🎉 reviewed</span></td><td class="d">Closes your own review: your points are dealt with, you have nothing to add. Approves nothing.</td><td class="m"><span class="deco nb">Never</span></td><td class="m">?r</td></tr>
+              </tbody>
+              <tbody class="added" data-kind="reply">
+                <tr class="grp"><th colspan="4" scope="rowgroup"><div class="gh"><span class="gk">Replies</span><span class="gd">answer a remark</span><span class="go">added by the toolkit · 5</span></div></th></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-thanks)">🤝 thanks</span></td><td class="d">Says thank you, without taking a position on the point or on the code.</td><td class="m"><span class="deco nb">Never</span></td><td class="m">?thx</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-done)">✅ done</span></td><td class="d">The code changed because of the remark.</td><td class="m"><span class="deco nb">Never</span></td><td class="m">?do</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-ack)">👌 ack</span></td><td class="d">Received and accepted; the code has not changed.</td><td class="m"><span class="deco nb">Never</span></td><td class="m">?a</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-decision)">⚖️ decision</span></td><td class="d">Records the choice <em>not</em> to address a remark, and says why.</td><td class="m"><span class="deco nb">Never</span></td><td class="m">?de</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-disagree)">✋ disagree</span></td><td class="d">Declines the remark, and says why. Carries no authority and resolves nothing.</td><td class="m"><span class="deco nb">Never</span></td><td class="m">?di</td></tr>
               </tbody>
             </table>
           </div>
@@ -59,25 +79,85 @@ const page = 'labels' as const;
         </section>
 
         <section class="dsec">
-          <h2><code style="font-size:.9em">decision</code> — the label added by this toolkit</h2>
-          <p><code>decision</code> is not part of the original Conventional Comments specification. The toolkit adds it because <code>enforce</code> needs a controlled way to resolve exceptional situations. Without one, a blocking thread could remain unresolved indefinitely simply because its author is unavailable.</p>
+          <h2>What the toolkit adds to Conventional Comments</h2>
+          <p>Seven of these nineteen labels are <strong>not part of Conventional Comments</strong>: <code>summary</code>, <code>reviewed</code>, <code>thanks</code>, <code>done</code>, <code>ack</code>, <code>decision</code> and <code>disagree</code>. In the table above, they are the two groups marked “added by the toolkit”.</p>
+          <p>The convention gives a vocabulary to the remark, and says nothing about what comes after it: how to answer one, or how to say that a review is over. It also invites teams to go beyond its list — <em>“Feel free to diverge from this specific list of labels if it seems appropriate.”</em> The toolkit does exactly that, on ground the convention does not cover. These labels are an addition of this tool, they claim no other standing, and a team can remove them.</p>
+          <div class="callout">
+            <span class="ct">to stick to the upstream list</span>
+            <h4>Disable them, one entry each</h4>
+            <p>There is no separate switch: a label is turned off with <code>enabled</code>, like any other. The extension's options page shows this block and copies it for you.</p>
+          </div>
+          <pre class="code"><span class="tk-k">&#123;</span>
+  <span class="tk-k">"labels"</span>: [
+    <span class="tk-k">&#123;</span> <span class="tk-k">"id"</span>: <span class="tk-v">"summary"</span>,  <span class="tk-k">"enabled"</span>: <span class="tk-v">false</span> <span class="tk-k">&#125;</span>,
+    <span class="tk-k">&#123;</span> <span class="tk-k">"id"</span>: <span class="tk-v">"reviewed"</span>, <span class="tk-k">"enabled"</span>: <span class="tk-v">false</span> <span class="tk-k">&#125;</span>,
+    <span class="tk-k">&#123;</span> <span class="tk-k">"id"</span>: <span class="tk-v">"thanks"</span>,   <span class="tk-k">"enabled"</span>: <span class="tk-v">false</span> <span class="tk-k">&#125;</span>,
+    <span class="tk-k">&#123;</span> <span class="tk-k">"id"</span>: <span class="tk-v">"done"</span>,     <span class="tk-k">"enabled"</span>: <span class="tk-v">false</span> <span class="tk-k">&#125;</span>,
+    <span class="tk-k">&#123;</span> <span class="tk-k">"id"</span>: <span class="tk-v">"ack"</span>,      <span class="tk-k">"enabled"</span>: <span class="tk-v">false</span> <span class="tk-k">&#125;</span>,
+    <span class="tk-k">&#123;</span> <span class="tk-k">"id"</span>: <span class="tk-v">"disagree"</span>, <span class="tk-k">"enabled"</span>: <span class="tk-v">false</span> <span class="tk-k">&#125;</span>
+  ]
+<span class="tk-k">&#125;</span></pre>
+          <p class="small"><code>decision</code> is deliberately not in that block. It belongs to the toolkit too, but it carries a rule of its own, described below, and is turned off separately.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Replying to a remark</h2>
+          <p>A repository can ask for <em>every</em> comment of a pull request to follow the convention, replies included (<code>scope.validateReplies</code>). Without labels made for replying, that meant writing <code>note: fixed</code> or <code>thought: good catch</code> — bending labels away from what they mean. Four labels fill that gap, and nothing else: <code>thanks</code>, <code>done</code>, <code>ack</code> and <code>disagree</code>. None of them can ever block.</p>
+          <pre class="code"><span class="tk-l">issue</span> <span class="tk-d">(blocking)</span><span class="tk-c">:</span> platform CSS tokens leak into the shared stylesheet
+
+<span class="tk-cm">— and, in the same thread, the author's reply —</span>
+
+<span class="tk-l">done</span><span class="tk-c">:</span> removed the platform-specific token</pre>
+          <p><code>done</code> says the code changed, so there is a diff to read again; <code>ack</code> says the remark is accepted and the code did not change. Three of the four accept a second spelling: <code>thx</code> for <code>thanks</code>, <code>fixed</code> for <code>done</code>, <code>acknowledged</code> for <code>ack</code>.</p>
+        </section>
+
+        <section class="dsec">
+          <h2><code style="font-size:.9em">decision</code> — setting a remark aside, and saying why</h2>
+          <p><code>decision</code> is a reply too, with one more requirement. It records the choice <em>not</em> to address a remark, and it has to explain that choice. It is written by the pull request's author or maintainers, in the thread it answers. It documents the choice; it does not resolve the thread, which must still be resolved using the platform's own controls.</p>
           <div class="split">
             <div class="callout">
               <span class="ct">it is recognized even where replies are not normally validated</span>
               <h4>The one label detected in an otherwise unvalidated reply</h4>
-              <p>Thread replies are not validated by default (<code>validateReplies: false</code>). A reply whose resolved label is <code>decision</code> is still recognized. Otherwise, this mechanism would only work in repositories that had independently enabled validation for replies.</p>
+              <p>Thread replies are not validated by default (<code>validateReplies: false</code>). A reply whose resolved label is <code>decision</code> is still recognized. Otherwise, its rule would only apply in repositories that had independently enabled validation for replies.</p>
             </div>
             <div class="callout">
               <span class="ct">and a decision must actually explain the decision</span>
               <h4><code>E-DECISION-SUBJECT</code> is an error, not a warning</h4>
-              <p>A <code>decision</code> reply must meet <code>minDecisionSubjectLength</code>, which defaults to 20 characters. That is the only subject-length threshold applied to <code>decision</code>. Resolving a blocking thread therefore requires an actual explanation. <code>wontfix</code> is not enough.</p>
+              <p>A <code>decision</code> reply must meet <code>minDecisionSubjectLength</code>, which defaults to 20 characters. That is the only subject-length threshold applied to <code>decision</code>. Setting a remark aside therefore requires an actual explanation. <code>wontfix</code> is not enough.</p>
             </div>
           </div>
           <pre class="code"><span class="tk-l">decision</span><span class="tk-c">:</span> out of scope for this PR, debt tracked in PROJ-142
 
 Agreed with the platform team on 3 Sep: the cache rewrite lands in Q4
 and this handler is deleted with it.</pre>
-          <p class="small">Not everyone is allowed to record a <code>decision</code>. <code>resolverOverrideGroup</code> identifies the group whose members may override a resolution. Configuring that group is a prerequisite for <code>enforce</code>; leaving it empty disables both override mechanisms.</p>
+          <div class="callout">
+            <span class="ct">not to be confused</span>
+            <h4><code>disagree</code> is not <code>decision</code></h4>
+            <p><code>disagree</code> is an opinion: anyone can voice it, and it settles nothing. <code>decision</code> records a choice made by the pull request's author or maintainers. The toolkit checks no authority behind either of them, and neither resolves the thread.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Saying where the review stands</h2>
+          <p>Two gestures come up in every review and had no label: recapping a pass, and saying you are done. <code>summary</code> says what was checked and what is still open. <code>reviewed</code> closes your own review: each of your points is dealt with, and you have nothing to add. They are counterparts — <code>summary</code> describes a review that continues, <code>reviewed</code> one that is closed.</p>
+          <pre class="code"><span class="tk-l">summary</span><span class="tk-c">:</span> second pass — the cache fix is verified, the naming point is still open
+
+<span class="tk-cm">— later, once that last point is settled —</span>
+
+<span class="tk-l">reviewed</span><span class="tk-c">:</span> nothing left on my side</pre>
+          <div class="split">
+            <div class="callout">
+              <span class="ct">when to post it</span>
+              <h4><code>reviewed</code> closes a review, not a reading pass</h4>
+              <p>Post it once each of your points is dealt with — fixed and checked, or set aside by a reply you accept — and a last reading raises nothing new. A later change to the pull request reopens your review: the new changes have to be read before another <code>reviewed</code>.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">what neither of them does</span>
+              <h4>They approve nothing</h4>
+              <p>Approval belongs to the platform — <em>Approve</em> on GitHub, the vote on Azure DevOps — and the toolkit does not count <code>reviewed</code> comments. A <code>summary</code> never stands in for <code>reviewed</code>, even when no point is left open; posted after your <code>reviewed</code>, it reads as if your review had reopened.</p>
+            </div>
+          </div>
+          <p class="small">Review agents publish a <code>summary</code> at each pass. See <a href={href('aireview', 'en')}>AI-assisted review</a>.</p>
         </section>
 
         <section class="dsec">
@@ -114,13 +194,13 @@ and this handler is deleted with it.</pre>
           </div>
           <div class="callout">
             <span class="ct">why a conflicting comment still gets a verdict</span>
-            <p style="margin:0">Rules 1 and 2 report an error, but they still produce a result. When a comment contradicts itself, the label's default is used as a deterministic fallback. Leaving the blocking state undefined would be worse: the system would be unable to determine whether the thread prevents acceptance, potentially leaving the pull request blocked with no actionable way to resolve the ambiguity.</p>
+            <p style="margin:0">Rules 1 and 2 report an error, but they still produce a result. When a comment contradicts itself, the label's default is used as a deterministic fallback. Leaving the blocking state undefined would be worse: neither the banner nor a reader could tell whether the thread counts as blocking, and nothing in the comment would say how to settle it.</p>
           </div>
         </section>
 
         <section class="dsec">
           <h2>Diagnostics</h2>
-          <p>There are fifteen diagnostic codes. <strong>Errors</strong> make a comment non-compliant. They only affect merge eligibility when the repository configures <code>formatSeverity: "error"</code>. <strong>Warnings</strong> are reported and counted but never cause a failure by themselves. Every diagnostic can be assigned a different severity — or disabled entirely — per repository through <code>severities</code>.</p>
+          <p>There are sixteen diagnostic codes. <strong>Errors</strong> make a comment non-compliant: in <code>enforce</code> mode, the extension refuses to send it. <strong>Warnings</strong> are reported, and never cause a refusal by themselves. A repository can give each diagnostic another severity through <code>severities</code>, within two limits: an error can be lowered to a warning but never silenced, and <code>W-SESSION-MULTIPLE</code> can never be raised to an error.</p>
           <div class="split">
             <div class="scroller">
               <table class="t">
@@ -148,6 +228,7 @@ and this handler is deleted with it.</pre>
                   <tr><td class="m">W-MISSING-DECORATION</td><td class="d">A <code>suggestion</code> or <code>question</code> has no decoration.</td></tr>
                   <tr><td class="m">W-NO-DISCUSSION</td><td class="d">A blocking comment contains no discussion.</td></tr>
                   <tr><td class="m">W-NOT-BLOCKABLE</td><td class="d">A comment is marked as blocking in a context that cannot carry blocking state.</td></tr>
+                  <tr><td class="m">W-SESSION-MULTIPLE</td><td class="d">A comment carries more than one <a href={href('aireview', 'en')}>session marker</a>.</td></tr>
                 </tbody>
               </table>
             </div>

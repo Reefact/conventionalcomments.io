@@ -3,7 +3,7 @@
   "$id": "https://conventionalcomments.io/schema/v1.json",
   "$comment": "Transcrit à la main de packages/core/src/config/schema.ts dans Reefact/conventional-comments-toolkit, qui fait foi. scripts/check-schema.mjs, dans Reefact/conventionalcomments.io, tient les deux en accord ; y lire docs/schema-fr.md avant d'éditer ce fichier. ($comment ne s'adresse qu'aux mainteneurs du schéma : draft-07 pose qu'il n'est pas présenté à l'utilisateur.)",
   "title": "Conventional Comments Toolkit — repository configuration",
-  "description": "Schema for .conventional-comments.json, read from a repository's default branch by conventional-comments-toolkit. Transcribed from packages/core/src/config/schema.ts; the validator in that file remains authoritative. Unknown keys are ignored with a warning at runtime — this schema flags them so you see them while editing.",
+  "description": "Schema for .conventional-comments.json, read from a repository's default branch by conventional-comments-toolkit. Transcribed from packages/core/src/config/schema.ts; the validator in that file remains authoritative. Unknown keys are ignored with a warning at runtime — this schema flags them so you see them while editing. That includes the keys retired with the verifier, which the extension no longer reads: formatSeverity, overrideLabel, resolverOverrideGroup, activation, docUrl, server and exemptionLog.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -17,29 +17,30 @@
       "minimum": 1,
       "maximum": 1,
       "default": 1,
-      "description": "Configuration schema version. A document declaring a version above the one a component supports is not applied: the component falls back to assist mode, or to the floor if the floor is stricter. Highest version supported today: 1."
+      "description": "Configuration schema version. A document declaring a version above the one the extension supports is not applied: the extension falls back to assist mode, or to the floor if the floor is stricter. Highest version supported today: 1."
     },
     "mode": {
-      "enum": [
-        "off",
-        "assist",
-        "warn",
-        "enforce"
-      ],
       "default": "assist",
-      "description": "off — nothing happens. assist — the extension helps and diagnoses, and never blocks. warn — same as assist, plus a visible count of unresolved blocking threads computed by the extension alone. Platform-level status publishing is not currently available. enforce — the extension can refuse to submit a non-compliant comment locally, in the browser. Platform-level merge enforcement is not currently available. See the adoption guide for what these modes mean in practice today."
-    },
-    "formatSeverity": {
-      "enum": [
-        "warn",
-        "error"
-      ],
-      "default": "warn",
-      "description": "Whether comment format compliance (criterion 1) can fail the check. With \"warn\", a badly formed comment is reported but never blocks; only unresolved blocking threads do."
+      "description": "off — nothing happens. assist — the extension helps and diagnoses, and never blocks. enforce — the extension refuses to send a non-compliant comment, in the browser of whoever has it installed. No mode ever blocks a merge: the extension reports unresolved blocking threads, it does not gate completion. See the adoption guide for what these modes mean in practice.",
+      "anyOf": [
+        {
+          "enum": [
+            "off",
+            "assist",
+            "enforce"
+          ]
+        },
+        {
+          "const": "warn",
+          "deprecated": true,
+          "deprecationMessage": "\"warn\" is obsolete: the extension reads it as \"assist\" and shows a configuration notice. Write \"assist\".",
+          "description": "Obsolete. Still accepted, and read as assist with a configuration notice."
+        }
+      ]
     },
     "labels": {
       "type": "array",
-      "description": "Per-label overrides. Only the keys you list are overridden; every other label keeps its product default. Thirteen labels exist; ten are enabled by default.",
+      "description": "Per-label overrides, and labels of your own. Only the keys you list are overridden; every other label keeps its product default. Nineteen labels ship: the twelve of Conventional Comments, and seven added by the toolkit. All are enabled by default except quibble.",
       "items": {
         "type": "object",
         "required": [
@@ -60,15 +61,21 @@
               "thought",
               "chore",
               "note",
-              "decision",
               "typo",
               "polish",
-              "quibble"
+              "quibble",
+              "summary",
+              "reviewed",
+              "thanks",
+              "done",
+              "ack",
+              "decision",
+              "disagree"
             ]
           },
           "enabled": {
             "type": "boolean",
-            "description": "Whether the label may be used in this repository. typo, polish and quibble ship disabled."
+            "description": "Whether the label may be used in this repository. Every shipped label is enabled by default except quibble, which Conventional Comments itself defines as a nitpick under another name. This key, and it alone, turns off the labels the toolkit adds to Conventional Comments: summary, reviewed, thanks, done, ack and disagree."
           },
           "blockingByDefault": {
             "type": "boolean",
@@ -76,22 +83,38 @@
           },
           "alwaysNonBlocking": {
             "type": "boolean",
-            "description": "Whether the label can never block. A (blocking) decoration on such a label raises E-CONFLICT, and the verdict falls back to blockingByDefault."
+            "description": "Whether the label can never block. A (blocking) decoration on such a label raises E-CONFLICT, and the verdict falls back to blockingByDefault. True by default for nitpick, thought, note and for the seven labels the toolkit adds."
+          },
+          "kind": {
+            "enum": [
+              "remark",
+              "status",
+              "reply"
+            ],
+            "description": "What the label does with a point. remark — it raises one. reply — it answers one. status — it does neither, and says where the review stands. The kind decides which row of the toolbar the button sits in, and keeps status and reply labels out of the statistics computed on remarks. It never changes a verdict. Default: the shipped kind for a shipped label, remark for a label you declare."
           },
           "icon": {
             "type": "string",
-            "description": "Emoji shown on the badge. Purely cosmetic: excluded from the configuration fingerprint, so it can never make two components disagree."
+            "description": "Emoji shown on the button and the badge. Purely cosmetic: it never changes a verdict."
           },
           "color": {
             "type": "string",
-            "description": "Badge border colour, conventionally #rrggbb. The validator only checks that this is a string, so the schema does not reject other forms either: a transcription that refuses what the product accepts is not a transcription. It only ever touches border-color, never a background at rest — so the applicable contrast criterion is WCAG 2.1 SC 1.4.11 (3:1 for a UI component boundary), not the 4.5:1 required of text. Cosmetic, and excluded from the fingerprint."
+            "description": "Badge border colour, conventionally #rrggbb. The validator only checks that this is a string, so the schema does not reject other forms either: a transcription that refuses what the product accepts is not a transcription. It only ever touches border-color, never a background at rest — so the applicable contrast criterion is WCAG 2.1 SC 1.4.11 (3:1 for a UI component boundary), not the 4.5:1 required of text. Cosmetic: it never changes a verdict."
+          },
+          "description": {
+            "type": "string",
+            "description": "What the label means, shown as the tooltip of the badge — and of the button when usage is absent. Shown as written, whatever the interface language. Written, it replaces the shipped text; written empty (\"\"), it removes the tooltip; left out, a shipped label keeps its text. Never changes a verdict."
+          },
+          "usage": {
+            "type": "string",
+            "description": "When to use the label, shown as the tooltip of the button. Written, it replaces the shipped text and its example; written empty (\"\"), it removes the button's tooltip; left out, the button shows description, then the shipped text. Never changes a verdict."
           },
           "aliases": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "Alternative spellings accepted for this label, rewritten to the canonical form with a one-click fix."
+            "description": "Alternative spellings accepted for this label on input: with \"bug\" as an alias of issue, bug: is read as issue: and inherits everything from it. An alias raises no diagnostic; the extension may offer to rewrite it to the canonical form, and never requires it."
           }
         }
       }
@@ -143,7 +166,7 @@
     },
     "severities": {
       "type": "object",
-      "description": "Re-level or silence individual diagnostics. Errors make a comment non-compliant; warnings are counted and shown, never a cause of failure. Codes not listed here keep their product severity, and an unrecognised code is accepted without complaint.",
+      "description": "Re-level or silence individual diagnostics. Errors make a comment non-compliant; warnings are shown, never a cause of failure. Codes not listed here keep their product severity, and an unrecognised code is accepted without complaint. Two limits apply at runtime, each reported by a configuration notice: an E- code never goes below warn, and W-SESSION-MULTIPLE never goes above it.",
       "additionalProperties": {
         "$ref": "#/definitions/severity"
       },
@@ -207,6 +230,10 @@
         "W-NOT-BLOCKABLE": {
           "$ref": "#/definitions/severity",
           "description": "A blocking comment in a place that cannot carry that state."
+        },
+        "W-SESSION-MULTIPLE": {
+          "$ref": "#/definitions/severity",
+          "description": "More than one review-session marker in a comment. Never above warn: \"error\" is read as warn, so that a metadata mistake can never block a send."
         }
       }
     },
@@ -218,7 +245,7 @@
         "validateReplies": {
           "type": "boolean",
           "default": false,
-          "description": "Whether replies inside a thread are validated. Even when false, a reply whose resolved label is decision is still read — otherwise the release valve would only work in repositories that had opted into validating replies."
+          "description": "Whether replies inside a thread are validated. Even when false, a reply whose resolved label is decision is still read — otherwise the rule on its subject would only apply in repositories that had opted into validating replies."
         },
         "validateReviewSummary": {
           "type": "boolean",
@@ -248,7 +275,7 @@
           "type": "integer",
           "minimum": 0,
           "default": 20,
-          "description": "Minimum length of a decision reply, and the only length threshold that applies to it. Below it, E-DECISION-SUBJECT — an error, not a warning: closing a blocking point requires a sentence saying why."
+          "description": "Minimum length of a decision reply, and the only length threshold that applies to it. Below it, E-DECISION-SUBJECT — an error, not a warning: setting a remark aside requires a sentence saying why."
         }
       }
     },
@@ -284,7 +311,7 @@
     "toolCommands": {
       "type": "array",
       "default": [],
-      "description": "Comments addressed to a bot rather than to a human. EMPTY BY DEFAULT: slash commands used to be exempted through a built-in list, and that list is gone — in enforce mode a bare /rebase is now rejected like any other comment until the repository declares it here. Each entry is compared literally, never interpreted as a pattern.",
+      "description": "Comments addressed to a bot rather than to a human. EMPTY BY DEFAULT: in enforce mode a bare /rebase is rejected like any other comment until the repository adds \"/*\". Two forms are accepted: \"/*\", which exempts every slash command at the start of a body, and an exact bot handle such as \"@dependabot\". A single slash command cannot be exempted on its own: an entry such as \"/rebase\" is ignored at runtime, with a configuration notice. Each entry is compared literally, never interpreted as a pattern.",
       "items": {
         "oneOf": [
           {
@@ -307,48 +334,6 @@
         ]
       ]
     },
-    "resolverOverrideGroup": {
-      "description": "The group whose members may override a resolution and record a decision. Designating it is a hard prerequisite for enforce: with an empty group both release valves are inert at once, and a blocking point whose author is unavailable holds the pull request with no recourse. Accepts a single group or a list.",
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      ],
-      "examples": [
-        "acme/tech-leads",
-        [
-          "acme/tech-leads",
-          "acme/security"
-        ]
-      ]
-    },
-    "overrideLabel": {
-      "type": "string",
-      "minLength": 1,
-      "default": "cc-override",
-      "description": "Name of the platform label that marks a pull request as exempt."
-    },
-    "activation": {
-      "type": "object",
-      "additionalProperties": false,
-      "description": "Installation scope.",
-      "properties": {
-        "activatedAt": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "default": null,
-          "description": "ISO 8601 instant from which pull requests are evaluated, or null for no cut-off. Anything Date.parse accepts is taken -- which is wider than RFC 3339, so no format is imposed here: \"2026-09-01\" is accepted at runtime and must be accepted in the editor too."
-        }
-      }
-    },
     "configUrl": {
       "type": [
         "string",
@@ -361,23 +346,29 @@
       "type": "string",
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
       "default": "1.0.0",
-      "description": "Minimum core/ version required to apply this document. A component running an older major does not apply it: it falls back to assist mode, or to the floor if stricter. This — not the configuration fingerprint — is the lever for requiring a core/ version across an organization."
+      "description": "Minimum core/ version required to apply this document. Only the MAJOR component is compared with the extension's core major: on a 1.x core, \"1.99.0\" is applied and \"2.0.0\" is not — the extension then falls back to assist mode, or to the floor if stricter. It cannot require a newer minor or patch release."
     },
     "configCacheTtlSeconds": {
       "type": "integer",
       "minimum": 0,
       "default": 3600,
-      "description": "How long a resolved configuration is cached. A relaxation of mode does not wait for this: the organization document is probed separately and invalidates the whole cache as soon as a softer mode is observed."
+      "description": "How long the extension caches a resolved configuration, in seconds. What it displays may lag by up to that long. Blocking does not: before it refuses to send a comment, the extension re-reads the configuration without its cache. An organization's policy can set a maximum; a repository may ask for less."
     },
     "badgeStyle": {
       "type": "string",
       "minLength": 1,
       "default": "pill",
-      "description": "Badge shape. Two values are styled: \"pill\" and \"flat\". Any other string is accepted but renders unstyled. Cosmetic, and excluded from the configuration fingerprint.",
+      "description": "Badge shape. Two values are styled: \"pill\" and \"flat\". Any other string is accepted but renders unstyled. Cosmetic: it never changes a verdict.",
       "examples": [
         "pill",
         "flat"
       ]
+    },
+    "sessionIcon": {
+      "type": "string",
+      "minLength": 1,
+      "default": "🤖",
+      "description": "Icon of the mention that replaces a review-session marker — a line [session:<id>] — when a comment is displayed. Never changes a verdict."
     },
     "shortcuts": {
       "type": "object",
@@ -396,59 +387,6 @@
               "?ib": "issue (blocking): "
             }
           ]
-        }
-      }
-    },
-    "docUrl": {
-      "type": "string",
-      "minLength": 1,
-      "default": "https://conventionalcomments.org/",
-      "description": "Where the check's summary and the extension link for an explanation of the convention."
-    },
-    "server": {
-      "type": "object",
-      "additionalProperties": false,
-      "description": "Reserved for future platform-level enforcement. Ignored by the browser extension. These settings have no effect in the extension available today.",
-      "properties": {
-        "coalesceWindowSeconds": {
-          "type": "integer",
-          "minimum": 0,
-          "default": 10,
-          "description": "Reserved for future platform-level enforcement; currently unused by the browser extension."
-        },
-        "gracePeriodSeconds": {
-          "type": "integer",
-          "minimum": 0,
-          "default": 900,
-          "description": "Reserved for future platform-level enforcement; currently unused by the browser extension."
-        },
-        "reconcileIntervalSeconds": {
-          "type": "integer",
-          "minimum": 0,
-          "default": 900,
-          "description": "Reserved for future platform-level enforcement; currently unused by the browser extension."
-        },
-        "statusTargetUrl": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "default": null,
-          "description": "Reserved for future platform-level enforcement; currently unused by the browser extension."
-        }
-      }
-    },
-    "exemptionLog": {
-      "type": "object",
-      "additionalProperties": false,
-      "description": "Where governed exemptions are recorded, so they are auditable rather than silent.",
-      "properties": {
-        "endpoint": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "default": null
         }
       }
     },

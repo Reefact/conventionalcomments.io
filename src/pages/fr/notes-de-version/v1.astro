@@ -13,12 +13,22 @@ const page = 'releasenotes' as const;
         <p class="grp">ligne de version&nbsp;:</p>
         <div class="rn-line">
           <span class="rn-ln">Toolkit 1.x</span>
-          <span class="rn-lv">1.0.0-beta.12</span>
-          <span class="rn-ld">8 septembre 2026 · 12 versions</span>
+          <span class="rn-lv">1.0.0-rc.2</span>
+          <span class="rn-ld">12 novembre 2026 · 23 versions</span>
         </div>
         <p class="grp">sur cette page&nbsp;:</p>
         <ul class="rn-jump">
-          <li><a href="#v1-0-0-beta-13" class="cur">1.0.0-beta.13 · à venir</a></li>
+          <li><a href="#v1-0-0-rc-2" class="cur">1.0.0-rc.2</a></li>
+          <li><a href="#v1-0-0-rc-1">1.0.0-rc.1</a></li>
+          <li><a href="#v1-0-0-beta-21">1.0.0-beta.21</a></li>
+          <li><a href="#v1-0-0-beta-20">1.0.0-beta.20</a></li>
+          <li><a href="#v1-0-0-beta-19">1.0.0-beta.19</a></li>
+          <li><a href="#v1-0-0-beta-18">1.0.0-beta.18</a></li>
+          <li><a href="#v1-0-0-beta-17">1.0.0-beta.17</a></li>
+          <li><a href="#v1-0-0-beta-16">1.0.0-beta.16</a></li>
+          <li><a href="#v1-0-0-beta-15">1.0.0-beta.15</a></li>
+          <li><a href="#v1-0-0-beta-14">1.0.0-beta.14</a></li>
+          <li><a href="#v1-0-0-beta-13">1.0.0-beta.13</a></li>
           <li><a href="#v1-0-0-beta-12">1.0.0-beta.12</a></li>
           <li><a href="#v1-0-0-beta-11">1.0.0-beta.11</a></li>
           <li><a href="#v1-0-0-beta-10">1.0.0-beta.10</a></li>
@@ -46,21 +56,182 @@ const page = 'releasenotes' as const;
           <p class="lede measure">Version après version, retrouvez ici ce qui change concrètement à l'utilisation du toolkit&nbsp;: nouvelles possibilités, corrections et évolutions de comportement visibles au quotidien. Le changelog conserve le relevé technique exhaustif, avec les contraintes, les détails de compatibilité et les cas limites.</p>
           <div class="callout">
             <span class="ct">un point à garder en tête</span>
-            <p style="margin:0">L'extension démarre en mode <code>assist</code>. Par défaut, elle vous aide à rédiger des commentaires conformes et signale les problèmes sans empêcher leur envoi. Les comportements plus stricts doivent être activés explicitement par votre organisation. Lorsqu'un serveur est déployé, c'est lui qui fournit la vérification de conformité de la pull request faisant autorité.</p>
+            <p style="margin:0">L'extension démarre en mode <code>assist</code>. Par défaut, elle vous aide à rédiger des commentaires conformes et signale les problèmes sans empêcher leur envoi. Les comportements plus stricts doivent être activés explicitement par votre organisation. Un commentaire n'est contrôlé que dans le navigateur de qui a installé l'extension, et l'extension ne bloque jamais une fusion.</p>
           </div>
         </div>
 
         <h2 class="rn-major">Version 1</h2>
 
-        <article class="rel" id="v1-0-0-beta-13">
-          <div class="rel-h"><span class="rel-v">1.0.0-beta.13</span><span class="rel-m up">à venir</span><span class="rel-d">notes prêtes, version pas encore publiée</span></div>
-          <p class="rel-sum">Le journal de la section «&nbsp;État&nbsp;» dit désormais sur quelle page chaque sélecteur a échoué, et s'efface d'un clic pour refaire une mesure propre.</p>
+        <article class="rel" id="v1-0-0-rc-2">
+          <div class="rel-h"><span class="rel-v">1.0.0-rc.2</span><span class="rel-m">rc</span><span class="rel-d">12 novembre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-rc.2" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">Deux corrections du filtre des fils sur la nouvelle page Overview de GitHub.</p>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li><strong>Sur l'Overview de GitHub, le filtre des fils ne se place plus à l'intérieur d'un fil.</strong> Quand la section Comments affichait <code>Unresolved</code> ou <code>Mine</code>, les puces du filtre apparaissaient au milieu du premier fil, entre son code et son commentaire. Elles se placent désormais au-dessus du premier fil, comme en <code>All</code>.</li>
+            <li><strong>Sur l'Overview de GitHub, filtrer par label masque le fil entier.</strong> Un fil qui ne portait pas le label choisi perdait ses commentaires mais gardait à l'écran son nom de fichier et son code, comme une boîte vide. Il disparaît désormais en entier, et revient quand vous choisissez <code>tous</code>.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changements</h4><ul>
+            <li><strong>Le skill de revue installe Slugger sous son nouveau nom.</strong> L'outil que <code>skills/review-pull-request</code> utilise pour nommer les sessions de revue est désormais publié sous le nom <code>Slugger</code> au lieu de <code>Slugger.Cli</code>&nbsp;; la commande reste <code>slugger</code>. Une installation faite sous l'ancien nom continue de fonctionner, et l'étape de configuration du skill dit comment passer au nouveau.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-rc-1">
+          <div class="rel-h"><span class="rel-v">1.0.0-rc.1</span><span class="rel-m">rc</span><span class="rel-d">11 novembre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-rc.1" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">La version candidate de la 1.0.0&nbsp;: la prise en charge de GitLab et de la nouvelle page Overview de GitHub, un Azure DevOps qui fonctionne, les marqueurs de session de revue et un label <code>summary</code>&nbsp;; <code>enforce</code> bloque désormais vraiment, après avoir relu la configuration, et le vérificateur est retiré pour de bon.</p>
           <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
-            <li><strong>Chaque ligne du journal dit de quelle page elle vient.</strong> Il indiquait quel sélecteur avait échoué et quand, jamais où&nbsp;: devant quatre lignes horodatées à la même seconde, rien ne permettait de savoir si elles venaient d'une seule page ou de quatre. Chaque ligne commence désormais par une marque de six caractères — même marque, même page —&nbsp;; un clic ouvre l'adresse exacte relevée dans un nouvel onglet. Cette adresse reste sur votre appareil&nbsp;: lorsque vous l'avez autorisée, la télémétrie ne transmet toujours que le nom du sélecteur. La mise à jour conserve toutefois les lignes déjà présentes&nbsp;: comme leur adresse n'était pas enregistrée, elles affichent une marque neutre jusqu'à ce que le sélecteur correspondant échoue de nouveau ou que vous effaciez le journal.</li>
+            <li><strong>GitLab (gitlab.com) est pris en charge, sans blocage.</strong> Les merge requests de gitlab.com reçoivent la barre d'outils, les badges, le filtre des fils et le bandeau. Activez gitlab.com depuis la page des réglages, comme tout autre site. L'extension ne sait pas encore lire la configuration d'un dépôt sur GitLab&nbsp;: elle n'y bloque donc jamais un commentaire. GitLab Self-Managed et Dedicated ne sont pas encore pris en charge.</li>
+            <li><strong>La nouvelle page Overview de GitHub est prise en charge.</strong> Sur l'Overview, l'extension ne reconnaissait pas le nouveau champ de commentaire&nbsp;: rien n'était bloqué en mode <code>enforce</code>, et beaucoup de commentaires n'avaient pas de badge. L'Overview et la page Conversation classique fonctionnent désormais toutes deux. Le bandeau se place sous l'en-tête de la pull request, et le filtre des fils au-dessus de leur liste.</li>
+            <li><strong>Les marqueurs de session de revue.</strong> Une ligne <code>[session:&lt;id&gt;]</code> dans un commentaire indique quelle session de revue l'a écrit, pour distinguer les commentaires de plusieurs agents ou de plusieurs passages. L'extension masque la ligne et affiche un discret <code>🤖 session: &lt;id&gt;</code> au bas du commentaire&nbsp;; le marqueur n'a aucun effet sur la validation. Ajoutez une description après un tiret cadratin, <code>[session:&lt;id&gt; — <em>&lt;phrase&gt;</em>]</code>, et elle apparaît au survol de la mention. Deux marqueurs dans un même commentaire affichent <code>#ERROR</code> et un avertissement qui ne bloque jamais.</li>
+            <li><strong>Un label <code>summary</code> pour récapituler une passe de revue.</strong> <code>summary</code> (📋, saisi avec <code>?sum</code>) dit ce qui a été vérifié et ce qui reste ouvert&nbsp;; il ne soulève aucun point et n'en clôt aucun. Il rejoint <code>reviewed</code> dans un nouveau groupe de labels qui disent où en est une revue, au bout de la première rangée de la barre d'outils. Un dépôt peut ajouter son propre label à ce groupe avec <code>"kind": "status"</code>.</li>
+            <li><strong>Les problèmes de votre configuration sont affichés, dans votre langue.</strong> Quand une clé est inconnue ou retirée, quand la configuration est invalide, ou quand la politique de votre organisation l'emporte sur un réglage, l'extension ne disait rien. Elle liste désormais ces avis dans la pastille d'état et sur la page des réglages, en français ou en anglais, en nommant d'où vient le problème&nbsp;: la politique de votre organisation, le document de l'organisation ou le fichier du dépôt. Ils informent&nbsp;; ils ne changent jamais l'acceptation d'un commentaire.</li>
+            <li><strong>Le journal consigne les champs de commentaire que l'extension n'a pas su comprendre entièrement.</strong> Un champ dont les boutons d'envoi n'ont pas été trouvés, ou que l'extension a situé par défaut sans le reconnaître, laisse désormais une ligne dans le journal de la page des réglages, si bien qu'une page mal lue peut être signalée.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changements</h4><ul>
+            <li><strong>En mode <code>enforce</code>, les commentaires non conformes sont désormais bloqués sur toutes les pull requests.</strong> Jusqu'ici, <code>enforce</code> ne bloquait que les pull requests créées après une date d'activation que rien ne fixait par défaut&nbsp;: la plupart des installations en <code>enforce</code> ne bloquaient donc rien. Cette condition disparaît&nbsp;: si vos dépôts sont en <code>enforce</code>, attendez-vous à des blocages après cette mise à jour. Avant de bloquer, l'extension relit la configuration&nbsp;: un dépôt que l'on vient de repasser en <code>assist</code> n'est pas bloqué, le bouton est libéré et l'on vous demande d'envoyer à nouveau.</li>
+            <li><strong>Le vérificateur est retiré, et ses réglages avec lui.</strong> Le produit signale les fils bloquants non résolus d'une pull request&nbsp;; il ne bloque jamais une fusion, et ne grise plus le bouton de fusion. Les clés <code>formatSeverity</code>, <code>overrideLabel</code>, <code>resolverOverrideGroup</code>, <code>activation</code> et <code>docUrl</code> ne sont plus lues, et sont signalées comme clés inconnues. Le mode <code>warn</code> fonctionne comme <code>assist</code>, avec un avis qui signale la valeur comme obsolète. Si votre configuration en contient, vous pouvez les retirer.</li>
+            <li><strong>Le bandeau est replié par défaut et n'affiche que le nombre de fils bloquants non résolus.</strong></li>
+            <li><strong>Azure DevOps est pris en charge sur <code>dev.azure.com</code> seulement.</strong> Les organisations sur <code>&#123;org&#125;.visualstudio.com</code> ou sur Azure DevOps Server ne sont pas couvertes.</li>
+            <li><strong>Si votre configuration définit déjà un label <code>summary</code>, il lui faut une propriété pour continuer à fonctionner comme avant.</strong> Votre label fusionne désormais avec celui que livre le produit et devient toujours non bloquant, si bien que <code>summary (blocking):</code> est refusé. Ajoutez <code>"alwaysNonBlocking": false</code> pour le rétablir.</li>
+            <li><strong>Les décomptes de labels de la télémétrie disent de quel type de label il s'agit.</strong> Si votre organisation collecte la télémétrie, chaque décompte de label porte désormais son type — <code>remark</code>, <code>status</code> ou <code>reply</code> — pour que réponses et récapitulatifs se comptent à part. Rien d'autre n'est ajouté.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li><strong>Azure DevOps fonctionne.</strong> L'extension n'avait jamais fonctionné sur Azure DevOps&nbsp;; elle est reconstruite à partir de pages réelles. Champs de commentaire, boutons d'envoi et fils sont reconnus, l'aperçu en direct reçoit ses badges, la barre d'outils suit le thème d'Azure DevOps, un bouton bloqué a l'air désactivé, et la configuration du dépôt est lue&nbsp;: <code>enforce</code> s'y applique.</li>
+            <li><strong>Les raccourcis clavier ne contournent plus <code>enforce</code>.</strong> Sur Azure DevOps, Entrée, Ctrl+Entrée ou Espace sur le bouton Comment publiaient un commentaire non conforme. Ces touches sont désormais bloquées comme un clic.</li>
+            <li><strong>Sur GitHub, «&nbsp;Close with comment&nbsp;» et le bouton Comment de l'Overview ne contournent plus <code>enforce</code>.</strong></li>
+            <li><strong>Un commentaire qui cite du code ou du texte avant son label reçoit son badge.</strong></li>
+            <li><strong>Un dépôt peut demander un cache de configuration plus court que la politique de votre organisation.</strong> La durée fixée par la politique était imposée telle quelle, si bien qu'un dépôt voulant des réglages plus frais y était ramené. C'est désormais un maximum, comme prévu.</li>
+            <li><strong>Sur Azure DevOps, la modification d'un commentaire n'est plus confondue avec la rédaction d'un nouveau commentaire.</strong></li>
+            <li><strong>Le journal de diagnostic garde la trace d'un problème qui n'a jamais disparu,</strong> au lieu de la remplacer par une observation plus tardive.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-21">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.21</span><span class="rel-m">beta</span><span class="rel-d">2 novembre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.21" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">L'extension ne devient plus muette sur GitHub après un redémarrage du navigateur.</p>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li><strong>L'extension reste active après un redémarrage du navigateur.</strong> Après un redémarrage, l'extension pouvait ne plus rien faire du tout sur GitHub — ni badges, ni bandeau, ni barre d'outils, et rien de bloqué même en mode <code>enforce</code> — jusqu'à ce que vous ouvriez sa page de réglages. Le navigateur abandonnait le script de l'extension au redémarrage, et rien ne le remettait en place. Le script survit désormais au redémarrage, et l'extension le remet aussi en place dès le lancement du navigateur. Si vous deviez ouvrir la page de réglages après chaque redémarrage pour retrouver l'extension, ce n'est plus nécessaire. L'archive de diagnostic montre désormais aussi cette étape de lancement.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-20">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.20</span><span class="rel-m">beta</span><span class="rel-d">1er novembre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.20" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">L'archive de diagnostic montre désormais comment l'extension s'est activée dans votre navigateur, pour retrouver les pages où elle ne fait rien du tout&nbsp;; deux champs de la page de réglages se lisent plus facilement.</p>
+          <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+            <li><strong>L'archive de diagnostic enregistre comment le script de l'extension a été mis en place dans votre navigateur.</strong> Sur certaines pages GitHub, l'extension peut être entièrement inactive — ni badges, ni barre d'outils, et rien de bloqué même en mode <code>enforce</code> — jusqu'à ce que vous ouvriez sa page de réglages. L'examiner de l'extérieur la répare, si bien que la cause restait invisible. L'extension garde désormais un court historique de chaque fois qu'elle a mis en place, mis à jour ou retiré son script&nbsp;: ce qui l'a déclenché, les sites couverts, ce que le navigateur rapportait avant et après, et l'erreur éventuelle. Si le problème vous arrive, téléchargez le diagnostic depuis la page de réglages avant toute autre chose et joignez-le à une issue&nbsp;; le téléchargement est proposé même quand le journal n'a aucune autre ligne. L'historique ne contient aucune adresse de page, et «&nbsp;Effacer le journal&nbsp;» l'efface aussi.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changements</h4><ul>
+            <li><strong>Le journal de la page de réglages n'affiche plus la légende des marques de page.</strong> Les marques et leurs liens fonctionnent comme avant.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li><strong>Les indications affichées dans les champs «&nbsp;Raccourcis directs&nbsp;» et «&nbsp;Ordre des boutons&nbsp;» se lisent dans les deux thèmes.</strong> Elles restent plus discrètes que ce que vous saisissez, sans être trop pâles pour être lues. L'indication du champ «&nbsp;Domaine à autoriser&nbsp;» n'a pas changé.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-19">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.19</span><span class="rel-m">beta</span><span class="rel-d">31 octobre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.19" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">Quand une partie de la page n'est pas reconnue, le journal enregistre ce que la page montrait à cet instant, et le diagnostic complet se télécharge en archive à joindre à un rapport de bug&nbsp;; modifier un commentaire sur GitHub ne produit plus de fausse alerte.</p>
+          <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+            <li><strong>Le journal enregistre ce que la page montrait quand quelque chose n'a pas été reconnu.</strong> Une ligne dit désormais jusqu'où l'extension est allée dans la page, ce qu'elle y a trouvé à la place et à quel moment&nbsp;; pour le bouton de fusion et la date de création de la PR, elle dit aussi si l'élément est apparu un instant plus tard. C'est souvent assez pour qu'un développeur trouve la cause sans vous demander de capturer la page. Elle ne garde que la structure de la page et ses attributs d'interface, jamais le texte de la page&nbsp;: ni ce que vous saisissez, ni les commentaires ou le code. Les valeurs des attributs sont toutefois conservées, et un libellé d'interface, comme le nom accessible d'un bouton, ou un nom de compte peut y figurer. Elle reste sur votre appareil.</li>
+            <li><strong>Un squelette de la page est conservé dès l'instant du problème, quand votre navigateur et le stockage le permettent.</strong> C'est la structure de la page, sans le texte de la page, prise au moment même de l'échec plutôt qu'après coup. Les squelettes occupent au plus 1 Mo du stockage de l'extension, les plus anciens partent d'abord, et l'extension ne les laisse jamais prendre la place du reste. Quand le navigateur ne sait pas compresser un squelette ou que le stockage manque de place, il n'est pas stocké&nbsp;: la ligne du journal le désigne quand même, et ce fichier manque simplement à l'archive.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changements</h4><ul>
+            <li><strong>«&nbsp;Copier tout le journal&nbsp;» devient «&nbsp;Télécharger le diagnostic (.zip)&nbsp;».</strong> L'archive contient le journal, les squelettes encore stockés et un README qui dit ce que contient chaque fichier&nbsp;; joignez-la à une issue. La copie d'une seule ligne fonctionne comme avant, et «&nbsp;Effacer le journal&nbsp;» efface aussi les squelettes. L'archive contient les adresses des pages concernées, qui nomment un dépôt et une revue sur un serveur d'entreprise&nbsp;: relisez l'archive avant de la partager, en sachant qu'un libellé d'interface peut nommer un compte.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li><strong>Modifier un commentaire sur GitHub n'écrit plus de fausse alerte dans le journal.</strong> Un champ caché du dialogue «&nbsp;Reference in new issue&nbsp;» de GitHub, qui n'est pas un champ de commentaire, était signalé comme un champ de commentaire non reconnu alors que rien n'allait mal.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-18">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.18</span><span class="rel-m">beta</span><span class="rel-d">30 octobre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.18" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">Le journal de la page de réglages dit en une phrase ce qui s'est mal passé, enregistre les erreurs de l'extension et se copie pour un rapport de bug&nbsp;; le filtre des fils par label fonctionne de nouveau sur GitHub.</p>
+          <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+            <li><strong>Le journal de la page de réglages se copie pour un rapport de bug.</strong> Chaque ligne a une icône de copie, et un bouton copie tout le journal. Ce que vous collez dans une issue porte la version de l'extension, votre navigateur et ce dont un développeur a besoin pour reproduire le problème. Le contenu des pages n'est pas collecté dans un champ à part, mais l'adresse de la page figure dans le rapport, et le message et le détail d'une erreur peuvent contenir des extraits de ce que l'extension traitait. Relisez tout le rapport, pas seulement l'adresse, avant de le coller dans une issue publique.</li>
+            <li><strong>Chaque ligne du journal dit en une phrase ce qui s'est mal passé.</strong> «&nbsp;Bouton de fusion introuvable&nbsp;: impossible de le griser&nbsp;» au lieu de <code>merge-button</code>, avec un niveau, <code>WARN</code> ou <code>ERROR</code>. Le nom technique reste dans la copie.</li>
+            <li><strong>L'extension enregistre maintenant ses propres erreurs.</strong> Un plantage ne laissait aucune trace. Il apparaît désormais comme une ligne <code>ERROR</code> qui dit ce que l'extension faisait, et le détail est dans la copie. Elles restent sur votre appareil.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li><strong>Le filtre des fils par label les masque de nouveau sur GitHub.</strong> GitHub forçait chaque fil à rester visible&nbsp;: un fil filtré restait à l'écran. Choisir <code>praise</code> ne laisse plus un fil <code>issue</code> affiché.</li>
+            <li><strong>Effacer le filtre rend à un fil son affichage d'origine.</strong> Un fil qui avait déjà un réglage d'affichage forcé le perdait une fois le filtre effacé, et le style propre à GitHub pouvait de nouveau l'écraser.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-17">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.17</span><span class="rel-m">beta</span><span class="rel-d">29 octobre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.17" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">Deux champs de la page de réglages ne s'affichent plus en blanc dans le thème sombre.</p>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li><strong>Le champ «&nbsp;Ordre des boutons&nbsp;» et le bloc de configuration des labels ajoutés suivent maintenant le thème sombre.</strong> Tous deux restaient blancs sur une page de réglages sombre, ce qui les rendait pénibles à lire et détonnait à côté des autres champs. Ils ressemblent maintenant au reste de la page.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-16">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.16</span><span class="rel-m">beta</span><span class="rel-d">29 octobre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.16" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">La page de réglages dit quelle version tourne, et l'adaptateur GitHub lit de nouveau correctement le bouton de fusion et les conversations résolues d'une PR.</p>
+          <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+            <li><strong>La page de réglages affiche la version de l'extension à côté de son titre.</strong> Une version de test se lit <code>v1.0.0-beta.16</code>, là où <code>chrome://extensions</code> affiche <code>1.0.0</code> pour toutes les bêtas&nbsp;: vous savez quelle build tourne avant de signaler un problème. Firefox affiche son propre numéro de version.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li><strong>Le bandeau ne compte plus les conversations résolues comme non résolues.</strong> Sur une PR dont GitHub replie les conversations résolues, le bandeau les rangeait parmi les non résolues, fils <code>issue (blocking)</code> compris. Il s'accorde maintenant avec la vue «&nbsp;Files changed&nbsp;» de la même PR.</li>
+            <li><strong>L'extension retrouve le bouton de fusion d'une PR ouverte sur github.com.</strong> GitHub a changé la construction du bouton et l'extension ne le reconnaissait plus. Rien ne change encore à l'écran&nbsp;: l'extension ne grise le bouton que lorsqu'un vérificateur publie un état en échec, et aucun n'est livré.</li>
+            <li><strong>La page de réglages ne signale plus de problèmes de sélecteurs qui n'en étaient pas.</strong> Sa section État signalait des recherches infructueuses alors que l'élément recherché était normalement absent, comme le bouton de fusion d'une PR déjà fusionnée. Elles ne sont plus consignées.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-15">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.15</span><span class="rel-m">beta</span><span class="rel-d">29 octobre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.15" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">Le badge d'un label dit désormais au lecteur ce que signifie un commentaire, et son bouton dit au rédacteur quand l'employer.</p>
+          <div class="rel-s"><h4>🔧 Changements</h4><ul>
+            <li><strong>Le badge et le bouton n'affichent plus la même infobulle.</strong> Au survol du badge de label d'un commentaire publié, vous lisez ce que le commentaire signifie, sans exemple&nbsp;: <code>issue</code> affiche «&nbsp;Un problème repéré dans ce code&nbsp;; le commentaire explique lequel.&nbsp;» Au survol du bouton du label dans la barre d'outils, vous lisez quand l'employer, suivi d'un exemple&nbsp;: «&nbsp;Signaler un problème à corriger, idéalement avec une piste.&nbsp;» Chaque label livré a ses deux textes, en français et en anglais. Le texte d'un badge n'affirme jamais plus que ce que dit le label&nbsp;: le caractère bloquant d'un point reste indiqué par le badge de décoration voisin.</li>
+            <li><strong>Le skill relecteur affiche les priorités en badges colorés.</strong> Un agent qui suit <code>skills/review-pull-request</code> marque désormais chaque remarque d'un badge P0 à P3&nbsp;; là où l'image ne s'affiche pas, le lecteur voit <code>[P1]</code> comme avant.</li>
+          </ul></div>
+          <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+            <li><strong>Une équipe peut écrire chaque texte&nbsp;: <code>labels[].usage</code> pour le bouton.</strong> Dans <code>.conventional-comments.json</code>, <code>description</code> va désormais au badge et <code>usage</code> au bouton. Écrit, chacun remplace le texte livré&nbsp;; une chaîne vide (<code>""</code>) supprime l'infobulle correspondante. Sans <code>usage</code>, le bouton affiche <code>description</code>&nbsp;: une configuration écrite pour la 1.0.0-beta.14 continue d'afficher le même texte sur les deux.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-14">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.14</span><span class="rel-m">beta</span><span class="rel-d">29 octobre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.14" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">Les labels s'expliquent là où on les lit&nbsp;: le survol d'un badge affiche sa définition, et une équipe peut écrire la sienne. <code>quibble</code> s'efface devant <code>nitpick</code>, et deux skills permettent à des agents IA de relire à la façon de l'outil.</p>
+          <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+            <li><strong>Un badge dit ce que son label signifie.</strong> Au survol du badge de label d'un commentaire publié, vous obtenez la même infobulle que sur son bouton de la barre d'outils&nbsp;: la définition et un exemple, dans la langue de l'interface. Le badge garde aussi le curseur flèche plutôt que la barre de sélection de texte.</li>
+            <li><strong>Votre équipe peut définir ses labels&nbsp;: <code>labels[].description</code>.</strong> Écrivez une description pour un label que vous créez, ou pour un label livré comme <code>issue</code>, dans <code>.conventional-comments.json</code>, et l'infobulle du bouton et du badge l'affiche. Écrite, elle remplace la définition livrée et son exemple. Une chaîne vide (<code>""</code>) supprime l'infobulle. Si la propriété est omise, le label conserve sa définition par défaut. Elle s'affiche telle qu'écrite, quelle que soit la langue de l'interface.</li>
+            <li><strong>Deux skills de revue pour les agents IA.</strong> <code>skills/review-pull-request</code> et <code>skills/respond-to-review</code> indiquent à un agent comment relire une pull request, ou répondre à sa revue, avec les labels de l'outil&nbsp;: remarques suivies jusqu'à vérification, <code>reviewed:</code> quand plus rien ne reste, labels de réponse pour l'auteur, et jamais d'approbation ni de fusion. Voir le <a href="https://github.com/Reefact/conventional-comments-toolkit/blob/main/README.md#review-skills-for-ai-agents" rel="noopener noreferrer" target="_blank">README</a>.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🔧 Changements</h4><ul>
+            <li><strong><code>quibble</code> est désactivé par défaut.</strong> Conventional Comments le décrit lui-même comme «&nbsp;très proche de nitpick&nbsp;», si bien que la barre affichait deux boutons pour un même sens. Utilisez <code>nitpick</code>, ou réactivez <code>quibble</code> avec <code>&#123; "id": "quibble", "enabled": true &#125;</code> dans <code>.conventional-comments.json</code>. D'ici là, un commentaire <code>quibble:</code> est un label inconnu là où les commentaires sont validés.</li>
+            <li><strong><code>reviewed</code> dit désormais quand l'employer.</strong> Son infobulle disait «&nbsp;vous avez fini de relire&nbsp;»&nbsp;; elle dit maintenant «&nbsp;vos points sont traités, vous n'avez plus rien à ajouter&nbsp;». Publiez-le quand chacun de vos points est corrigé et vérifié, ou écarté par une réponse que vous acceptez. Toute modification ultérieure rouvre votre revue. Il n'approuve toujours rien.</li>
+            <li><strong>La description de l'extension ne mentionne plus le composant serveur</strong>, retiré en 1.0.0-beta.13, ni dans <code>chrome://extensions</code> ni sur les pages de Release.</li>
+          </ul></div>
+          <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li><strong>Un label personnalisé n'affiche plus sa clé interne en infobulle.</strong> Le survol du bouton d'un label créé par votre dépôt, comme <code>risk</code>, affichait «&nbsp;label.risk&nbsp;». Il affiche maintenant sa <code>description</code> s'il en a une, et rien sinon.</li>
+          </ul></div>
+        </article>
+
+        <article class="rel" id="v1-0-0-beta-13">
+          <div class="rel-h"><span class="rel-v">1.0.0-beta.13</span><span class="rel-m">beta</span><span class="rel-d">29 octobre 2026</span><a class="rel-tag" href="https://github.com/Reefact/conventional-comments-toolkit/releases/tag/v1.0.0-beta.13" rel="noopener noreferrer" target="_blank">tag ↗</a></div>
+          <p class="rel-sum">Des labels pour répondre à une revue, tous les labels livrés activés par défaut, la zone de commentaire de GitHub de nouveau reconnue sur ses pages actuelles — et le composant serveur retiré, sans vérificateur pour le remplacer à ce jour.</p>
+          <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
+            <li><strong>Des labels pour répondre à une revue.</strong> <code>thanks</code>, <code>done</code>, <code>ack</code> et <code>disagree</code> répondent à un point&nbsp;; <code>reviewed</code> clôt votre propre revue et n'approuve rien. Ils sont un ajout de l'outil, pas de Conventional Comments, et ne bloquent jamais. <code>fixed</code> est accepté pour <code>done</code>, <code>acknowledged</code> pour <code>ack</code> et <code>thx</code> pour <code>thanks</code>&nbsp;; <code>?thx</code> se déplie en <code>thanks: </code> et <code>?r</code> en <code>reviewed: </code>. Ils ne rendent pas le label obligatoire dans les réponses. Un dépôt qui veut s'en tenir à Conventional Comments les désactive chacun par une entrée <code>labels[]</code>&nbsp;: la page d'options affiche ce bloc et le copie pour vous.</li>
+            <li><strong>La barre d'outils met les réponses sur une ligne à part.</strong> Les labels qui soulèvent un point viennent d'abord&nbsp;; sous un trait fin suivent ceux qui y répondent — <code>thanks</code>, <code>done</code>, <code>ack</code>, <code>decision</code>, <code>disagree</code>, du plus chaleureux au plus ferme. Un double trait fin sépare les labels des décorations.</li>
+            <li><strong>Vous choisissez l'ordre des boutons de labels.</strong> «&nbsp;Ordre des boutons&nbsp;», dans les options, prend une liste séparée par des virgules&nbsp;: les labels cités passent en tête, les autres suivent dans l'ordre par défaut, et la liste de complétion suit le même ordre. C'est une préférence personnelle.</li>
+            <li><strong>Un label peut dire s'il soulève un point ou y répond</strong>, avec <code>labels[].kind</code> (<code>"remark"</code> ou <code>"reply"</code>). Un label que vous déclarez est <code>"remark"</code> sauf mention contraire. Cela ne change aucun verdict.</li>
+            <li><strong>Chaque ligne du journal dit de quelle page elle vient.</strong> Il indiquait quel sélecteur avait échoué et quand, jamais où&nbsp;: devant quatre lignes horodatées à la même seconde, rien ne permettait de savoir si elles venaient d'une seule page ou de quatre. Chaque ligne commence désormais par une marque de six caractères&nbsp;: une même page produit la même marque. Un clic ouvre l'adresse exacte relevée dans un nouvel onglet. Cette adresse reste sur votre appareil&nbsp;: si vous avez autorisé la télémétrie, celle-ci ne transmet toujours que le nom du sélecteur. La mise à jour conserve toutefois les lignes déjà présentes&nbsp;: comme leur adresse n'était pas enregistrée, elles affichent une marque neutre jusqu'à ce que le sélecteur correspondant échoue de nouveau ou que vous effaciez le journal.</li>
             <li><strong>Le journal s'efface depuis la page d'options.</strong> Un bouton le vide&nbsp;; les onglets déjà ouverts recommencent aussitôt à mesurer, et la section se met à jour d'elle-même quand l'un d'eux y écrit, sans rechargement.</li>
             <li><strong>La page d'options porte l'icône de l'extension</strong>, devant son titre. Le bouton de la visite guidée s'appelle désormais «&nbsp;Visite guidée&nbsp;», son intitulé complet passant en infobulle.</li>
           </ul></div>
+          <div class="rel-s"><h4>🔧 Changements</h4><ul>
+            <li><strong>Tous les labels livrés par l'outil sont activés par défaut</strong>, <code>typo</code>, <code>polish</code> et <code>quibble</code> de Conventional Comments compris. Un dépôt désactive ceux dont il ne veut pas.</li>
+            <li><strong>Si votre configuration définit déjà <code>thanks</code>, <code>done</code>, <code>ack</code>, <code>disagree</code> ou <code>reviewed</code>, il lui faut une propriété pour fonctionner comme avant.</strong> Votre label fusionne désormais avec celui de l'outil et devient toujours non bloquant, si bien que <code>done (blocking):</code> est refusé. Ajoutez <code>"alwaysNonBlocking": false</code> pour le rétablir.</li>
+            <li><strong>Nouvelles icônes&nbsp;:</strong> <code>praise</code> devient 👏, <code>decision</code> ⚖️, et 🎉 passe à <code>reviewed</code>.</li>
+            <li><strong>Le contrôle renvoie par défaut à la page des labels de l'outil</strong>, https://conventionalcomments.io/docs/labels/, au lieu de conventionalcomments.org, qui ne documente aucun des labels ajoutés. Un <code>docUrl</code> que vous avez fixé est conservé.</li>
+            <li><strong>Deux labels actifs ne peuvent plus porter le même nom.</strong> Un alias qui reprend le nom d'un autre label actif est retiré, et ce retrait est signalé. Auparavant, l'ordre de la liste des labels décidait duquel parlait un commentaire.</li>
+            <li><strong>Un plancher d'entreprise ne rend plus <code>decision</code> bloquant.</strong> Le citer sous <code>labels.minimum</code> le forçait bloquant&nbsp;: un simple <code>decision:</code> ouvrait un fil bloquant, tandis que <code>decision (blocking):</code> était refusé. Le plancher ne fait plus que le garder activé.</li>
+            <li><strong>Une abréviation livrée ne se déplie plus que vers un label activé.</strong> <code>?ty</code>, <code>?po</code> et <code>?qui</code> inséraient le préfixe d'un label désactivé, que la validation refusait ensuite. Une abréviation définie par votre dépôt n'est pas concernée.</li>
+            <li><strong>Sur Azure DevOps, le préfixe du label n'est plus masqué ni le sujet mis en valeur.</strong> Personne n'a encore mesuré comment Azure DevOps rend le corps d'un commentaire, et l'extension a cessé de supposer qu'il le rend comme GitHub. Les badges restent, et le corps s'affiche entier.</li>
+            <li><strong>Le composant serveur est retiré, et aucun vérificateur n'est livré à sa place.</strong> Il n'a jamais été déployé. La spécification demande désormais un vérificateur qui s'exécute dans la plateforme et ne garde aucun état, et <a href="https://github.com/Reefact/conventional-comments-toolkit/issues/56" rel="noopener noreferrer" target="_blank">l'issue #56</a> suit sa construction pour GitHub. D'ici là, rien ne vérifie les commentaires après coup et aucun statut n'est publié&nbsp;: <code>enforce</code> bloque toujours un envoi dans l'extension, ce que contourne quiconque ne l'a pas. Les blocs de configuration <code>server</code> et <code>exemptionLog</code> sont désormais ignorés, avec un avertissement.</li>
+          </ul></div>
           <div class="rel-s"><h4>🐛 Corrections</h4><ul>
+            <li><strong>La vue «&nbsp;Files changed&nbsp;» de GitHub est de nouveau reconnue.</strong> Sur les pages telles que github.com les sert aujourd'hui, l'extension ne trouvait aucun bouton de publication, si bien qu'en mode <code>enforce</code> un commentaire non conforme pouvait y être publié quand même. Elle prenait aussi la modification d'un commentaire pour l'écriture d'un nouveau, traitait le résumé de revue comme un commentaire en ligne susceptible de bloquer la pull request, et n'affichait aucun badge sur les fils. Sur l'onglet «&nbsp;Conversation&nbsp;», modifier un commentaire publié était aussi traité comme un commentaire en ligne susceptible de bloquer la pull request. «&nbsp;Cancel&nbsp;» n'est toujours jamais intercepté.</li>
+            <li><strong>GitHub&nbsp;: la date de création de la pull request est lue sur la pull request elle-même.</strong> Cette date décide si une pull request est antérieure à <code>activatedAt</code>, donc si l'extension peut bloquer dessus. C'était la première date de la page — sur une pull request fusionnée, la date de fusion, si bien que la même pull request pouvait afficher deux dates selon l'onglet. Quand la date ne peut pas être lue, l'extension ne bloque pas.</li>
             <li><strong>La politique de confidentialité décrivait un historique que l'extension ne garde pas.</strong> Elle annonçait «&nbsp;les 50 dernières fois&nbsp;» où un élément n'a pas été reconnu, alors que le journal ne conserve qu'une ligne par règle de sélection — cinquante au plus, chacune avec son dernier relevé. Elle décrit maintenant ce qui est réellement conservé, adresse de la page comprise.</li>
           </ul></div>
         </article>
@@ -223,7 +394,7 @@ const page = 'releasenotes' as const;
           <p class="rel-sum">Première version installable.</p>
           <div class="rel-s"><h4>✨ Nouveautés</h4><ul>
             <li>L'extension pour GitHub et Azure DevOps&nbsp;: une barre d'outils au-dessus de la boîte de commentaire, une saisie rapide au clavier, un retour visuel pendant la frappe, et un garde d'envoi en mode <code>enforce</code>.</li>
-            <li>Le compagnon serveur, auto-hébergeable, qui fait autorité sur la conformité et sur le blocage de la complétion d'une pull request.</li>
+            <li>Le composant serveur, auto-hébergeable, qui vérifie la conformité et peut empêcher la fusion d'une pull request.</li>
             <li>Des archives Chromium et Firefox publiées à chaque tag, chargeables sans Node ni npm.</li>
           </ul></div>
         </article>
