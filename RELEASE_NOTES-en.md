@@ -16,6 +16,10 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
+_Nothing pending yet._
+
+## release/2026-11-12T12-59-00Z — November 12, 2026
+
 ### ✨ New
 
 - **Every section of the labels page can be linked to.** `/docs/labels/#added-labels`,
