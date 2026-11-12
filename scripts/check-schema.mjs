@@ -89,7 +89,7 @@ if (toolkit) {
       if (!missing.length && !extra.length) ok(`${known.size} clés de premier niveau, identiques des deux côtés`);
     }
 
-    // Les domaines fermés que schema.ts expose en constantes.
+    // Les trois domaines fermés que schema.ts expose en constantes.
     const enumOf = (path) => path.split('.').reduce((o, k) => o?.[k], schema);
     const checkEnum = (constName, actual, label) => {
       const m = new RegExp(`export const ${constName} = \\[([^\\]]*)\\]`).exec(text);
@@ -100,17 +100,17 @@ if (toolkit) {
       if (a !== b) fail(`${label} : schéma ${a} ≠ validateur ${b}`);
       else ok(`${label} — ${expected.join(', ')}`);
     };
-    // `mode` a deux branches : les modes du produit, et `warn`, que le validateur lit encore
-    // comme `assist` en le signalant. Le schéma l'accepte donc, marqué déprécié — le refuser
-    // soulignerait en rouge une configuration que le produit applique. La première branche
-    // se compare à MODES, la seconde à DEPRECATED_MODE.
+    // `mode` has two branches: the product's modes, and `warn`, which the validator still
+    // reads as `assist` while flagging it. The schema therefore accepts it, marked deprecated:
+    // refusing it would underline in red a configuration the product applies. The first
+    // branch is compared with MODES, the second with DEPRECATED_MODE.
     checkEnum('MODES', enumOf('properties.mode.anyOf.0.enum') ?? [], 'domaine de mode');
     const dep = /export const DEPRECATED_MODE = '([^']+)'/.exec(text);
     const depSchema = enumOf('properties.mode.anyOf.1');
-    if (!dep) fail('DEPRECATED_MODE introuvable dans schema.ts — le mode déprécié a peut-être été retiré');
+    if (!dep) fail('DEPRECATED_MODE not found in schema.ts — the deprecated mode may have been removed');
     else if (depSchema?.const !== dep[1] || depSchema?.deprecated !== true)
-      fail(`mode déprécié : schéma ${JSON.stringify(depSchema?.const)} ≠ validateur ${JSON.stringify(dep[1])}, ou non marqué deprecated`);
-    else ok(`mode déprécié — ${dep[1]}, accepté et marqué comme tel`);
+      fail(`deprecated mode: schema ${JSON.stringify(depSchema?.const)} ≠ validator ${JSON.stringify(dep[1])}, or not marked deprecated`);
+    else ok(`deprecated mode — ${dep[1]}, accepted and marked as such`);
     checkEnum('SEVERITIES', enumOf('definitions.severity.enum'), 'domaine des sévérités');
 
     // Bornes statiques d'allowlistPatterns.

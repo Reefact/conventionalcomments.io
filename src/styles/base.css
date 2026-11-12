@@ -154,12 +154,12 @@ table.t td.m { font-family:var(--font-mono); font-size:12.5px; white-space:nowra
 table.t td.d { color:var(--fg-muted); }
 table.t .num { font-variant-numeric:tabular-nums; }
 
-/* Le tableau des labels, en trois groupes. Chaque groupe est un <tbody> ouvert par une
-   ligne de titre (.grp) qui dit la catégorie (.gk), ce qu'elle fait (.gd) et d'où viennent
-   ses labels (.go). Les groupes que le toolkit ajoute à Conventional Comments (.added)
-   portent en plus un fond (--bg-added) — une SURFACE, pas une teinte : seul un verdict a le
-   droit de remplir avec une couleur (identite-fr.md §3.1). Ce fond ne dit jamais rien seul :
-   l'origine est écrite en toutes lettres dans la ligne de titre. */
+/* The labels table, in three groups. Each group is a <tbody> opened by a title row (.grp)
+   that gives the kind (.gk), what it does (.gd) and where its labels come from (.go). The
+   groups the toolkit adds to Conventional Comments (.added) also get a background
+   (--bg-added) — a SURFACE, not a hue: only a verdict may fill with a colour
+   (identite-fr.md §3.1). That background never carries meaning on its own: the origin is
+   written out in the title row. */
 table.t tr.grp th { padding:9px 13px; font-weight:400; background:var(--bg-surface);
                     border-top:1px solid var(--line); border-bottom:1px solid var(--line-soft); }
 table.t tbody:first-of-type tr.grp th { border-top:none; }
@@ -172,9 +172,9 @@ table.t .go { margin-left:auto; font-family:var(--font-mono); font-size:11px; le
 table.t tbody.added td, table.t tbody.added tr.grp th { background:var(--bg-added); }
 table.t tbody.added td { border-bottom-color:var(--line); }
 table.t tbody.added .go { color:var(--fg-2); }
-/* Sur un écran étroit, le tableau défile à l'horizontale : poussée à droite, l'origine
-   sortait de l'écran — la seule mention qui ne doit jamais manquer. Le titre du groupe
-   reste donc collé au bord gauche et se replie sur la largeur visible. */
+/* On a narrow screen the table scrolls sideways: pushed to the right, the origin left the
+   screen — the one mention that must never be missing. So the group title sticks to the
+   left edge and wraps within the visible width. */
 @media (max-width:860px){
   table.t .gh { position:sticky; left:13px; width:max-content; max-width:calc(100vw - 72px); }
   table.t .go { margin-left:0; white-space:normal; }
@@ -350,7 +350,7 @@ a.pgl:hover, .pgl:hover { border-color:var(--line-strong); }
                font-size:14.5px; color:var(--fg-2); }
 .av-browsers b { font-weight:600; color:var(--fg); }
 
-/* --- how it works : les encarts de « ce que l'extension ajoute à la page » --- */
+/* --- how it works: the cards of "what the extension adds to the page" --- */
 .feat { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1px;
         background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
 .feat > div { background:var(--bg-surface); padding:22px 24px; display:flex; flex-direction:column; gap:10px; }

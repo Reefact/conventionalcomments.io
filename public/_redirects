@@ -69,13 +69,12 @@
 /notes-de-version/v1 /release-notes/v1/ 301
 /notes-de-version/v1/ /release-notes/v1/ 301
 
-# --- adresses retirées ---
+# --- retired addresses ---
 #
-# La page « Enforce (feuille de route) » vivait à /docs/server/ ↔ /fr/docs/serveur/.
-# Le toolkit a abandonné le vérificateur et le serveur : la page décrit désormais le
-# mode enforce tel qu'il est livré, à /docs/enforce/ dans les deux langues. Les
-# anciennes adresses, et les fautes de langue qu'on rattrapait déjà pour elles,
-# y mènent en un seul saut.
+# The "Enforce (roadmap)" page lived at /docs/server/ ↔ /fr/docs/serveur/. The toolkit
+# dropped the verifier and the server: the page now describes the enforce mode as it
+# ships, at /docs/enforce/ in both languages. The old addresses, and the wrong-language
+# variants already caught for them, lead there in a single hop.
 
 /docs/server /docs/enforce/ 301
 /docs/server/ /docs/enforce/ 301
