@@ -121,6 +121,12 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ### 🔧 Améliorations
 
+- **Les phrases qui sentaient la traduction se lisent désormais naturellement, dans les
+  deux langues.** Une relecture complète a repris les pages des labels, « Comment ça
+  marche », adoption, configuration, installation, diagnostic et revue assistée par IA, le
+  sommaire de la documentation et quelques notes de version du toolkit : un fil se marque
+  désormais « comme résolu avec la commande de la plateforme », et le pilote est « concluant »
+  plutôt que de « tenir ».
 - **Le schéma de configuration suit la 1.0.0-rc.2 du toolkit.** `/schema/v1.json` connaît
   désormais `sessionIcon`, les propriétés `kind`, `description` et `usage` d'un label, et le
   diagnostic `W-SESSION-MULTIPLE`. Il ne propose plus les sept clés que le toolkit a retirées

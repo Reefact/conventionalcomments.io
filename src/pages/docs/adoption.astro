@@ -19,7 +19,7 @@ const page = 'adoption' as const;
           <div class="timeline">
             <div class="tcell" style="--st:var(--fg-faint)"><span class="wk">from day one</span><span class="md">assist</span><span class="ds">Install the extension and let people use it. Nothing is blocked and nothing is published. Nothing is measured centrally either, unless your organization has explicitly enabled telemetry.</span></div>
             <div class="tcell" style="--st:var(--warn)"><span class="wk">when the team is ready</span><span class="md">enforce, one pilot</span><span class="ds">On a single repository, the extension refuses to send a comment that does not follow the convention. Every other repository stays in <code>assist</code>.</span></div>
-            <div class="tcell" style="--st:var(--block)"><span class="wk">once the pilot holds</span><span class="md">enforce, everywhere</span><span class="ds">Move the mode to the organization configuration, so that it applies to every repository that does not set its own.</span></div>
+            <div class="tcell" style="--st:var(--block)"><span class="wk">once the pilot has proved successful</span><span class="md">enforce, everywhere</span><span class="ds">Move the mode to the organization configuration, so that it applies to every repository that does not set its own.</span></div>
           </div>
           <div class="scroller">
             <table class="t">
@@ -63,7 +63,7 @@ const page = 'adoption' as const;
 
         <section class="dsec">
           <h2>What to watch before going further</h2>
-          <p>There is no organization-wide dashboard. The indicators that would tell you when a team is ready — the share of compliant comments, how labels are used — are meant to come from the extension's own telemetry, which is off by default and opt-in. They cannot be computed yet: the counters the extension emits today do not record how many comments were written. Until they do, the <code>assist</code> stage is followed by eye, on the status pill and the banner.</p>
+          <p>There is no organization-wide dashboard. The indicators that would tell you when a team is ready — the share of compliant comments, how labels are used — are meant to come from the extension's own telemetry, which is off by default and opt-in. They cannot be computed yet: the counters the extension emits today do not record how many comments were written. Until then, monitor the <code>assist</code> stage manually by watching the status pill and the banner.</p>
           <p>What is worth watching is qualitative: are reviewers finding the right labels, are blocking threads getting resolved instead of stalling, and does the banner's count on a pull request usually reach zero before it merges. Uneven label use, or counts that never quite reach zero, are both reasons to slow down rather than switch to <code>enforce</code>.</p>
         </section>
 

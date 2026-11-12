@@ -96,7 +96,7 @@ const page = 'howitworks' as const;
         <div class="stack g14 measure">
           <span class="eyebrow">avant que l'extension puisse bloquer&nbsp;:</span>
           <h2>Deux conditions doivent être réunies</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Écrire <code>enforce</code> dans une configuration ne suffit pas. Si l'une des deux conditions suivantes manque, l'extension se comporte comme en <code>assist</code>&nbsp;: elle affiche ses diagnostics et laisse partir le commentaire.</p>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Écrire <code>enforce</code> dans une configuration ne suffit pas&nbsp;: les deux conditions suivantes doivent être réunies. Si la configuration ne peut pas être lue, l'extension vous aide sans bloquer. Si elle a pu être lue, <code>assist</code> affiche les diagnostics et <code>off</code> n'en affiche aucun.</p>
         </div>
         <ul class="tick">
           <li><span class="mk">1</span><b>Le mode effectif est <code>enforce</code></b><span class="tx">Le mode est déterminé à partir de la configuration que l'extension a lue&nbsp;: le fichier du dépôt, le document de l'organisation et, s'il y en a une, la politique que l'organisation pousse dans le navigateur. L'extension ne le suppose jamais localement.</span></li>
@@ -134,7 +134,7 @@ const page = 'howitworks' as const;
           <div>
             <span class="tag" style="color:var(--accent)">résolu</span>
             <h3>Un fil est résolu quand la plateforme le dit</h3>
-            <p>L'extension lit l'état que la page affiche, quelle que soit la personne qui a résolu le fil. Elle ne décide pas de qui en a le droit. Quand ceux qui portent la pull request choisissent de ne pas traiter un point bloquant, ils répondent dans le fil par une <code>decision</code>, avec son motif. Cette réponse consigne le choix&nbsp;; résoudre le fil reste un geste de la plateforme.</p>
+            <p>L'extension lit l'état que la page affiche, quelle que soit la personne qui a résolu le fil. Elle ne décide pas de qui en a le droit. Quand ceux qui portent la pull request choisissent de ne pas traiter un point bloquant, ils répondent dans le fil par une <code>decision</code>, avec son motif. Cette réponse consigne le choix&nbsp;; le fil doit encore être marqué comme résolu avec la commande de la plateforme.</p>
             <p class="guar">Le décompte informe. Il n'empêche jamais une fusion.</p>
           </div>
         </div>
