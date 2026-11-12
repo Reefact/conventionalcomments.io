@@ -7,11 +7,11 @@ const page = 'install' as const;
 ---
 <Docs lang={lang} page={page}
   title="Install the extension"
-  description="Install it from your browser's extension store, from a ready-to-use release archive with no build tools, or directly from source.">
+  description="Install the extension from a ready-to-load release archive, with no build tools, or directly from source. Then authorize the domains where you review, or deploy it across an organization.">
 <div class="dhead stack g12">
           <p class="crumb"><b>docs</b> / install</p>
           <h1>Install the extension</h1>
-          <p class="lede measure">There are three ways to install the extension, depending on what your machine allows. You can try it without installing Node, Git, or any other development tools.</p>
+          <p class="lede measure">There are two ways to install the extension today: a ready-to-load release archive, or a build from source. A store listing will follow. You can try the extension without installing Node, Git, or any other development tools.</p>
         </div>
 
         <section class="dsec">
@@ -54,24 +54,38 @@ npm run build:extension     <span class="tk-cm">// → packages/extension/dist-e
 
         <section class="dsec">
           <h2>Authorize the domains where you review</h2>
-          <p>A freshly installed extension is active nowhere — github.com included. It holds no permanent access to any site: every domain is granted one at a time, and can be withdrawn the same way. The options page opens by itself the first time to say so, and offers a guided tour you can skip at any point or replay later.</p>
+          <p>A freshly installed extension is active nowhere. It has no permanent access to any site: you grant the extension access to each domain one at a time, and can withdraw it the same way. The options page opens by itself the first time to say so, and offers a guided tour you can skip at any point or replay later.</p>
           <ul class="tick">
             <li><span class="mk">1</span><b>Open the extension's settings</b><span class="tx">The page opens on its own right after installation. You can reopen it at any time from the extension icon in your browser toolbar.</span></li>
-            <li><span class="mk">2</span><b>Activate a domain the extension already knows</b><span class="tx">github.com and Azure DevOps Services each have a card of their own: one click asks your browser for that domain and, once you approve, records which platform serves it — so you never have to classify these yourself.</span></li>
-            <li><span class="mk">3</span><b>Add any other domain, and select its platform</b><span class="tx">A GitHub Enterprise Server instance, an Azure DevOps Server, a <code>visualstudio.com</code> organization, or an internal configuration host is typed in by hand. The extension can't know whether <code>devops.acme.internal</code> is running Azure DevOps or GitHub Enterprise Server. Selecting the platform tells it which adapter to use.</span></li>
+            <li><span class="mk">2</span><b>Activate a domain the extension already knows</b><span class="tx">github.com, Azure DevOps Services (<code>dev.azure.com</code>) and GitLab.com each have a card of their own: one click asks your browser for that domain and, once you approve, records which platform serves it — so you never have to classify these yourself.</span></li>
+            <li><span class="mk">3</span><b>Add any other domain, and select its platform</b><span class="tx">A GitHub Enterprise Server instance, a GitHub Enterprise Cloud domain on <code>ghe.com</code>, or an internal host that only serves your organization's configuration is typed in by hand. The extension can't tell from a name like <code>git.acme.internal</code> what is running there. Selecting the platform tells it which adapter to use — or that the host serves configuration and nothing else.</span></li>
             <li><span class="mk">4</span><b>Approve the browser permission</b><span class="tx">Your browser asks whether the extension may access that domain. You decide whether to grant it. Every domain you have allowed then carries a “Withdraw” button on the options page, and your browser's own controls still revoke it too.</span></li>
           </ul>
+          <p class="small">Authorizing a domain does not widen what the extension supports. On Azure DevOps it works on <code>dev.azure.com</code> only: an Azure DevOps Server, or an organization still on <code>visualstudio.com</code>, is not covered, and granting access to it changes nothing. The same goes for GitLab Self-Managed and GitLab Dedicated, which are not supported yet. The <a href={href('platforms', 'en')}>platforms page</a> has the full picture.</p>
           <div class="callout warn">
             <span class="ct">if you are updating from 1.0.0-beta.10 or earlier</span>
             <h4>The extension goes quiet on github.com until you allow it.</h4>
-            <p>Earlier versions carried a built-in permission on github.com, active from the moment you installed the extension and revocable from nowhere inside it. That domain now goes through the same one-click authorization as every other, and no update can grant it on your behalf: a browser only gives a site permission after an explicit action from you. The options page opens by itself to say so — but only if the update leaves you with no working domain at all. If you already had another one configured, the extension keeps working there, and nothing announces that github.com has gone silent.</p>
+            <p>Earlier versions carried a built-in permission on github.com, active from the moment you installed the extension, with no way to revoke it from within the extension. That domain now goes through the same one-click authorization as every other, and no update can grant it on your behalf: a browser only gives a site permission after an explicit action from you. The options page opens by itself to say so — but only if the update leaves you with no working domain at all. If you already had another one configured, the extension keeps working there, and nothing announces that github.com has gone silent.</p>
           </div>
         </section>
 
         <section class="dsec">
           <h2>Check that it works</h2>
-          <p>Open any pull request on a domain you have authorized and start writing a review comment. A row of labels should appear above the comment box, with a status indicator below it. Type <code>?i</code>, then press <code>Tab</code>. It should expand to <code>issue:</code>.</p>
-          <p>If nothing appears, the troubleshooting page covers the three most common causes.</p>
+          <p>Open any pull request on a domain you have authorized and start writing a review comment. A row of labels should appear above the comment box, with a status pill below it. Type <code>?i</code>, then press <code>Tab</code>. It should expand to <code>issue:</code>.</p>
+          <p>The settings page shows the exact version you are running next to its title — <code>v1.0.0-rc.2</code>, for example — where <code>chrome://extensions</code> shows <code>1.0.0</code> for every prerelease. Quote that version when you report a problem.</p>
+          <p>If nothing appears, the <a href={href('troubleshooting', 'en')}>troubleshooting page</a> covers the most common causes. On GitLab, check which editor you are using first: the extension works in the plain-text editor, not in the rich text one.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Deploy it across an organization</h2>
+          <p>Everything above is done by one person, on one machine. An organization that wants the same setup everywhere uses its browsers' enterprise policy instead: the same channel installs the extension and carries its settings.</p>
+          <ul class="bul">
+            <li><strong>Force the installation.</strong> The policy is called <code>ExtensionInstallForcelist</code> on Chrome and Edge, and <code>ExtensionSettings</code> with <code>"installation_mode": "force_installed"</code> on Firefox. A forced installation needs a source the browser can update from: the public stores once the listings exist, or a private store that your organization runs.</li>
+            <li><strong>Authorize the domains for everyone.</strong> <code>allowedHosts</code> lists the domains authorized in advance, each with its platform — for example <code>&#123;"host": "ghes.example.corp", "platform": "github"&#125;</code>, or <code>"platform": "config"</code> for a host that only serves the organization's configuration. Nobody has to go through the settings page for these, and nobody can withdraw them from it.</li>
+            <li><strong>Set the floor.</strong> <code>floor</code> carries the minimum mode, the rules that no repository may relax, and the address of the organization's shared configuration. The <a href={href('configure', 'en')}>configuration page</a> explains how the three levels combine.</li>
+            <li><strong>Declare a telemetry endpoint, if you want one.</strong> Telemetry is off by default and can only be made available through this policy: <code>telemetry.enabled</code> set to <code>true</code> and an <code>https</code> address in <code>telemetry.endpoint</code>. Each person must still tick the box on their own settings page before anything is sent. The <a href={href('privacy', 'en')}>privacy page</a> says what the counters contain.</li>
+          </ul>
+          <p class="small">These three settings live under the extension's managed storage, which browsers fill from the policy and which the extension can only read. A key that the extension does not declare there is dropped by the browser before it arrives.</p>
         </section>
         <div class="pager"></div>
 </Docs>

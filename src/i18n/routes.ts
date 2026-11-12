@@ -15,7 +15,8 @@ export type Locale = (typeof LOCALES)[number];
 
 export type PageKey =
   | 'home' | 'howitworks' | 'platforms' | 'privacy'
-  | 'docsindex' | 'install' | 'labels' | 'configure' | 'adoption' | 'server' | 'troubleshooting'
+  | 'docsindex' | 'install' | 'labels' | 'configure' | 'adoption' | 'enforce' | 'aireview'
+  | 'troubleshooting'
   | 'releasenotes' | 'version';
 
 export const ROUTES: Record<PageKey, Record<Locale, string>> = {
@@ -28,7 +29,8 @@ export const ROUTES: Record<PageKey, Record<Locale, string>> = {
   labels:          { en: '/docs/labels/',          fr: '/fr/docs/labels/' },
   configure:       { en: '/docs/configure/',       fr: '/fr/docs/configuration/' },
   adoption:        { en: '/docs/adoption/',        fr: '/fr/docs/adoption/' },
-  server:          { en: '/docs/server/',          fr: '/fr/docs/serveur/' },
+  enforce:         { en: '/docs/enforce/',         fr: '/fr/docs/enforce/' },
+  aireview:        { en: '/docs/ai-review/',       fr: '/fr/docs/revue-ia/' },
   troubleshooting: { en: '/docs/troubleshooting/', fr: '/fr/docs/diagnostic/' },
   releasenotes:    { en: '/release-notes/v1/',     fr: '/fr/notes-de-version/v1/' },
   version:         { en: '/version/',              fr: '/fr/version/' },
@@ -36,7 +38,8 @@ export const ROUTES: Record<PageKey, Record<Locale, string>> = {
 
 /** Les pages de documentation, dans l'ordre de la barre latérale. */
 export const DOCS_PAGES: PageKey[] = [
-  'docsindex', 'install', 'labels', 'configure', 'adoption', 'server', 'troubleshooting',
+  'docsindex', 'install', 'labels', 'configure', 'adoption', 'enforce', 'aireview',
+  'troubleshooting',
 ];
 
 /**

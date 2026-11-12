@@ -19,7 +19,7 @@ const isCurrentBuildsRelease = version.release !== null;
 ---
 <Base lang={lang} page={page} noindex
   title="Version"
-  description="Quelle release est en ligne, depuis quel commit, construite quand.">
+  description="La version actuellement en ligne, son commit d'origine et la date de compilation.">
 <section class="hband">
       <div class="in">
         <div class="stack g18 measure">
@@ -39,9 +39,9 @@ const isCurrentBuildsRelease = version.release !== null;
           <span class="eyebrow">ce qu'elle a changé&nbsp;:</span>
           <h2>Ce qui a été livré</h2>
           {isCurrentBuildsRelease ? (
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Cette section nomme ce que la release ci-dessus a apporté — lu depuis le <code>RELEASE_NOTES-fr.md</code> de ce dépôt, pas celui du toolkit. Les notes de version du toolkit, qui sont autre chose, sont sur <a href={href('releasenotes', 'fr')}>notes de version</a>.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Cette section présente les changements apportés par la release ci-dessus, à partir du fichier <code>RELEASE_NOTES-fr.md</code> de ce dépôt, et non de celui du toolkit. Les notes de version du toolkit, qui sont autre chose, sont sur <a href={href('releasenotes', 'fr')}>notes de version</a>.</p>
           ) : (
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Ce build ne vient pas d'un tag de release — la ligne <code>release</code> ci-dessus est vide — il n'a donc pas apporté ce qui est nommé ci-dessous. Ce qui est montré est la dernière release réellement publiée par ce site, lue depuis le <code>RELEASE_NOTES-fr.md</code> de ce dépôt, pas celui du toolkit. Les notes de version du toolkit, qui sont autre chose, sont sur <a href={href('releasenotes', 'fr')}>notes de version</a>.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Ce build ne vient pas d'un tag de release — la ligne <code>release</code> ci-dessus est vide — il n'a donc pas apporté ce qui est nommé ci-dessous. La section ci-dessous présente les notes de la dernière version publiée de ce site, tirées du fichier <code>RELEASE_NOTES-fr.md</code> de ce dépôt, et non de celui du toolkit. Les notes de version du toolkit, qui sont autre chose, sont sur <a href={href('releasenotes', 'fr')}>notes de version</a>.</p>
           )}
         </div>
         <SiteReleaseCard locale={lang} release={latest} />

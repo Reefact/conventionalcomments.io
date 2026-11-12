@@ -1,8 +1,8 @@
 # conventionalcomments.io
 
-Vitrine de [`conventional-comments-toolkit`](https://github.com/Reefact/conventional-comments-toolkit) —
-l'extension navigateur et le compagnon serveur qui font respecter
-[Conventional Comments](https://conventionalcomments.org/) dans les revues de code.
+The showcase for [`conventional-comments-toolkit`](https://github.com/Reefact/conventional-comments-toolkit) —
+the browser extension that helps write, and enforce,
+[Conventional Comments](https://conventionalcomments.org/) in code reviews.
 
 Site statique **Astro**, hébergé sur **Cloudflare**. Bilingue anglais (racine) / français
 (`/fr/`), segments d'URL traduits.
@@ -23,7 +23,7 @@ npm run check    # build + tous les contrôles ci-dessous
 | Commande | Ce qu'elle fait |
 | --- | --- |
 | `npm run dev` | Estampille le build, puis sert le site en développement |
-| `npm run build` | Estampille le build, puis produit `dist/` (28 pages) |
+| `npm run build` | Stamps the build, then produces `dist/` (30 pages) |
 | `npm run check` | `build`, puis les invariants du site et du schéma |
 | `npm run check:site` | Les treize invariants, sur ce qui est réellement produit |
 | `npm run check:schema` | Le schéma JSON contre ses gabarits ; `-- <chemin>` ou `TOOLKIT_PATH` le compare à la source |
@@ -39,7 +39,7 @@ src/i18n/routes.ts      La table des routes — seule source de vérité sur les
 src/i18n/ui.ts          Les chaînes de chrome, et rien d'autre (§7.3 : on écrit, on ne traduit pas)
 src/layouts/            Base (coque, méta, alternats) et Docs (grille + barre latérale)
 src/components/         Mark, Header, Footer, DocsSidebar, BuildFacts
-src/pages/              26 pages : 13 en anglais à la racine, 13 en français sous fr/
+src/pages/              28 pages: 14 in English at the root, 14 in French under fr/
 src/styles/             fonts.css (@font-face), tokens.css (jetons, trois thèmes), base.css
 public/schema/v1.json   Le schéma de configuration, servi à /schema/v1.json
 public/_headers         CORS du schéma, cache des polices (lu par Cloudflare, jamais servi)
@@ -101,9 +101,10 @@ bruyamment : elle reste juste, en retard. La CI récupère donc le toolkit et co
 - `check:schema` compare les clés, les domaines et les bornes à `schema.ts`.
 - `check:toolkit` compare la liste des versions de `/release-notes/v1/` à celle que le
   toolkit publie — la page a été mise en ligne à jour et l'était déjà moins le lendemain.
-- `check:labels` compare les treize icônes et couleurs **affichées** à `defaults.ts`. Une
-  transcription de treize emoji en avait déjà un faux, que rien ne signalait : les deux
-  s'affichent, seul le codet diffère.
+- `check:labels` compares the icons, colours and kinds the site **displays** for the
+  nineteen labels with `defaults.ts`, read declaration by declaration. When there were
+  thirteen, a hand transcription already had one wrong and nothing flagged it: both emoji
+  render, only the code point differs.
 
 ## Intégration continue
 

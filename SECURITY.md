@@ -7,7 +7,7 @@ package: a script that runs where it should not, a link or redirect that sends a
 somewhere it should not, a secret that reached the built artefact, or a page that states
 something false about what the toolkit does with your data.
 
-That last one belongs here too. The privacy page and the server page make claims a reader uses
+That last one belongs here too. The privacy page and the Enforce page make claims a reader uses
 to decide whether to trust the tooling; a claim that is wrong is a defect of this site even when
 no code is at fault.
 
@@ -18,10 +18,10 @@ form is submitted, so an issue is a disclosure before it is a report.
 It opens a thread that only the maintainer can read, and it stays closed until there is something
 to publish.
 
-A vulnerability in the **toolkit itself** — the browser extension or the server companion —
+A vulnerability in the **toolkit itself** — the browser extension, which is the whole product —
 belongs to [its own repository](https://github.com/Reefact/conventional-comments-toolkit), not
-here. This site only describes them; a defect in either reaches every user of the tooling rather
-than only a visitor to this site.
+here. This site only describes it; a defect there reaches every user of the tooling rather than
+only a visitor to this site.
 
 The configuration schema served at
 [`/schema/v1.json`](https://conventionalcomments.io/schema/v1.json) is read by other

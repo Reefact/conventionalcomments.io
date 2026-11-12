@@ -2,8 +2,8 @@
 import { href, DOCS_PAGES, type Locale, type PageKey } from '../i18n/routes';
 import { t } from '../i18n/ui';
 
-/** Générée, jamais recopiée : sept entrées × deux langues × sept pages sont la
- *  première source de liens morts d'un site de documentation. */
+/** Generated, never copied by hand: eight entries × two languages × eight pages are
+ *  the first source of dead links on a documentation site. */
 interface Props { lang: Locale; page: PageKey }
 const { lang, page } = Astro.props;
 const ui = t(lang);

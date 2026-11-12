@@ -7,11 +7,11 @@ const page = 'labels' as const;
 ---
 <Docs lang={lang} page={page}
   title="Labels et décorations"
-  description="Les treize labels, les décorations, les règles qui déterminent si un commentaire est bloquant et les quinze diagnostics associés.">
+  description="Les dix-neuf labels et leurs trois types, ce que le toolkit ajoute à Conventional Comments, les décorations, les règles qui déterminent si un commentaire est bloquant et les seize diagnostics.">
 <div class="dhead stack g12">
           <p class="crumb"><b>doc</b> / labels et décorations</p>
           <h1>Labels et décorations</h1>
-          <p class="lede measure">Treize labels, trois décorations intégrées et cinq règles de priorité déterminent comment interpréter un commentaire — notamment s'il doit bloquer une fusion. Cette page en constitue la référence.</p>
+          <p class="lede measure">Dix-neuf labels de trois types, trois décorations intégrées et cinq règles de priorité déterminent comment lire un commentaire — notamment si son fil compte comme bloquant. Douze de ces labels viennent de Conventional Comments&nbsp;; sept sont ajoutés par le toolkit, et cette page dit lesquels. Elle en constitue la référence.</p>
         </div>
 
         <section class="dsec">
@@ -35,15 +35,23 @@ const page = 'labels' as const;
         </section>
 
         <section class="dsec">
-          <h2>Les treize labels</h2>
-          <p>Dix labels sont activés par défaut. Trois autres — <code>typo</code>, <code>polish</code> et <code>quibble</code> — sont disponibles mais désactivés initialement. Ils permettent d'affiner respectivement <code>todo</code>, <code>suggestion</code> et <code>nitpick</code>, et chaque dépôt peut les activer s'il en a l'usage.</p>
+          <h2>Dix-neuf labels, trois types</h2>
+          <p>Une revue met face à face deux rôles, que Conventional Comments ne distingue pas&nbsp;: le <strong>relecteur</strong>, qui examine la pull request et soulève des points, et <strong>ceux qui la portent</strong> — son auteur et ses mainteneurs —, qui y répondent. Chaque label a un <strong>type</strong>, qui dit ce que le label fait d'un point&nbsp;:</p>
+          <ul class="bul">
+            <li><strong>Une remarque ouvre un point.</strong> C'est d'abord le geste du relecteur, et le cas de tous les labels que définit Conventional Comments.</li>
+            <li><strong>Une réponse répond à une remarque.</strong> C'est d'abord le geste de ceux qui portent la pull request.</li>
+            <li><strong>Un label d'état ne fait ni l'un ni l'autre.</strong> Il dit où en est la revue elle-même&nbsp;: une passe terminée, ou la revue close.</li>
+          </ul>
+          <p>Le type ne change jamais un verdict&nbsp;: ni ce qui est valide, ni ce qui est bloquant, ni la résolution d'un fil. Il sert à deux choses. Il décide de la place du bouton dans la barre d'outils&nbsp;: les remarques d'abord, puis les labels d'état, qui ferment la première rangée&nbsp;; les réponses, toujours sur une rangée à part. Et il sépare les réponses et les états des remarques quand on compte l'usage des labels, pour qu'un remerciement ou un récapitulatif ne vienne pas diluer la part de <code>praise</code>. Rien n'est réservé à personne&nbsp;: tous les labels sont proposés à tout le monde, et un auteur peut très bien répondre à une <code>question</code> par une <code>note</code>.</p>
+          <p>Le tableau suit l'ordre de la barre d'outils. Tous les labels sont livrés activés, à une exception près&nbsp;: <code>quibble</code>, que Conventional Comments décrit lui-même comme un <code>nitpick</code> sous un autre nom. Un dépôt qui y tient l'active d'une entrée dans sa configuration.</p>
           <div class="scroller">
             <table class="t">
               <thead>
                 <tr><th>Label</th><th>Signification</th><th>Bloquant</th><th>Raccourci</th></tr>
               </thead>
-              <tbody>
-                <tr><td class="m"><span class="pill" style="--lc:var(--l-praise)">🎉 praise</span></td><td class="d">Met en valeur quelque chose de particulièrement réussi.</td><td class="m d">Selon la décoration</td><td class="m">?pr</td></tr>
+              <tbody data-kind="remark">
+                <tr class="grp"><th colspan="4" scope="rowgroup"><div class="gh"><span class="gk">Remarques</span><span class="gd">ouvrent un point</span><span class="go">Conventional Comments · 12</span></div></th></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-praise)">👏 praise</span></td><td class="d">Met en valeur quelque chose de particulièrement réussi.</td><td class="m d">Selon la décoration</td><td class="m">?pr</td></tr>
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-nitpick)">🔍 nitpick</span></td><td class="d">Signale une préférence mineure, sans véritable enjeu.</td><td class="m"><span class="deco nb">Jamais</span></td><td class="m">?ni</td></tr>
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-suggestion)">💡 suggestion</span></td><td class="d">Propose une amélioration argumentée.</td><td class="m d">Selon la décoration</td><td class="m">?su</td></tr>
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-issue)">🔨 issue</span></td><td class="d">Signale un problème identifié. Idéalement accompagné d'une suggestion.</td><td class="m"><span class="deco b">Par défaut</span></td><td class="m">?i · ?ib</td></tr>
@@ -52,10 +60,22 @@ const page = 'labels' as const;
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-thought)">💭 thought</span></td><td class="d">Partage une idée apparue pendant la revue, sans demander d'action.</td><td class="m"><span class="deco nb">Jamais</span></td><td class="m">?th</td></tr>
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-chore)">🧹 chore</span></td><td class="d">Signale une tâche annexe à réaliser avant l'acceptation.</td><td class="m"><span class="deco b">Par défaut</span></td><td class="m">?ch</td></tr>
                 <tr><td class="m"><span class="pill" style="--lc:var(--l-note)">📝 note</span></td><td class="d">Apporte une information utile à connaître.</td><td class="m"><span class="deco nb">Jamais</span></td><td class="m">?no</td></tr>
-                <tr><td class="m"><span class="pill" style="--lc:var(--l-decision)">🏁 decision</span></td><td class="d">Acte le choix de <em>ne pas</em> traiter un point et en explique la raison.</td><td class="m"><span class="deco nb">Jamais</span></td><td class="m">?de</td></tr>
-                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-typo)">🔤 typo</span></td><td class="d">Signale une faute de frappe.</td><td class="m d">Désactivé par défaut</td><td class="m">?ty</td></tr>
-                <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-polish)">✨ polish</span></td><td class="d">Propose une amélioration de finition.</td><td class="m d">Désactivé par défaut</td><td class="m">?po</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-typo)">🔤 typo</span></td><td class="d">Signale une faute de frappe.</td><td class="m d">Selon la décoration</td><td class="m">?ty</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-polish)">✨ polish</span></td><td class="d">Propose une amélioration de finition.</td><td class="m d">Selon la décoration</td><td class="m">?po</td></tr>
                 <tr><td class="m" style="opacity:.6"><span class="pill" style="--lc:var(--l-quibble)">🪶 quibble</span></td><td class="d">Soulève un détail discutable.</td><td class="m d">Désactivé par défaut</td><td class="m">?qui</td></tr>
+              </tbody>
+              <tbody class="added" data-kind="status">
+                <tr class="grp"><th colspan="4" scope="rowgroup"><div class="gh"><span class="gk">État de la revue</span><span class="gd">disent où en est la revue</span><span class="go">ajoutés par le toolkit · 2</span></div></th></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-summary)">📋 summary</span></td><td class="d">Fait le point sur la revue, ou sur l'une de ses passes&nbsp;: ce qui a été vérifié, ce qui reste ouvert.</td><td class="m"><span class="deco nb">Jamais</span></td><td class="m">?sum</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-reviewed)">🎉 reviewed</span></td><td class="d">Clôt votre propre revue&nbsp;: vos points sont traités, vous n'avez plus rien à ajouter. N'approuve rien.</td><td class="m"><span class="deco nb">Jamais</span></td><td class="m">?r</td></tr>
+              </tbody>
+              <tbody class="added" data-kind="reply">
+                <tr class="grp"><th colspan="4" scope="rowgroup"><div class="gh"><span class="gk">Réponses</span><span class="gd">répondent à une remarque</span><span class="go">ajoutés par le toolkit · 5</span></div></th></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-thanks)">🤝 thanks</span></td><td class="d">Remercie, sans prendre position sur le point ni sur le code.</td><td class="m"><span class="deco nb">Jamais</span></td><td class="m">?thx</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-done)">✅ done</span></td><td class="d">Le code a changé à la suite de la remarque.</td><td class="m"><span class="deco nb">Jamais</span></td><td class="m">?do</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-ack)">👌 ack</span></td><td class="d">Reçu et accepté&nbsp;; le code n'a pas changé.</td><td class="m"><span class="deco nb">Jamais</span></td><td class="m">?a</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-decision)">⚖️ decision</span></td><td class="d">Acte le choix de <em>ne pas</em> traiter une remarque, et dit pourquoi.</td><td class="m"><span class="deco nb">Jamais</span></td><td class="m">?de</td></tr>
+                <tr><td class="m"><span class="pill" style="--lc:var(--l-disagree)">✋ disagree</span></td><td class="d">Refuse la remarque, et dit pourquoi. N'emporte aucune autorité et ne résout rien.</td><td class="m"><span class="deco nb">Jamais</span></td><td class="m">?di</td></tr>
               </tbody>
             </table>
           </div>
@@ -63,25 +83,85 @@ const page = 'labels' as const;
         </section>
 
         <section class="dsec">
-          <h2><code style="font-size:.9em">decision</code> — le label ajouté par ce toolkit</h2>
-          <p><code>decision</code> ne fait pas partie de la spécification Conventional Comments d'origine. Le toolkit l'ajoute parce que le mode <code>enforce</code> a besoin d'un mécanisme contrôlé pour résoudre les situations exceptionnelles. Sans cela, un fil bloquant pourrait rester ouvert indéfiniment simplement parce que son auteur n'est plus disponible.</p>
+          <h2>Ce que le toolkit ajoute à Conventional Comments</h2>
+          <p>Sept de ces dix-neuf labels <strong>ne font pas partie de Conventional Comments</strong>&nbsp;: <code>summary</code>, <code>reviewed</code>, <code>thanks</code>, <code>done</code>, <code>ack</code>, <code>decision</code> et <code>disagree</code>. Dans le tableau ci-dessus, ce sont les deux groupes marqués «&nbsp;ajoutés par le toolkit&nbsp;».</p>
+          <p>La convention donne un vocabulaire à la remarque, et ne dit rien de ce qui vient après&nbsp;: comment y répondre, comment dire qu'une revue est terminée. Elle invite d'ailleurs les équipes à s'écarter de sa liste — <em>«&nbsp;Feel free to diverge from this specific list of labels if it seems appropriate.&nbsp;»</em> Le toolkit fait exactement cela, sur un terrain que la convention n'occupe pas. Ces labels sont un ajout de cet outil, ils ne prétendent à rien d'autre, et une équipe peut les retirer.</p>
+          <div class="callout">
+            <span class="ct">pour s'en tenir à la liste d'origine</span>
+            <h4>Désactivez-les, une entrée par label</h4>
+            <p>Il n'existe pas d'interrupteur à part&nbsp;: un label se désactive avec <code>enabled</code>, comme n'importe quel autre. La page d'options de l'extension affiche ce bloc et le copie pour vous.</p>
+          </div>
+          <pre class="code"><span class="tk-k">&#123;</span>
+  <span class="tk-k">"labels"</span>: [
+    <span class="tk-k">&#123;</span> <span class="tk-k">"id"</span>: <span class="tk-v">"summary"</span>,  <span class="tk-k">"enabled"</span>: <span class="tk-v">false</span> <span class="tk-k">&#125;</span>,
+    <span class="tk-k">&#123;</span> <span class="tk-k">"id"</span>: <span class="tk-v">"reviewed"</span>, <span class="tk-k">"enabled"</span>: <span class="tk-v">false</span> <span class="tk-k">&#125;</span>,
+    <span class="tk-k">&#123;</span> <span class="tk-k">"id"</span>: <span class="tk-v">"thanks"</span>,   <span class="tk-k">"enabled"</span>: <span class="tk-v">false</span> <span class="tk-k">&#125;</span>,
+    <span class="tk-k">&#123;</span> <span class="tk-k">"id"</span>: <span class="tk-v">"done"</span>,     <span class="tk-k">"enabled"</span>: <span class="tk-v">false</span> <span class="tk-k">&#125;</span>,
+    <span class="tk-k">&#123;</span> <span class="tk-k">"id"</span>: <span class="tk-v">"ack"</span>,      <span class="tk-k">"enabled"</span>: <span class="tk-v">false</span> <span class="tk-k">&#125;</span>,
+    <span class="tk-k">&#123;</span> <span class="tk-k">"id"</span>: <span class="tk-v">"disagree"</span>, <span class="tk-k">"enabled"</span>: <span class="tk-v">false</span> <span class="tk-k">&#125;</span>
+  ]
+<span class="tk-k">&#125;</span></pre>
+          <p class="small"><code>decision</code> ne figure pas dans ce bloc, et c'est voulu. Il est propre au toolkit lui aussi, mais il porte une règle à lui, décrite plus bas, et se désactive séparément.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Répondre à une remarque</h2>
+          <p>Un dépôt peut demander que <em>tous</em> les commentaires d'une pull request respectent la convention, réponses comprises (<code>scope.validateReplies</code>). Faute de labels faits pour répondre, il fallait alors écrire <code>note: corrigé</code> ou <code>thought: bien vu</code>, c'est-à-dire détourner des labels de leur sens. Quatre labels comblent ce manque, et rien d'autre&nbsp;: <code>thanks</code>, <code>done</code>, <code>ack</code> et <code>disagree</code>. Aucun ne peut jamais être bloquant.</p>
+          <pre class="code"><span class="tk-l">issue</span> <span class="tk-d">(blocking)</span><span class="tk-c">:</span> des jetons CSS propres à une plateforme fuient dans la feuille commune
+
+<span class="tk-cm">— puis, dans le même fil, la réponse de l'auteur —</span>
+
+<span class="tk-l">done</span><span class="tk-c">:</span> jeton propre à la plateforme retiré</pre>
+          <p><code>done</code> dit que le code a changé&nbsp;: il y a donc un diff à relire. <code>ack</code> dit que la remarque est acceptée et que le code n'a pas changé. Trois de ces quatre labels admettent une seconde écriture&nbsp;: <code>thx</code> pour <code>thanks</code>, <code>fixed</code> pour <code>done</code>, <code>acknowledged</code> pour <code>ack</code>.</p>
+        </section>
+
+        <section class="dsec">
+          <h2><code style="font-size:.9em">decision</code> — écarter une remarque, et dire pourquoi</h2>
+          <p><code>decision</code> est une réponse, elle aussi, avec une exigence de plus. Elle acte le choix de <em>ne pas</em> traiter une remarque, et doit expliquer ce choix. Elle est écrite par ceux qui portent la pull request, dans le fil auquel elle répond. Elle documente le choix&nbsp;; elle ne résout pas le fil, qui doit encore être marqué comme résolu avec la commande de la plateforme.</p>
           <div class="split">
             <div class="callout">
               <span class="ct">il est reconnu même là où les réponses ne sont normalement pas validées</span>
               <h4>Le seul label détecté dans une réponse non soumise à validation</h4>
-              <p>Par défaut, les réponses à un fil ne sont pas validées (<code>validateReplies: false</code>). Une réponse dont le label résolu est <code>decision</code> est néanmoins reconnue. Sans cette exception, ce mécanisme ne fonctionnerait que dans les dépôts ayant déjà choisi de valider toutes les réponses.</p>
+              <p>Par défaut, les réponses à un fil ne sont pas validées (<code>validateReplies: false</code>). Une réponse dont le label résolu est <code>decision</code> est néanmoins reconnue. Sans cette exception, sa règle ne s'appliquerait que dans les dépôts ayant déjà choisi de valider toutes les réponses.</p>
             </div>
             <div class="callout">
               <span class="ct">et une décision doit réellement être justifiée</span>
               <h4><code>E-DECISION-SUBJECT</code> est une erreur, pas un avertissement</h4>
-              <p>Une réponse <code>decision</code> doit respecter <code>minDecisionSubjectLength</code>, fixé à 20 caractères par défaut. C'est le seul seuil de longueur appliqué au sujet d'une <code>decision</code>. Résoudre un fil bloquant exige donc une véritable explication. <code>wontfix</code> ne suffit pas.</p>
+              <p>Une réponse <code>decision</code> doit respecter <code>minDecisionSubjectLength</code>, fixé à 20 caractères par défaut. C'est le seul seuil de longueur appliqué au sujet d'une <code>decision</code>. Écarter une remarque exige donc une véritable explication. <code>wontfix</code> ne suffit pas.</p>
             </div>
           </div>
           <pre class="code"><span class="tk-l">decision</span><span class="tk-c">:</span> hors périmètre pour cette PR, dette suivie en PROJ-142
 
 Décidé avec l'équipe plateforme le 3 septembre : la réécriture du cache
 arrive au T4 et ce handler disparaîtra avec elle.</pre>
-          <p class="small">Tout le monde n'est pas autorisé à enregistrer une <code>decision</code>. <code>resolverOverrideGroup</code> désigne le groupe dont les membres peuvent passer outre une résolution. Ce groupe doit être configuré avant d'activer <code>enforce</code>&nbsp;; lorsqu'il est vide, les deux mécanismes de déblocage sont indisponibles.</p>
+          <div class="callout">
+            <span class="ct">à ne pas confondre</span>
+            <h4><code>disagree</code> n'est pas <code>decision</code></h4>
+            <p><code>disagree</code> est un avis&nbsp;: chacun peut le donner, et il ne tranche rien. <code>decision</code> acte un choix de ceux qui portent la pull request. Le toolkit ne vérifie aucune habilitation derrière l'un ni l'autre, et aucun des deux ne résout le fil.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Dire où en est la revue</h2>
+          <p>Deux gestes reviennent dans toutes les revues et n'avaient pas de label&nbsp;: faire le point après une passe, et dire qu'on a terminé. <code>summary</code> dit ce qui a été vérifié et ce qui reste ouvert. <code>reviewed</code> clôt votre propre revue&nbsp;: chacun de vos points est traité, et vous n'avez plus rien à ajouter. Les deux se répondent&nbsp;: <code>summary</code> décrit une revue qui continue, <code>reviewed</code> une revue close.</p>
+          <pre class="code"><span class="tk-l">summary</span><span class="tk-c">:</span> deuxième passe — le correctif du cache est vérifié, le point de nommage reste ouvert
+
+<span class="tk-cm">— plus tard, une fois ce dernier point réglé —</span>
+
+<span class="tk-l">reviewed</span><span class="tk-c">:</span> plus rien à signaler de mon côté</pre>
+          <div class="split">
+            <div class="callout">
+              <span class="ct">quand le publier</span>
+              <h4><code>reviewed</code> clôt une revue, pas une passe de lecture</h4>
+              <p>Publiez-le quand chacun de vos points est traité — corrigé et vérifié, ou écarté par une réponse que vous acceptez — et qu'une dernière lecture n'en révèle aucun nouveau. Une modification ultérieure de la pull request rouvre votre revue&nbsp;: il faut relire les nouveaux changements avant de publier un autre <code>reviewed</code>.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">ce que ni l'un ni l'autre ne fait</span>
+              <h4>Ils n'approuvent rien</h4>
+              <p>L'approbation appartient à la plateforme — <em>Approve</em> sur GitHub, le vote sur Azure DevOps —, et le toolkit ne compte pas les <code>reviewed</code>. Un <code>summary</code> ne tient jamais lieu de <code>reviewed</code>, même quand plus aucun point n'est ouvert&nbsp;; publié après votre <code>reviewed</code>, il se lit comme si votre revue avait rouvert.</p>
+            </div>
+          </div>
+          <p class="small">Les agents de revue publient un <code>summary</code> à chaque passe. Voir <a href={href('aireview', 'fr')}>la revue assistée par IA</a>.</p>
         </section>
 
         <section class="dsec">
@@ -118,13 +198,13 @@ arrive au T4 et ce handler disparaîtra avec elle.</pre>
           </div>
           <div class="callout">
             <span class="ct">pourquoi un commentaire contradictoire reçoit tout de même un verdict</span>
-            <p style="margin:0">Les deux premières règles signalent une erreur, mais elles produisent malgré tout un résultat. Lorsqu'un commentaire se contredit, le comportement par défaut du label sert de valeur de repli déterministe. Laisser l'état bloquant indéfini serait pire&nbsp;: le système ne pourrait plus déterminer si le fil empêche l'acceptation, et la pull request pourrait rester bloquée sans qu'aucune action claire permette de résoudre la situation.</p>
+            <p style="margin:0">Les deux premières règles signalent une erreur, mais elles produisent malgré tout un résultat. Lorsqu'un commentaire se contredit, le comportement par défaut du label sert de valeur de repli déterministe. Laisser l'état bloquant indéfini serait pire&nbsp;: ni le bandeau ni un lecteur ne pourraient dire si le fil compte comme bloquant, et rien dans le commentaire n'indiquerait comment trancher.</p>
           </div>
         </section>
 
         <section class="dsec">
           <h2>Diagnostics</h2>
-          <p>La validation définit quinze diagnostics. Une <strong>erreur</strong> rend le commentaire non conforme. Elle n'a d'effet sur la possibilité de fusionner que si le dépôt configure <code>formatSeverity: "error"</code>. Un <strong>avertissement</strong> est affiché et comptabilisé, mais ne provoque jamais d'échec à lui seul. Chaque diagnostic peut changer de sévérité — ou être entièrement désactivé — dépôt par dépôt avec <code>severities</code>.</p>
+          <p>La validation définit seize diagnostics. Une <strong>erreur</strong> rend le commentaire non conforme&nbsp;: en mode <code>enforce</code>, l'extension refuse de l'envoyer. Un <strong>avertissement</strong> est affiché, et ne provoque jamais de refus à lui seul. Un dépôt peut donner une autre sévérité à chaque diagnostic avec <code>severities</code>, dans deux limites&nbsp;: une erreur peut être ramenée à un avertissement mais jamais désactivée, et <code>W-SESSION-MULTIPLE</code> ne peut jamais devenir une erreur.</p>
           <div class="split">
             <div class="scroller">
               <table class="t">
@@ -152,6 +232,7 @@ arrive au T4 et ce handler disparaîtra avec elle.</pre>
                   <tr><td class="m">W-MISSING-DECORATION</td><td class="d">Un <code>suggestion</code> ou un <code>question</code> ne contient aucune décoration.</td></tr>
                   <tr><td class="m">W-NO-DISCUSSION</td><td class="d">Un commentaire bloquant ne contient aucune discussion.</td></tr>
                   <tr><td class="m">W-NOT-BLOCKABLE</td><td class="d">Un commentaire est déclaré bloquant dans un contexte qui ne peut pas porter cet état.</td></tr>
+                  <tr><td class="m">W-SESSION-MULTIPLE</td><td class="d">Un commentaire porte plus d'un <a href={href('aireview', 'fr')}>marqueur de session</a>.</td></tr>
                 </tbody>
               </table>
             </div>

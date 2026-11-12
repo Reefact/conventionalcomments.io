@@ -54,10 +54,10 @@
 /docs/configuration /docs/configure/ 301
 /docs/configuration/ /docs/configure/ 301
 
-/fr/docs/server /fr/docs/serveur/ 301
-/fr/docs/server/ /fr/docs/serveur/ 301
-/docs/serveur /docs/server/ 301
-/docs/serveur/ /docs/server/ 301
+/fr/docs/ai-review /fr/docs/revue-ia/ 301
+/fr/docs/ai-review/ /fr/docs/revue-ia/ 301
+/docs/revue-ia /docs/ai-review/ 301
+/docs/revue-ia/ /docs/ai-review/ 301
 
 /fr/docs/troubleshooting /fr/docs/diagnostic/ 301
 /fr/docs/troubleshooting/ /fr/docs/diagnostic/ 301
@@ -68,6 +68,26 @@
 /fr/release-notes/v1/ /fr/notes-de-version/v1/ 301
 /notes-de-version/v1 /release-notes/v1/ 301
 /notes-de-version/v1/ /release-notes/v1/ 301
+
+# --- retired addresses ---
+#
+# The "Enforce (roadmap)" page lived at /docs/server/ ↔ /fr/docs/serveur/. The toolkit
+# dropped the verifier and the server: the page now describes the enforce mode as it
+# ships, at /docs/enforce/ in both languages. The old addresses, and the wrong-language
+# variants already caught for them, lead there in a single hop.
+
+/docs/server /docs/enforce/ 301
+/docs/server/ /docs/enforce/ 301
+/docs/serveur /docs/enforce/ 301
+/docs/serveur/ /docs/enforce/ 301
+/fr/docs/serveur /fr/docs/enforce/ 301
+/fr/docs/serveur/ /fr/docs/enforce/ 301
+/fr/docs/server /fr/docs/enforce/ 301
+/fr/docs/server/ /fr/docs/enforce/ 301
+/en/docs/server /docs/enforce/ 301
+/en/docs/server/ /docs/enforce/ 301
+/en/docs/serveur /docs/enforce/ 301
+/en/docs/serveur/ /docs/enforce/ 301
 
 # --- /en/ explicite + mot français : direction directe, sans double saut ---
 
@@ -81,8 +101,8 @@
 /en/docs/installation/ /docs/install/ 301
 /en/docs/configuration /docs/configure/ 301
 /en/docs/configuration/ /docs/configure/ 301
-/en/docs/serveur /docs/server/ 301
-/en/docs/serveur/ /docs/server/ 301
+/en/docs/revue-ia /docs/ai-review/ 301
+/en/docs/revue-ia/ /docs/ai-review/ 301
 /en/docs/diagnostic /docs/troubleshooting/ 301
 /en/docs/diagnostic/ /docs/troubleshooting/ 301
 /en/notes-de-version/v1 /release-notes/v1/ 301
