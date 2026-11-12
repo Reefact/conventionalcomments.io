@@ -68,6 +68,12 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ### 🔧 Améliorations
 
+- **Le schéma de configuration suit la 1.0.0-rc.2 du toolkit.** `/schema/v1.json` connaît
+  désormais `sessionIcon`, les propriétés `kind`, `description` et `usage` d'un label, et le
+  diagnostic `W-SESSION-MULTIPLE`. Il ne propose plus les sept clés que le toolkit a retirées
+  avec le vérificateur — `formatSeverity`, `overrideLabel`, `resolverOverrideGroup`,
+  `activation`, `docUrl`, `server` et `exemptionLog` : votre éditeur les souligne désormais.
+  `"mode": "warn"` reste accepté, et signalé comme obsolète.
 - **La page des plateformes ne range plus les navigateurs parmi les plateformes.** Chrome,
   Edge, Brave et Firefox figuraient dans la même grille que GitHub et Azure DevOps, comme
   s'ils répondaient à la même question. Ils ont désormais leur propre rubrique, sous les
