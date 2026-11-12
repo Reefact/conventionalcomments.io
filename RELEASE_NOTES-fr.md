@@ -18,6 +18,10 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ### ✨ Nouveautés
 
+- **Chaque section de la page des labels a désormais son lien.** `/fr/docs/labels/#added-labels`,
+  `#replies`, `#review-status`, `#decision` et les autres sont des ancres stables, les mêmes
+  dans les deux langues. La page de configuration explique aussi l'ordre personnel des
+  boutons.
 - **Les notes de version du toolkit vont désormais jusqu'à la 1.0.0-rc.2.**
   `/fr/notes-de-version/v1/` gagne onze versions, de la 1.0.0-beta.13 à la version
   candidate : les labels pour répondre à une revue, la prise en charge de GitLab, les

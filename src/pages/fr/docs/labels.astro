@@ -14,7 +14,7 @@ const page = 'labels' as const;
           <p class="lede measure">Dix-neuf labels de trois types, trois décorations intégrées et cinq règles de priorité déterminent comment lire un commentaire — notamment si son fil compte comme bloquant. Douze de ces labels viennent de Conventional Comments&nbsp;; sept sont ajoutés par le toolkit, et cette page dit lesquels. Elle en constitue la référence.</p>
         </div>
 
-        <section class="dsec">
+        <section class="dsec" id="grammar">
           <h2>La syntaxe d'un commentaire</h2>
           <p>Tout commentaire soumis à validation commence par une ligne de préfixe. Après la première ligne vide vient la discussion. Son contenu est entièrement libre et n'est jamais analysé.</p>
           <div class="anno">
@@ -34,7 +34,7 @@ const page = 'labels' as const;
           <p class="small">Une erreur de casse n'entraîne pas un rejet. Par exemple, <code>Issue:</code> déclenche <code>W-CASE</code>, un simple avertissement accompagné d'une correction automatique.</p>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="labels">
           <h2>Dix-neuf labels, trois types</h2>
           <p>Une revue met face à face deux rôles, que Conventional Comments ne distingue pas&nbsp;: le <strong>relecteur</strong>, qui examine la pull request et soulève des points, et <strong>ceux qui la portent</strong> — son auteur et ses mainteneurs —, qui y répondent. Chaque label a un <strong>type</strong>, qui dit ce que le label fait d'un point&nbsp;:</p>
           <ul class="bul">
@@ -82,7 +82,7 @@ const page = 'labels' as const;
           <p class="small">Les couleurs et les icônes sont purement visuelles et ne font pas partie du plancher d'entreprise. Les modifier ne peut donc ni changer un verdict ni faire l'objet d'une règle imposée par un administrateur.</p>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="added-labels">
           <h2>Ce que le toolkit ajoute à Conventional Comments</h2>
           <p>Sept de ces dix-neuf labels <strong>ne font pas partie de Conventional Comments</strong>&nbsp;: <code>summary</code>, <code>reviewed</code>, <code>thanks</code>, <code>done</code>, <code>ack</code>, <code>decision</code> et <code>disagree</code>. Dans le tableau ci-dessus, ce sont les deux groupes marqués «&nbsp;ajoutés par le toolkit&nbsp;».</p>
           <p>La convention donne un vocabulaire à la remarque, et ne dit rien de ce qui vient après&nbsp;: comment y répondre, comment dire qu'une revue est terminée. Elle invite d'ailleurs les équipes à s'écarter de sa liste — <em>«&nbsp;Feel free to diverge from this specific list of labels if it seems appropriate.&nbsp;»</em> Le toolkit fait exactement cela, sur un terrain que la convention n'occupe pas. Ces labels sont un ajout de cet outil, ils ne prétendent à rien d'autre, et une équipe peut les retirer.</p>
@@ -104,7 +104,7 @@ const page = 'labels' as const;
           <p class="small"><code>decision</code> ne figure pas dans ce bloc, et c'est voulu. Il est propre au toolkit lui aussi, mais il porte une règle à lui, décrite plus bas, et se désactive séparément.</p>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="replies">
           <h2>Répondre à une remarque</h2>
           <p>Un dépôt peut demander que <em>tous</em> les commentaires d'une pull request respectent la convention, réponses comprises (<code>scope.validateReplies</code>). Faute de labels faits pour répondre, il fallait alors écrire <code>note: corrigé</code> ou <code>thought: bien vu</code>, c'est-à-dire détourner des labels de leur sens. Quatre labels comblent ce manque, et rien d'autre&nbsp;: <code>thanks</code>, <code>done</code>, <code>ack</code> et <code>disagree</code>. Aucun ne peut jamais être bloquant.</p>
           <pre class="code"><span class="tk-l">issue</span> <span class="tk-d">(blocking)</span><span class="tk-c">:</span> des jetons CSS propres à une plateforme fuient dans la feuille commune
@@ -115,7 +115,7 @@ const page = 'labels' as const;
           <p><code>done</code> dit que le code a changé&nbsp;: il y a donc un diff à relire. <code>ack</code> dit que la remarque est acceptée et que le code n'a pas changé. Trois de ces quatre labels admettent une seconde écriture&nbsp;: <code>thx</code> pour <code>thanks</code>, <code>fixed</code> pour <code>done</code>, <code>acknowledged</code> pour <code>ack</code>.</p>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="decision">
           <h2><code style="font-size:.9em">decision</code> — écarter une remarque, et dire pourquoi</h2>
           <p><code>decision</code> est une réponse, elle aussi, avec une exigence de plus. Elle acte le choix de <em>ne pas</em> traiter une remarque, et doit expliquer ce choix. Elle est écrite par ceux qui portent la pull request, dans le fil auquel elle répond. Elle documente le choix&nbsp;; elle ne résout pas le fil, qui doit encore être marqué comme résolu avec la commande de la plateforme.</p>
           <div class="split">
@@ -141,7 +141,7 @@ arrive au T4 et ce handler disparaîtra avec elle.</pre>
           </div>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="review-status">
           <h2>Dire où en est la revue</h2>
           <p>Deux gestes reviennent dans toutes les revues et n'avaient pas de label&nbsp;: faire le point après une passe, et dire qu'on a terminé. <code>summary</code> dit ce qui a été vérifié et ce qui reste ouvert. <code>reviewed</code> clôt votre propre revue&nbsp;: chacun de vos points est traité, et vous n'avez plus rien à ajouter. Les deux se répondent&nbsp;: <code>summary</code> décrit une revue qui continue, <code>reviewed</code> une revue close.</p>
           <pre class="code"><span class="tk-l">summary</span><span class="tk-c">:</span> deuxième passe — le correctif du cache est vérifié, le point de nommage reste ouvert
@@ -164,7 +164,7 @@ arrive au T4 et ce handler disparaîtra avec elle.</pre>
           <p class="small">Les agents de revue publient un <code>summary</code> à chaque passe. Voir <a href={href('aireview', 'fr')}>la revue assistée par IA</a>.</p>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="decorations">
           <h2>Décorations</h2>
           <p>Une décoration précise l'intention associée à un label. Trois décorations intégrées peuvent modifier le caractère bloquant du commentaire. Les décorations personnalisées sont également autorisées par défaut&nbsp;: elles peuvent apporter une information utile aux lecteurs sans jamais influencer le verdict.</p>
           <div class="scroller">
@@ -181,7 +181,7 @@ arrive au T4 et ce handler disparaîtra avec elle.</pre>
           <p class="small">Un <code>suggestion</code> ou un <code>question</code> sans décoration déclenche <code>W-MISSING-DECORATION</code>. Ce sont les deux labels pour lesquels le caractère bloquant ne peut réellement pas être déduit du seul label.</p>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="precedence">
           <h2>Comment déterminer si un commentaire est bloquant</h2>
           <p>Cinq règles sont évaluées dans l'ordre. La première qui s'applique détermine le résultat. Il n'existe ni heuristique supplémentaire ni exception cachée.</p>
           <div class="scroller">
@@ -202,7 +202,7 @@ arrive au T4 et ce handler disparaîtra avec elle.</pre>
           </div>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="diagnostics">
           <h2>Diagnostics</h2>
           <p>La validation définit seize diagnostics. Une <strong>erreur</strong> rend le commentaire non conforme&nbsp;: en mode <code>enforce</code>, l'extension refuse de l'envoyer. Un <strong>avertissement</strong> est affiché, et ne provoque jamais de refus à lui seul. Un dépôt peut donner une autre sévérité à chaque diagnostic avec <code>severities</code>, dans deux limites&nbsp;: une erreur peut être ramenée à un avertissement mais jamais désactivée, et <code>W-SESSION-MULTIPLE</code> ne peut jamais devenir une erreur.</p>
           <div class="split">
