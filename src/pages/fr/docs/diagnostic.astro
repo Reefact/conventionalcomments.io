@@ -7,28 +7,56 @@ const page = 'troubleshooting' as const;
 ---
 <Docs lang={lang} page={page}
   title="Diagnostic"
-  description="Cinq problèmes courants, leur cause et les actions à effectuer lorsque l'extension ne se comporte pas comme prévu.">
+  description="Sept problèmes courants, leur cause et ce qu'il faut faire quand l'extension ne se comporte pas comme prévu — et comment signaler ceux que cette page n'explique pas.">
 <div class="dhead stack g12">
           <p class="crumb"><b>doc</b> / diagnostic</p>
           <h1>Quand quelque chose ne fonctionne pas comme prévu</h1>
-          <p class="lede measure">La plupart des comportements qui surprennent au premier abord sont intentionnels. Pour chaque cas ci-dessous, vous trouverez ce que vous observez, pourquoi cela se produit et ce que vous devez éventuellement faire.</p>
+          <p class="lede measure">La plupart des comportements qui surprennent au premier abord sont intentionnels. Pour chaque cas ci-dessous, vous trouverez ce que vous observez, pourquoi cela se produit et ce que vous devez éventuellement faire. Si aucun ne correspond, la dernière section explique comment envoyer un diagnostic.</p>
         </div>
 
         <section class="dsec">
           <h2>La barre de labels n'apparaît pas</h2>
           <ul class="tick">
-            <li><span class="mk n">·</span><b>Le domaine n'est pas encore autorisé</b><span class="tx">L'extension ne fonctionne que là où vous l'avez autorisée, github.com compris&nbsp;: fraîchement installée, elle n'est active nulle part tant que vous n'avez pas autorisé l'accès à un premier domaine depuis ses réglages. Pour un domaine qu'elle ne connaît pas déjà — une instance auto-hébergée, un serveur interne —, vous devez également indiquer quelle plateforme y est hébergée afin que l'extension utilise le bon adaptateur.</span></li>
-            <li><span class="mk n">·</span><b>Un sélecteur de l'extension n'a rien trouvé</b><span class="tx">Quand l'élément que cherche une règle n'est pas là, l'extension désactive la zone concernée plutôt que de risquer d'interagir avec le mauvais élément. Cela peut vouloir dire que la plateforme a changé son balisage — ou simplement que l'élément est légitimement absent, comme le bouton de fusion sur une pull request fermée. La section «&nbsp;État&nbsp;» de la page de réglages en tient un journal, à raison d'une ligne par règle et de cinquante au plus&nbsp;: le nom de la règle et le moment de son dernier échec — jamais le contenu des revues. À partir de la 1.0.0-beta.13, à venir, chaque ligne dit aussi sur quelle page l'échec a eu lieu, et le journal s'efface d'un clic.</span></li>
+            <li><span class="mk n">·</span><b>Le domaine n'est pas encore autorisé</b><span class="tx">L'extension ne fonctionne que là où vous l'avez autorisée, github.com compris&nbsp;: fraîchement installée, elle n'est active nulle part tant que vous n'avez pas autorisé l'accès à un premier domaine depuis ses réglages. Pour un domaine qu'elle ne connaît pas déjà — une instance GitHub Enterprise Server, par exemple —, vous devez également indiquer quelle plateforme y est hébergée afin que l'extension utilise le bon adaptateur.</span></li>
+            <li><span class="mk n">·</span><b>Le domaine est autorisé, mais la plateforme n'y est pas prise en charge</b><span class="tx">Autoriser un domaine ne suffit pas à le rendre pris en charge. Azure DevOps ne l'est que sur <code>dev.azure.com</code>&nbsp;: un Azure DevOps Server, ou une organisation sur <code>&#123;org&#125;.visualstudio.com</code>, ne reçoit rien, même une fois l'accès autorisé. GitLab ne l'est que sur gitlab.com&nbsp;: GitLab Self-Managed et Dedicated ne sont pas encore pris en charge.</span></li>
+            <li><span class="mk n">·</span><b>Vous écrivez dans l'éditeur de texte enrichi de GitLab</b><span class="tx">GitLab propose deux éditeurs sous chaque champ de commentaire, et retient votre choix pour votre compte. L'extension fonctionne dans l'éditeur Markdown. Dans l'éditeur de texte enrichi, elle n'ajoute aucune barre et ne valide rien&nbsp;: repassez le champ en Markdown pour les retrouver.</span></li>
+            <li><span class="mk n">·</span><b>L'extension n'a pas reconnu une partie de la page</b><span class="tx">Quand l'élément que cherche une règle n'est pas là, l'extension laisse la zone concernée tranquille plutôt que de risquer d'agir sur le mauvais élément. Le plus souvent, c'est que la plateforme a changé son balisage. Chaque cas laisse une ligne dans le journal de la page de réglages — voyez plus bas comment <a href="#diagnostic">envoyer un diagnostic</a>.</span></li>
             <li><span class="mk n">·</span><b>Le mode est <code>off</code></b><span class="tx">La configuration de l'organisation ou du dépôt peut désactiver complètement l'extension.</span></li>
           </ul>
         </section>
 
         <section class="dsec">
-          <h2>Bandeau « configuration non lue »</h2>
-          <p>L'extension n'a pas pu récupérer <code>.conventional-comments.json</code>. Elle continue de vous assister, mais puisqu'elle ne connaît pas les règles du dépôt, elle <strong>ne bloque jamais l'envoi d'un commentaire</strong>. Ce comportement est volontaire&nbsp;: personne ne doit être empêché de travailler au nom d'une règle que l'extension elle-même n'a pas réussi à lire.</p>
+          <h2>La pastille d'état affiche «&nbsp;Configuration non lue&nbsp;»</h2>
+          <p>Sous le champ de commentaire, la pastille d'état indique&nbsp;: <em>Configuration non lue&nbsp;: l'extension assiste sans connaître les règles, et ne bloque pas l'envoi.</em> La section «&nbsp;État&nbsp;» de la page de réglages dit la même chose, et en donne la raison. L'extension a essayé de lire <code>.conventional-comments.json</code> et n'y est pas parvenue. Elle continue de vous assister, mais puisqu'elle ne connaît pas les règles du dépôt, elle <strong>ne bloque jamais l'envoi d'un commentaire</strong>. Ce comportement est volontaire&nbsp;: personne ne doit être empêché de travailler au nom d'une règle que l'extension elle-même n'a pas réussi à lire.</p>
+          <ul class="tick">
+            <li><span class="mk n">·</span><b>Sur GitLab, le message est permanent</b><span class="tx">L'extension ne sait pas encore lire la configuration d'un dépôt sur GitLab. Elle vous y assiste sans connaître les règles du dépôt, et n'y bloque jamais un commentaire — quel que soit le mode que le dépôt demande.</span></li>
+            <li><span class="mk n">·</span><b>Ailleurs, vérifiez que vous êtes connecté</b><span class="tx">L'extension lit le fichier avec votre propre session de navigation, jamais avec un jeton à elle. Sur un dépôt privé dont vous êtes déconnecté — ou sur Azure DevOps sans session ouverte, où la requête est renvoyée vers la page de connexion —, elle n'a le droit de rien lire, et le message le dit exactement.</span></li>
+          </ul>
           <div class="callout">
-            <span class="ct">ce que ce bandeau ne signifie pas</span>
-            <p style="margin:0">Un dépôt qui ne contient <strong>aucun fichier <code>.conventional-comments.json</code></strong> n'est ni en erreur ni en mode dégradé. Dans ce cas, les valeurs par défaut du produit s'appliquent et aucun bandeau n'est affiché. Le bandeau apparaît uniquement lorsqu'une configuration est censée être accessible mais que l'extension ne parvient pas à la lire. Sur un dépôt public — ou sur un dépôt privé auquel vous êtes connecté — vous ne devriez normalement pas le voir. Si vous êtes déconnecté d'un dépôt privé, le bandeau indique simplement que la configuration n'est pas accessible.</p>
+            <span class="ct">ce que ce message ne signifie pas</span>
+            <p style="margin:0">Un dépôt qui ne contient <strong>aucun fichier <code>.conventional-comments.json</code></strong> n'est ni en erreur ni en état dégradé. Dans ce cas, la configuration de l'organisation s'applique, puis les valeurs par défaut du produit, et le message n'est pas affiché. Il n'apparaît que lorsque l'extension n'a pas pu savoir ce que dit la configuration.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Des avis de configuration sont apparus après une mise à jour</h2>
+          <p>Depuis la 1.0.0-rc.1, l'extension vous dit ce qu'elle a constaté en lisant la configuration, là où elle se taisait auparavant. Ces avis s'affichent dans la pastille d'état et dans la section «&nbsp;État&nbsp;» de la page de réglages, dans la langue de l'interface, et chacun nomme l'origine du problème&nbsp;: le plancher d'entreprise, la configuration de l'organisation ou le fichier du dépôt. <strong>Ils informent&nbsp;; ils ne changent jamais l'acceptation d'un commentaire.</strong></p>
+          <ul class="tick">
+            <li><span class="mk n">·</span><b>«&nbsp;Clé inconnue … ignorée&nbsp;»</b><span class="tx">C'est l'avis le plus probable après une mise à jour. <code>formatSeverity</code>, <code>overrideLabel</code>, <code>resolverOverrideGroup</code>, <code>activation</code> et <code>docUrl</code> ne servaient qu'au vérificateur, qui a été retiré&nbsp;; <code>server</code> et <code>exemptionLog</code> sont partis avec le serveur compagnon. Aucune de ces clés n'est plus lue. Retirez-les du fichier, et l'avis disparaît.</span></li>
+            <li><span class="mk n">·</span><b>«&nbsp;Valeur obsolète “warn”&nbsp;»</b><span class="tx">Le mode <code>warn</code> n'existe plus. Il est lu comme <code>assist</code>&nbsp;: remplacez-le par <code>"mode": "assist"</code>.</span></li>
+            <li><span class="mk n">·</span><b>«&nbsp;Configuration invalide&nbsp;»</b><span class="tx">Une clé connue porte une valeur que l'extension ne sait pas interpréter, ou le fichier n'est pas du JSON valide&nbsp;; l'avis nomme la clé, ou la ligne. L'extension se replie alors sur le dernier niveau valide — la configuration de l'organisation, puis les valeurs par défaut du produit&nbsp;: un fichier invalide ne fait donc jamais disparaître les règles en silence.</span></li>
+            <li><span class="mk n">·</span><b>«&nbsp;Plancher d'entreprise&nbsp;: clé … ignorée&nbsp;»</b><span class="tx">Le dépôt ou le document de l'organisation demande plus de souplesse que n'en autorise la politique navigateur de votre organisation. Votre installation n'a rien d'anormal&nbsp;: la politique l'emporte, et l'avis dit sur quel réglage.</span></li>
+          </ul>
+          <p class="small">La liste complète des réglages, et ce qui a remplacé ceux qui ont été retirés, se trouve sur la <a href={href('configure', 'fr')}>page de configuration</a>.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Mes commentaires sont bloqués du jour au lendemain — ou l'on me demande de renvoyer</h2>
+          <p>En mode <code>enforce</code>, un commentaire qui ne respecte pas la convention ne peut pas être envoyé. Jusqu'à la 1.0.0-rc.1, cela ne valait que pour les pull requests créées après une date d'activation que rien ne fixait par défaut&nbsp;: la plupart des dépôts en <code>enforce</code> ne bloquaient donc rien. Cette condition a disparu&nbsp;: <strong><code>enforce</code> bloque désormais sur toutes les pull requests</strong>, que vous cliquiez sur le bouton ou que vous passiez par le clavier. Si vos dépôts étaient déjà en <code>enforce</code>, les premiers blocages arrivent avec la mise à jour, pas avec un changement de votre part.</p>
+          <p>La pastille d'état dit ce qui ne va pas dans le commentaire, et propose la correction quand elle sait la calculer. Si le dépôt n'a jamais été censé bloquer, c'est son mode qu'il faut changer — voyez <a href={href('enforce', 'fr')}>ce que fait <code>enforce</code></a>.</p>
+          <div class="callout">
+            <span class="ct">quand l'extension vous demande de renvoyer</span>
+            <p style="margin:0">Avant de bloquer quoi que ce soit, l'extension relit la configuration sans passer par son cache. Si le blocage n'a plus lieu d'être — le dépôt vient de repasser en <code>assist</code>, par exemple —, elle libère le bouton et vous l'indique&nbsp;: <em>Configuration relue&nbsp;: cet envoi n'est plus bloqué. Renvoyez votre commentaire.</em> Elle n'envoie pas le commentaire à votre place&nbsp;: appuyez une seconde fois sur le bouton. La pastille peut continuer d'afficher l'ancien mode jusqu'à l'expiration du cache (une heure par défaut)&nbsp;; ce retard ne bloque rien.</p>
           </div>
         </section>
 
@@ -40,20 +68,35 @@ const page = 'troubleshooting' as const;
         </section>
 
         <section class="dsec">
-          <h2>Les commentaires d'un bot font échouer la vérification</h2>
+          <h2>Les commentaires d'un bot sont signalés</h2>
           <p>Ajoutez son identifiant sur la plateforme à <code>exemptUsers</code>. La comparaison ne tient pas compte de la casse et utilise <strong>l'identifiant de connexion</strong>, jamais le nom affiché.</p>
           <p class="small">Les entrées générées directement par la plateforme — événements de timeline, mises à jour de branche, notifications système — sont automatiquement exemptées et n'ont pas besoin d'être déclarées. Une approbation envoyée <strong>sans aucun texte</strong> est également toujours exemptée. Sans cette règle, approuver simplement une pull request sans écrire de commentaire provoquerait une erreur de validation que l'auteur de la PR ne pourrait même pas corriger, puisqu'il ne peut pas modifier la revue de quelqu'un d'autre.</p>
         </section>
 
         <section class="dsec">
-          <h2>Un point bloquant ne peut pas être résolu</h2>
-          <p>Un fil bloquant ne peut être résolu que par&nbsp;:</p>
-          <ul class="bul">
-            <li>l'auteur du commentaire bloquant, ou</li>
-            <li>un membre du groupe autorisé à passer outre une résolution.</li>
-          </ul>
-          <p>Si personne ne peut le résoudre, le groupe désigné est probablement vide. La présence de ce groupe est précisément un prérequis de <code>enforce</code>, afin qu'un fil bloquant ne puisse jamais se retrouver sans personne autorisée à intervenir.</p>
-          <p>L'autre possibilité consiste à répondre avec un <code>decision</code> expliquant pourquoi le point ne sera pas traité. Cette justification doit contenir au moins vingt caractères. Elle est enregistrée directement dans le fil&nbsp;: la dérogation reste donc toujours explicite et visible.</p>
+          <h2>Un fil bloquant reste dans le décompte</h2>
+          <p>Résoudre un fil est un geste de la plateforme, fait par qui elle y autorise. L'extension n'accorde aucun droit et n'en retire aucun&nbsp;: elle compte un fil bloquant comme résolu <strong>tel que la page l'affiche, quel que soit l'auteur de la résolution</strong>. Si un fil figure encore dans le bandeau, c'est que la page l'affiche toujours comme non résolu — résolvez-le là, avec la commande de la plateforme.</p>
+          <p>Il arrive que ceux qui portent la pull request décident, délibérément, de ne pas faire le changement demandé. Ils le disent dans le fil par une réponse <code>decision</code>, qui doit s'expliquer&nbsp;: vingt caractères de justification au moins, faute de quoi <code>E-DECISION-SUBJECT</code> est signalé. Une <code>decision</code> consigne le choix à l'endroit même de la discussion. Elle <strong>ne résout pas le fil</strong>, et aucun groupe habilité n'intervient&nbsp;: le fil se résout ensuite sur la plateforme, comme n'importe quel autre.</p>
+          <p class="small">Ce décompte est une information, pas une barrière&nbsp;: l'extension n'empêche jamais une fusion. Une équipe qui veut que la fusion attende la résolution des conversations utilise le réglage que sa plateforme propose déjà — voyez <a href={href('enforce', 'fr')}>ce que fait <code>enforce</code>, et ce qu'il ne fait pas</a>.</p>
         </section>
-        <div class="pager"></div>
+
+        <section class="dsec" id="diagnostic">
+          <h2>Rien de tout cela&nbsp;: envoyez un diagnostic</h2>
+          <p>La section «&nbsp;État&nbsp;» de la page de réglages tient le journal de ce que l'extension n'a pas pu faire. Chaque ligne est une phrase — <em>Bouton d'envoi introuvable&nbsp;: impossible de le griser ou d'en arrêter le clic</em> —, accompagnée d'un niveau, <code>WARN</code> ou <code>ERROR</code>, et d'une marque qui mène à la page où cela s'est produit. Le journal consigne trois sortes de choses&nbsp;:</p>
+          <ul class="bul">
+            <li><strong>les éléments de page qu'une règle n'a pas trouvés</strong> — une ligne par règle, cinquante au plus, chacune gardant le dernier relevé de sa règle&nbsp;;</li>
+            <li><strong>les champs de commentaire que l'extension n'a pas entièrement compris</strong> — un champ dont le bouton d'envoi est resté introuvable, ou qu'elle a situé par défaut sans reconnaître son emplacement&nbsp;;</li>
+            <li><strong>les erreurs de l'extension elle-même</strong>, qui ne laissaient auparavant aucune trace.</li>
+          </ul>
+          <ul class="tick">
+            <li><span class="mk">1</span><b>Ouvrez la page de réglages, section «&nbsp;État&nbsp;»</b><span class="tx">La page affiche la version de l'extension à côté de son titre&nbsp;: c'est la première chose dont un signalement a besoin.</span></li>
+            <li><span class="mk">2</span><b>Cliquez sur «&nbsp;Télécharger le diagnostic (.zip)&nbsp;»</b><span class="tx">L'archive réunit le journal, les squelettes de page relevés quand une règle a échoué, l'historique de la mise en place du script de l'extension dans votre navigateur, et un README qui décrit chaque fichier. Le téléchargement est proposé même quand le journal est vide — ce qui compte lorsque l'extension ne fait plus rien du tout sur une page&nbsp;: téléchargez le diagnostic avant toute autre manipulation.</span></li>
+            <li><span class="mk">3</span><b>Relisez-la avant de la partager</b><span class="tx">L'archive ne contient jamais le texte d'une page, d'un commentaire ou du code. Elle contient en revanche les adresses des pages concernées, qui nomment des dépôts et des revues&nbsp;; un libellé d'interface peut nommer un compte, et un message d'erreur peut citer ce que l'extension était en train de traiter.</span></li>
+            <li><span class="mk">4</span><b>Joignez-la à un ticket</b><span class="tx">Ouvrez un ticket sur le <a href="https://github.com/Reefact/conventional-comments-toolkit/issues" rel="noopener noreferrer" target="_blank">dépôt du toolkit</a> et joignez-y l'archive. Une ligne peut aussi se copier seule, grâce à l'icône placée à côté d'elle.</span></li>
+          </ul>
+          <p class="small">«&nbsp;Effacer le journal&nbsp;» supprime d'un clic le journal, les squelettes et l'historique du script. Le journal reste sur votre appareil tant que vous ne le partagez pas&nbsp;; si vous avez autorisé la télémétrie, seul le nom d'une règle en échec est compté. La <a href={href('privacy', 'fr')}>page de confidentialité</a> détaille exactement ce que le journal conserve.</p>
+        </section>
+        <div class="pager">
+          <a class="pgl" href={href('aireview', 'fr')}><span class="dir">← précédent</span><span class="ttl">Revue assistée par IA</span></a>
+        </div>
 </Docs>
