@@ -18,6 +18,9 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ### ✨ New
 
+- **Every section of the labels page can be linked to.** `/docs/labels/#added-labels`,
+  `#replies`, `#review-status`, `#decision` and the others are stable anchors, the same in
+  both languages. The configuration page also explains the personal button order.
 - **The toolkit's release notes now run up to 1.0.0-rc.2.** `/release-notes/v1/` gains eleven
   versions, from 1.0.0-beta.13 to the release candidate: labels for replying to a review,
   GitLab support, review-session markers, an `enforce` mode that really blocks, and the

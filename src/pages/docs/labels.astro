@@ -14,7 +14,7 @@ const page = 'labels' as const;
           <p class="lede measure">Nineteen labels in three kinds, three built-in decorations, and five precedence rules determine how a comment is read — including whether its thread counts as blocking. Twelve of the labels come from Conventional Comments; seven are added by the toolkit, and this page says which. It is the reference for all of them.</p>
         </div>
 
-        <section class="dsec">
+        <section class="dsec" id="grammar">
           <h2>The grammar</h2>
           <p>Every validated comment starts with a prefix line. Anything after the first blank line is discussion. It is left entirely untouched by the parser.</p>
           <div class="anno">
@@ -30,7 +30,7 @@ const page = 'labels' as const;
           <p class="small">Casing errors are corrected rather than rejected. For example, <code>Issue:</code> raises <code>W-CASE</code>, a warning with an automatic fix.</p>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="labels">
           <h2>Nineteen labels, three kinds</h2>
           <p>A review involves two roles that Conventional Comments does not distinguish: <strong>reviewers</strong>, who examine the pull request and raise points, and its <strong>author and maintainers</strong>, who respond. Every label has a <strong>kind</strong>, which says what the label does with a point:</p>
           <ul class="bul">
@@ -78,7 +78,7 @@ const page = 'labels' as const;
           <p class="small">Colours and icons are deliberately cosmetic. They are excluded from the enterprise floor. Changing them can never change a verdict or be locked down by an administrator.</p>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="added-labels">
           <h2>What the toolkit adds to Conventional Comments</h2>
           <p>Seven of these nineteen labels are <strong>not part of Conventional Comments</strong>: <code>summary</code>, <code>reviewed</code>, <code>thanks</code>, <code>done</code>, <code>ack</code>, <code>decision</code> and <code>disagree</code>. In the table above, they are the two groups marked “added by the toolkit”.</p>
           <p>The convention gives a vocabulary to the remark, and says nothing about what comes after it: how to answer one, or how to say that a review is over. It also invites teams to go beyond its list — <em>“Feel free to diverge from this specific list of labels if it seems appropriate.”</em> The toolkit does exactly that, on ground the convention does not cover. These labels are an addition of this tool, they claim no other standing, and a team can remove them.</p>
@@ -100,7 +100,7 @@ const page = 'labels' as const;
           <p class="small"><code>decision</code> is deliberately not in that block. It belongs to the toolkit too, but it carries a rule of its own, described below, and is turned off separately.</p>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="replies">
           <h2>Replying to a remark</h2>
           <p>A repository can ask for <em>every</em> comment of a pull request to follow the convention, replies included (<code>scope.validateReplies</code>). Without labels made for replying, that meant writing <code>note: fixed</code> or <code>thought: good catch</code> — bending labels away from what they mean. Four labels fill that gap, and nothing else: <code>thanks</code>, <code>done</code>, <code>ack</code> and <code>disagree</code>. None of them can ever block.</p>
           <pre class="code"><span class="tk-l">issue</span> <span class="tk-d">(blocking)</span><span class="tk-c">:</span> platform CSS tokens leak into the shared stylesheet
@@ -111,7 +111,7 @@ const page = 'labels' as const;
           <p><code>done</code> says the code changed, so there is a diff to read again; <code>ack</code> says the remark is accepted and the code did not change. Three of the four accept a second spelling: <code>thx</code> for <code>thanks</code>, <code>fixed</code> for <code>done</code>, <code>acknowledged</code> for <code>ack</code>.</p>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="decision">
           <h2><code style="font-size:.9em">decision</code> — setting a remark aside, and saying why</h2>
           <p><code>decision</code> is a reply too, with one more requirement. It records the choice <em>not</em> to address a remark, and it has to explain that choice. It is written by the pull request's author or maintainers, in the thread it answers. It documents the choice; it does not resolve the thread, which must still be resolved using the platform's own controls.</p>
           <div class="split">
@@ -137,7 +137,7 @@ and this handler is deleted with it.</pre>
           </div>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="review-status">
           <h2>Saying where the review stands</h2>
           <p>Two gestures come up in every review and had no label: recapping a pass, and saying you are done. <code>summary</code> says what was checked and what is still open. <code>reviewed</code> closes your own review: each of your points is dealt with, and you have nothing to add. They are counterparts — <code>summary</code> describes a review that continues, <code>reviewed</code> one that is closed.</p>
           <pre class="code"><span class="tk-l">summary</span><span class="tk-c">:</span> second pass — the cache fix is verified, the naming point is still open
@@ -160,7 +160,7 @@ and this handler is deleted with it.</pre>
           <p class="small">Review agents publish a <code>summary</code> at each pass. See <a href={href('aireview', 'en')}>AI-assisted review</a>.</p>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="decorations">
           <h2>Decorations</h2>
           <p>Decorations qualify the meaning of a label. Three built-in decorations affect the blocking verdict. Custom decorations are also allowed by default: they can carry useful meaning for people without influencing whether the comment blocks.</p>
           <div class="scroller">
@@ -177,7 +177,7 @@ and this handler is deleted with it.</pre>
           <p class="small">An undecorated <code>suggestion</code> or <code>question</code> raises <code>W-MISSING-DECORATION</code>. Those are the two labels for which a reader genuinely cannot infer the blocking intent from the label alone.</p>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="precedence">
           <h2>Precedence — how blocking is determined</h2>
           <p>Five rules are evaluated in order. The first matching rule determines the result. There are no additional heuristics or hidden inputs.</p>
           <div class="scroller">
@@ -198,7 +198,7 @@ and this handler is deleted with it.</pre>
           </div>
         </section>
 
-        <section class="dsec">
+        <section class="dsec" id="diagnostics">
           <h2>Diagnostics</h2>
           <p>There are sixteen diagnostic codes. <strong>Errors</strong> make a comment non-compliant: in <code>enforce</code> mode, the extension refuses to send it. <strong>Warnings</strong> are reported, and never cause a refusal by themselves. A repository can give each diagnostic another severity through <code>severities</code>, within two limits: an error can be lowered to a warning but never silenced, and <code>W-SESSION-MULTIPLE</code> can never be raised to an error.</p>
           <div class="split">
