@@ -32,10 +32,10 @@ const page = 'labels' as const;
 
         <section class="dsec">
           <h2>Nineteen labels, three kinds</h2>
-          <p>A review puts two roles face to face, and Conventional Comments does not tell them apart: the <strong>reviewer</strong>, who reads the pull request and raises points, and <strong>the people who carry it</strong> — its author and its maintainers — who answer them. Every label has a <strong>kind</strong>, which says what the label does with a point:</p>
+          <p>A review involves two roles that Conventional Comments does not distinguish: <strong>reviewers</strong>, who examine the pull request and raise points, and its <strong>author and maintainers</strong>, who respond. Every label has a <strong>kind</strong>, which says what the label does with a point:</p>
           <ul class="bul">
-            <li><strong>A remark raises a point.</strong> It is first the reviewer's gesture, and the case of every label Conventional Comments defines.</li>
-            <li><strong>A reply answers a remark.</strong> It is first the gesture of the people who carry the pull request.</li>
+            <li><strong>A remark raises a point.</strong> Reviewers typically use these labels, which include every label defined by Conventional Comments.</li>
+            <li><strong>A reply responds to a remark.</strong> Authors and maintainers typically use these labels.</li>
             <li><strong>A status label does neither.</strong> It says where the review itself stands: one pass done, or the whole review closed.</li>
           </ul>
           <p>The kind never changes a verdict: not what is valid, not what blocks, not whether a thread is resolved. It does two things. It decides where the button sits in the toolbar — remarks first, then status labels, which close the first row; replies always on a row of their own. And it keeps replies and status labels apart from remarks when label usage is counted, so that a thank-you or a recap never dilutes the share of <code>praise</code>. Nothing is reserved for anyone: every label is offered to everyone, and an author may perfectly well answer a <code>question</code> with a <code>note</code>.</p>
@@ -113,7 +113,7 @@ const page = 'labels' as const;
 
         <section class="dsec">
           <h2><code style="font-size:.9em">decision</code> — setting a remark aside, and saying why</h2>
-          <p><code>decision</code> is a reply too, with one more requirement. It records the choice <em>not</em> to address a remark, and it has to explain that choice. It is written by the people who carry the pull request, in the thread it answers. It documents the choice; it does not resolve the thread, which remains a gesture of the platform.</p>
+          <p><code>decision</code> is a reply too, with one more requirement. It records the choice <em>not</em> to address a remark, and it has to explain that choice. It is written by the pull request's author or maintainers, in the thread it answers. It documents the choice; it does not resolve the thread, which must still be resolved using the platform's own controls.</p>
           <div class="split">
             <div class="callout">
               <span class="ct">it is recognized even where replies are not normally validated</span>
@@ -133,7 +133,7 @@ and this handler is deleted with it.</pre>
           <div class="callout">
             <span class="ct">not to be confused</span>
             <h4><code>disagree</code> is not <code>decision</code></h4>
-            <p><code>disagree</code> is an opinion: anyone can voice it, and it settles nothing. <code>decision</code> records a choice made by the people who carry the pull request. The toolkit checks no authority behind either of them, and neither resolves the thread.</p>
+            <p><code>disagree</code> is an opinion: anyone can voice it, and it settles nothing. <code>decision</code> records a choice made by the pull request's author or maintainers. The toolkit checks no authority behind either of them, and neither resolves the thread.</p>
           </div>
         </section>
 

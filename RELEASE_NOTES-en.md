@@ -113,6 +113,11 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ### 🔧 Improved
 
+- **Sentences that read as translations now read naturally, in both languages.** A full
+  language pass reworded the labels, how-it-works, adoption, configuration, install,
+  troubleshooting and AI-assisted review pages, the docs index, and a few toolkit release
+  notes: for instance, an author and maintainers "respond" to a remark rather than "carry"
+  the pull request, and a thread is resolved "using the platform's own controls".
 - **The configuration schema follows the toolkit's 1.0.0-rc.2.** `/schema/v1.json` now knows
   `sessionIcon`, the `kind`, `description` and `usage` of a label, and the
   `W-SESSION-MULTIPLE` diagnostic. It no longer offers the seven keys the toolkit retired

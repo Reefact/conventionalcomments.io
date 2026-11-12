@@ -96,7 +96,7 @@ const page = 'howitworks' as const;
         <div class="stack g14 measure">
           <span class="eyebrow">when the extension is allowed to block:</span>
           <h2>Two conditions must be met</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Writing <code>enforce</code> in a configuration is not enough. Unless both conditions below are satisfied, the extension behaves as it does in <code>assist</code>: it reports its diagnostics and still lets the comment through.</p>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Writing <code>enforce</code> in a configuration is not enough: both conditions below must hold. If the configuration cannot be read, the extension assists without blocking. With a readable configuration, <code>assist</code> shows diagnostics and <code>off</code> shows none.</p>
         </div>
         <ul class="tick">
           <li><span class="mk">1</span><b>The effective mode is <code>enforce</code></b><span class="tx">The mode is resolved from the configuration the extension has read — the repository's file, the organization's document and, where there is one, the organization's browser policy. It is never assumed locally.</span></li>
@@ -129,12 +129,12 @@ const page = 'howitworks' as const;
           <div>
             <span class="tag" style="color:var(--fg-muted)">blocking</span>
             <h3>A thread is blocking if the comment that opened it is</h3>
-            <p><code>issue</code>, <code>todo</code> and <code>chore</code> block unless decorated otherwise, and the <code>blocking</code> decoration makes blocking the labels that accept it, such as <code>suggestion</code> or <code>question</code> — the <a href={href('labels', 'en')}>labels</a> page has the exact rules. Only the current text counts: edit an <code>issue:</code> into a <code>note:</code> and the thread stops being counted. The platform shows that the comment was edited; the extension keeps no history.</p>
+            <p><code>issue</code>, <code>todo</code> and <code>chore</code> block unless decorated otherwise, and the <code>blocking</code> decoration makes a comment blocking when its label allows it, for example <code>suggestion</code> or <code>question</code> — the <a href={href('labels', 'en')}>labels</a> page has the exact rules. Only the current text counts: edit an <code>issue:</code> into a <code>note:</code> and the thread stops being counted. The platform shows that the comment was edited; the extension keeps no history.</p>
           </div>
           <div>
             <span class="tag" style="color:var(--accent)">resolved</span>
             <h3>A thread is resolved when the platform says so</h3>
-            <p>The extension reads the state the page displays, whoever resolved the thread. It does not decide who is allowed to. When the people carrying the pull request choose not to address a blocking point, they answer in the thread with a <code>decision</code> and its reason. That reply records the choice; resolving the thread remains a gesture of the platform.</p>
+            <p>The extension reads the state the page displays, whoever resolved the thread. It does not decide who is allowed to. When the pull request's author or maintainers choose not to address a blocking point, they answer in the thread with a <code>decision</code> and its reason. That reply records the choice; the thread must still be resolved using the platform's own controls.</p>
             <p class="guar">The count informs. It never prevents a merge.</p>
           </div>
         </div>
