@@ -1,7 +1,7 @@
 # conventionalcomments.io
 
 Vitrine de [`conventional-comments-toolkit`](https://github.com/Reefact/conventional-comments-toolkit) —
-l'extension navigateur et le compagnon serveur qui font respecter
+l'extension navigateur qui aide à écrire et à faire respecter
 [Conventional Comments](https://conventionalcomments.org/) dans les revues de code.
 
 Site statique **Astro**, hébergé sur **Cloudflare**. Bilingue anglais (racine) / français
@@ -23,7 +23,7 @@ npm run check    # build + tous les contrôles ci-dessous
 | Commande | Ce qu'elle fait |
 | --- | --- |
 | `npm run dev` | Estampille le build, puis sert le site en développement |
-| `npm run build` | Estampille le build, puis produit `dist/` (28 pages) |
+| `npm run build` | Estampille le build, puis produit `dist/` (30 pages) |
 | `npm run check` | `build`, puis les invariants du site et du schéma |
 | `npm run check:site` | Les treize invariants, sur ce qui est réellement produit |
 | `npm run check:schema` | Le schéma JSON contre ses gabarits ; `-- <chemin>` ou `TOOLKIT_PATH` le compare à la source |
@@ -39,7 +39,7 @@ src/i18n/routes.ts      La table des routes — seule source de vérité sur les
 src/i18n/ui.ts          Les chaînes de chrome, et rien d'autre (§7.3 : on écrit, on ne traduit pas)
 src/layouts/            Base (coque, méta, alternats) et Docs (grille + barre latérale)
 src/components/         Mark, Header, Footer, DocsSidebar, BuildFacts
-src/pages/              26 pages : 13 en anglais à la racine, 13 en français sous fr/
+src/pages/              28 pages : 14 en anglais à la racine, 14 en français sous fr/
 src/styles/             fonts.css (@font-face), tokens.css (jetons, trois thèmes), base.css
 public/schema/v1.json   Le schéma de configuration, servi à /schema/v1.json
 public/_headers         CORS du schéma, cache des polices (lu par Cloudflare, jamais servi)
@@ -101,9 +101,9 @@ bruyamment : elle reste juste, en retard. La CI récupère donc le toolkit et co
 - `check:schema` compare les clés, les domaines et les bornes à `schema.ts`.
 - `check:toolkit` compare la liste des versions de `/release-notes/v1/` à celle que le
   toolkit publie — la page a été mise en ligne à jour et l'était déjà moins le lendemain.
-- `check:labels` compare les treize icônes et couleurs **affichées** à `defaults.ts`. Une
-  transcription de treize emoji en avait déjà un faux, que rien ne signalait : les deux
-  s'affichent, seul le codet diffère.
+- `check:labels` compare les icônes et couleurs **affichées** des dix-neuf labels à
+  `defaults.ts`. Du temps où ils étaient treize, une transcription à la main en avait déjà
+  un faux, que rien ne signalait : les deux s'affichent, seul le codet diffère.
 
 ## Intégration continue
 

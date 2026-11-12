@@ -52,11 +52,12 @@ Version anglaise : *“Is that feedback, or a dig?”*
 | « La convention ne tient pas toute seule. » | Ouvre sur la thèse du produit. Suppose qu'on sait déjà ce qu'est la convention. Parle à quelqu'un qui a lu la spécification. |
 | « Ce commentaire bloque la PR, ou pas ? » | Correcte et compréhensible, mais procédurale : elle réduit le sujet à une question de fusion. Le lecteur n'a pas mal parce qu'une PR est bloquée ; il a mal parce qu'il croit qu'on lui en veut. |
 
-**L'asymétrie extension / serveur reste vraie, mais elle n'est plus la thèse.** Elle arrive
-en sixième section, sous un titre qui dit à quoi elle sert : *une bonne habitude s'oublie
-en trois jours*. Le serveur y est présenté comme **un pense-bête qui ne se fatigue pas**,
-jamais comme une police — l'accueil doit donner envie d'essayer la convention, pas peur de
-l'outil.
+**L'outil arrive après la convention, et il n'est jamais la thèse.** Il entre en sixième
+section, sous un titre qui dit à quoi il sert : *une bonne habitude s'oublie en trois
+jours*. L'extension — qui est désormais tout le produit : le serveur et le vérificateur
+ont été abandonnés — y est présentée comme **un pense-bête qui ne se fatigue pas**, jamais
+comme une police. Elle signale, elle n'empêche pas une fusion ; l'accueil doit donner
+envie d'essayer la convention, pas peur de l'outil.
 
 ### 1.1 Filiation `.org` / `.io`
 
@@ -141,13 +142,13 @@ fait `packages/extension/src/styles.css`, et `packages/core/src/config/defaults.
 explique pourquoi : le texte reste la couleur de la page, donc le critère applicable n'est
 pas le 4,5:1 du texte mais le **3:1 de bordure (WCAG 2.1 SC 1.4.11)**.
 
-Conséquence de design : treize couleurs cohabitent sans qu'aucune ne crie. Le remplissage
+Conséquence de design : dix-neuf couleurs cohabitent sans qu'aucune ne crie. Le remplissage
 est réservé aux verdicts.
 
 ### 3.2 Le mono est la part machine
 
 Tout ce qu'une machine parse est en IBM Plex Mono : labels, décorations, clés de
-configuration, routes, hexadécimaux, références `§`, ligne `cc/1`. Tout ce qu'un humain lit
+configuration, routes, hexadécimaux, références `§`. Tout ce qu'un humain lit
 est en Plex Sans.
 
 **Jamais de mono décoratif.** Sinon la distinction cesse de vouloir dire quelque chose — et
@@ -189,38 +190,49 @@ l'insère jamais, suffisent à ce que la règle tienne sans vigilance humaine.
 | Conforme     | `#1F8A4C` | Verdict vert. Jamais employé comme couleur de marque.        |
 | Bloquant     | `#E04E45` | Le hex exact du label `issue`. Reprise, pas invention.       |
 
-### 4.2 Spectre — les treize labels
+### 4.2 Spectre — les dix-neuf labels
 
 Ce ne sont **pas** des couleurs redessinées : ce sont exactement celles de
 `packages/core/src/config/defaults.ts`, déjà mesurées contre neuf fonds Primer (clair,
 sombre, *dark-dimmed*) au seuil 3:1 de bordure. Elles sont donc réutilisables telles
 quelles dans les deux thèmes du site.
 
-| Label        | Icône | Hex       | Défaut                | Abrév. |
-| ------------ | :---: | --------- | --------------------- | ------ |
-| `praise`     | 🎉    | `#36933B` | —                     | `?pr`  |
-| `nitpick`    | 🔍    | `#76818E` | toujours non-bloquant | `?ni`  |
-| `suggestion` | 💡    | `#B07600` | —                     | `?su`  |
-| `issue`      | 🔨    | `#E04E45` | bloquant par défaut   | `?i`   |
-| `todo`       | 📌    | `#D95800` | bloquant par défaut   | `?to`  |
-| `question`   | ❓    | `#197EF5` | —                     | `?que` |
-| `thought`    | 💭    | `#9368E3` | toujours non-bloquant | `?th`  |
-| `chore`      | 🧹    | `#A97735` | bloquant par défaut   | `?ch`  |
-| `note`       | 📝    | `#1F8E96` | toujours non-bloquant | `?no`  |
-| `decision`   | 🏁    | `#936DD4` | toujours non-bloquant | `?de`  |
-| `typo`       | 🔤    | `#CC549C` | désactivé             | `?ty`  |
-| `polish`     | ✨    | `#0C8E9A` | désactivé             | `?po`  |
-| `quibble`    | 🪶    | `#61896C` | désactivé             | `?qui` |
+| Label        | Icône | Hex       | Type     | Défaut                | Abrév. |
+| ------------ | :---: | --------- | -------- | --------------------- | ------ |
+| `praise`     | 👏    | `#36933B` | `remark` | —                     | `?pr`  |
+| `nitpick`    | 🔍    | `#76818E` | `remark` | toujours non-bloquant | `?ni`  |
+| `suggestion` | 💡    | `#B07600` | `remark` | —                     | `?su`  |
+| `issue`      | 🔨    | `#E04E45` | `remark` | bloquant par défaut   | `?i`   |
+| `todo`       | 📌    | `#D95800` | `remark` | bloquant par défaut   | `?to`  |
+| `question`   | ❓    | `#197EF5` | `remark` | —                     | `?que` |
+| `thought`    | 💭    | `#9368E3` | `remark` | toujours non-bloquant | `?th`  |
+| `chore`      | 🧹    | `#A97735` | `remark` | bloquant par défaut   | `?ch`  |
+| `note`       | 📝    | `#1F8E96` | `remark` | toujours non-bloquant | `?no`  |
+| `typo`       | 🔤    | `#CC549C` | `remark` | —                     | `?ty`  |
+| `polish`     | ✨    | `#0C8E9A` | `remark` | —                     | `?po`  |
+| `quibble`    | 🪶    | `#61896C` | `remark` | désactivé             | `?qui` |
+| `summary`    | 📋    | `#B160C9` | `status` | toujours non-bloquant | `?sum` |
+| `reviewed`   | 🎉    | `#D04A7A` | `status` | toujours non-bloquant | `?r`   |
+| `thanks`     | 🤝    | `#9C8C1A` | `reply`  | toujours non-bloquant | `?thx` |
+| `done`       | ✅    | `#6B8E23` | `reply`  | toujours non-bloquant | `?do`  |
+| `ack`        | 👌    | `#6A7FDB` | `reply`  | toujours non-bloquant | `?a`   |
+| `decision`   | ⚖️    | `#936DD4` | `reply`  | toujours non-bloquant | `?de`  |
+| `disagree`   | ✋    | `#8A7B6E` | `reply`  | toujours non-bloquant | `?di`  |
+
+L'ordre est celui de la barre d'outils de l'extension : les remarques, puis les états de
+la revue, puis les réponses.
 
 Les émojis sont le champ `icon` de chaque label : **de la donnée produit, pas de
 l'ornement**. Ils n'apparaissent nulle part ailleurs sur le site.
 
-`decision` est un **ajout du toolkit**, absent de la spécification d'origine. Il mérite sa
-propre explication en page de référence, pas une ligne de tableau.
+Sept labels sont des **ajouts du toolkit**, absents de Conventional Comments : `decision`,
+`summary`, `reviewed`, `thanks`, `done`, `ack` et `disagree`. Ils méritent leur propre
+explication en page de référence, pas seulement une ligne de tableau — et le site ne doit
+jamais laisser croire qu'ils font partie de la convention.
 
 ### 4.3 Réserve
 
-Les treize teintes sont mesurées contre les fonds Primer, **pas contre `#EEF1F5`**. Porter
+Les dix-neuf teintes sont mesurées contre les fonds Primer, **pas contre `#EEF1F5`**. Porter
 dans le site un test équivalent à celui de `packages/core/test/config.test.ts` avant la
 mise en ligne.
 
@@ -247,19 +259,21 @@ nativement, ce qui rend la règle §3.2 lisible plutôt que bruyante.
 
 ## 6. Composants
 
-Cinq objets suffisent à tout le site. Ils reprennent l'interface réelle du toolkit : un
+Quatre objets suffisent à tout le site — un cinquième, le check de conformité, a été retiré. Ils reprennent l'interface réelle du toolkit : un
 lecteur qui les voit sur le site les retrouve à l'identique dans sa pull request.
 
 | Composant             | Forme                                                                                     |
 | --------------------- | ----------------------------------------------------------------------------------------- |
 | **Badge de label**    | Pilule, bordure teintée, fond transparent, texte à la couleur de page. Les décorations sont des marqueurs neutres accolés — jamais des badges concurrents. |
 | **Verdict**           | Angles droits, fond teinté + bordure. *Le seul composant autorisé à porter un fond coloré (§3.1).* La forme le distingue d'un label avant même la couleur. |
-| **Trajectoire**       | `assist` → `warn` → `enforce`, trois colonnes, filet de couleur en tête. Seule séquence numérotable du site : l'ordre y porte une information réelle. |
+| **Trajectoire**       | `assist` partout → `enforce` sur un dépôt pilote → généralisation, en colonnes, filet de couleur en tête. Seule séquence numérotable du site : l'ordre y porte une information réelle. Le mode `warn` n'existe plus. |
 | **Bloc de grammaire** | Label en accent, décoration en gris, **deux-points en rouge bloquant** — le pivot est la seule ponctuation colorée du site. |
-| **Check de conformité** | Deux lignes (échec / succès) + la ligne machine `cc/1 core=… mode=… blocking=… configFingerprint=…`. |
+| **Check de conformité** | *Retiré.* Il figurait le statut publié par le vérificateur ; le toolkit a abandonné le vérificateur, et le site ne montre plus ce composant. |
 
-**Le check, pas l'extension, doit occuper le premier écran de l'accueil.** C'est la seule
-preuve visuelle que la convention est *tenue* et pas seulement *suggérée*.
+**Le premier écran de l'accueil montre un commentaire, pas un contrôle.** La première
+version de ce document y plaçait le check de conformité, « seule preuve que la convention
+est tenue » ; cette preuve n'existe plus, puisque le produit signale et n'empêche pas une
+fusion.
 
 ---
 
@@ -271,8 +285,8 @@ commercial. Trois arbitrages, à appliquer aux deux langues.
 
 | Jamais | Plutôt | Pourquoi |
 | --- | --- | --- |
-| « Révolutionnez vos revues de code ! » | « Un fil bloquant non résolu empêche la fusion. » | Promettre un changement d'état d'esprit quand le produit promet un statut de PR. |
-| « Fonctionne partout, sans configuration. » | « Sur Azure DevOps, la provenance des étiquettes n'est pas établie : le repli documenté s'applique. » | Faux : deux prérequis AzDO restent ouverts. Nommer une limite est ce qui rend le reste croyable. |
+| « Révolutionnez vos revues de code ! » | « Un fil bloquant non résolu reste affiché dans le bandeau tant qu'il n'est pas résolu. » | Promettre un changement d'état d'esprit quand le produit promet un signalement — et surtout pas un blocage de fusion, qu'il ne fait pas. |
+| « Fonctionne partout, sans configuration. » | « Sur GitLab, l'extension ne lit pas encore la configuration du dépôt : elle n'y bloque jamais un commentaire. » | Faux : GitLab n'est couvert que sur gitlab.com, Azure DevOps que sur dev.azure.com. Nommer une limite est ce qui rend le reste croyable. |
 | « Vos données sont en sécurité. » | « Aucun contenu de commentaire, de code ou de diff ne quitte le navigateur. Les préférences, elles, se synchronisent si Chrome Sync est actif. » | Formule creuse — et le dépôt a déjà corrigé une version trop absolue de cette phrase. |
 
 ---
