@@ -58,7 +58,7 @@ const page = 'configure' as const;
                 <tr><td class="m">scope.validateReplies</td><td class="m d">false</td><td class="d">Whether replies inside a thread are validated too, and not only the comments that open one.</td></tr>
                 <tr><td class="m">configCacheTtlSeconds</td><td class="m d">3600</td><td class="d">How long the extension may keep working from a configuration it has already read, in seconds. See “When a change takes effect”.</td></tr>
                 <tr><td class="m">sessionIcon</td><td class="m d">🤖</td><td class="d">The icon of the mention that replaces a session marker when a comment is displayed. See <a href={href('aireview', 'en')}>AI-assisted review</a>.</td></tr>
-                <tr><td class="m">coreMinVersion</td><td class="m d">1.0.0</td><td class="d">Requires a minimum core version across the organization.</td></tr>
+                <tr><td class="m">coreMinVersion</td><td class="m d">1.0.0</td><td class="d">Requires a minimum <em>major</em> version of the core. Only the major is compared: on a 1.x core, <code>1.99.0</code> is accepted and <code>2.0.0</code> triggers the fallback. It cannot require a newer minor or patch release.</td></tr>
               </tbody>
             </table>
           </div>
@@ -73,7 +73,7 @@ const page = 'configure' as const;
           <div class="callout blk">
             <span class="ct">one setting deserves special attention</span>
             <h4><code>toolCommands</code> is empty by default.</h4>
-            <p>In <code>enforce</code> mode, a bare <code>/rebase</code> is treated like any other non-conforming comment unless the repository explicitly declares it. Adding <code>"/*"</code> exempts every slash command. Bot accounts are declared individually and must match exactly, for example <code>"@dependabot"</code>.</p>
+            <p>In <code>enforce</code> mode, a bare <code>/rebase</code> is treated like any other non-conforming comment until the repository adds <code>"/*"</code>, which exempts every slash command. There is no way to exempt one command on its own: an entry such as <code>"/rebase"</code> is ignored, and reported by a configuration notice. Bot accounts are declared individually and must match exactly, for example <code>"@dependabot"</code>.</p>
           </div>
         </section>
 
@@ -94,7 +94,7 @@ const page = 'configure' as const;
                 <tr><td class="m">config-warning</td><td class="d">A key is unknown or retired, a value is obsolete, or one entry of a list could not be used.</td><td class="d">Ignores that key or entry and applies everything else.</td></tr>
                 <tr><td class="m">floor-override</td><td class="d">A setting tried to go below the floor.</td><td class="d">Ignores that setting and keeps the floor's value.</td></tr>
                 <tr><td class="m">invalid-config</td><td class="d">The file is not valid JSON, or a known key holds an impossible value such as <code>"mode": "banana"</code>.</td><td class="d">Sets the whole document aside, falls back to the last valid level — the organization, then the product defaults — and points to the faulty line.</td></tr>
-                <tr><td class="m">unsupported-version</td><td class="d">The file asks for a schema version or a <code>coreMinVersion</code> newer than the installed extension.</td><td class="d">Falls back to <code>assist</code>, or to the floor if it is stricter.</td></tr>
+                <tr><td class="m">unsupported-version</td><td class="d">The file declares a <code>version</code> above the schema version the extension supports (1 today), or a <code>coreMinVersion</code> whose major is above the core's major.</td><td class="d">Falls back to <code>assist</code>, or to the floor if it is stricter.</td></tr>
               </tbody>
             </table>
           </div>

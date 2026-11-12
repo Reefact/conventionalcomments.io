@@ -21,7 +21,7 @@ const page = 'enforce' as const;
             <li><span class="mk">1</span><b>Le mode effectif est <code>enforce</code></b><span class="tx">Le mode résulte des trois niveaux de configuration — le plancher d'entreprise, le document de l'organisation, le fichier du dépôt. Il n'est jamais supposé localement.</span></li>
             <li><span class="mk">2</span><b>La configuration a réellement été lue</b><span class="tx">Si l'extension n'a pas pu atteindre la configuration, elle ne refuse rien&nbsp;: personne n'est bloqué au nom d'une règle qu'on n'a pas pu lire. Un dépôt qui n'a tout simplement pas de fichier de configuration n'est pas dans ce cas.</span></li>
           </ul>
-          <p>Si l'une des deux manque, l'extension se comporte comme en <code>assist</code>&nbsp;: elle affiche ses diagnostics et laisse passer le commentaire. Rien d'autre n'entre en ligne de compte — ni l'ancienneté de la pull request, ni un quelconque état publié sur elle.</p>
+          <p>Si la configuration n'a pas pu être lue, l'extension se comporte comme en <code>assist</code>&nbsp;: elle affiche ses diagnostics et laisse passer le commentaire. Si le mode effectif est <code>assist</code>, elle fait de même. S'il est <code>off</code>, elle ne fait rien du tout&nbsp;: ni diagnostic, ni blocage. Rien d'autre n'entre en ligne de compte — ni l'ancienneté de la pull request, ni un quelconque état publié sur elle.</p>
           <p>Quand les deux sont réunies, un commentaire qui comporte une <strong>erreur</strong> ne peut pas être envoyé. Le bouton d'envoi prend l'apparence d'un bouton désactivé, mais reste accessible au clavier, afin qu'un lecteur d'écran en annonce le motif&nbsp;: <em>Envoi bloqué&nbsp;: le commentaire n'est pas conforme</em>, suivi de ce qui ne va pas. Les avertissements, eux, ne bloquent jamais&nbsp;: ce sont des conseils.</p>
           <div class="scroller">
             <table class="t">
@@ -31,12 +31,12 @@ const page = 'enforce' as const;
                 <tr><td class="d">Publier au clavier — Ctrl+Entrée (ou ⌘+Entrée) dans le champ, par exemple</td><td class="m"><span class="deco b">Bloqué</span></td></tr>
                 <tr><td class="d">Envoyer un commentaire qui ne soulève que des avertissements</td><td class="m"><span class="deco nb">Envoyé</span></td></tr>
                 <tr><td class="d">Approuver une pull request sans rien écrire</td><td class="m"><span class="deco nb">Envoyé</span></td></tr>
-                <tr><td class="d">Envoyer une commande d'outil déclarée dans <code>toolCommands</code>, comme <code>/rebase</code></td><td class="m"><span class="deco nb">Envoyé</span></td></tr>
+                <tr><td class="d">Envoyer une commande comme <code>/rebase</code>, avec <code>"/*"</code> dans <code>toolCommands</code></td><td class="m"><span class="deco nb">Envoyé</span></td></tr>
                 <tr><td class="d">Répondre dans un fil, tant que <code>validateReplies</code> reste désactivé</td><td class="m"><span class="deco nb">Envoyé</span></td></tr>
               </tbody>
             </table>
           </div>
-          <p class="small">Deux précisions sur ce tableau. <code>toolCommands</code> est vide par défaut&nbsp;: tant qu'un dépôt n'a pas déclaré <code>"/*"</code> ou les commandes qu'il utilise, un simple <code>/rebase</code> est un commentaire non conforme comme un autre. Et une réponse qui commence par <code>decision:</code> est toujours vérifiée, quoi que dise <code>validateReplies</code>. Ces deux réglages sont décrits dans la page <a href={href('configure', 'fr')}>configuration</a>.</p>
+          <p class="small">Deux précisions sur ce tableau. <code>toolCommands</code> est vide par défaut&nbsp;: tant qu'un dépôt n'y a pas ajouté <code>"/*"</code>, un simple <code>/rebase</code> est un commentaire non conforme comme un autre. Une commande ne peut pas être exemptée seule&nbsp;: une entrée comme <code>"/rebase"</code> est ignorée, avec un avis de configuration, et <code>"/*"</code> les exempte toutes. Les bots, eux, s'exemptent un par un, par leur identifiant exact&nbsp;: <code>"@dependabot"</code>. Et une réponse qui commence par <code>decision:</code> est toujours vérifiée, quoi que dise <code>validateReplies</code>. Ces deux réglages sont décrits dans la page <a href={href('configure', 'fr')}>configuration</a>.</p>
         </section>
 
         <section class="dsec">

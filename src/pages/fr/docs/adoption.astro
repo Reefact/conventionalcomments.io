@@ -78,7 +78,7 @@ const page = 'adoption' as const;
 <span class="tk-k">&#125;</span></pre>
           <div class="callout">
             <span class="ct">à vérifier avant d'activer enforce</span>
-            <p style="margin:0"><code>toolCommands</code> est <strong>vide par défaut</strong>. En mode <code>enforce</code>, un <code>/rebase</code> utilisé seul est rejeté comme n'importe quel autre commentaire non conforme, sauf s'il a été déclaré. Ajouter <code>"/*"</code> exempte toutes les commandes commençant par <code>/</code>.</p>
+            <p style="margin:0"><code>toolCommands</code> est <strong>vide par défaut</strong>. En mode <code>enforce</code>, un <code>/rebase</code> utilisé seul est rejeté comme n'importe quel autre commentaire non conforme, jusqu'à ce que <code>"/*"</code> soit ajouté&nbsp;: il exempte toutes les commandes commençant par <code>/</code>. Une entrée pour une seule commande, comme <code>"/rebase"</code>, est ignorée.</p>
           </div>
         </section>
 
