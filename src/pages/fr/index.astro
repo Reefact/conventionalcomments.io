@@ -209,27 +209,23 @@ const page = 'home' as const;
       <div class="in">
         <div class="split">
           <div class="stack g14">
-            <span class="eyebrow">le parcours&nbsp;:</span>
+            <span class="eyebrow">deux modes&nbsp;:</span>
             <h2 style="font-size:24px">Aider d'abord. Bloquer seulement quand l'équipe l'a décidé.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">L'extension a trois modes&nbsp;: <code>off</code>, <code>assist</code> et <code>enforce</code>. En <code>assist</code>, le mode par défaut, elle aide et ne bloque jamais. En <code>enforce</code>, elle refuse d'envoyer un commentaire mal formé — dans le navigateur de qui l'a installée.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">L'équipe choisit dans la configuration le mode qui s'applique, pour un dépôt ou pour toute l'organisation.</p>
             <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Elle ne bloque jamais une fusion. Une équipe qui veut qu'une fusion attende la résolution des conversations s'appuie sur le réglage que sa plateforme prévoit pour cela.</p>
             <div class="hero-btns">
               <a class="btn btn-p" href={href('adoption', 'fr')}>Comment l'adopter en équipe</a>
               <a class="btn btn-s" href={href('enforce', 'fr')}>Ce que fait enforce</a>
             </div>
           </div>
-          <div class="traj">
+          <div class="traj two">
             <div class="step" style="--st:var(--fg-faint)">
               <span class="sn">assist</span><span class="sw">le mode par défaut</span>
-              <span class="sd">L'extension aide les personnes qui l'ont installée et affiche, sur la pull request, les fils bloquants non résolus. Personne n'est bloqué. Aucun suivi centralisé par défaut.</span>
-            </div>
-            <div class="step" style="--st:var(--warn)">
-              <span class="sn">enforce</span><span class="sw">sur un dépôt pilote</span>
-              <span class="sd">Un dépôt passe en <code>enforce</code>. Là, l'extension refuse d'envoyer un commentaire mal formé. Partout ailleurs, rien ne change.</span>
+              <span class="sd">L'extension aide à rédiger des commentaires conformes, signale les problèmes pendant la saisie et affiche, sur la pull request, les fils bloquants non résolus. Elle ne bloque jamais.</span>
             </div>
             <div class="step" style="--st:var(--block)">
-              <span class="sn">enforce</span><span class="sw">généralisé</span>
-              <span class="sd">Une fois le pilote concluant, les autres dépôts suivent, au rythme que l'équipe choisit.</span>
+              <span class="sn">enforce</span><span class="sw">quand l'équipe le décide</span>
+              <span class="sd">Tout ce que fait <code>assist</code>, et en plus l'extension refuse d'envoyer un commentaire mal formé — dans le navigateur de qui l'a installée.</span>
             </div>
           </div>
         </div>

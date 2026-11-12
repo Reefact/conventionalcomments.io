@@ -11,7 +11,7 @@ const page = 'adoption' as const;
 <div class="dhead stack g12">
           <p class="crumb"><b>doc</b> / adoption</p>
           <h1>Adoption&nbsp;: assist → enforce</h1>
-          <p class="lede measure">La manière la plus sûre d'introduire une convention dans une équipe consiste à avancer progressivement&nbsp;: aider d'abord, puis — si l'équipe le souhaite — refuser les commentaires non conformes sur un dépôt pilote avant de le faire partout. Les deux étapes reposent uniquement sur l'extension. Aucune ne touche aux règles de fusion de votre plateforme&nbsp;: l'extension signale les fils bloquants non résolus et ne bloque jamais une fusion. La page <a href={href('enforce', 'fr')}>Enforce</a> décrit précisément ce que fait le mode strict, et ce qu'il ne fait pas.</p>
+          <p class="lede measure">La manière la plus sûre d'introduire une convention dans une équipe consiste à avancer progressivement&nbsp;: aider d'abord, puis — si l'équipe le souhaite — refuser les commentaires non conformes sur un dépôt pilote avant de le faire partout. Les deux modes reposent uniquement sur l'extension. Aucun ne touche aux règles de fusion de votre plateforme&nbsp;: l'extension signale les fils bloquants non résolus et ne bloque jamais une fusion. La page <a href={href('enforce', 'fr')}>Enforce</a> décrit précisément ce que fait le mode strict, et ce qu'il ne fait pas.</p>
         </div>
 
         <section class="dsec">
@@ -25,13 +25,12 @@ const page = 'adoption' as const;
             <table class="t">
               <thead><tr><th>Mode</th><th>Ce que fait l'extension</th><th>Peut-elle empêcher l'envoi d'un commentaire&nbsp;?</th></tr></thead>
               <tbody>
-                <tr><td class="m">off</td><td class="d">Rien.</td><td class="d">Non.</td></tr>
                 <tr><td class="m">assist</td><td class="d">Elle aide les relecteurs à rédiger des commentaires conformes, signale les problèmes pendant la saisie et compte les fils bloquants non résolus dans un bandeau, sur la pull request.</td><td class="d">Non.</td></tr>
                 <tr><td class="m" style="color:var(--block)">enforce</td><td class="d">Tout ce que fait <code>assist</code>.</td><td class="d">Oui, quand le commentaire n'est pas conforme et que la configuration a pu être lue.</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="small">Aucun mode ne bloque une fusion. Comme les deux étapes reposent uniquement sur l'extension, passer de l'une à l'autre revient à modifier la configuration&nbsp;: il n'y a aucun service séparé à déployer, à redémarrer ou à retirer. Les versions précédentes avaient un mode <code>warn</code> entre les deux&nbsp;; il se comportait exactement comme <code>assist</code> et a été retiré. Une configuration qui écrit encore <code>"warn"</code> est lue comme <code>"assist"</code>, avec un avis qui vous invite à la corriger.</p>
+          <p class="small">Aucun mode ne bloque une fusion. Comme les deux modes reposent uniquement sur l'extension, passer de l'un à l'autre revient à modifier la configuration&nbsp;: il n'y a aucun service séparé à déployer, à redémarrer ou à retirer. Les versions précédentes avaient un mode <code>warn</code> entre les deux&nbsp;; il se comportait exactement comme <code>assist</code> et a été retiré. Une configuration qui écrit encore <code>"warn"</code> est lue comme <code>"assist"</code>, avec un avis qui vous invite à la corriger. Pour désactiver l'extension sur un dépôt ou une organisation, la configuration accepte aussi <code>mode: off</code>.</p>
         </section>
 
         <section class="dsec">
