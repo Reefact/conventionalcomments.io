@@ -95,6 +95,13 @@ _Rien en attente pour l'instant._
 - **La documentation ne décrit plus des réglages et un mode qui ont disparu.** `warn`,
   `formatSeverity` et `resolverOverrideGroup` sortent des pages de configuration et
   d'adoption, qui disent maintenant ce qu'il advient d'un fichier qui les contient encore.
+- **La documentation dit ce que `toolCommands` et `coreMinVersion` acceptent vraiment.**
+  Elle invitait à exempter une seule commande comme `"/rebase"`, ce que l'extension ignore :
+  seuls `"/*"`, pour toutes les commandes commençant par `/`, et les identifiants exacts
+  `@compte` fonctionnent. Et `coreMinVersion` était présenté comme exigeant une version
+  minimale, alors que seule la majeure est comparée : avec une extension 1.x, `1.99.0` est
+  appliqué et `2.0.0` ne l'est pas. Les pages Enforce, configuration, adoption et diagnostic,
+  ainsi que les indications du schéma dans l'éditeur, le disent désormais.
 - **La page d'installation ne propose plus d'autoriser Azure DevOps Server ni
   `visualstudio.com`,** où l'extension ne fait rien.
 - **La page de confidentialité recense tout ce que l'extension conserve.** Trois préférences
