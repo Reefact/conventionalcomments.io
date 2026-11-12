@@ -88,6 +88,13 @@ _Nothing pending yet._
 - **The docs no longer describe settings and a mode that are gone.** `warn`,
   `formatSeverity` and `resolverOverrideGroup` are out of the configuration and adoption
   pages, which now say what happens to a file that still carries them.
+- **The docs say what `toolCommands` and `coreMinVersion` actually accept.** They invited
+  you to exempt a single slash command such as `"/rebase"`, which the extension ignores:
+  only `"/*"`, for every slash command, and exact `@handle` entries work. And
+  `coreMinVersion` was described as requiring a minimum version, when only its major is
+  compared — on a 1.x extension, `1.99.0` is applied and `2.0.0` is not. The Enforce,
+  configuration, adoption and troubleshooting pages and the schema's editor hints now say
+  so.
 - **The installation page no longer suggests authorizing Azure DevOps Server or
   `visualstudio.com`,** where the extension does nothing.
 - **The privacy page lists everything the extension keeps.** Three synced preferences rather
