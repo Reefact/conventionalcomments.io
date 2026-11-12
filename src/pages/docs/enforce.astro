@@ -1,0 +1,101 @@
+---
+import Docs from '../../layouts/Docs.astro';
+import { href } from '../../i18n/routes';
+
+const lang = 'en' as const;
+const page = 'enforce' as const;
+---
+<Docs lang={lang} page={page}
+  title="Enforce: what it blocks, and what it doesn't"
+  description="In enforce mode, the extension refuses to send a comment that breaks the convention. See when it blocks, why it re-reads the configuration first, and why it never stops a merge.">
+<div class="dhead stack g12">
+          <p class="crumb"><b>docs</b> / enforce</p>
+          <h1>Enforce: what it blocks, and what it doesn't</h1>
+          <p class="lede measure"><code>enforce</code> is the strictest of the three modes. In <code>assist</code>, the extension tells you a comment breaks the convention and lets you send it anyway. In <code>enforce</code>, it holds the comment back until it is fixed. That is a guard on <strong>sending</strong>, in the browser of whoever has the extension installed. It is not a condition on merging, and it was never meant to be one.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>When a comment is blocked</h2>
+          <p>Writing <code>"mode": "enforce"</code> is not enough on its own. Two conditions must hold together at the moment you send:</p>
+          <ul class="tick">
+            <li><span class="mk">1</span><b>The effective mode is <code>enforce</code></b><span class="tx">The mode is resolved from the three configuration levels — the enterprise floor, the organization's document, the repository's file. It is never assumed locally.</span></li>
+            <li><span class="mk">2</span><b>The configuration was actually read</b><span class="tx">If the extension could not reach the configuration, it does not refuse anything: nobody is blocked in the name of a rule that could not be read. A repository that simply has no configuration file is not in that case.</span></li>
+          </ul>
+          <p>If either condition is missing, the extension behaves as it does in <code>assist</code>: it shows its diagnostics and lets the comment through. Nothing else enters the decision — neither the age of the pull request, nor any state published on it.</p>
+          <p>When both hold, a comment with an <strong>error</strong> cannot be sent. The send button looks disabled and stays reachable with the keyboard, so that the reason is announced to a screen reader: <em>Sending blocked: the comment is not compliant</em>, followed by what is wrong. Warnings never block; they are advice.</p>
+          <div class="scroller">
+            <table class="t">
+              <thead><tr><th>What you do</th><th>In <code>enforce</code></th></tr></thead>
+              <tbody>
+                <tr><td class="d">Click the send button with a non-compliant comment</td><td class="m"><span class="deco b">Blocked</span></td></tr>
+                <tr><td class="d">Publish from the keyboard — Ctrl+Enter (or ⌘+Enter) in the field, for example</td><td class="m"><span class="deco b">Blocked</span></td></tr>
+                <tr><td class="d">Send a comment that only raises warnings</td><td class="m"><span class="deco nb">Sent</span></td></tr>
+                <tr><td class="d">Approve a pull request without writing anything</td><td class="m"><span class="deco nb">Sent</span></td></tr>
+                <tr><td class="d">Send a tool command declared in <code>toolCommands</code>, such as <code>/rebase</code></td><td class="m"><span class="deco nb">Sent</span></td></tr>
+                <tr><td class="d">Reply in a thread, while <code>validateReplies</code> is left off</td><td class="m"><span class="deco nb">Sent</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small">Two details behind that table. <code>toolCommands</code> is empty by default: until a repository declares <code>"/*"</code> or the commands it uses, a bare <code>/rebase</code> is a non-compliant comment like any other. And a reply that starts with <code>decision:</code> is always checked, whatever <code>validateReplies</code> says. Both settings are described under <a href={href('configure', 'en')}>configuration</a>.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>It re-reads the configuration before blocking</h2>
+          <p>The extension keeps the configuration in a cache — for an hour by default — and has no way to learn that a remote file changed in the meantime. A block decided on that cache could hold back a comment in a repository that went back to <code>assist</code> ten minutes ago.</p>
+          <p>So before it blocks anything, the extension reads the repository's and the organization's configuration again, bypassing its cache. If the fresh configuration no longer justifies the block, it releases the button and says so:</p>
+          <pre class="code">Configuration re-read: this comment is no longer blocked. Send it again.</pre>
+          <p>It does not send the comment for you: you click again. The practical consequence is for whoever runs a rollout: stepping back from <code>enforce</code> takes effect at the <strong>next send attempt</strong>, without waiting for anyone's cache to expire.</p>
+          <p class="small">Relaxing the organization's document does not reach everything. A repository that writes <code>"mode": "enforce"</code> in its own file keeps it, and so does an enterprise floor that requires it. The rollback order is on the <a href={href('adoption', 'en')}>adoption</a> page.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>There is no “send anyway” button</h2>
+          <p>That is deliberate. An extension can be switched off in two clicks, so a bypass button would add no real control: only a ceremony, and the impression of a safeguard where there is none. The guard exists to catch the slip — the comment sent without its label — which is the common case. It has never claimed to stop someone determined.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>What enforce does not do</h2>
+          <div class="split">
+            <div class="callout">
+              <span class="ct">it only reaches the browsers that run it</span>
+              <h4>It does not cover every way to comment</h4>
+              <p>A comment posted through the platform's API, a command-line tool, an IDE, another browser or a machine without the extension is not checked by anything. No special permission is needed to get around the guard: it is enough not to have it.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">reported, never prevented</span>
+              <h4>It never blocks a merge</h4>
+              <p>The banner at the top of a pull request counts its unresolved blocking threads and lists them. It informs. The extension publishes no status on the pull request and leaves the merge button alone, in every mode.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">gitlab.com</span>
+              <h4>It never blocks on GitLab</h4>
+              <p>The extension cannot read a repository's configuration on GitLab yet. The second condition above is therefore never met there: merge requests get the toolbar, the live validation, the badges and the banner, and every comment goes through.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>If you want merges to wait for resolved threads</h2>
+          <p>That is your platform's job, and it does it with its own settings — requiring that conversations be resolved before a pull request can be merged, for example. Such a rule holds for everyone, with or without the extension, which is exactly what a browser extension cannot promise.</p>
+          <p>The two fit together. The convention says which threads are blocking, and the extension keeps them visible; the platform decides whether an unresolved thread holds the merge.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Turning it on</h2>
+          <p>One setting, at whichever level you manage: the repository's file for a pilot, the organization's document for everyone.</p>
+          <pre class="code"><span class="tk-k">&#123;</span>
+  <span class="tk-k">"version"</span>: <span class="tk-v">1</span>,
+  <span class="tk-k">"mode"</span>: <span class="tk-v">"enforce"</span>
+<span class="tk-k">&#125;</span></pre>
+          <div class="callout warn">
+            <span class="ct">if a repository already says enforce</span>
+            <p style="margin:0">Before 1.0.0-rc.1, <code>enforce</code> only blocked pull requests created after an activation date that was not set by default, so most installations in <code>enforce</code> never blocked anything. That condition is gone. A repository that already writes <code>"mode": "enforce"</code> blocks non-compliant comments on every pull request as soon as its reviewers update the extension.</p>
+          </div>
+          <p>The <a href={href('adoption', 'en')}>adoption</a> page describes the path that leads here — <code>assist</code> everywhere, <code>enforce</code> on a pilot repository, then the rollout — and what to prepare before the switch. <a href={href('configure', 'en')}>Configuration</a> explains where <code>mode</code> is read from and which level wins.</p>
+        </section>
+
+        <div class="pager">
+          <a class="pgl" href={href('adoption', 'en')}><span class="dir">← previous</span><span class="ttl">Adoption</span></a>
+          <a class="pgl" href={href('aireview', 'en')} style="text-align:right"><span class="dir">next →</span><span class="ttl">AI-assisted review</span></a>
+        </div>
+</Docs>

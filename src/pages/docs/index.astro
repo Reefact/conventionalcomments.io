@@ -7,19 +7,19 @@ const page = 'docsindex' as const;
 ---
 <Docs lang={lang} page={page}
   title="Documentation"
-  description="Three paths: trying it out, setting it up for a repository, and seeing where platform-level enforcement is headed.">
+  description="Four ways in: trying the extension, setting it up for a repository, going further with enforce and AI-assisted review, and finding out why something isn't working.">
 <div class="dhead stack g12">
           <p class="crumb"><b>docs</b></p>
           <h1>Documentation</h1>
-          <p class="lede measure">Three ways in. Start with the one that fits what you're trying to do.</p>
+          <p class="lede measure">Four ways in. Start with the one that fits what you're trying to do.</p>
         </div>
 
         <section class="dsec">
           <h2>I'm trying it out</h2>
           <p>You want to see how it works on your own pull requests, without needing anyone else's permission.</p>
           <div class="paths">
-            <a class="path" href={href('install', 'en')}><span class="pn">Install the extension</span><span class="pd">Get it from your browser's extension store, or use a release archive if building locally isn't an option. You'll be up and running in minutes.</span></a>
-            <a class="path" href={href('labels', 'en')}><span class="pn">Labels &amp; decorations</span><span class="pd">Meet the thirteen labels, learn what each one means, and understand when a comment becomes blocking.</span></a>
+            <a class="path" href={href('install', 'en')}><span class="pn">Install the extension</span><span class="pd">Load it from a release archive, with no build tools, or build it from source. The store listings are not published yet. You'll be up and running in minutes.</span></a>
+            <a class="path" href={href('labels', 'en')}><span class="pn">Labels &amp; decorations</span><span class="pd">Meet the nineteen labels, see which come from Conventional Comments and which the toolkit adds for replies, and understand when a comment becomes blocking.</span></a>
           </div>
         </section>
 
@@ -27,17 +27,25 @@ const page = 'docsindex' as const;
           <h2>I'm setting it up for a repository</h2>
           <p>Your team is on board. Now you want everyone following the same rules.</p>
           <div class="paths">
-            <a class="path" href={href('configure', 'en')}><span class="pn">Configure</span><span class="pd">One file on the default branch. Learn which settings matter, which gotchas to watch for, and how the three levels of configuration work together.</span></a>
-            <a class="path" href={href('adoption', 'en')}><span class="pn">Adoption</span><span class="pd">assist → warn → enforce. See what changes at each stage and how to roll back quickly if you need to.</span></a>
+            <a class="path" href={href('configure', 'en')}><span class="pn">Configure</span><span class="pd">One file on the default branch. Learn which settings matter, how the three levels of configuration work together, and what the extension tells you when the file has a problem.</span></a>
+            <a class="path" href={href('adoption', 'en')}><span class="pn">Adoption</span><span class="pd">assist → enforce. See what changes at each stage, what to prepare before the switch, and how to roll back in minutes.</span></a>
           </div>
         </section>
 
         <section class="dsec">
-          <h2>I'm wondering what happens next</h2>
-          <p>You want the convention applied consistently, regardless of who has installed what — and you're curious where enforcement is headed.</p>
+          <h2>I want to go further</h2>
+          <p>The team writes in the convention. Now you want it to hold when someone forgets — or when part of the review is written by an agent.</p>
           <div class="paths">
-            <a class="path" href={href('server', 'en')}><span class="pn">Enforce (roadmap)</span><span class="pd">Why platform-level enforcement isn't shipped yet, what already works without it, and how the eventual implementation is being kept open.</span></a>
-            <a class="path" href={href('troubleshooting', 'en')}><span class="pn">Troubleshooting</span><span class="pd">Understand the banners and the few common surprises you're likely to run into the first time.</span></a>
+            <a class="path" href={href('enforce', 'en')}><span class="pn">Enforce</span><span class="pd">What the stricter mode does — refuse to send a comment that doesn't follow the convention — and what it doesn't: it never blocks a merge, and it only applies where the extension is installed.</span></a>
+            <a class="path" href={href('aireview', 'en')}><span class="pn">AI-assisted review</span><span class="pd">Session markers that say which review session wrote a comment, and the two skills that teach an agent to review, and to answer a review, in the convention.</span></a>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Something isn't working</h2>
+          <p>The toolbar doesn't show up, a comment is refused, or the extension reports something you didn't expect.</p>
+          <div class="paths">
+            <a class="path" href={href('troubleshooting', 'en')}><span class="pn">Troubleshooting</span><span class="pd">What the status pill, the configuration notices and the diagnostic journal tell you, and the few surprises you're likely to run into the first time.</span></a>
           </div>
         </section>
 
