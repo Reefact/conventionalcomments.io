@@ -62,6 +62,12 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ### 🔧 Improved
 
+- **The configuration schema follows the toolkit's 1.0.0-rc.2.** `/schema/v1.json` now knows
+  `sessionIcon`, the `kind`, `description` and `usage` of a label, and the
+  `W-SESSION-MULTIPLE` diagnostic. It no longer offers the seven keys the toolkit retired
+  with the verifier — `formatSeverity`, `overrideLabel`, `resolverOverrideGroup`,
+  `activation`, `docUrl`, `server` and `exemptionLog` — so your editor now underlines them.
+  `"mode": "warn"` is still accepted, and flagged as obsolete.
 - **The platforms page no longer lists browsers as a platform.** Chrome, Edge, Brave and
   Firefox sat in the same grid as GitHub and Azure DevOps, as if they answered the same
   question. They now have their own short section under the platforms: where you review
