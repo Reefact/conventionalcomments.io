@@ -6,48 +6,65 @@ const lang = 'fr' as const;
 const page = 'adoption' as const;
 ---
 <Docs lang={lang} page={page}
-  title="Adoption : assist → warn → enforce"
-  description="Assist et warn sont disponibles dès aujourd'hui via l'extension. Découvrez comment introduire progressivement la convention dans une équipe, ce qui change à chaque étape et la place qu'occupera enforce, encore sur la feuille de route.">
+  title="Adoption : assist → enforce"
+  description="Commencez en assist, passez un dépôt pilote en enforce, puis généralisez. Découvrez ce qui change à chaque étape, la seule chose à préparer avant enforce et la façon de revenir en arrière en quelques minutes.">
 <div class="dhead stack g12">
           <p class="crumb"><b>doc</b> / adoption</p>
-          <h1>Adoption&nbsp;: assist → warn → enforce</h1>
-          <p class="lede measure">La manière la plus sûre d'introduire une convention dans une équipe consiste à avancer progressivement&nbsp;: aider d'abord, rendre les points à traiter visibles ensuite, puis décider ensemble s'il faut aller jusqu'à rendre son respect obligatoire. Assist et warn fonctionnent dès aujourd'hui uniquement via l'extension. Enforce, dans sa dimension de contrôle de fusion au niveau de la plateforme, reste sur la feuille de route — consultez <a href={href('server', 'fr')}>la feuille de route</a> pour en savoir plus.</p>
+          <h1>Adoption&nbsp;: assist → enforce</h1>
+          <p class="lede measure">La manière la plus sûre d'introduire une convention dans une équipe consiste à avancer progressivement&nbsp;: aider d'abord, puis — si l'équipe le souhaite — refuser les commentaires non conformes sur un dépôt pilote avant de le faire partout. Les deux étapes reposent uniquement sur l'extension. Aucune ne touche aux règles de fusion de votre plateforme&nbsp;: l'extension signale les fils bloquants non résolus et ne bloque jamais une fusion. La page <a href={href('enforce', 'fr')}>Enforce</a> décrit précisément ce que fait le mode strict, et ce qu'il ne fait pas.</p>
         </div>
 
         <section class="dsec">
           <h2>Les étapes d'adoption</h2>
           <div class="timeline">
-            <div class="tcell" style="--st:var(--fg-faint)"><span class="wk">semaines 0 à 2</span><span class="md">assist</span><span class="ds">Installez l'extension et laissez l'équipe se l'approprier. Aucun statut n'est publié et rien n'est mesuré de façon centralisée, sauf si votre organisation a explicitement activé la télémétrie.</span></div>
-            <div class="tcell" style="--st:var(--warn)"><span class="wk">semaines 2 à 6</span><span class="md">warn</span><span class="ds">Les points bloquants non résolus deviennent visibles directement sur la pull request, sans bloquer l'envoi d'un commentaire ni la fusion. L'équipe voit ainsi ce qui reste à traiter sans modifier son fonctionnement habituel.</span></div>
-            <div class="tcell" style="--st:var(--block)"><span class="wk">plus tard</span><span class="md">enforce</span><span class="ds">Le contrôle de fusion au niveau de la plateforme n'est pas encore disponible. Il fait partie de la feuille de route pour GitHub, Azure DevOps et, à terme, d'autres plateformes.</span></div>
+            <div class="tcell" style="--st:var(--fg-faint)"><span class="wk">dès le premier jour</span><span class="md">assist</span><span class="ds">Installez l'extension et laissez l'équipe se l'approprier. Rien n'est bloqué, rien n'est publié. Rien n'est mesuré de façon centralisée non plus, sauf si votre organisation a explicitement activé la télémétrie.</span></div>
+            <div class="tcell" style="--st:var(--warn)"><span class="wk">quand l'équipe est prête</span><span class="md">enforce, un pilote</span><span class="ds">Sur un seul dépôt, l'extension refuse l'envoi d'un commentaire qui ne respecte pas la convention. Tous les autres dépôts restent en <code>assist</code>.</span></div>
+            <div class="tcell" style="--st:var(--block)"><span class="wk">quand le pilote tient</span><span class="md">enforce, partout</span><span class="ds">Portez le mode dans la configuration de l'organisation&nbsp;: il s'applique alors à tous les dépôts qui ne fixent pas le leur.</span></div>
           </div>
           <div class="scroller">
             <table class="t">
-              <thead><tr><th>Mode</th><th>Ce que fait l'extension</th><th>Effet sur la pull request</th></tr></thead>
+              <thead><tr><th>Mode</th><th>Ce que fait l'extension</th><th>Peut-elle empêcher l'envoi d'un commentaire&nbsp;?</th></tr></thead>
               <tbody>
-                <tr><td class="m">off</td><td class="d">Ne fait rien.</td><td class="d">Aucun.</td></tr>
-                <tr><td class="m">assist</td><td class="d">Aide les relecteurs à rédiger des commentaires conformes et signale les problèmes détectés. Ne bloque jamais.</td><td class="d">Aucun.</td></tr>
-                <tr><td class="m" style="color:var(--warn)">warn</td><td class="d">Comme <code>assist</code>, avec en plus un décompte visible des fils bloquants non résolus.</td><td class="d">Les points restent visibles, sans bloquer.</td></tr>
-                <tr><td class="m" style="color:var(--block)">enforce</td><td class="d">Peut refuser localement, dans le navigateur, l'envoi d'un commentaire mal formé.</td><td class="d">Aucun contrôle de fusion au niveau de la plateforme n'est encore disponible.</td></tr>
+                <tr><td class="m">off</td><td class="d">Rien.</td><td class="d">Non.</td></tr>
+                <tr><td class="m">assist</td><td class="d">Elle aide les relecteurs à rédiger des commentaires conformes, signale les problèmes pendant la saisie et compte les fils bloquants non résolus dans un bandeau, sur la pull request.</td><td class="d">Non.</td></tr>
+                <tr><td class="m" style="color:var(--block)">enforce</td><td class="d">Tout ce que fait <code>assist</code>.</td><td class="d">Oui, quand le commentaire n'est pas conforme et que la configuration a pu être lue.</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="small">Comme ces étapes reposent aujourd'hui uniquement sur l'extension, passer de l'une à l'autre revient à modifier la configuration. Il n'y a aucun service séparé à déployer, redémarrer ou retirer.</p>
+          <p class="small">Aucun mode ne bloque une fusion. Comme les deux étapes reposent uniquement sur l'extension, passer de l'une à l'autre revient à modifier la configuration&nbsp;: il n'y a aucun service séparé à déployer, à redémarrer ou à retirer. Les versions précédentes avaient un mode <code>warn</code> entre les deux&nbsp;; il se comportait exactement comme <code>assist</code> et a été retiré. Une configuration qui écrit encore <code>"warn"</code> est lue comme <code>"assist"</code>, avec un avis qui vous invite à la corriger.</p>
         </section>
 
         <section class="dsec">
-          <h2>Un prérequis à anticiper</h2>
-          <p><strong>Configurez <code>resolverOverrideGroup</code></strong> avant de compter sur les réponses <code>decision</code> pour résoudre un fil bloquant. Ce paramètre définit qui peut enregistrer une <code>decision</code> lorsque l'auteur du commentaire bloquant n'est pas disponible. S'il reste vide, personne ne peut utiliser ce mécanisme de secours et un fil bloquant peut rester sans personne autorisée pour le résoudre.</p>
+          <h2>Durcissez les règles tant que vous êtes en assist</h2>
+          <p>Un changement de configuration s'applique aux pull requests déjà ouvertes. Activer un label bloquant ou relever une sévérité peut rendre non conforme un commentaire que son auteur avait écrit de bonne foi — et rendre bloquants, d'un seul coup, des fils sur toutes les pull requests ouvertes. Modifiez donc les règles tant que rien n'est refusé&nbsp;: durcissez-les en <code>assist</code>, observez ce que signalent la pastille d'état et le bandeau, et passez en <code>enforce</code> seulement ensuite.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Une seule chose à préparer avant enforce</h2>
+          <p><strong>Écrivez la procédure de retour arrière, et désignez la personne qui l'exécutera.</strong> Elle doit préciser l'ordre des opérations et la liste des dépôts qui écrivent <code>"mode": "enforce"</code> dans leur propre fichier&nbsp;: la configuration de l'organisation ne l'emporte pas sur eux, et chacun devra donc être modifié à la main. Dressez cette liste avant la bascule, pas pendant l'incident.</p>
+          <p>C'est le seul prérequis. Personne n'a besoin d'une habilitation particulière&nbsp;: le paramètre <code>resolverOverrideGroup</code>, que les versions précédentes de cette page demandaient de configurer, a été retiré, tout comme la date d'activation. Deux points méritent tout de même une vérification sur le dépôt pilote&nbsp;:</p>
+          <ul class="bul">
+            <li><strong>La plateforme.</strong> <code>enforce</code> s'applique sur GitHub et sur Azure DevOps. Sur GitLab, l'extension ne sait pas encore lire la configuration d'un dépôt&nbsp;: elle n'y bloque donc jamais, quel que soit le mode.</li>
+            <li><strong>Les commentaires destinés aux outils.</strong> <code>toolCommands</code> est vide par défaut — voir la remarque en bas de cette page.</li>
+          </ul>
         </section>
 
         <section class="dsec">
           <h2>Revenir en arrière</h2>
-          <p>Chaque étape correspond à une valeur du paramètre <code>mode</code>, appliquée via le même système à trois niveaux décrit dans <a href={href('configure', 'fr')}>la configuration</a>. Repasser de <code>warn</code> à <code>assist</code>, ou du mode strict local d'<code>enforce</code> à <code>warn</code>, prend effet dès la prochaine lecture de la configuration par l'extension. Aucun service n'est à redémarrer et aucune règle de protection de branche n'est à modifier, puisque ces modes n'agissent pas encore sur les règles de fusion de la plateforme.</p>
+          <p>Repasser d'<code>enforce</code> à <code>assist</code> doit prendre quelques minutes. Le mode est résolu à travers les trois niveaux décrits dans <a href={href('configure', 'fr')}>la configuration</a>, et chacun d'eux peut, à lui seul, maintenir <code>enforce</code>. Assouplissez-les dans cet ordre&nbsp;:</p>
+          <ul class="tick">
+            <li><span class="mk">1</span><b>Le plancher</b><span class="tx">Si la politique d'entreprise de vos navigateurs impose <code>enforce</code> comme mode minimal, commencez par l'assouplir à cet endroit. Aucun des deux niveaux suivants ne peut le faire à sa place.</span></li>
+            <li><span class="mk">2</span><b>La configuration de l'organisation</b><span class="tx">Passez son <code>mode</code> à <code>assist</code>. Cela vaut pour tous les dépôts qui n'écrivent pas leur propre mode.</span></li>
+            <li><span class="mk">3</span><b>Chaque dépôt de votre liste</b><span class="tx">Modifiez le fichier de chaque dépôt qui écrit lui-même <code>"mode": "enforce"</code>.</span></li>
+          </ul>
+          <p>Il n'y a rien à attendre ni à invalider. Avant de bloquer un commentaire, l'extension relit la configuration sans tenir compte de son cache. Un mode assoupli lève donc le blocage dès la tentative d'envoi suivante&nbsp;: l'envoi est retenu le temps de la relecture, puis le bouton est libéré et un message invite à renvoyer le commentaire. La pastille d'état peut continuer d'afficher l'ancien mode pendant une heure au plus — la durée du cache par défaut —, mais cela ne bloque rien.</p>
+          <p class="small">Pour vérifier&nbsp;: sur une pull request témoin, envoyez un commentaire sans label. Il doit partir.</p>
         </section>
 
         <section class="dsec">
           <h2>Ce qu'il faut surveiller avant d'aller plus loin</h2>
-          <p>Il n'existe pas encore de tableau de bord à l'échelle de l'organisation. Une vue agrégée de ce type deviendra pertinente avec un futur contrôle exécuté au niveau de la plateforme. En attendant, l'observation reste surtout qualitative&nbsp;: les relecteurs trouvent-ils les bons labels&nbsp;? Les fils bloquants sont-ils réellement résolus&nbsp;? Le décompte affiché en <code>warn</code> revient-il généralement à zéro avant la fusion&nbsp;? Un usage très inégal des labels ou des points bloquants qui restent systématiquement ouverts sont de bonnes raisons de ne pas durcir les règles trop vite.</p>
+          <p>Il n'existe pas de tableau de bord à l'échelle de l'organisation. Les indicateurs qui diraient quand une équipe est prête — la part de commentaires conformes, la répartition des labels — doivent venir de la télémétrie de l'extension, désactivée par défaut et soumise au consentement de chacun. Ils ne sont pas encore calculables&nbsp;: les compteurs que l'extension émet aujourd'hui n'enregistrent pas le nombre de commentaires rédigés. En attendant, l'étape <code>assist</code> se suit à l'œil, sur la pastille d'état et sur le bandeau.</p>
+          <p>L'observation reste donc qualitative&nbsp;: les relecteurs trouvent-ils les bons labels&nbsp;? Les fils bloquants sont-ils réellement résolus, ou restent-ils en suspens&nbsp;? Le décompte du bandeau revient-il généralement à zéro avant la fusion&nbsp;? Un usage très inégal des labels, ou des décomptes qui n'atteignent jamais tout à fait zéro, sont de bonnes raisons de ralentir plutôt que de passer en <code>enforce</code>.</p>
         </section>
 
         <section class="dsec">
@@ -55,20 +72,18 @@ const page = 'adoption' as const;
           <p>Un seul paramètre doit changer en passant d'une étape à l'autre&nbsp;: <code>mode</code>. Tout le reste devrait déjà être en place.</p>
           <pre class="code"><span class="tk-k">&#123;</span>
   <span class="tk-k">"version"</span>: <span class="tk-v">1</span>,
-  <span class="tk-k">"mode"</span>: <span class="tk-v">"warn"</span>,                    <span class="tk-cm">// assist → warn → enforce</span>
-  <span class="tk-k">"resolverOverrideGroup"</span>: [<span class="tk-v">"acme/tech-leads"</span>],
-  <span class="tk-k">"formatSeverity"</span>: <span class="tk-v">"warn"</span>,          <span class="tk-cm">// les erreurs de format ne bloquent pas</span>
+  <span class="tk-k">"mode"</span>: <span class="tk-v">"assist"</span>,                  <span class="tk-cm">// assist → enforce</span>
   <span class="tk-k">"exemptUsers"</span>: [<span class="tk-v">"dependabot[bot]"</span>, <span class="tk-v">"github-actions[bot]"</span>],
   <span class="tk-k">"toolCommands"</span>: [<span class="tk-v">"/*"</span>, <span class="tk-v">"@dependabot"</span>, <span class="tk-v">"@renovate"</span>]
 <span class="tk-k">&#125;</span></pre>
           <div class="callout">
-            <span class="ct">à vérifier avant d'activer le mode strict</span>
-            <p style="margin:0"><code>toolCommands</code> est <strong>vide par défaut</strong>. Dans le mode strict local d'<code>enforce</code>, un <code>/rebase</code> utilisé seul est rejeté comme n'importe quel autre commentaire non conforme, sauf s'il a été déclaré. Ajouter <code>"/*"</code> exempte toutes les commandes commençant par <code>/</code>.</p>
+            <span class="ct">à vérifier avant d'activer enforce</span>
+            <p style="margin:0"><code>toolCommands</code> est <strong>vide par défaut</strong>. En mode <code>enforce</code>, un <code>/rebase</code> utilisé seul est rejeté comme n'importe quel autre commentaire non conforme, sauf s'il a été déclaré. Ajouter <code>"/*"</code> exempte toutes les commandes commençant par <code>/</code>.</p>
           </div>
         </section>
 
         <div class="pager">
-          <a class="pgl" href={href('labels', 'fr')}><span class="dir">← précédent</span><span class="ttl">Labels et décorations</span></a>
-          <a class="pgl" href={href('server', 'fr')} style="text-align:right"><span class="dir">suivant →</span><span class="ttl">Enforce (feuille de route)</span></a>
+          <a class="pgl" href={href('configure', 'fr')}><span class="dir">← précédent</span><span class="ttl">Configuration</span></a>
+          <a class="pgl" href={href('enforce', 'fr')} style="text-align:right"><span class="dir">suivant →</span><span class="ttl">Enforce</span></a>
         </div>
 </Docs>

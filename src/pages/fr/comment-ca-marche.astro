@@ -7,13 +7,13 @@ const page = 'howitworks' as const;
 ---
 <Base lang={lang} page={page}
   title="Comment ça marche"
-  description="L'extension aide à rédiger les commentaires et suit les points bloquants directement dans le navigateur. Découvrez ce qu'elle fait aujourd'hui et ce qu'Enforce ajoutera à terme au niveau de la plateforme.">
+  description="L'extension aide à rédiger les commentaires et garde sous les yeux les points bloquants encore ouverts, directement dans le navigateur. Découvrez ce qu'elle ajoute à la page, quand elle bloque un commentaire et ce qu'elle laisse à votre plateforme.">
 <section class="hband">
       <div class="in">
         <div class="stack g18 measure">
           <span class="eyebrow acc">comment ça marche&nbsp;:</span>
           <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">L'extension vous aide à écrire. Elle suit aussi les points bloquants.</h1>
-          <p class="lede">L'extension navigateur facilite l'utilisation de Conventional Comments pendant la revue&nbsp;: barre d'outils, raccourcis clavier et validation au fil de la saisie. Elle repère aussi les fils bloquants qui restent ouverts et affiche leur nombre directement sur la pull request. À terme, Enforce ajoutera un contrôle de fusion exécuté au niveau de la plateforme, indépendant du navigateur. Cette capacité n'est pas encore disponible.</p>
+          <p class="lede">L'extension de navigateur facilite l'utilisation de Conventional Comments pendant la revue&nbsp;: barre d'outils, raccourcis clavier et validation au fil de la saisie. Une fois les commentaires publiés, elle affiche leurs labels sous forme de badges et compte, directement sur la pull request, les fils bloquants qui restent ouverts. L'extension est tout le produit&nbsp;: il n'y a rien d'autre à déployer, et rien en elle ne bloque une fusion.</p>
         </div>
       </div>
     </section>
@@ -27,33 +27,38 @@ const page = 'howitworks' as const;
 
         <div class="feat">
           <div>
-            <h3>Une barre d'outils sur deux rangées</h3>
-            <p>Les labels occupent la première rangée et les décorations la seconde. Ils restent séparés quelle que soit la largeur disponible, car choisir un label et le compléter par une décoration sont deux actions différentes. Une seule rangée qui se replie finirait par les placer côte à côte comme s'ils avaient le même rôle.</p>
-            <p>Cliquer sur un label <strong>insère ou remplace le préfixe</strong> sans modifier le reste du commentaire. Cliquez de nouveau sur le même label pour le retirer. Survolez-le pour afficher sa définition et un exemple.</p>
+            <h3>Une barre d'outils en trois groupes</h3>
+            <p>Viennent d'abord les labels qui ouvrent un point — <code>issue</code>, <code>suggestion</code>, <code>question</code> et les autres —, suivis des deux labels qui disent où en est la revue, <code>summary</code> et <code>reviewed</code>. Les labels qui répondent à un point — <code>thanks</code>, <code>done</code>, <code>ack</code>, <code>decision</code>, <code>disagree</code> — occupent toujours leur propre rangée, sous un trait fin. Un double trait sépare ensuite les labels des décorations, car choisir un label et le préciser par une décoration sont deux gestes différents.</p>
+            <p>Cliquer sur un label <strong>insère ou remplace le préfixe</strong> sans modifier le reste du commentaire. Cliquez de nouveau sur le même label pour le retirer. Survolez un bouton&nbsp;: il vous dit quand employer ce label, exemple à l'appui. Dans les options de l'extension, le réglage <em>Ordre des boutons</em> place en tête de leur groupe les labels que vous utilisez le plus.</p>
           </div>
           <div>
             <h3>Tout peut aussi se faire au clavier</h3>
             <p>Tapez <code>/</code> ou <code>:</code> au début du champ de commentaire pour ouvrir une liste filtrable. Utilisez <code>↑</code> et <code>↓</code> pour naviguer, <code>Entrée</code> ou <code>Tab</code> pour sélectionner et <code>Échap</code> pour fermer la liste.</p>
             <p>Vous pouvez également développer des abréviations avec <code>Tab</code>&nbsp;:</p>
             <pre class="code">?i  → issue:
-?ib → issue (blocking):</pre>
+?ib → issue (blocking):
+?ni → nitpick:</pre>
             <p>Des raccourcis directs comme <code>Alt+I</code> sont également disponibles.</p>
           </div>
           <div>
             <h3>Une validation en temps réel sous le champ</h3>
-            <p>Un indicateur vous précise si le commentaire est&nbsp;:</p>
-            <ul class="bul">
-              <li>conforme&nbsp;;</li>
-              <li>conforme avec des avertissements&nbsp;;</li>
-              <li>non conforme.</li>
-            </ul>
-            <p>Lorsque plusieurs problèmes sont présents, l'extension les affiche <strong>tous en même temps</strong>. N'en montrer qu'un seul obligerait à corriger les erreurs successivement pour découvrir la suivante.</p>
-            <p>La validation est déclenchée 150&nbsp;ms après la dernière frappe afin que l'interface reste stable pendant la saisie.</p>
+            <p>Un indicateur vous précise si le commentaire est conforme, conforme avec des avertissements, ou non conforme. Lorsque plusieurs problèmes sont présents, il les affiche <strong>tous en même temps</strong>&nbsp;: n'en montrer qu'un seul obligerait à corriger les erreurs une à une pour découvrir la suivante. La validation se déclenche 150&nbsp;ms après la dernière frappe, afin que l'interface reste stable pendant la saisie.</p>
+            <p>Ce même indicateur dit ce que l'extension sait des règles. Si elle n'a pas pu lire la configuration, elle vous le dit au lieu de déclarer un commentaire conforme. Et quand la configuration pose un problème — une clé inconnue ou retirée, une valeur invalide, un réglage que la politique de votre organisation écarte —, elle affiche un avis pour chacun, dans votre langue, en précisant d'où il vient. Ces avis informent. Ils ne changent jamais le verdict rendu sur un commentaire.</p>
           </div>
           <div>
             <h3>Des badges sur les commentaires publiés</h3>
-            <p>Une fois les commentaires publiés, leurs labels sont affichés sous forme de badges sans modifier le contenu réellement enregistré par la plateforme. Un bandeau en haut de la pull request indique le nombre de fils bloquants encore non résolus et permet d'accéder directement à chacun d'eux.</p>
-            <p>Ce nombre est calculé directement par l'extension à partir des fils affichés dans la page, sans aucun serveur.</p>
+            <p>Une fois les commentaires publiés, leurs labels sont affichés sous forme de badges, sans modifier le contenu réellement enregistré par la plateforme. Survolez un badge&nbsp;: il dit ce que le commentaire signifie, pour la personne qui le lit. Ce n'est pas le texte du bouton, qui s'adresse, lui, à la personne qui s'apprête à écrire.</p>
+            <p>Une équipe peut remplacer ces deux textes par les siens, label par label, dans sa configuration.</p>
+          </div>
+          <div>
+            <h3>Un bandeau et un filtre pour les fils</h3>
+            <p>Un bandeau, en haut de la pull request, compte les fils bloquants non résolus. Il est replié par défaut et n'affiche que ce nombre&nbsp;; dépliez-le et il énumère chaque fil — label, sujet, auteur — avec un lien pour s'y rendre.</p>
+            <p>Au-dessus des fils, une rangée de labels sert de filtre&nbsp;: choisissez-en un et seuls les fils ouverts avec ce label restent à l'écran. L'un et l'autre sont calculés par l'extension à partir des fils affichés dans la page, sans aucun serveur.</p>
+          </div>
+          <div>
+            <h3>Des marqueurs de session de revue</h3>
+            <p>Une ligne <code>[session:&lt;id&gt;]</code> dans un commentaire indique quelle session de revue l'a écrit — utile quand plusieurs agents IA, ou plusieurs passes, relisent la même pull request. L'extension masque cette ligne et affiche une mention discrète, <code>🤖 session: &lt;id&gt;</code>, tout en bas du commentaire. Le marqueur n'a jamais d'effet sur la validation.</p>
+            <p>Voir <a href={href('aireview', 'fr')}>la revue assistée par IA</a>.</p>
           </div>
         </div>
       </div>
@@ -64,7 +69,7 @@ const page = 'howitworks' as const;
         <div class="stack g14 measure">
           <span class="eyebrow">un choix volontaire&nbsp;:</span>
           <h2>Il n'existe pas de bouton « publier quand même ».</h2>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Dans son mode le plus strict, l'extension peut empêcher l'envoi d'un commentaire mal formé. Elle ne propose aucun bouton permettant de contourner localement ce blocage. C'est volontaire, pour deux raisons.</p>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">Dans son mode le plus strict, <code>enforce</code>, l'extension refuse d'envoyer un commentaire mal formé. Elle ne propose aucun bouton permettant de contourner localement ce blocage. C'est volontaire, pour deux raisons.</p>
         </div>
         <div class="duo">
           <div>
@@ -75,13 +80,13 @@ const page = 'howitworks' as const;
           <div>
             <span class="tag" style="color:var(--accent)">la raison la plus importante</span>
             <h3>La justification doit rester dans la revue</h3>
-            <p>« Nous avons décidé de ne pas traiter ce point, pour telle raison » fait partie de la revue. Cette décision doit apparaître dans le fil sous la forme d'un commentaire identifié, visible par tous et conservé avec la pull request. Elle n'a pas vocation à disparaître dans un journal technique séparé.</p>
+            <p>« Nous avons décidé de ne pas traiter ce point, pour telle raison » fait partie de la revue. Cette décision doit apparaître dans le fil sous la forme d'un commentaire labellisé — une <code>decision</code> —, visible par tous et conservé avec la pull request. Elle n'a pas vocation à disparaître dans un journal technique séparé.</p>
           </div>
         </div>
         <div class="callout acc">
           <span class="ct">quel est donc le rôle de l'extension&nbsp;?</span>
           <h4>Un garde-fou, pas une barrière infranchissable.</h4>
-          <p>L'extension évite les erreurs d'inattention, qui représentent le cas courant. Elle n'a pas vocation à empêcher quelqu'un de la contourner volontairement. C'est le rôle qu'aura, à terme, le contrôle au niveau de la plateforme&nbsp;: évaluer la pull request indépendamment du navigateur de chaque relecteur. Cette capacité fait partie de la feuille de route et n'est pas encore disponible.</p>
+          <p>L'extension évite les erreurs d'inattention, qui représentent le cas courant. Elle n'a pas vocation à arrêter quelqu'un qui choisit délibérément de la contourner, et rien d'autre dans le toolkit ne s'en charge&nbsp;: il signale les fils bloquants non résolus et n'empêche jamais une fusion. Une équipe qui veut qu'une fusion attende la résolution des conversations active la règle que sa plateforme prévoit pour cela, par exemple la résolution obligatoire des conversations.</p>
         </div>
       </div>
     </section>
@@ -90,49 +95,59 @@ const page = 'howitworks' as const;
       <div class="in">
         <div class="stack g14 measure">
           <span class="eyebrow">avant que l'extension puisse bloquer&nbsp;:</span>
-          <h2>Trois conditions doivent être réunies</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Le simple fait d'être en mode strict ne suffit pas. Si l'une des trois conditions suivantes manque, l'extension affiche ses diagnostics mais autorise tout de même l'envoi du commentaire.</p>
+          <h2>Deux conditions doivent être réunies</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Écrire <code>enforce</code> dans une configuration ne suffit pas. Si l'une des deux conditions suivantes manque, l'extension se comporte comme en <code>assist</code>&nbsp;: elle affiche ses diagnostics et laisse partir le commentaire.</p>
         </div>
         <ul class="tick">
-          <li><span class="mk">1</span><b>Le mode strict est réellement actif</b><span class="tx">Le mode effectif est déterminé à partir de la configuration de l'organisation. L'extension ne le suppose jamais localement.</span></li>
-          <li><span class="mk">2</span><b>La pull request fait partie du périmètre</b><span class="tx">Si un dépôt commence à appliquer la convention à partir d'une date donnée, les pull requests plus anciennes ne deviennent pas rétroactivement bloquantes.</span></li>
-          <li><span class="mk">3</span><b>La configuration a pu être lue correctement</b><span class="tx">Si le fichier de configuration n'est pas accessible, l'extension ne refuse aucun commentaire. Personne ne doit être bloqué au nom d'une règle que l'extension elle-même n'a pas réussi à lire.</span></li>
+          <li><span class="mk">1</span><b>Le mode effectif est <code>enforce</code></b><span class="tx">Le mode est déterminé à partir de la configuration que l'extension a lue&nbsp;: le fichier du dépôt, le document de l'organisation et, s'il y en a une, la politique que l'organisation pousse dans le navigateur. L'extension ne le suppose jamais localement.</span></li>
+          <li><span class="mk">2</span><b>La configuration a pu être lue correctement</b><span class="tx">Si la configuration n'est pas accessible, l'extension ne refuse aucun commentaire. Personne ne doit être bloqué au nom d'une règle que l'extension elle-même n'a pas réussi à lire.</span></li>
         </ul>
-        <p class="small measure">Ces conditions répondent au même principe&nbsp;: <strong>l'extension ne doit jamais refuser un commentaire pour lequel elle ne peut pas confirmer que la règle s'applique réellement.</strong></p>
+        <div class="duo">
+          <div>
+            <span class="tag" style="color:var(--accent)">juste avant de bloquer</span>
+            <h3>L'extension relit la configuration</h3>
+            <p>Avant de refuser un commentaire, l'extension relit la configuration du dépôt et celle de l'organisation, sans passer par son cache. Si le commentaire n'a plus à être bloqué — le dépôt est repassé en <code>assist</code>, un label vient d'être ajouté —, elle libère le bouton et vous le dit&nbsp;: « Configuration relue&nbsp;: cet envoi n'est plus bloqué. Renvoyez votre commentaire. »</p>
+          </div>
+          <div>
+            <span class="tag" style="color:var(--fg-muted)">et ce dont le blocage ne dépend pas</span>
+            <h3>Ni de l'âge de la pull request, ni de la façon d'envoyer</h3>
+            <p>Le blocage vaut pour toutes les pull requests d'un dépôt en <code>enforce</code>, anciennes comme récentes. Un envoi au clavier est retenu exactement comme un clic. Une plateforme fait exception&nbsp;: sur GitLab, l'extension ne sait pas encore lire la configuration d'un dépôt&nbsp;; elle n'y bloque donc jamais.</p>
+          </div>
+        </div>
+        <p class="small measure">Tout cela protège un même principe&nbsp;: <strong>l'extension ne doit jamais refuser un commentaire sans pouvoir confirmer que la règle s'applique réellement.</strong> La page <a href={href('enforce', 'fr')}>Enforce</a> décrit ce mode en détail.</p>
       </div>
     </section>
 
     <section class="hband">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">sur la feuille de route&nbsp;:</span>
-          <h2>Ce que le futur contrôle de fusion devra vérifier</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Les capacités décrites ci-dessous ne sont pas encore disponibles&nbsp;: vous ne pouvez aujourd'hui ni les installer ni les activer. Elles décrivent l'objectif d'Enforce&nbsp;: évaluer la pull request indépendamment du navigateur afin que les règles de fusion de la plateforme puissent s'appuyer sur ce résultat. Sur le fond, ce contrôle répondrait aux deux mêmes questions que l'extension sait déjà évaluer localement.</p>
+          <span class="eyebrow">ce que compte le bandeau&nbsp;:</span>
+          <h2>Les fils bloquants, tels que la page les affiche</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Ce décompte repose sur deux définitions, et sur rien que l'extension aurait à retenir ou à trancher elle-même.</p>
         </div>
         <div class="duo">
           <div>
-            <span class="tag" style="color:var(--fg-muted)">la première</span>
-            <h3>Les commentaires sont-ils correctement formés&nbsp;?</h3>
-            <p>Un commentaire est conforme lorsqu'il ne produit aucun diagnostic de niveau erreur. Les avertissements sont affichés et comptabilisés, mais ne provoquent jamais à eux seuls l'échec de la vérification. La plupart des équipes conservent les problèmes de format comme non bloquants.</p>
+            <span class="tag" style="color:var(--fg-muted)">bloquant</span>
+            <h3>Un fil est bloquant si le commentaire qui l'a ouvert l'est</h3>
+            <p><code>issue</code>, <code>todo</code> et <code>chore</code> sont bloquants, sauf décoration contraire, et la décoration <code>blocking</code> rend bloquants les labels qui l'acceptent, comme <code>suggestion</code> ou <code>question</code> — la page <a href={href('labels', 'fr')}>Labels</a> donne les règles exactes. Seul le texte actuel compte&nbsp;: transformez un <code>issue:</code> en <code>note:</code> et le fil n'est plus compté. La plateforme montre que le commentaire a été modifié&nbsp;; l'extension, elle, ne garde aucun historique.</p>
           </div>
           <div>
-            <span class="tag" style="color:var(--accent)">la seconde</span>
-            <h3>Tous les points bloquants ont-ils été résolus&nbsp;?</h3>
-            <p>Un fil devient bloquant lorsque le commentaire qui l'a ouvert aboutit à un verdict bloquant. Une fois dans cet état, il le reste jusqu'à ce que le fil soit résolu, ou qu'une personne autorisée enregistre une <code>decision</code> expliquant pourquoi le point ne sera pas traité.</p>
-            <p class="guar">C'est ce critère qui pourrait, à terme, empêcher une fusion.</p>
+            <span class="tag" style="color:var(--accent)">résolu</span>
+            <h3>Un fil est résolu quand la plateforme le dit</h3>
+            <p>L'extension lit l'état que la page affiche, quelle que soit la personne qui a résolu le fil. Elle ne décide pas de qui en a le droit. Quand ceux qui portent la pull request choisissent de ne pas traiter un point bloquant, ils répondent dans le fil par une <code>decision</code>, avec son motif. Cette réponse consigne le choix&nbsp;; résoudre le fil reste un geste de la plateforme.</p>
+            <p class="guar">Le décompte informe. Il n'empêche jamais une fusion.</p>
           </div>
         </div>
-        <p class="small measure">L'approche envisagée consiste à privilégier les mécanismes les plus simples et les plus natifs de chaque plateforme, plutôt qu'un backend générique imposé à toutes. Un service dédié ne serait envisagé que si un besoin concret montrait qu'une intégration propre à la plateforme ne suffit pas. Tant que cette implémentation n'existe pas, le site doit la présenter comme une direction et non comme une capacité disponible.</p>
       </div>
     </section>
 
     <section class="hband sunk">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">pensé pour la suite, pas seulement pour aujourd'hui&nbsp;:</span>
-          <h2>Un seul moteur de validation, pas deux implémentations à maintenir en phase.</h2>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">L'extension ne possède pas sa propre implémentation séparée des règles. Elle s'appuie sur <strong>un unique package de validation</strong>, et aucune règle de validation n'existe ailleurs. Le futur contrôle au niveau de la plateforme devra s'appuyer sur ce même package afin de produire les mêmes résultats que l'extension.</p>
-          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">La bibliothèque de validation ne dépend ni du navigateur ni du réseau. Toutes les informations dont elle a besoin lui sont fournies sous forme de données, et les actions à effectuer sont renvoyées à l'appelant. Cette séparation permet au même moteur de validation de fonctionner directement dans le navigateur — et rend également possible le <em>playground</em>.</p>
+          <span class="eyebrow">sous le capot&nbsp;:</span>
+          <h2>Un seul moteur de validation, et aucune règle en dehors de lui.</h2>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">L'extension ne possède pas sa propre copie des règles. Toutes les règles de validation vivent dans <strong>un unique package de validation</strong>, sur lequel s'appuient l'extension et ses adaptateurs de plateforme. La barre d'outils, la validation en direct, les badges et le bandeau ne peuvent donc pas se contredire sur le sens d'un commentaire.</p>
+          <p style="font-size:15.5px;color:var(--fg-2);line-height:1.6">La bibliothèque de validation ne dépend ni du navigateur, ni du réseau, ni d'une plateforme. Toutes les informations dont elle a besoin lui sont fournies sous forme de données, et les actions à effectuer sont renvoyées à l'appelant. C'est cette séparation qui permet d'appliquer les mêmes règles, à l'identique, sur GitHub, Azure DevOps et GitLab.</p>
         </div>
       </div>
     </section>
@@ -140,12 +155,12 @@ const page = 'howitworks' as const;
     <section class="cta-band">
       <div class="cta-in">
         <div class="stack g8">
-          <h2>L'extension suffit pour commencer.</h2>
-          <p class="small" style="color:var(--fg-2)">Assist et warn fonctionnent dès aujourd'hui, entièrement dans votre navigateur. Enforce, au niveau de la plateforme, fait partie de la feuille de route.</p>
+          <h2>Il n'y a que l'extension à installer.</h2>
+          <p class="small" style="color:var(--fg-2)">Elle fonctionne entièrement dans votre navigateur et aide dès le premier commentaire. Le blocage vient plus tard, si votre équipe le décide.</p>
         </div>
         <div class="hero-btns">
           <a class="btn btn-p" href={href('install', 'fr')}>Installer l'extension</a>
-          <a class="btn btn-s" href={href('server', 'fr')}>Voir la feuille de route</a>
+          <a class="btn btn-s" href={href('enforce', 'fr')}>Ce que fait enforce</a>
         </div>
       </div>
     </section>
