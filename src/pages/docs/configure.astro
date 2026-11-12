@@ -7,7 +7,7 @@ const page = 'configure' as const;
 ---
 <Docs lang={lang} page={page}
   title="Configure a repository"
-  description="Configure a repository with one file on the default branch. Understand the three configuration levels, the settings that matter most, and the important caveats.">
+  description="Configure a repository with one file on the default branch. Understand the three configuration levels, the settings that matter most, when a change takes effect, and what the extension tells you when the file has a problem.">
 <div class="dhead stack g12">
           <p class="crumb"><b>docs</b> / configure</p>
           <h1>Configure a repository</h1>
@@ -31,49 +31,83 @@ const page = 'configure' as const;
             <table class="t">
               <thead><tr><th>Level</th><th>Who controls it</th><th>What it does</th></tr></thead>
               <tbody>
-                <tr><td class="m">floor</td><td class="d">The organization, through deployment — never through a repository file.</td><td class="d">Sets the minimum mode and defines rules that repositories cannot disable. A repository may be stricter, but never more permissive.</td></tr>
-                <tr><td class="m">organization</td><td class="d">A shared configuration document fetched from the URL defined by the floor.</td><td class="d">Provides the common baseline. Changing <code>mode</code> here takes effect across the organization, including on pull requests that are already open.</td></tr>
-                <tr><td class="m">repository</td><td class="d"><code>.conventional-comments.json</code> on the default branch.</td><td class="d">Applies local adjustments, such as exempting bots, enabling an optional label, or silencing a diagnostic.</td></tr>
+                <tr><td class="m">floor</td><td class="d">The organization, through its browsers' enterprise policy — never through a repository file.</td><td class="d">Sets the minimum mode and defines rules that repositories cannot relax. A repository may be stricter, but never more permissive.</td></tr>
+                <tr><td class="m">organization</td><td class="d">A shared configuration document fetched from the URL defined by the floor.</td><td class="d">Provides the common baseline. Changing <code>mode</code> here takes effect in every repository that does not set its own, including on pull requests that are already open.</td></tr>
+                <tr><td class="m">repository</td><td class="d"><code>.conventional-comments.json</code> on the default branch.</td><td class="d">Applies local adjustments, such as exempting bots, turning off a label, or silencing a warning.</td></tr>
               </tbody>
             </table>
           </div>
           <div class="callout acc">
-            <span class="ct">who applies the floor today</span>
-            <p style="margin:0">Today, the extension is the only component that applies the floor, reading it from the browser's enterprise policy. A future platform-level enforcement mechanism could not read that browser policy directly, so it would need another way to receive the same constraint. That mechanism is intentionally left open until Enforce is designed for each platform.</p>
+            <span class="ct">where the floor comes from</span>
+            <p style="margin:0">The floor has a single channel: the browser's enterprise policy, which the extension reads on each machine. An organization that deploys no policy has no floor, and the organization document and the repository file decide on their own. When a repository file tries to go below the floor, that one setting is ignored and the extension says so. The <a href={href('install', 'en')}>installation page</a> describes how the policy is deployed.</p>
           </div>
         </section>
 
         <section class="dsec">
           <h2>The settings worth knowing</h2>
-          <p>There are twenty-five settings in total. These are the ones that affect behaviour rather than presentation.</p>
+          <p>The file has nineteen top-level settings. These are the ones that affect behaviour rather than presentation.</p>
           <div class="scroller">
             <table class="t wide">
               <thead><tr><th>Key</th><th>Default</th><th>What it controls</th></tr></thead>
               <tbody>
-                <tr><td class="m">mode</td><td class="m d">assist</td><td class="d"><code>off</code> · <code>assist</code> · <code>warn</code> · <code>enforce</code>. Assist and warn are fully supported by the extension today. Enforce already provides local strict-mode behavior in the browser; the authoritative platform-level merge gate is still on the roadmap. See the adoption guide for details.</td></tr>
-                <tr><td class="m">formatSeverity</td><td class="m d">warn</td><td class="d">Whether malformed comments can cause the check to fail. Most teams leave this unchanged: unresolved blocking points, rather than formatting mistakes, should normally be what prevents a merge.</td></tr>
-                <tr><td class="m">resolverOverrideGroup</td><td class="m d">empty</td><td class="d">Defines who may override a resolution and record a <code>decision</code>. <strong>Required before using <code>enforce</code>.</strong> When left empty, both escape hatches are unavailable.</td></tr>
+                <tr><td class="m">mode</td><td class="m d">assist</td><td class="d"><code>off</code> · <code>assist</code> · <code>enforce</code>. In <code>assist</code>, the extension helps and reports, and never blocks. In <code>enforce</code>, it also refuses to send a non-compliant comment, in the browser where it is installed; it never blocks a merge. See the <a href={href('adoption', 'en')}>adoption guide</a> and the <a href={href('enforce', 'en')}>Enforce page</a>.</td></tr>
                 <tr><td class="m">exemptUsers</td><td class="m d">empty</td><td class="d">Users whose comments are never validated. Values are matched against platform logins case-insensitively.</td></tr>
                 <tr><td class="m">toolCommands</td><td class="m d">empty</td><td class="d">Defines comments intended for bots or tools. See the warning below.</td></tr>
-                <tr><td class="m">labels</td><td class="m d">13 labels</td><td class="d">Per-label overrides. Only include the labels you want to change.</td></tr>
-                <tr><td class="m">severities</td><td class="m d">product defaults</td><td class="d">Changes the severity of individual diagnostics or silences them entirely.</td></tr>
+                <tr><td class="m">labels</td><td class="m d">19 labels, 18 enabled</td><td class="d">Per-label overrides, merged by <code>id</code>. Only include the labels you want to change; to remove one, set its <code>enabled</code> to <code>false</code>.</td></tr>
+                <tr><td class="m">severities</td><td class="m d">product defaults</td><td class="d">Changes the severity of individual diagnostics: <code>off</code>, <code>warn</code> or <code>error</code>. Two limits apply — see below.</td></tr>
+                <tr><td class="m">scope.validateReplies</td><td class="m d">false</td><td class="d">Whether replies inside a thread are validated too, and not only the comments that open one.</td></tr>
+                <tr><td class="m">configCacheTtlSeconds</td><td class="m d">3600</td><td class="d">How long the extension may keep working from a configuration it has already read, in seconds. See “When a change takes effect”.</td></tr>
+                <tr><td class="m">sessionIcon</td><td class="m d">🤖</td><td class="d">The icon of the mention that replaces a session marker when a comment is displayed. See <a href={href('aireview', 'en')}>AI-assisted review</a>.</td></tr>
                 <tr><td class="m">coreMinVersion</td><td class="m d">1.0.0</td><td class="d">Requires a minimum core version across the organization.</td></tr>
               </tbody>
             </table>
           </div>
+          <p>An entry in <code>labels</code> can change more than whether a label is enabled or blocking. Three properties are worth knowing:</p>
+          <ul class="bul">
+            <li><strong><code>kind</code></strong> says what the label does with a point: <code>"remark"</code> raises one, <code>"reply"</code> answers one, <code>"status"</code> says where the review stands. It decides where the button sits in the toolbar and never changes a verdict. A label you create is a <code>"remark"</code> unless you write otherwise.</li>
+            <li><strong><code>description</code></strong> is what the label means. It is shown as the tooltip of the badge on a published comment.</li>
+            <li><strong><code>usage</code></strong> is when to use the label. It is shown as the tooltip of the toolbar button, which falls back to <code>description</code> when <code>usage</code> is absent.</li>
+          </ul>
+          <p class="small">Both texts are shown exactly as you write them, whatever the interface language. Written empty (<code>""</code>), they remove the tooltip; left out, a shipped label keeps its own texts. The <a href={href('labels', 'en')}>labels page</a> lists the nineteen labels and their kinds.</p>
+          <p><code>severities</code> has two limits that no level of configuration can lift. A diagnostic whose code starts with <code>E-</code> can be lowered to a warning, never turned off. And <code>W-SESSION-MULTIPLE</code>, the warning for a comment that carries two session markers, can never be raised to an error: a mistake in a marker must not block a comment.</p>
           <div class="callout blk">
             <span class="ct">one setting deserves special attention</span>
             <h4><code>toolCommands</code> is empty by default.</h4>
-            <p>In strict mode, a bare <code>/rebase</code> is treated like any other non-conforming comment unless the repository explicitly declares it. Adding <code>"/*"</code> exempts every slash command. Bot accounts are declared individually and must match exactly, for example <code>"@dependabot"</code>.</p>
+            <p>In <code>enforce</code> mode, a bare <code>/rebase</code> is treated like any other non-conforming comment unless the repository explicitly declares it. Adding <code>"/*"</code> exempts every slash command. Bot accounts are declared individually and must match exactly, for example <code>"@dependabot"</code>.</p>
           </div>
         </section>
 
         <section class="dsec">
-          <h2>Two behaviours worth knowing</h2>
+          <h2>When a change takes effect</h2>
+          <p>There is no pinned configuration: a change applies to pull requests that are already open as soon as the extension reads it. The extension keeps what it has read for <code>configCacheTtlSeconds</code> — one hour by default — so the status pill and the diagnostics can lag behind a change by up to that long.</p>
+          <p>Blocking is the exception. Before it refuses to send a comment, the extension reads the repository file and the organization document again, ignoring its cache. A comment is therefore never blocked on the strength of an outdated configuration: if you have just relaxed the mode or added a label, the next attempt to send goes through.</p>
+          <p class="small">The floor can set <code>configCacheTtlSeconds</code> too. There it is a maximum: a repository may ask for a shorter cache than the organization's, never a longer one.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>When the configuration has a problem</h2>
+          <p>The extension does not stay silent about a configuration it could not apply as written. It lists <strong>configuration notices</strong> in the status pill under the comment box and on its settings page, in the language of the interface. Each notice names the level it comes from: the organization's policy, the organization document, or the repository file. Notices inform; they never change whether a comment is accepted.</p>
+          <div class="scroller">
+            <table class="t wide">
+              <thead><tr><th>Notice</th><th>What happened</th><th>What the extension does</th></tr></thead>
+              <tbody>
+                <tr><td class="m">config-warning</td><td class="d">A key is unknown or retired, a value is obsolete, or one entry of a list could not be used.</td><td class="d">Ignores that key or entry and applies everything else.</td></tr>
+                <tr><td class="m">floor-override</td><td class="d">A setting tried to go below the floor.</td><td class="d">Ignores that setting and keeps the floor's value.</td></tr>
+                <tr><td class="m">invalid-config</td><td class="d">The file is not valid JSON, or a known key holds an impossible value such as <code>"mode": "banana"</code>.</td><td class="d">Sets the whole document aside, falls back to the last valid level — the organization, then the product defaults — and points to the faulty line.</td></tr>
+                <tr><td class="m">unsupported-version</td><td class="d">The file asks for a schema version or a <code>coreMinVersion</code> newer than the installed extension.</td><td class="d">Falls back to <code>assist</code>, or to the floor if it is stricter.</td></tr>
+              </tbody>
+            </table>
+          </div>
           <ul class="bul">
-            <li><strong>Unknown settings are ignored with a warning rather than rejected.</strong> A recognized setting with an invalid value is different: it invalidates the entire document. If the configuration cannot be interpreted reliably, none of it is applied.</li>
-            <li><strong>A <code>configUrl</code> declared in the repository file is ignored.</strong> The organization configuration URL comes exclusively from the floor. Allowing a repository to redirect it would effectively allow that repository to choose its own organization-wide rules.</li>
+            <li><strong>A broken file never switches the convention off.</strong> The extension falls back to a level it can read, within the floor, and tells you why.</li>
+            <li><strong>A <code>configUrl</code> declared in the repository file is ignored</strong>, and reported as a <code>config-warning</code>. The organization configuration URL comes exclusively from the floor. Allowing a repository to redirect it would effectively allow that repository to choose its own organization-wide rules.</li>
+            <li><strong>A configuration the extension could not read at all is a different case.</strong> When the request fails, the status pill says “Configuration unread”, and the extension assists without blocking: it does not refuse a comment in the name of rules it could not read. This is always the case on GitLab, where the extension cannot read a repository's configuration yet.</li>
           </ul>
+          <div class="callout warn">
+            <span class="ct">if your file was written for an earlier version</span>
+            <h4>Five keys are retired, and so is the <code>warn</code> mode.</h4>
+            <p><code>formatSeverity</code>, <code>resolverOverrideGroup</code>, <code>overrideLabel</code>, <code>activation</code> and <code>docUrl</code> only served a merge check that the toolkit no longer plans. The <code>server</code> and <code>exemptionLog</code> blocks belonged to the companion server, retired earlier. A file that still carries any of them stays readable: each one is reported as an unknown key and ignored, and nothing else changes. <code>"mode": "warn"</code> is read as <code>"assist"</code>, with a notice saying the value is obsolete. Remove the keys, write <code>"assist"</code>, and the notices go away.</p>
+          </div>
         </section>
         <div class="pager"></div>
 </Docs>
