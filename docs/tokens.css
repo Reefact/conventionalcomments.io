@@ -1,8 +1,8 @@
 /* ============================================================================
    conventionalcomments.io — jetons de design
-   Voir docs/identite-fr.md. Les dix-neuf teintes de labels sont reprises
-   verbatim de packages/core/src/config/defaults.ts du dépôt toolkit ;
-   ne pas les redessiner ici.
+   See docs/identite-fr.md. The nineteen label hues are copied verbatim
+   from packages/core/src/config/defaults.ts in the toolkit repository;
+   do not redesign them here.
 
    Trois états de thème, dans cet ordre :
      :root                                   palette claire complète
@@ -20,10 +20,10 @@
   --bg-surface:  #FFFFFF;
   --bg-sunken:   #E5EAF1;
   --bg-code:     #F5F7FA;
-  /* Le fond des groupes du tableau des labels que le toolkit ajoute à Conventional
-     Comments. Une surface, pas une teinte : elle accompagne la mention écrite, elle
-     ne la remplace pas. En clair elle s'enfonce, en sombre elle se détache — dans
-     les deux cas juste assez pour qu'on voie où le groupe commence. */
+  /* The background of the labels-table groups the toolkit adds to Conventional
+     Comments. A surface, not a hue: it accompanies the written mention, it never
+     replaces it. In light it sinks, in dark it lifts — in both, just enough to see
+     where the group starts. */
   --bg-added:    #E5EAF1;
 
   /* --- texte ------------------------------------------------------------- */
@@ -71,7 +71,7 @@
   --l-typo:       #CC549C;
   --l-polish:     #0C8E9A;
   --l-quibble:    #61896C;
-  /* les labels que le toolkit ajoute à Conventional Comments : états de la revue, réponses */
+  /* the labels the toolkit adds to Conventional Comments: review status, replies */
   --l-summary:    #B160C9;
   --l-reviewed:   #D04A7A;
   --l-thanks:     #9C8C1A;

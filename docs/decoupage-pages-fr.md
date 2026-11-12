@@ -1,7 +1,7 @@
 # Découpage en pages — conventionalcomments.io
 
-Périmètre retenu : **vitrine + documentation essentielle**, bilingue **EN + FR**, cible
-**tech lead**. Douze routes de contenu × deux langues, plus le schéma JSON.
+Chosen scope: **showcase + essential documentation**, bilingual **EN + FR**, aimed at the
+**tech lead**. Twelve content routes × two languages, plus the JSON schema.
 
 Ce qui relève de la spécification normative, de la matrice `CA-01…CA-39` ou de
 l'architecture interne **reste sur GitHub** : le site n'a pas vocation à devenir un
@@ -36,26 +36,26 @@ Source : `README.md`, et le §1 de l'identité pour l'angle.
 
 **Travail :** lever l'objection « une extension, ça se désinstalle ».
 
-Le contournement est assumé · ce que l'extension fait à l'envoi d'un commentaire, et ce
-qu'elle ne fait pas : **elle ne bloque jamais une fusion**, et une équipe qui veut cette
-contrainte utilise le réglage natif de sa plateforme · un seul `core/`, qui porte toute la
-grammaire · ce que voit concrètement l'auteur d'une PR.
+Bypassing is acknowledged · what the extension does when a comment is sent, and what it
+does not: **it never blocks a merge**, and a team that wants that constraint uses its
+platform's native setting · a single `core/`, which carries the whole grammar · what the
+author of a PR actually sees.
 
-Le serveur, la parité A/B et l'empreinte de configuration, que cette page devait expliquer,
-ont disparu avec le vérificateur (DEC0010 du toolkit).
+The server, A/B parity and the configuration fingerprint, which this page was meant to
+explain, disappeared with the verifier (the toolkit's DEC0010).
 
-Source : `docs/architecture-fr.md`, `README.md`, `docs/idr/` du toolkit.
+Source: `docs/architecture-fr.md`, `README.md`, the toolkit's `docs/idr/`.
 
 ### `/platforms/` · `/fr/plateformes/`
 
 **Travail :** répondre à « est-ce que ça marche chez nous », et à rien d'autre.
 
-Ce qui est **disponible** — GitHub (github.com, Enterprise Cloud, EMU, Enterprise Server),
-Azure DevOps (Services, sur `dev.azure.com` seulement), GitLab (gitlab.com, sans blocage),
-les navigateurs · ce qui **n'est pas couvert** (Azure DevOps Server et
-`{org}.visualstudio.com`, GitLab Self-Managed et Dedicated ; Bitbucket est hors périmètre)
-et l'invitation à demander le reste · ce qu'il faut pour démarrer (l'extension seule, qui
-ne demande rien) · sur quels domaines l'extension regarde.
+What is **available** — GitHub (github.com, Enterprise Cloud, EMU, Enterprise Server),
+Azure DevOps (Services, on `dev.azure.com` only), GitLab (gitlab.com, without blocking),
+the browsers · what is **not covered** (Azure DevOps Server and `{org}.visualstudio.com`,
+GitLab Self-Managed and Dedicated; Bitbucket is out of scope) and the invitation to ask for
+the rest · what it takes to start (the extension alone, which asks for nothing) · which
+domains the extension looks at.
 
 **Une page de disponibilité, pas une page d'aveux.** Une première version y étalait les
 hypothèses ouvertes du spike P1′ sous forme de matrice à trois états. C'était une lecture
@@ -100,10 +100,10 @@ Source : `docs/extension-setup-en.md`.
 
 La page la plus consultée, et la vitrine de l'identité.
 
-Les 19 labels, en trois groupes — remarques, états de la revue, réponses : icône, couleur,
-bloquant par défaut, alias, exemple, abréviation clavier · **ce que le toolkit ajoute à
-Conventional Comments** (sept labels, dont `decision`), dit sans ambiguïté · les
-décorations `blocking` / `non-blocking` / `if-minor` et les décorations libres.
+The 19 labels, in three groups — remarks, review status, replies: icon, colour, blocking by
+default, aliases, example, keyboard abbreviation · **what the toolkit adds to Conventional
+Comments** (seven labels, `decision` among them), stated without ambiguity · the
+`blocking` / `non-blocking` / `if-minor` decorations and free decorations.
 
 Source : `packages/core/src/config/defaults.ts`, `packages/extension/src/ui/strings.ts`.
 
@@ -120,41 +120,41 @@ Source : `.conventional-comments.example.json`, `packages/core/src/config/`.
 
 La page qu'un tech lead partagera à son équipe.
 
-Le parcours — `assist` partout, puis `enforce` sur un dépôt pilote, puis généralisation ;
-le mode `warn` n'existe plus · le **seul prérequis à `enforce`** : une procédure de retour
-arrière écrite, son exécutant nommé, et la liste des dépôts qui écrivent eux-mêmes
-`"mode": "enforce"` · le retour arrière en trois étapes (plancher, configuration
-d'organisation, dépôts) · les indicateurs, qui ne sont pas encore calculables.
+The path — `assist` everywhere, then `enforce` on a pilot repository, then rollout; the
+`warn` mode no longer exists · the **only prerequisite for `enforce`**: a written rollback
+procedure, the named person who runs it, and the list of repositories that write
+`"mode": "enforce"` themselves · the three-step rollback (floor, organization
+configuration, repositories) · the indicators, which cannot be computed yet.
 
 Source : `docs/operations-fr.md`.
 
 ### `/docs/enforce/` · `/fr/docs/enforce/`
 
-Dire exactement ce que fait le mode `enforce`, et ce qu'il ne fait pas. Ce qu'il bloque :
-l'envoi d'un commentaire non conforme, au clic comme au clavier, après avoir relu la
-configuration · ce qu'il ne fait pas : il ne vaut que pour qui a l'extension, il ne bloque
-jamais une fusion, et jamais sur GitLab · où trouver la contrainte de fusion : dans le
-réglage natif de la plateforme.
+State exactly what the `enforce` mode does, and what it does not. What it blocks: sending
+a non-compliant comment, by click or by keyboard, after re-reading the configuration · what
+it does not do: it only applies to people who have the extension, it never blocks a merge,
+and it never blocks on GitLab · where to find a merge constraint: in the platform's native
+setting.
 
-Cette page remplace `/docs/server/` · `/fr/docs/serveur/`, qui décrivait le déploiement du
-serveur puis une feuille de route ; les anciennes adresses y redirigent.
+This page replaces `/docs/server/` · `/fr/docs/serveur/`, which described deploying the
+server and then a roadmap; the old addresses redirect to it.
 
-Source : `specifications-fr.md` §5.4, `docs/idr/` (DEC0010, DEC0012).
+Source: `specifications-fr.md` §5.4, `docs/idr/` (DEC0010, DEC0012).
 
 ### `/docs/ai-review/` · `/fr/docs/revue-ia/`
 
-La revue menée ou assistée par un agent. Le marqueur de session `[session:<id>]` et son
-rendu · les deux skills fournis par le toolkit, `review-pull-request` et
+Reviews run or assisted by an agent. The session marker `[session:<id>]` and how it is
+rendered · the two skills the toolkit ships, `review-pull-request` and
 `respond-to-review`.
 
-Source : `README.md`, `specifications-fr.md` §3.6 et §5.5, `skills/`.
+Source: `README.md`, `specifications-fr.md` §3.6 and §5.5, `skills/`.
 
 ### `/docs/troubleshooting/` · `/fr/docs/diagnostic/`
 
-Absorber le support avant qu'il n'arrive en issue. Le message « Configuration non lue » de
-la pastille d'état · les avis de configuration qui apparaissent après une mise à jour · les
-commentaires bloqués en `enforce` · les commandes outils (`/rebase`, bots) · les
-utilisateurs exemptés · le journal et l'archive de diagnostic à joindre à un ticket.
+Absorb support requests before they become issues. The status pill's "Configuration
+unread" message · the configuration notices that appear after an update · comments blocked
+in `enforce` · tool commands (`/rebase`, bots) · exempt users · the journal and the
+diagnostic archive to attach to an issue.
 
 Source : `packages/extension/src/ui/strings.ts`, `docs/store-listing-en.md`.
 
@@ -174,8 +174,9 @@ dans l'éditeur à tout dépôt configuré.
 Servi avec `Access-Control-Allow-Origin: *` (`public/_headers`), sans quoi un éditeur qui
 tourne dans un navigateur ne peut pas le lire. Détails : [`schema-fr.md`](./schema-fr.md).
 
-Décision à prendre côté toolkit, pas ici : si le schéma déménage, `$schema` change dans
-`.conventional-comments.example.json` **et** dans `specifications-fr.md` (ligne 846).
+A decision for the toolkit, not for this repository: if the schema moves, `$schema`
+changes in `.conventional-comments.example.json` **and** in `specifications-fr.md`
+(line 846).
 
 Source : `packages/core/src/config/schema.ts`.
 
@@ -188,16 +189,16 @@ site frère, même pile Astro + Cloudflare : une colonne d'index à gauche, les 
 plus récente à la plus ancienne, chacune avec sa date, sa maturité, une tagline en italique,
 et des rubriques `✨ Nouveautés` / `🐛 Corrections` / `🔧 Changements`.
 
-**La source existe déjà et est bilingue :** `docs/release-notes-1.x-fr.md` et
-`-en.md`, des versions rédigées pour le lecteur plutôt que dérivées des commits. Le
-`CHANGELOG.md` reste le relevé technique, lié depuis la page.
+**The source already exists and is bilingual:** `docs/release-notes-1.x-fr.md` and
+`-en.md`, versions written for the reader rather than derived from commits. `CHANGELOG.md`
+remains the technical record, linked from the page.
 
-**Différence assumée avec justdummies :** là-bas quatre paquets NuGet distincts justifient
-quatre « trains » de version dans la colonne de gauche. Ici tout sort sous un numéro unique
-— l'extension et `core/` partagent le même numéro de version — donc inventer des trains
-serait faux. La colonne de gauche porte l'index des versions de la page, ce qui est utile
-sur une page longue, et la ligne de version en tête. Elle accueillera des lignes
-supplémentaires le jour où les composants divergeront, ou à la v2.
+**A deliberate difference from justdummies:** there, four separate NuGet packages justify
+four version "trains" in the left column. Here everything ships under a single number — the
+extension and `core/` share the same version number — so inventing trains would be wrong.
+The left column carries the index of the page's versions, which helps on a long page, and
+the version line at the top. It will take more lines the day the components diverge, or at
+v2.
 
 Le schéma de justdummies vaut d'être copié si la génération arrive : `index.json` +
 `majors/{train}-v{major}.{locale}.json`, avec `summaryHtml`, `sections[].label`,
@@ -267,10 +268,10 @@ du toolkit (§10, Internationalisation), et ce sont des jetons de grammaire, pas
 
 Écarté : `how it holds:`. Joli, et incompréhensible pour qui découvre le site.
 
-« Installer l'extension » n'est **pas** dans l'en-tête : le bouton y invite à l'adopter en
-équipe, parce que le site s'adresse à qui décide pour une équipe. La raison donnée à
-l'origine — ne pas réduire le produit à une extension avec un serveur en option — est
-tombée avec le serveur : l'extension est désormais tout le produit.
+"Install the extension" is **not** in the header: the button there invites visitors to
+adopt it as a team, because the site speaks to whoever decides for a team. The original
+reason — not reducing the product to an extension with an optional server — fell with the
+server: the extension is now the whole product.
 
 **Pied de page :** mention d'indépendance, licence Apache-2.0, Reefact, lien dépôt, lien
 schéma.
@@ -304,9 +305,9 @@ une version de `core/` — donc la seule page qu'un administrateur reviendra con
 
 - [ ] **Décider du sort de `conventional-comments-toolkit.dev`** et du déménagement du
       schéma.
-- [ ] **Arbitrer la source de vérité de la doc.** Douze pages traduites qui reformulent des
-      fichiers `-fr.md` divergeront. Deux options tenables : le site importe le dépôt au
-      build, ou il assume d'être la version lisible et le dépôt garde la version
-      normative.
-- [ ] **Confirmer que les 19 teintes tiennent sur `#EEF1F5`.** Elles sont mesurées contre
-      les neuf fonds Primer, pas contre le papier du site.
+- [ ] **Decide the documentation's source of truth.** Twelve translated pages that rephrase
+      `-fr.md` files will drift. Two tenable options: the site imports the repository at
+      build time, or it accepts being the readable version while the repository keeps the
+      normative one.
+- [ ] **Confirm that the 19 hues hold on `#EEF1F5`.** They are measured against the nine
+      Primer backgrounds, not against the site's paper.
