@@ -11,7 +11,7 @@ const page = 'adoption' as const;
 <div class="dhead stack g12">
           <p class="crumb"><b>docs</b> / adoption</p>
           <h1>Adoption: assist → enforce</h1>
-          <p class="lede measure">The safest way to introduce a convention is to roll it out gradually: help first, then — if the team wants it — refuse non-compliant comments on one pilot repository before doing so everywhere. Both stages run in the extension alone. Neither one touches your platform's merge rules: the extension reports unresolved blocking threads and never blocks a merge. The <a href={href('enforce', 'en')}>Enforce page</a> says exactly what the stricter mode does and does not do.</p>
+          <p class="lede measure">The safest way to introduce a convention is to roll it out gradually: help first, then — if the team wants it — refuse non-compliant comments on one pilot repository before doing so everywhere. Both modes run in the extension alone. Neither one touches your platform's merge rules: the extension reports unresolved blocking threads and never blocks a merge. The <a href={href('enforce', 'en')}>Enforce page</a> says exactly what the stricter mode does and does not do.</p>
         </div>
 
         <section class="dsec">
@@ -25,13 +25,12 @@ const page = 'adoption' as const;
             <table class="t">
               <thead><tr><th>Mode</th><th>What the extension does</th><th>Can it stop a comment from being sent?</th></tr></thead>
               <tbody>
-                <tr><td class="m">off</td><td class="d">Nothing.</td><td class="d">No.</td></tr>
                 <tr><td class="m">assist</td><td class="d">Helps reviewers write compliant comments, reports diagnostics as they type, and counts unresolved blocking threads in a banner on the pull request.</td><td class="d">No.</td></tr>
                 <tr><td class="m" style="color:var(--block)">enforce</td><td class="d">Everything <code>assist</code> does.</td><td class="d">Yes, when the comment is not compliant and the configuration could be read.</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="small">No mode blocks a merge. Because both stages depend only on the extension, moving between them is a configuration change: there is no separate infrastructure to deploy, restart, or remove. Earlier versions had a <code>warn</code> mode between the two; it behaved exactly like <code>assist</code> and is retired. A configuration that still says <code>"warn"</code> is read as <code>"assist"</code>, with a notice asking you to replace it.</p>
+          <p class="small">No mode blocks a merge. Because both modes depend only on the extension, moving between them is a configuration change: there is no separate infrastructure to deploy, restart, or remove. Earlier versions had a <code>warn</code> mode between the two; it behaved exactly like <code>assist</code> and is retired. A configuration that still says <code>"warn"</code> is read as <code>"assist"</code>, with a notice asking you to replace it. To switch the extension off for a repository or an organization, the configuration also accepts <code>mode: off</code>.</p>
         </section>
 
         <section class="dsec">

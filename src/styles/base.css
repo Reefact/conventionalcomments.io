@@ -217,7 +217,8 @@ ul.bul code { font-size:13px; color:var(--fg-2); }
              border-top:1px dotted var(--line); color:var(--fg-2); }
 
 .traj { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
-@media (max-width:720px){ .traj{grid-template-columns:1fr} }
+.traj.two { grid-template-columns:repeat(2,1fr); }
+@media (max-width:720px){ .traj, .traj.two{grid-template-columns:1fr} }
 .step { padding:15px 16px 17px; background:var(--bg-code); border-top:3px solid var(--st);
         display:flex; flex-direction:column; gap:7px; }
 .step .sn { font-family:var(--font-mono); font-size:14px; font-weight:600; color:var(--st); }

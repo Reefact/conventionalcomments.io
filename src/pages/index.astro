@@ -209,27 +209,23 @@ const page = 'home' as const;
       <div class="in">
         <div class="split">
           <div class="stack g14">
-            <span class="eyebrow">the path:</span>
+            <span class="eyebrow">two modes:</span>
             <h2 style="font-size:24px">Help first. Block only once your team decides to.</h2>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The extension has three modes: <code>off</code>, <code>assist</code> and <code>enforce</code>. In <code>assist</code>, the default, it helps and never blocks. In <code>enforce</code>, it refuses to send a malformed comment — in the browser of whoever has it installed.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The team picks the mode in the configuration, for one repository or for the whole organization.</p>
             <p style="font-size:15px;color:var(--fg-2);line-height:1.6">It never blocks a merge. A team that wants merges to wait for resolved conversations uses its platform's own setting for that.</p>
             <div class="hero-btns">
               <a class="btn btn-p" href={href('adoption', 'en')}>How teams adopt it</a>
               <a class="btn btn-s" href={href('enforce', 'en')}>What enforce does</a>
             </div>
           </div>
-          <div class="traj">
+          <div class="traj two">
             <div class="step" style="--st:var(--fg-faint)">
               <span class="sn">assist</span><span class="sw">the default</span>
-              <span class="sd">The extension helps the people who install it and shows the unresolved blocking threads on the pull request. Nobody is blocked. No centralized tracking by default.</span>
-            </div>
-            <div class="step" style="--st:var(--warn)">
-              <span class="sn">enforce</span><span class="sw">on a pilot repository</span>
-              <span class="sd">One repository switches to <code>enforce</code>. There, the extension refuses to send a malformed comment. Everywhere else, nothing changes.</span>
+              <span class="sd">The extension helps write compliant comments, flags problems as you type and shows the unresolved blocking threads on the pull request. It never blocks.</span>
             </div>
             <div class="step" style="--st:var(--block)">
-              <span class="sn">enforce</span><span class="sw">rolled out</span>
-              <span class="sd">Once the pilot has proved successful, the other repositories follow, at the pace the team chooses.</span>
+              <span class="sn">enforce</span><span class="sw">when the team decides</span>
+              <span class="sd">Everything <code>assist</code> does, and the extension also refuses to send a malformed comment — in the browser of whoever has it installed.</span>
             </div>
           </div>
         </div>
