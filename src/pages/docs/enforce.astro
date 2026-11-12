@@ -21,7 +21,7 @@ const page = 'enforce' as const;
             <li><span class="mk">1</span><b>The effective mode is <code>enforce</code></b><span class="tx">The mode is resolved from the three configuration levels — the enterprise floor, the organization's document, the repository's file. It is never assumed locally.</span></li>
             <li><span class="mk">2</span><b>The configuration was actually read</b><span class="tx">If the extension could not reach the configuration, it does not refuse anything: nobody is blocked in the name of a rule that could not be read. A repository that simply has no configuration file is not in that case.</span></li>
           </ul>
-          <p>If either condition is missing, the extension behaves as it does in <code>assist</code>: it shows its diagnostics and lets the comment through. Nothing else enters the decision — neither the age of the pull request, nor any state published on it.</p>
+          <p>If the configuration could not be read, the extension behaves as it does in <code>assist</code>: it shows its diagnostics and lets the comment through. If the effective mode is <code>assist</code>, it does the same. If the effective mode is <code>off</code>, it does nothing at all — no diagnostics, no blocking. Nothing else enters the decision — neither the age of the pull request, nor any state published on it.</p>
           <p>When both hold, a comment with an <strong>error</strong> cannot be sent. The send button looks disabled and stays reachable with the keyboard, so that the reason is announced to a screen reader: <em>Sending blocked: the comment is not compliant</em>, followed by what is wrong. Warnings never block; they are advice.</p>
           <div class="scroller">
             <table class="t">
@@ -31,12 +31,12 @@ const page = 'enforce' as const;
                 <tr><td class="d">Publish from the keyboard — Ctrl+Enter (or ⌘+Enter) in the field, for example</td><td class="m"><span class="deco b">Blocked</span></td></tr>
                 <tr><td class="d">Send a comment that only raises warnings</td><td class="m"><span class="deco nb">Sent</span></td></tr>
                 <tr><td class="d">Approve a pull request without writing anything</td><td class="m"><span class="deco nb">Sent</span></td></tr>
-                <tr><td class="d">Send a tool command declared in <code>toolCommands</code>, such as <code>/rebase</code></td><td class="m"><span class="deco nb">Sent</span></td></tr>
+                <tr><td class="d">Send a slash command such as <code>/rebase</code>, with <code>"/*"</code> in <code>toolCommands</code></td><td class="m"><span class="deco nb">Sent</span></td></tr>
                 <tr><td class="d">Reply in a thread, while <code>validateReplies</code> is left off</td><td class="m"><span class="deco nb">Sent</span></td></tr>
               </tbody>
             </table>
           </div>
-          <p class="small">Two details behind that table. <code>toolCommands</code> is empty by default: until a repository declares <code>"/*"</code> or the commands it uses, a bare <code>/rebase</code> is a non-compliant comment like any other. And a reply that starts with <code>decision:</code> is always checked, whatever <code>validateReplies</code> says. Both settings are described under <a href={href('configure', 'en')}>configuration</a>.</p>
+          <p class="small">Two details behind that table. <code>toolCommands</code> is empty by default: until a repository adds <code>"/*"</code>, a bare <code>/rebase</code> is a non-compliant comment like any other. A slash command cannot be exempted on its own — an entry such as <code>"/rebase"</code> is ignored, with a configuration notice; <code>"/*"</code> exempts them all. Bots are exempted one by one, by their exact handle: <code>"@dependabot"</code>. And a reply that starts with <code>decision:</code> is always checked, whatever <code>validateReplies</code> says. Both settings are described under <a href={href('configure', 'en')}>configuration</a>.</p>
         </section>
 
         <section class="dsec">

@@ -311,7 +311,7 @@
     "toolCommands": {
       "type": "array",
       "default": [],
-      "description": "Comments addressed to a bot rather than to a human. EMPTY BY DEFAULT: in enforce mode a bare /rebase is rejected like any other comment until the repository declares it here. Each entry is compared literally, never interpreted as a pattern.",
+      "description": "Comments addressed to a bot rather than to a human. EMPTY BY DEFAULT: in enforce mode a bare /rebase is rejected like any other comment until the repository adds \"/*\". Two forms are accepted: \"/*\", which exempts every slash command at the start of a body, and an exact bot handle such as \"@dependabot\". A single slash command cannot be exempted on its own: an entry such as \"/rebase\" is ignored at runtime, with a configuration notice. Each entry is compared literally, never interpreted as a pattern.",
       "items": {
         "oneOf": [
           {
@@ -346,7 +346,7 @@
       "type": "string",
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
       "default": "1.0.0",
-      "description": "Minimum core/ version required to apply this document. An extension running an older major does not apply it: it falls back to assist mode, or to the floor if stricter. This is the lever for requiring a core/ version across an organization."
+      "description": "Minimum core/ version required to apply this document. Only the MAJOR component is compared with the extension's core major: on a 1.x core, \"1.99.0\" is applied and \"2.0.0\" is not — the extension then falls back to assist mode, or to the floor if stricter. It cannot require a newer minor or patch release."
     },
     "configCacheTtlSeconds": {
       "type": "integer",

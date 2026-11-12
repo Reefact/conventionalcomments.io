@@ -58,7 +58,7 @@ const page = 'configure' as const;
                 <tr><td class="m">scope.validateReplies</td><td class="m d">false</td><td class="d">Indique si les réponses à l'intérieur d'un fil sont validées elles aussi, et pas seulement les commentaires qui en ouvrent un.</td></tr>
                 <tr><td class="m">configCacheTtlSeconds</td><td class="m d">3600</td><td class="d">Durée, en secondes, pendant laquelle l'extension peut continuer de s'appuyer sur une configuration qu'elle a déjà lue. Voir «&nbsp;Quand un changement prend effet&nbsp;».</td></tr>
                 <tr><td class="m">sessionIcon</td><td class="m d">🤖</td><td class="d">Icône de la mention qui remplace un marqueur de session à l'affichage d'un commentaire. Voir <a href={href('aireview', 'fr')}>Revue assistée par IA</a>.</td></tr>
-                <tr><td class="m">coreMinVersion</td><td class="m d">1.0.0</td><td class="d">Permet d'imposer une version minimale du moteur dans toute l'organisation.</td></tr>
+                <tr><td class="m">coreMinVersion</td><td class="m d">1.0.0</td><td class="d">Impose une version <em>majeure</em> minimale du moteur. Seule la majeure est comparée&nbsp;: avec un moteur 1.x, <code>1.99.0</code> est accepté et <code>2.0.0</code> déclenche le repli. Il ne permet pas d'exiger une version mineure ou corrective plus récente.</td></tr>
               </tbody>
             </table>
           </div>
@@ -73,7 +73,7 @@ const page = 'configure' as const;
           <div class="callout blk">
             <span class="ct">un paramètre mérite une attention particulière</span>
             <h4><code>toolCommands</code> est vide par défaut.</h4>
-            <p>En mode <code>enforce</code>, un <code>/rebase</code> utilisé seul est traité comme n'importe quel autre commentaire non conforme, sauf si le dépôt le déclare explicitement. Ajouter <code>"/*"</code> permet d'exempter toutes les commandes commençant par <code>/</code>. Les comptes de bots, eux, doivent être déclarés individuellement avec leur identifiant exact, par exemple <code>"@dependabot"</code>.</p>
+            <p>En mode <code>enforce</code>, un <code>/rebase</code> utilisé seul est traité comme n'importe quel autre commentaire non conforme, jusqu'à ce que le dépôt ajoute <code>"/*"</code>, qui exempte toutes les commandes commençant par <code>/</code>. Il n'existe aucun moyen d'en exempter une seule&nbsp;: une entrée comme <code>"/rebase"</code> est ignorée, et signalée par un avis de configuration. Les comptes de bots, eux, doivent être déclarés individuellement avec leur identifiant exact, par exemple <code>"@dependabot"</code>.</p>
           </div>
         </section>
 
@@ -94,7 +94,7 @@ const page = 'configure' as const;
                 <tr><td class="m">config-warning</td><td class="d">Une clé est inconnue ou retirée, une valeur est obsolète, ou une entrée d'une liste est inutilisable.</td><td class="d">Elle ignore cette clé ou cette entrée et applique tout le reste.</td></tr>
                 <tr><td class="m">floor-override</td><td class="d">Un réglage a tenté de descendre sous le plancher.</td><td class="d">Elle ignore ce réglage et conserve la valeur du plancher.</td></tr>
                 <tr><td class="m">invalid-config</td><td class="d">Le fichier n'est pas un JSON valide, ou une clé connue contient une valeur impossible, comme <code>"mode": "banana"</code>.</td><td class="d">Elle écarte le document entier, se replie sur le dernier niveau valide — l'organisation, puis les valeurs du produit — et indique la ligne fautive.</td></tr>
-                <tr><td class="m">unsupported-version</td><td class="d">Le fichier demande une version du schéma ou un <code>coreMinVersion</code> plus récents que l'extension installée.</td><td class="d">Elle se replie sur <code>assist</code>, ou sur le plancher s'il est plus strict.</td></tr>
+                <tr><td class="m">unsupported-version</td><td class="d">Le fichier déclare une <code>version</code> supérieure à la version de schéma que l'extension sait lire (1 aujourd'hui), ou un <code>coreMinVersion</code> dont la majeure dépasse celle du moteur.</td><td class="d">Elle se replie sur <code>assist</code>, ou sur le plancher s'il est plus strict.</td></tr>
               </tbody>
             </table>
           </div>

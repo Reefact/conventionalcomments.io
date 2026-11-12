@@ -78,7 +78,7 @@ const page = 'adoption' as const;
 <span class="tk-k">&#125;</span></pre>
           <div class="callout">
             <span class="ct">worth checking before you enable it</span>
-            <p style="margin:0"><code>toolCommands</code> is <strong>empty by default</strong>. In <code>enforce</code> mode, a bare <code>/rebase</code> is rejected like any other non-compliant comment unless it has been declared. Adding <code>"/*"</code> exempts all slash commands.</p>
+            <p style="margin:0"><code>toolCommands</code> is <strong>empty by default</strong>. In <code>enforce</code> mode, a bare <code>/rebase</code> is rejected like any other non-compliant comment until <code>"/*"</code> is added, which exempts all slash commands. An entry for a single command, such as <code>"/rebase"</code>, is ignored.</p>
           </div>
         </section>
 
