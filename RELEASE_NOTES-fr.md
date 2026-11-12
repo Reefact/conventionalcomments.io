@@ -18,11 +18,12 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ### ✨ Nouveautés
 
-- **Les notes de version du toolkit annoncent la 1.0.0-beta.13 à venir.**
-  `/fr/notes-de-version/v1/` montre les notes que le toolkit a déjà rédigées pour elle —
-  chaque ligne du journal de la section « État » dit sur quelle page son sélecteur a échoué,
-  et le journal s'efface d'un clic — mais marque la version « à venir », hors du compte des
-  versions publiées, tant que le toolkit ne l'a pas taguée.
+- **Les notes de version du toolkit vont désormais jusqu'à la 1.0.0-rc.2.**
+  `/fr/notes-de-version/v1/` gagne onze versions, de la 1.0.0-beta.13 à la version
+  candidate : les labels pour répondre à une revue, la prise en charge de GitLab, les
+  marqueurs de session de revue, un mode `enforce` qui bloque vraiment, et le retrait du
+  vérificateur. Son introduction ne parle plus d'un serveur : l'extension ne bloque jamais
+  une fusion.
 
 ### 🐛 Corrections
 

@@ -18,10 +18,11 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ### ✨ New
 
-- **The toolkit's release notes announce the upcoming 1.0.0-beta.13.** `/release-notes/v1/`
-  shows the notes the toolkit has already written for it — each line of the "Status"
-  journal says which page its selector failed on, and the journal clears in one click — but
-  marks the version "upcoming", outside the count of releases, until the toolkit tags it.
+- **The toolkit's release notes now run up to 1.0.0-rc.2.** `/release-notes/v1/` gains eleven
+  versions, from 1.0.0-beta.13 to the release candidate: labels for replying to a review,
+  GitLab support, review-session markers, an `enforce` mode that really blocks, and the
+  retirement of the verifier. Its introduction no longer mentions a server: the extension
+  never blocks a merge.
 
 ### 🐛 Fixed
 
