@@ -7,13 +7,13 @@ const page = 'platforms' as const;
 ---
 <Base lang={lang} page={page}
   title="Supported platforms"
-  description="GitHub and Azure DevOps, hosted or self-hosted. See what's supported today, what's coming next, and which browsers are supported.">
+  description="GitHub, Azure DevOps and GitLab. See which hosts are covered on each platform, where the extension stops, and which browsers it installs in.">
 <section class="hband">
       <div class="in">
         <div class="stack g18 measure">
           <span class="eyebrow acc">compatibility:</span>
           <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Supported platforms</h1>
-          <p class="lede">The extension works on both hosted and self-hosted code review platforms. Here is what is available today, what is coming next, and which browsers it installs in.</p>
+          <p class="lede">The extension works on three code review platforms. Here is what is covered on each of them, where it stops, and which browsers it installs in.</p>
         </div>
 
         <div class="avail">
@@ -28,14 +28,23 @@ const page = 'platforms' as const;
             </ul>
           </div>
           <div class="av-card">
-            <span class="av-tag beta">beta</span>
+            <span class="av-tag ok">available</span>
             <h3>Azure DevOps</h3>
             <ul class="av-list">
-              <li>Services</li>
-              <li>Server <span class="av-note">self-hosted</span></li>
+              <li>Services <span class="av-note">dev.azure.com</span></li>
             </ul>
+            <p class="av-p">Azure DevOps Server and organizations still on a <code>visualstudio.com</code> address are not covered.</p>
+          </div>
+          <div class="av-card">
+            <span class="av-tag ok">available</span>
+            <h3>GitLab</h3>
+            <ul class="av-list">
+              <li>gitlab.com <span class="av-note">assistance only</span></li>
+            </ul>
+            <p class="av-p">Merge requests get the toolbar, live validation, the badges, the thread filter and the banner. The extension never blocks a comment there: it cannot read a repository's configuration on GitLab yet. It does not act in GitLab's rich text editor either, and GitLab Self-Managed and Dedicated are not supported.</p>
           </div>
         </div>
+        <p class="small measure">On GitHub, both the classic Conversation page and the new Overview page are supported.</p>
 
         <div class="stack g12">
           <span class="eyebrow">and on your machine:</span>
@@ -51,20 +60,20 @@ const page = 'platforms' as const;
     <section class="hband sunk">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">not yet:</span>
+          <span class="eyebrow">not covered:</span>
           <h2>Other platforms</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The convention itself works anywhere — it's simply a way of writing comments. What isn't available everywhere yet is the tooling: the toolbar, validation, and the pull request check.</p>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The convention itself works anywhere — it's simply a way of writing comments. What exists only on the platforms above is the tooling: the toolbar, live validation, the badges and the banner that counts blocking threads.</p>
         </div>
         <div class="avail">
           <div class="av-card soon">
-            <span class="av-tag">to come</span>
-            <h3>GitLab</h3>
-            <p class="av-p">Merge requests on gitlab.com and self-managed instances.</p>
+            <span class="av-tag">not covered</span>
+            <h3>Self-hosted Azure DevOps and GitLab</h3>
+            <p class="av-p">Azure DevOps Server, organizations on a <code>visualstudio.com</code> address, GitLab Self-Managed and GitLab Dedicated. The extension has only been built and measured against dev.azure.com and gitlab.com.</p>
           </div>
           <div class="av-card soon">
-            <span class="av-tag">to come</span>
-            <h3>Bitbucket</h3>
-            <p class="av-p">Cloud and Data Center.</p>
+            <span class="av-tag">out of scope</span>
+            <h3>Bitbucket and Gerrit</h3>
+            <p class="av-p">Neither is in the toolkit's scope today.</p>
           </div>
           <div class="av-card soon">
             <span class="av-tag">tell us</span>
@@ -83,7 +92,7 @@ const page = 'platforms' as const;
             <span class="eyebrow">what you need:</span>
             <h2 style="font-size:24px">The extension needs no infrastructure.</h2>
             <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Install it, allow the domains where you review, and it works: the toolbar, shortcuts, and live feedback. No account, no server, no configuration required. The store listings haven't been published yet, so for now the extension is installed from a release archive. The installation page provides browser-specific instructions.</p>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">An authoritative, platform-level merge check is on the roadmap, but isn't part of the extension today. There's nothing to deploy to get started.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">The extension is the whole product: there is no server to deploy and no check to add to a pipeline. It reports unresolved blocking threads and never blocks a merge. A team that wants merges to wait for resolved conversations uses its platform's own setting for that.</p>
             <div class="hero-btns">
               <a class="btn btn-p" href={href('install', 'en')}>Install the extension</a>
               <a class="btn btn-s" href={href('adoption', 'en')}>How teams adopt it</a>

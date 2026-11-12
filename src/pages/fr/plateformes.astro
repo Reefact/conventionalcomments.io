@@ -7,13 +7,13 @@ const page = 'platforms' as const;
 ---
 <Base lang={lang} page={page}
   title="Plateformes prises en charge"
-  description="GitHub et Azure DevOps, hébergés ou auto-hébergés. Découvrez ce qui est disponible aujourd'hui, ce qui est prévu ensuite et les navigateurs pris en charge.">
+  description="GitHub, Azure DevOps et GitLab. Découvrez quels hôtes sont couverts sur chaque plateforme, où l'extension s'arrête et dans quels navigateurs elle s'installe.">
 <section class="hband">
       <div class="in">
         <div class="stack g18 measure">
           <span class="eyebrow acc">compatibilité&nbsp;:</span>
           <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">Plateformes prises en charge</h1>
-          <p class="lede">L'extension fonctionne aussi bien sur des plateformes de revue de code hébergées qu'auto-hébergées. Voici ce qui est disponible aujourd'hui, ce qui est prévu ensuite, et les navigateurs dans lesquels elle s'installe.</p>
+          <p class="lede">L'extension fonctionne sur trois plateformes de revue de code. Voici ce qui est couvert sur chacune d'elles, où elle s'arrête, et les navigateurs dans lesquels elle s'installe.</p>
         </div>
 
         <div class="avail">
@@ -28,14 +28,23 @@ const page = 'platforms' as const;
             </ul>
           </div>
           <div class="av-card">
-            <span class="av-tag beta">bêta</span>
+            <span class="av-tag ok">disponible</span>
             <h3>Azure DevOps</h3>
             <ul class="av-list">
-              <li>Services</li>
-              <li>Server <span class="av-note">auto-hébergé</span></li>
+              <li>Services <span class="av-note">dev.azure.com</span></li>
             </ul>
+            <p class="av-p">Azure DevOps Server et les organisations restées sur une adresse <code>visualstudio.com</code> ne sont pas couverts.</p>
+          </div>
+          <div class="av-card">
+            <span class="av-tag ok">disponible</span>
+            <h3>GitLab</h3>
+            <ul class="av-list">
+              <li>gitlab.com <span class="av-note">assistance seule</span></li>
+            </ul>
+            <p class="av-p">Les merge requests reçoivent la barre de labels, la validation en direct, les badges, le filtre des fils et le bandeau. L'extension n'y bloque jamais un commentaire&nbsp;: elle ne sait pas encore lire la configuration d'un dépôt sur GitLab. Elle n'intervient pas non plus dans l'éditeur de texte enrichi de GitLab, et GitLab Self-Managed comme GitLab Dedicated ne sont pas pris en charge.</p>
           </div>
         </div>
+        <p class="small measure">Sur GitHub, la page Conversation classique et la nouvelle page Overview sont toutes deux prises en charge.</p>
 
         <div class="stack g12">
           <span class="eyebrow">et côté poste de travail&nbsp;:</span>
@@ -51,20 +60,20 @@ const page = 'platforms' as const;
     <section class="hband sunk">
       <div class="in">
         <div class="stack g14 measure">
-          <span class="eyebrow">pas encore&nbsp;:</span>
+          <span class="eyebrow">non couvert&nbsp;:</span>
           <h2>Autres plateformes</h2>
-          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">La convention elle-même peut s'utiliser partout&nbsp;: c'est avant tout une manière de rédiger les commentaires de revue. Ce qui n'est pas encore disponible sur toutes les plateformes, ce sont les outils qui l'accompagnent&nbsp;: la barre de labels, la validation et la vérification de la pull request.</p>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">La convention elle-même peut s'utiliser partout&nbsp;: c'est avant tout une manière de rédiger les commentaires de revue. Ce qui n'existe que sur les plateformes ci-dessus, ce sont les outils qui l'accompagnent&nbsp;: la barre de labels, la validation en direct, les badges et le bandeau qui compte les fils bloquants.</p>
         </div>
         <div class="avail">
           <div class="av-card soon">
-            <span class="av-tag">à venir</span>
-            <h3>GitLab</h3>
-            <p class="av-p">Merge requests sur gitlab.com et les instances GitLab Self-Managed.</p>
+            <span class="av-tag">non couvert</span>
+            <h3>Azure DevOps et GitLab auto-hébergés</h3>
+            <p class="av-p">Azure DevOps Server, les organisations sur une adresse <code>visualstudio.com</code>, GitLab Self-Managed et GitLab Dedicated. L'extension n'a été construite et mesurée que sur dev.azure.com et gitlab.com.</p>
           </div>
           <div class="av-card soon">
-            <span class="av-tag">à venir</span>
-            <h3>Bitbucket</h3>
-            <p class="av-p">Cloud et Data Center.</p>
+            <span class="av-tag">hors périmètre</span>
+            <h3>Bitbucket et Gerrit</h3>
+            <p class="av-p">Ni l'un ni l'autre n'entre aujourd'hui dans le périmètre du toolkit.</p>
           </div>
           <div class="av-card soon">
             <span class="av-tag">dites-le-nous</span>
@@ -83,7 +92,7 @@ const page = 'platforms' as const;
             <span class="eyebrow">ce qu'il vous faut&nbsp;:</span>
             <h2 style="font-size:24px">L'extension n'a besoin d'aucune infrastructure.</h2>
             <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Installez-la, autorisez les domaines où vous faites vos revues, et elle fonctionne&nbsp;: barre de labels, raccourcis et retours en temps réel. Aucun compte, aucun serveur, aucune configuration. Les fiches ne sont pas encore publiées sur les stores. Pour l'instant, l'installation se fait donc depuis l'archive d'une release. La page d'installation détaille la procédure pour chaque navigateur.</p>
-            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">Un contrôle de fusion exécuté au niveau de la plateforme fait partie de la feuille de route d'Enforce, mais cette capacité n'est pas encore disponible. Rien d'autre que l'extension n'est à déployer pour commencer.</p>
+            <p style="font-size:15px;color:var(--fg-2);line-height:1.6">L'extension est tout le produit&nbsp;: il n'y a ni serveur à déployer, ni vérification à ajouter à un pipeline. Elle signale les fils bloquants non résolus et ne bloque jamais une fusion. Une équipe qui veut qu'une fusion attende la résolution des conversations s'appuie sur le réglage que sa plateforme prévoit pour cela.</p>
             <div class="hero-btns">
               <a class="btn btn-p" href={href('install', 'fr')}>Installer l'extension</a>
               <a class="btn btn-s" href={href('adoption', 'fr')}>Comment l'adopter en équipe</a>
