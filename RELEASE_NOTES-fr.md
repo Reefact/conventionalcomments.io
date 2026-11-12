@@ -16,6 +16,10 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
+_Rien en attente pour l'instant._
+
+## release/2026-11-12T12-59-00Z — 12 novembre 2026
+
 ### ✨ Nouveautés
 
 - **Chaque section de la page des labels a désormais son lien.** `/fr/docs/labels/#added-labels`,
