@@ -100,7 +100,17 @@ if (toolkit) {
       if (a !== b) fail(`${label} : schéma ${a} ≠ validateur ${b}`);
       else ok(`${label} — ${expected.join(', ')}`);
     };
-    checkEnum('MODES', enumOf('properties.mode.enum'), 'domaine de mode');
+    // `mode` has two branches: the product's modes, and `warn`, which the validator still
+    // reads as `assist` while flagging it. The schema therefore accepts it, marked deprecated:
+    // refusing it would underline in red a configuration the product applies. The first
+    // branch is compared with MODES, the second with DEPRECATED_MODE.
+    checkEnum('MODES', enumOf('properties.mode.anyOf.0.enum') ?? [], 'domaine de mode');
+    const dep = /export const DEPRECATED_MODE = '([^']+)'/.exec(text);
+    const depSchema = enumOf('properties.mode.anyOf.1');
+    if (!dep) fail('DEPRECATED_MODE not found in schema.ts — the deprecated mode may have been removed');
+    else if (depSchema?.const !== dep[1] || depSchema?.deprecated !== true)
+      fail(`deprecated mode: schema ${JSON.stringify(depSchema?.const)} ≠ validator ${JSON.stringify(dep[1])}, or not marked deprecated`);
+    else ok(`deprecated mode — ${dep[1]}, accepted and marked as such`);
     checkEnum('SEVERITIES', enumOf('definitions.severity.enum'), 'domaine des sévérités');
 
     // Bornes statiques d'allowlistPatterns.

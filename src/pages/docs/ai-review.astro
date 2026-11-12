@@ -1,0 +1,122 @@
+---
+import Docs from '../../layouts/Docs.astro';
+import { href } from '../../i18n/routes';
+
+const lang = 'en' as const;
+const page = 'aireview' as const;
+---
+<Docs lang={lang} page={page}
+  title="AI-assisted review"
+  description="When agents review a pull request or answer a review: the session marker that tells their comments apart, and the two skills that teach an agent the convention as the toolkit applies it.">
+<div class="dhead stack g12">
+          <p class="crumb"><b>docs</b> / ai-assisted review</p>
+          <h1>AI-assisted review</h1>
+          <p class="lede measure">Agents write review comments, and the same convention applies to them as to any other reviewer. Two things are specific to agents. Several of them can work on the same pull request, often under the same account, so a comment can say which review session wrote it. And an agent has to be told how a review is run: the toolkit ships two skills for that, one for the reviewer and one for the author.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>The session marker</h2>
+          <p>The platform tells you <em>who</em> wrote a comment. It does not tell you <em>which review session</em> produced it — and when three agents review the same pull request in parallel under one technical account, or when the same agent comes back for a second review, that is the question a reader has. A comment can therefore carry a session marker: one line, on its own, usually the last.</p>
+          <pre class="code"><span class="tk-l">issue</span> <span class="tk-d">(blocking)</span><span class="tk-c">:</span> this state can produce a wrong result
+
+When `value` is null, this branch returns a success, against the contract.
+
+<span class="tk-k">[session:melancholy-coordinated-value-object]</span></pre>
+          <p>In a published comment, the extension hides that line and puts a single discreet mention at the very bottom of the comment, in muted text:</p>
+          <pre class="code">🤖 session: melancholy-coordinated-value-object</pre>
+          <p>The marker is metadata, not review content. It is set aside before the comment is validated, so it is never the label, the subject or the discussion, and it changes no verdict: neither the label, nor the decorations, nor whether a thread is blocking. What the platform stores is never modified either — the mention is drawn in your browser, and editing the comment shows the line as it was written.</p>
+          <div class="scroller">
+            <table class="t wide">
+              <thead><tr><th>What is written</th><th>What happens</th></tr></thead>
+              <tbody>
+                <tr><td class="m">[session:tedious-debated-branch]</td><td class="d">Recognized on any line where it stands alone: the last one, the middle of the body, even above the label. The last line is the recommended place; a signature that a tool appends after it does no harm.</td></tr>
+                <tr><td class="m">[session:Tedious-Debated-Branch]</td><td class="d">Recognized. The value is free text and no format is imposed; lowercase words separated by hyphens are recommended. The mention shows it in lowercase.</td></tr>
+                <tr><td class="m">see [session:a] above</td><td class="d">Not a marker: the line carries something else. A sentence that talks about a marker does not carry one.</td></tr>
+                <tr><td class="m">[Session:a] · [session :a]</td><td class="d">Not a marker: <code>session</code> is written in lowercase, right against the bracket and the colon.</td></tr>
+                <tr><td class="m">inside a code block or a quote</td><td class="d">Not a marker.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small">A marker that is not recognized stays ordinary text and raises no diagnostic: the convention does not require a marker, so it does not penalize a failed attempt. And a marker is a statement, not a proof — it attests neither identity nor provenance, and the extension offers no filter or search by session.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>A description, shown on hover</h2>
+          <p>A readable identifier can be followed by a sentence that describes it, after an em dash with a space on each side. Writing the sentence in italics sets it apart for readers who do not have the extension.</p>
+          <pre class="code"><span class="tk-k">[session:disheartening-reviewed-implementation — *We reviewed the implementation, and frankly, it was disheartening.*]</span></pre>
+          <p>The mention still shows the identifier alone; the description appears when you hover over it. Without a description, hovering shows nothing.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>One marker per comment</h2>
+          <p>A comment that carries several markers — identical or not — designates no session at all. The mention then reads <code>🤖 session: #ERROR</code>, and the comment raises <code>W-SESSION-MULTIPLE</code>.</p>
+          <div class="callout">
+            <span class="ct">a metadata mistake never holds a comment back</span>
+            <p style="margin:0"><code>W-SESSION-MULTIPLE</code> is a warning, and it stays one. It does not block sending, not even in <a href={href('enforce', 'en')}><code>enforce</code></a>: a repository's <code>severities</code> can turn it off, never raise it to an error.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Changing the icon</h2>
+          <p>The robot is a default, chosen because the marker serves first to follow agents' review sessions. A repository or an organization can replace it with <code>sessionIcon</code>, which takes any non-empty string. Like colours and label icons, it changes no verdict.</p>
+          <pre class="code"><span class="tk-k">&#123;</span>
+  <span class="tk-k">"version"</span>: <span class="tk-v">1</span>,
+  <span class="tk-k">"sessionIcon"</span>: <span class="tk-v">"🧭"</span>
+<span class="tk-k">&#125;</span></pre>
+          <p class="small">The other settings are described under <a href={href('configure', 'en')}>configuration</a>.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Two skills for review agents</h2>
+          <p>A skill is a set of instructions an agent follows. The toolkit publishes two, each as a directory under <a href="https://github.com/Reefact/conventional-comments-toolkit/tree/main/skills" rel="noopener noreferrer" target="_blank"><code>skills/</code> ↗</a> in its repository. Claude Code loads a skill's <code>SKILL.md</code> as it is; any other agent can be given the same file as instructions. Both are written for pull requests on GitHub.</p>
+          <div class="split">
+            <div class="callout">
+              <span class="ct">for the reviewer</span>
+              <h4><code>review-pull-request</code></h4>
+              <p>Reviews the pull request in depth and publishes its findings on it as Conventional Comments, inline where possible. Each finding is rated from P0 to P3, in the discussion and never in the header line. On later passes it checks every fix in the code itself, recaps the pass under <code>summary:</code>, and closes its review with <code>reviewed:</code> only once each of its points is dealt with.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">for the author</span>
+              <h4><code>respond-to-review</code></h4>
+              <p>Answers every finding and every question, in its own thread, with the label that says what was done: <code>done:</code> once the fix is pushed, naming the commit; <code>ack:</code>; <code>disagree:</code>, with a verifiable reason; <code>thanks:</code>. It answers questions with <code>note:</code> and asks for clarification with <code>question:</code>. It fixes what needs fixing and pushes.</p>
+            </div>
+          </div>
+          <pre class="code"><span class="tk-l">issue</span> <span class="tk-d">(blocking)</span><span class="tk-c">:</span> an empty result is reported as a success
+
+[P1] When the query returns nothing, this branch returns a success, against the contract.
+
+<span class="tk-k">[session:melancholy-coordinated-value-object — *The value object was well coordinated, yet strangely melancholy.*]</span>
+
+<span class="tk-l">done</span><span class="tk-c">:</span> fixed in a1b2c3d, an empty result now returns an error
+
+The code now returns the error the contract requires, with a regression test.
+
+<span class="tk-k">[session:melancholy-coordinated-value-object — *The value object was well coordinated, yet strangely melancholy.*]</span></pre>
+          <p class="small">A finding from the reviewer, then the author's reply in the same thread. The reviewer ends each of its comments with its session marker; the author copies the marker of the comment it answers, exactly as written. The priority is published as a small badge whose fallback text is <code>[P1]</code>.</p>
+          <p>What the two skills have in common:</p>
+          <ul class="bul">
+            <li><strong>They read the repository's <code>.conventional-comments.json</code> first</strong> and use only the labels it leaves enabled. The organization's configuration and the enterprise floor reach the extension through the browser's policy, so an agent usually cannot see them: it says so in its report instead of guessing.</li>
+            <li><strong>They write in the language the repository requires.</strong> Where it sets none, the reviewer follows the language of the pull request, and the author the language of the comment it answers. Labels and decorations are never translated.</li>
+            <li><strong>They leave to people what belongs to people.</strong> Neither approves or merges. The reviewer does not change the code and never uses the reply labels; the author never posts <code>reviewed</code>, which closes a reviewer's review, nor <code>decision</code>: giving up on what a reviewer asked for is a call for the pull request's author and maintainers, and the agent tells them one may be needed.</li>
+            <li><strong>They do not take a reply for a fix.</strong> For the reviewer, a <code>done:</code> or a resolved thread proves nothing until the code has been checked.</li>
+          </ul>
+          <p class="small">Install or hand over the whole directory, not the <code>SKILL.md</code> alone: the reviewer's skill relies on the files beside it. The labels these skills use — <code>summary</code>, <code>reviewed</code> and the reply labels — are described under <a href={href('labels', 'en')}>labels &amp; decorations</a>.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>How a session gets its identifier</h2>
+          <p>A review session is one review of one state of the pull request, run by one conversation: it starts with the first comment published and ends with the <code>reviewed:</code> that closes it. The reviewer skill gives each session an identifier under four rules.</p>
+          <ul class="bul">
+            <li><strong>Drawn, never chosen.</strong> The identifier comes from a random source, once, before anything is published, and is kept for the whole session. Two agents that make up a name tend to pick the same words.</li>
+            <li><strong>Never borrowed.</strong> Not from the pull request, not from another session, not from an earlier conversation. Every session of the same account posts as the same author, so nothing on the pull request proves a marker was yours.</li>
+            <li><strong>Checked before the first comment.</strong> If the pull request already carries that identifier, the draw collided with another session: the agent draws again.</li>
+            <li><strong>Renewed when the pull request changes.</strong> After a <code>reviewed:</code>, new commits, a new base branch or an edited description make a new state, hence a new review under a new identifier. A reader sees each review end where its marker stops.</li>
+          </ul>
+          <p>The identifier is a readable name drawn by <a href="https://github.com/Reefact/slugger" rel="noopener noreferrer" target="_blank">Slugger ↗</a> from code-review vocabulary, or a GUID. Where Slugger already runs, the skill uses it without asking. Otherwise it asks the person it works for — Slugger, or a GUID — and records the answer in a <code>session-id.md</code> file beside the skill, so that the question is not asked again. A Slugger name also gets its description: one sentence that renders the words of the name, in the language of the review's comments. A GUID gets none — it has no words to render.</p>
+        </section>
+
+        <div class="pager">
+          <a class="pgl" href={href('enforce', 'en')}><span class="dir">← previous</span><span class="ttl">Enforce</span></a>
+          <a class="pgl" href={href('troubleshooting', 'en')} style="text-align:right"><span class="dir">next →</span><span class="ttl">Troubleshooting</span></a>
+        </div>
+</Docs>

@@ -3,8 +3,9 @@
   "version": 1,
   "mode": "enforce",
   "labels": [
-    { "id": "issue", "enabled": true, "blockingByDefault": true, "alwaysNonBlocking": false, "icon": "🔨", "color": "#E04E45", "aliases": ["bug"] },
-    { "id": "typo", "enabled": false }
+    { "id": "issue", "enabled": true, "blockingByDefault": true, "alwaysNonBlocking": false, "icon": "🔨", "color": "#E04E45", "aliases": ["bug"], "description": "A problem that must be fixed.", "usage": "Report a problem to fix." },
+    { "id": "quibble", "enabled": true },
+    { "id": "followup", "kind": "reply", "icon": "🧭" }
   ],
   "decorations": {
     "allowFree": true,
@@ -14,24 +15,18 @@
       { "id": "security", "forces": null }
     ]
   },
-  "severities": { "W-MISSING-DECORATION": "off", "E-CONFLICT": "error" },
+  "severities": { "W-MISSING-DECORATION": "off", "E-CONFLICT": "error", "W-SESSION-MULTIPLE": "warn" },
   "scope": { "validateReplies": false, "validateReviewSummary": true },
   "rules": { "minSubjectLength": 5, "maxSubjectLength": 120, "minDecisionSubjectLength": 20 },
-  "formatSeverity": "warn",
   "exemptUsers": ["dependabot[bot]"],
   "allowlistPatterns": ["^LGTM$"],
   "toolCommands": ["/*", "@dependabot", "@renovate"],
-  "resolverOverrideGroup": ["acme/tech-leads"],
-  "overrideLabel": "cc-override",
-  "activation": { "activatedAt": "2026-09-01T00:00:00Z" },
   "configUrl": null,
   "coreMinVersion": "1.0.0",
   "configCacheTtlSeconds": 3600,
   "badgeStyle": "pill",
+  "sessionIcon": "🤖",
   "shortcuts": { "abbreviations": { "?i": "issue: " } },
-  "docUrl": "https://conventionalcomments.org/",
-  "server": { "coalesceWindowSeconds": 10, "gracePeriodSeconds": 900, "reconcileIntervalSeconds": 60, "statusTargetUrl": null },
-  "exemptionLog": { "endpoint": null },
   "language": "fr",
   "telemetry": { "enabled": false, "endpoint": null }
 }

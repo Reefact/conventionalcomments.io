@@ -1,0 +1,122 @@
+---
+import Docs from '../../../layouts/Docs.astro';
+import { href } from '../../../i18n/routes';
+
+const lang = 'fr' as const;
+const page = 'aireview' as const;
+---
+<Docs lang={lang} page={page}
+  title="Revue assistée par IA"
+  description="Quand des agents relisent une pull request ou répondent à une revue : le marqueur de session, qui permet de distinguer leurs commentaires, et les deux skills qui apprennent à un agent la convention telle que le toolkit l'applique.">
+<div class="dhead stack g12">
+          <p class="crumb"><b>doc</b> / revue assistée par IA</p>
+          <h1>Revue assistée par IA</h1>
+          <p class="lede measure">Un agent qui relit une pull request écrit des commentaires comme tout le monde, et la convention s'y applique comme à tout le monde. Deux choses sont propres aux agents. Ils peuvent être plusieurs sur la même pull request, souvent sous le même compte&nbsp;: un commentaire peut donc dire quelle session de revue l'a écrit. Et il faut expliquer à un agent comment se mène une revue&nbsp;: le toolkit fournit pour cela deux skills, l'un pour le relecteur, l'autre pour l'auteur.</p>
+        </div>
+
+        <section class="dsec">
+          <h2>Le marqueur de session</h2>
+          <p>La plateforme vous dit <em>qui</em> a écrit un commentaire. Elle ne vous dit pas <em>quelle session de revue</em> l'a produit — et quand trois agents relisent la même pull request en parallèle sous un seul compte technique, ou quand le même agent revient pour une seconde revue, c'est bien la question que se pose le lecteur. Un commentaire peut donc porter un marqueur de session&nbsp;: une ligne, seule, le plus souvent la dernière.</p>
+          <pre class="code"><span class="tk-l">issue</span> <span class="tk-d">(blocking)</span><span class="tk-c">:</span> cet état peut produire un résultat faux
+
+Quand `value` vaut null, cette branche renvoie un succès, contrairement au contrat.
+
+<span class="tk-k">[session:melancholy-coordinated-value-object]</span></pre>
+          <p>Dans un commentaire publié, l'extension masque cette ligne et place une seule mention, discrète, tout en bas du commentaire, dans une couleur atténuée&nbsp;:</p>
+          <pre class="code">🤖 session: melancholy-coordinated-value-object</pre>
+          <p>Le marqueur est une métadonnée, pas du contenu de revue. Il est mis de côté avant que le commentaire soit validé&nbsp;: il n'est donc jamais le label, le sujet ou la discussion, et il ne change aucun verdict — ni le label, ni les décorations, ni le caractère bloquant d'un fil. Ce que la plateforme enregistre n'est jamais modifié non plus&nbsp;: la mention est dessinée dans votre navigateur, et l'édition du commentaire montre la ligne telle qu'elle a été écrite.</p>
+          <div class="scroller">
+            <table class="t wide">
+              <thead><tr><th>Ce qui est écrit</th><th>Ce qui se passe</th></tr></thead>
+              <tbody>
+                <tr><td class="m">[session:tedious-debated-branch]</td><td class="d">Reconnu sur n'importe quelle ligne où il est seul&nbsp;: la dernière, le milieu du corps, et même au-dessus du label. La dernière ligne est l'emplacement recommandé&nbsp;; une signature qu'un outil ajoute après lui ne gêne pas.</td></tr>
+                <tr><td class="m">[session:Tedious-Debated-Branch]</td><td class="d">Reconnu. La valeur est un texte libre et aucun format n'est imposé&nbsp;; des mots en minuscules séparés par des tirets sont recommandés. La mention l'affiche en minuscules.</td></tr>
+                <tr><td class="m">voir [session:a] plus haut</td><td class="d">Ce n'est pas un marqueur&nbsp;: la ligne porte autre chose. Une phrase qui parle d'un marqueur n'en porte pas un.</td></tr>
+                <tr><td class="m">[Session:a] · [session :a]</td><td class="d">Ce n'est pas un marqueur&nbsp;: <code>session</code> s'écrit en minuscules, collé au crochet et au deux-points.</td></tr>
+                <tr><td class="m">dans un bloc de code ou une citation</td><td class="d">Ce n'est pas un marqueur.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small">Un marqueur qui n'est pas reconnu reste du texte ordinaire et ne produit aucun diagnostic&nbsp;: la convention n'exige pas de marqueur, elle ne sanctionne donc pas une tentative ratée. Et un marqueur est une déclaration, pas une preuve&nbsp;: il n'atteste ni une identité ni une provenance, et l'extension ne propose ni filtre ni recherche par session.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Une description, affichée au survol</h2>
+          <p>Un identifiant lisible peut être suivi d'une phrase qui le décrit, après un tiret cadratin entouré d'espaces. Écrite en italique, la phrase se détache de l'identifiant pour les lecteurs qui n'ont pas l'extension.</p>
+          <pre class="code"><span class="tk-k">[session:disheartening-reviewed-implementation — *On a passé l'implémentation en revue, et franchement, il y a de quoi se décourager !*]</span></pre>
+          <p>La mention n'affiche toujours que l'identifiant&nbsp;; la description apparaît quand vous la survolez. Sans description, le survol n'affiche rien.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Un seul marqueur par commentaire</h2>
+          <p>Un commentaire qui porte plusieurs marqueurs — identiques ou non — ne désigne aucune session. La mention affiche alors <code>🤖 session: #ERROR</code>, et le commentaire reçoit le diagnostic <code>W-SESSION-MULTIPLE</code>.</p>
+          <div class="callout">
+            <span class="ct">une erreur de métadonnée ne retient jamais un commentaire</span>
+            <p style="margin:0"><code>W-SESSION-MULTIPLE</code> est un avertissement, et il le reste. Il ne bloque pas l'envoi, pas même en <a href={href('enforce', 'fr')}><code>enforce</code></a>&nbsp;: le réglage <code>severities</code> d'un dépôt peut l'éteindre, jamais en faire une erreur.</p>
+          </div>
+        </section>
+
+        <section class="dsec">
+          <h2>Changer l'icône</h2>
+          <p>Le robot est une valeur par défaut, retenue parce que le marqueur sert d'abord à suivre les sessions de revue des agents. Un dépôt ou une organisation peut le remplacer avec <code>sessionIcon</code>, qui accepte n'importe quelle chaîne non vide. Comme les couleurs et les icônes des labels, ce réglage ne change aucun verdict.</p>
+          <pre class="code"><span class="tk-k">&#123;</span>
+  <span class="tk-k">"version"</span>: <span class="tk-v">1</span>,
+  <span class="tk-k">"sessionIcon"</span>: <span class="tk-v">"🧭"</span>
+<span class="tk-k">&#125;</span></pre>
+          <p class="small">Les autres réglages sont décrits dans la page <a href={href('configure', 'fr')}>configuration</a>.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Deux skills pour les agents de revue</h2>
+          <p>Un skill est un ensemble de consignes que suit un agent. Le toolkit en publie deux, chacun sous la forme d'un dossier dans <a href="https://github.com/Reefact/conventional-comments-toolkit/tree/main/skills" rel="noopener noreferrer" target="_blank"><code>skills/</code> ↗</a>, dans son dépôt. Claude Code charge le fichier <code>SKILL.md</code> d'un skill tel quel&nbsp;; à tout autre agent, on peut donner ce même fichier en guise de consignes. Les deux sont écrits pour les pull requests sur GitHub, et rédigés en anglais.</p>
+          <div class="split">
+            <div class="callout">
+              <span class="ct">pour le relecteur</span>
+              <h4><code>review-pull-request</code></h4>
+              <p>Relit la pull request en profondeur et y publie ses constats sous forme de Conventional Comments, sur la ligne concernée chaque fois que c'est possible. Chaque constat reçoit une priorité, de P0 à P3, écrite dans la discussion et jamais dans la ligne d'en-tête. Aux passes suivantes, il vérifie chaque correction dans le code lui-même, fait le point sur la passe sous <code>summary:</code>, et ne clôt sa revue par <code>reviewed:</code> qu'une fois chacun de ses points traité.</p>
+            </div>
+            <div class="callout">
+              <span class="ct">pour l'auteur</span>
+              <h4><code>respond-to-review</code></h4>
+              <p>Répond à chaque constat et à chaque question, dans son fil, avec le label qui dit ce qui a été fait&nbsp;: <code>done:</code> une fois la correction poussée, en nommant le commit&nbsp;; <code>ack:</code>&nbsp;; <code>disagree:</code>, avec une raison vérifiable&nbsp;; <code>thanks:</code>. Il répond à une question par <code>note:</code> et demande une précision par <code>question:</code>. Il corrige ce qui doit l'être, puis pousse.</p>
+            </div>
+          </div>
+          <pre class="code"><span class="tk-l">issue</span> <span class="tk-d">(blocking)</span><span class="tk-c">:</span> un résultat vide est rapporté comme un succès
+
+[P1] Quand la requête ne renvoie rien, cette branche renvoie un succès, contrairement au contrat.
+
+<span class="tk-k">[session:melancholy-coordinated-value-object — *L'objet-valeur était bien coordonné, et pourtant étrangement mélancolique.*]</span>
+
+<span class="tk-l">done</span><span class="tk-c">:</span> corrigé dans a1b2c3d, un résultat vide renvoie maintenant une erreur
+
+Le code renvoie désormais l'erreur qu'exige le contrat, avec un test de non-régression.
+
+<span class="tk-k">[session:melancholy-coordinated-value-object — *L'objet-valeur était bien coordonné, et pourtant étrangement mélancolique.*]</span></pre>
+          <p class="small">Un constat du relecteur, puis la réponse de l'auteur dans le même fil. Le relecteur termine chacun de ses commentaires par son marqueur de session&nbsp;; l'auteur recopie le marqueur du commentaire auquel il répond, exactement comme il est écrit. La priorité est publiée sous la forme d'un petit badge, dont le texte de repli est <code>[P1]</code>.</p>
+          <p>Ce que les deux skills ont en commun&nbsp;:</p>
+          <ul class="bul">
+            <li><strong>Ils lisent d'abord le fichier <code>.conventional-comments.json</code> du dépôt</strong> et n'emploient que les labels qu'il laisse activés. La configuration de l'organisation et le plancher d'entreprise parviennent à l'extension par la politique du navigateur&nbsp;: un agent ne les voit généralement pas, et il le dit dans son compte rendu plutôt que de les deviner.</li>
+            <li><strong>Ils écrivent dans la langue qu'exige le dépôt.</strong> S'il n'en fixe aucune, le relecteur suit la langue de la pull request, et l'auteur celle du commentaire auquel il répond. Les labels et les décorations ne sont jamais traduits.</li>
+            <li><strong>Ils laissent aux personnes ce qui leur revient.</strong> Aucun des deux n'approuve ni ne fusionne. Le relecteur ne modifie pas le code et n'emploie jamais les labels de réponse&nbsp;; l'auteur ne publie jamais <code>reviewed</code>, qui clôt la revue d'un relecteur, ni <code>decision</code>&nbsp;: renoncer à ce qu'un relecteur a demandé est un choix qui appartient à ceux qui portent la pull request, et l'agent leur signale qu'il pourrait être nécessaire.</li>
+            <li><strong>Ils ne prennent pas une réponse pour une correction.</strong> Pour le relecteur, un <code>done:</code> ou un fil résolu ne prouve rien tant que le code n'a pas été vérifié.</li>
+          </ul>
+          <p class="small">Installez ou transmettez le dossier entier, et pas seulement le fichier <code>SKILL.md</code>&nbsp;: le skill du relecteur s'appuie sur les fichiers qui l'accompagnent. Les labels qu'emploient ces skills — <code>summary</code>, <code>reviewed</code> et les labels de réponse — sont décrits dans la page <a href={href('labels', 'fr')}>labels et décorations</a>.</p>
+        </section>
+
+        <section class="dsec">
+          <h2>Comment une session reçoit son identifiant</h2>
+          <p>Une session de revue, c'est une revue d'un état de la pull request, menée par une conversation&nbsp;: elle commence au premier commentaire publié et se termine par le <code>reviewed:</code> qui la clôt. Le skill du relecteur attribue à chaque session un identifiant, selon quatre règles.</p>
+          <ul class="bul">
+            <li><strong>Tiré au sort, jamais choisi.</strong> L'identifiant vient d'une source aléatoire, une seule fois, avant toute publication, et il est conservé pendant toute la session. Deux agents qui inventent un nom ont tendance à choisir les mêmes mots.</li>
+            <li><strong>Jamais emprunté.</strong> Ni à la pull request, ni à une autre session, ni à une conversation précédente. Toutes les sessions d'un même compte publient sous le même auteur&nbsp;: rien, sur la pull request, ne prouve qu'un marqueur était le vôtre.</li>
+            <li><strong>Vérifié avant le premier commentaire.</strong> Si la pull request porte déjà cet identifiant, le tirage est tombé sur celui d'une autre session&nbsp;: l'agent en tire un nouveau.</li>
+            <li><strong>Renouvelé quand la pull request change.</strong> Après un <code>reviewed:</code>, de nouveaux commits, une autre branche de base ou une description modifiée constituent un nouvel état, donc une nouvelle revue, sous un nouvel identifiant. Le lecteur voit ainsi chaque revue s'arrêter là où s'arrête son marqueur.</li>
+          </ul>
+          <p>L'identifiant est un nom lisible, tiré par <a href="https://github.com/Reefact/slugger" rel="noopener noreferrer" target="_blank">Slugger ↗</a> dans un vocabulaire de revue de code, ou bien un GUID. Là où Slugger fonctionne déjà, le skill l'utilise sans rien demander. Sinon, il pose la question à la personne pour qui il travaille — Slugger, ou un GUID — et consigne la réponse dans un fichier <code>session-id.md</code>, à côté du skill, pour ne pas avoir à la reposer. Un nom tiré par Slugger reçoit aussi sa description&nbsp;: une phrase qui restitue les mots du nom, dans la langue des commentaires de la revue. Un GUID n'en reçoit pas&nbsp;: il n'a pas de mots à restituer.</p>
+        </section>
+
+        <div class="pager">
+          <a class="pgl" href={href('enforce', 'fr')}><span class="dir">← précédent</span><span class="ttl">Enforce</span></a>
+          <a class="pgl" href={href('troubleshooting', 'fr')} style="text-align:right"><span class="dir">suivant →</span><span class="ttl">Diagnostic</span></a>
+        </div>
+</Docs>
