@@ -1,0 +1,36 @@
+---
+import Platform from '../../../layouts/Platform.astro';
+import { href } from '../../../i18n/routes';
+
+const lang = 'fr' as const;
+---
+<Platform lang={lang} page="gitlab"
+  title="GitLab — Plateformes prises en charge"
+  description="L'extension sur gitlab.com : barre de labels, validation en direct, badges, filtre des fils et bandeau, sans blocage. GitLab Self-Managed et Dedicated ne sont pas couverts.">
+  <Fragment slot="intro">
+    <p>GitLab est une plateforme de développement, et gitlab.com en est l'édition hébergée. Les revues s'y font dans les merge requests. L'extension y assiste — barre de labels, validation en direct, badges, filtre des fils et bandeau — mais n'y bloque jamais un commentaire, quel que soit le mode demandé par le dépôt.</p>
+  </Fragment>
+
+  <Fragment slot="hosts">
+    <p class="small">L'extension n'a été développée et évaluée que sur gitlab.com.</p>
+  </Fragment>
+
+  <Fragment slot="where">
+    <p>L'extension fonctionne sur les merge requests, dans l'<strong>éditeur en texte brut (Markdown)</strong> de GitLab. GitLab propose un second éditeur, en texte enrichi, sous chaque zone de commentaire, et retient votre choix pour votre compte&nbsp;: dans celui-là, l'extension n'ajoute rien.</p>
+  </Fragment>
+
+  <Fragment slot="setup">
+    <p>gitlab.com a sa propre carte dans la page d'options de l'extension&nbsp;: un clic demande l'accès à ce domaine à votre navigateur. La page <a href={href('install', lang)}>Installation</a> détaille la marche à suivre.</p>
+  </Fragment>
+
+  <Fragment slot="merge">
+    <p>L'extension ne bloque jamais une fusion. Pour qu'une merge request attende la résolution de ses fils, activez <strong>All threads must be resolved</strong> dans les réglages de merge request du projet, parmi les merge checks. Ce contrôle attend tous les fils, pas seulement les bloquants. La page <a href={href('enforce', lang)}>Enforce</a> explique comment les deux s'articulent.</p>
+  </Fragment>
+
+  <Fragment slot="limits">
+    <ul class="bul">
+      <li><strong>Elle ne bloque jamais un commentaire.</strong> L'extension ne sait pas encore lire la configuration d'un dépôt sur GitLab, et elle ne refuse pas un commentaire au nom de règles qu'elle n'a pas pu lire. <code>enforce</code> s'y comporte donc comme <code>assist</code>, et la pastille d'état indique toujours une configuration non lue.</li>
+      <li><strong>Elle n'agit pas dans l'éditeur de texte enrichi.</strong> Passez à l'éditeur en texte brut pour retrouver la barre de labels et la validation. Voir <a href={href('troubleshooting', lang)}>Diagnostic</a>.</li>
+    </ul>
+  </Fragment>
+</Platform>

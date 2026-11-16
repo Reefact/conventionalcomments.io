@@ -15,6 +15,7 @@ export type Locale = (typeof LOCALES)[number];
 
 export type PageKey =
   | 'home' | 'howitworks' | 'platforms' | 'privacy'
+  | 'github' | 'azuredevops' | 'gitlab'
   | 'docsindex' | 'install' | 'labels' | 'configure' | 'adoption' | 'enforce' | 'aireview'
   | 'troubleshooting'
   | 'releasenotes' | 'version';
@@ -23,6 +24,9 @@ export const ROUTES: Record<PageKey, Record<Locale, string>> = {
   home:            { en: '/',                      fr: '/fr/' },
   howitworks:      { en: '/how-it-works/',         fr: '/fr/comment-ca-marche/' },
   platforms:       { en: '/platforms/',            fr: '/fr/plateformes/' },
+  github:          { en: '/platforms/github/',       fr: '/fr/plateformes/github/' },
+  azuredevops:     { en: '/platforms/azure-devops/', fr: '/fr/plateformes/azure-devops/' },
+  gitlab:          { en: '/platforms/gitlab/',       fr: '/fr/plateformes/gitlab/' },
   privacy:         { en: '/privacy/',              fr: '/fr/confidentialite/' },
   docsindex:       { en: '/docs/',                 fr: '/fr/docs/' },
   install:         { en: '/docs/install/',         fr: '/fr/docs/installation/' },
@@ -41,6 +45,9 @@ export const DOCS_PAGES: PageKey[] = [
   'docsindex', 'install', 'labels', 'configure', 'adoption', 'enforce', 'aireview',
   'troubleshooting',
 ];
+
+/** The page of each supported platform, in the order of the cards on `/platforms/`. */
+export const PLATFORM_PAGES: PageKey[] = ['github', 'azuredevops', 'gitlab'];
 
 /**
  * Les pages qu'aucun lien du site ne doit atteindre.

@@ -1,0 +1,37 @@
+---
+import Platform from '../../layouts/Platform.astro';
+import { href } from '../../i18n/routes';
+
+const lang = 'en' as const;
+---
+<Platform lang={lang} page="azuredevops"
+  title="Azure DevOps — Supported platforms"
+  description="The extension on Azure DevOps Services (dev.azure.com), with every feature, blocking included. Azure DevOps Server and visualstudio.com addresses are not covered.">
+  <Fragment slot="intro">
+    <p>Azure DevOps is Microsoft's development platform, and Azure DevOps Services is its hosted edition. Reviews happen in pull requests, under Repos. The extension does everything there that it does on GitHub: toolbar, live validation, badges, and in <code>enforce</code> a non-compliant comment is held back, whether you click Comment or press a key.</p>
+    <p>The extension reads the repository's <code>.conventional-comments.json</code> with your own browser session.</p>
+  </Fragment>
+
+  <Fragment slot="hosts">
+    <p class="small">The extension has only been built and measured against <code>dev.azure.com</code>. Authorizing another Azure DevOps address in the extension changes nothing.</p>
+  </Fragment>
+
+  <Fragment slot="where">
+    <p>The extension works on a pull request's pages: the comment boxes, the send buttons and the threads are recognised, and the preview of a comment gets its badges. Editing a comment you already published is told apart from writing a new one. The toolbar follows the Azure DevOps theme.</p>
+  </Fragment>
+
+  <Fragment slot="setup">
+    <p>Azure DevOps Services (<code>dev.azure.com</code>) has its own card on the extension's options page: one click asks your browser for that domain. The <a href={href('install', lang)}>installation page</a> walks through it.</p>
+  </Fragment>
+
+  <Fragment slot="merge">
+    <p>The extension never blocks a merge. To make a pull request wait until its comments are resolved, add the <strong>Check for comment resolution</strong> branch policy and set it to <em>Required</em>. That policy waits for every comment, not only the blocking ones. See <a href={href('enforce', lang)}>Enforce</a> for how the two fit together.</p>
+  </Fragment>
+
+  <Fragment slot="limits">
+    <ul class="bul">
+      <li><strong>Published comments keep their label prefix.</strong> Nobody has yet measured how Azure DevOps renders a comment body, so the extension adds its badges and leaves the body whole, instead of hiding the prefix as it does on GitHub.</li>
+      <li><strong>Reading the configuration needs an open session.</strong> Without one, Azure DevOps redirects the request to its sign-in page: the extension reports the configuration as unread and assists without blocking. See <a href={href('troubleshooting', lang)}>Troubleshooting</a>.</li>
+    </ul>
+  </Fragment>
+</Platform>

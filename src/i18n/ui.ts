@@ -51,7 +51,7 @@ export const UI: Record<Locale, Dict> = {
       enforce: 'Enforce',
       aireview: 'AI-assisted review',
       troubleshooting: 'Troubleshooting',
-      home: '', howitworks: '', platforms: '', privacy: '', releasenotes: '', version: '',
+      home: '', howitworks: '', platforms: '', github: '', azuredevops: '', gitlab: '', privacy: '', releasenotes: '', version: '',
     },
     jsonSchema: 'JSON schema ↗',
     ogAlt:
@@ -85,7 +85,7 @@ export const UI: Record<Locale, Dict> = {
       enforce: 'Enforce',
       aireview: 'Revue assistée par IA',
       troubleshooting: 'Diagnostic',
-      home: '', howitworks: '', platforms: '', privacy: '', releasenotes: '', version: '',
+      home: '', howitworks: '', platforms: '', github: '', azuredevops: '', gitlab: '', privacy: '', releasenotes: '', version: '',
     },
     jsonSchema: 'schéma JSON ↗',
     ogAlt:

@@ -1,0 +1,104 @@
+---
+import Base from './Base.astro';
+import { href, type Locale } from '../i18n/routes';
+import { PLATFORMS, PLATFORM_UI, FEATURES, type PlatformKey } from '../i18n/platforms';
+
+/**
+ * The page of one platform. Every platform page has the same seven sections, in the
+ * same order, whatever there is to say: a reader comparing GitHub with GitLab should
+ * find the same question in the same place on both pages.
+ *
+ * Hosts and features come from `src/i18n/platforms.ts`, shared with the cards on
+ * `/platforms/`. The prose sections are slots; a slot left empty prints "Nothing to
+ * report" rather than disappearing.
+ */
+interface Props { lang: Locale; page: PlatformKey; title: string; description: string }
+const { lang, page, title, description } = Astro.props;
+const p = PLATFORMS[page];
+const ui = PLATFORM_UI[lang];
+const s = ui.sections;
+
+const has = (slot: string) => Astro.slots.has(slot);
+const feature = (v: boolean | { ok: boolean; note: Record<Locale, string> }) =>
+  typeof v === 'boolean' ? { ok: v, note: undefined } : { ok: v.ok, note: v.note[lang] };
+---
+<Base lang={lang} page={page} title={title} description={description}>
+  <section class="hband">
+    <div class="in pf">
+      <div class="dhead stack g12 measure">
+        <p class="crumb"><a href={href('platforms', lang)}>{ui.crumb}</a> / <b>{p.name}</b></p>
+        <h1>{p.name}</h1>
+        <span class:list={['av-tag', p.support === 'full' ? 'ok' : 'part']}>{ui.support[p.support]}</span>
+      </div>
+
+      <section class="dsec">
+        <h2>{s.intro}</h2>
+        {has('intro') ? <slot name="intro" /> : <p>{ui.nothing}</p>}
+      </section>
+
+      <section class="dsec">
+        <h2>{s.hosts}</h2>
+        <div class="split">
+          <div class="stack g10">
+            <h3>{ui.covered}</h3>
+            <ul class="av-list">
+              {p.covered.map((h) => <li>{h.name} {h.note && <span class="av-note">{h.note[lang]}</span>}</li>)}
+            </ul>
+          </div>
+          <div class="stack g10">
+            <h3>{ui.notCovered}</h3>
+            {p.notCovered.length
+              ? <ul class="av-list">
+                  {p.notCovered.map((h) => <li>{h.name} {h.note && <span class="av-note">{h.note[lang]}</span>}</li>)}
+                </ul>
+              : <p>{ui.nothing}</p>}
+          </div>
+        </div>
+        {has('hosts') && <slot name="hosts" />}
+      </section>
+
+      <section class="dsec">
+        <h2>{s.features}</h2>
+        <div class="scroller">
+          <table class="t">
+            <thead><tr><th>{ui.feature}</th><th>{ui.status}</th></tr></thead>
+            <tbody>
+              {FEATURES.map((k) => {
+                const f = feature(p.features[k]);
+                return (
+                  <tr>
+                    <td class="d">{ui.features[k]}</td>
+                    <td>
+                      <span class:list={['st', f.ok && 'ok']}>{f.ok ? ui.available : ui.unavailable}</span>
+                      {f.note && <span class="why">{f.note}</span>}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="dsec">
+        <h2>{s.where}</h2>
+        {has('where') ? <slot name="where" /> : <p>{ui.nothing}</p>}
+      </section>
+
+      <section class="dsec">
+        <h2>{s.setup}</h2>
+        {has('setup') ? <slot name="setup" /> : <p>{ui.nothing}</p>}
+      </section>
+
+      <section class="dsec">
+        <h2>{s.merge}</h2>
+        {has('merge') ? <slot name="merge" /> : <p>{ui.nothing}</p>}
+      </section>
+
+      <section class="dsec">
+        <h2>{s.limits}</h2>
+        {has('limits') ? <slot name="limits" /> : <p>{ui.noLimits}</p>}
+      </section>
+    </div>
+  </section>
+</Base>
