@@ -16,7 +16,13 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
-_Nothing pending yet._
+### ✨ New
+
+- **Each supported platform has a page of its own.** `/platforms/github/`,
+  `/platforms/azure-devops/` and `/platforms/gitlab/` follow the same seven sections — the
+  platform, hosts and editions, features, where the extension acts, setup, making merges
+  wait, limitations — so two platforms can be compared section by section. The cards on
+  `/platforms/` now list only the hosts covered and the support level.
 
 ## release/2026-11-12T12-59-00Z — November 12, 2026
 

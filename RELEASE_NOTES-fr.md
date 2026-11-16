@@ -16,7 +16,14 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
-_Rien en attente pour l'instant._
+### ✨ Nouveautés
+
+- **Chaque plateforme prise en charge a sa propre page.** `/fr/plateformes/github/`,
+  `/fr/plateformes/azure-devops/` et `/fr/plateformes/gitlab/` suivent les mêmes sept
+  sections — la plateforme, hôtes et éditions, fonctionnalités, où l'extension agit, mise en
+  place, faire attendre la fusion, limitations — pour qu'on puisse comparer deux plateformes
+  section par section. Les cartes de `/fr/plateformes/` ne listent plus que les hôtes
+  couverts et le niveau de prise en charge.
 
 ## release/2026-11-12T12-59-00Z — 12 novembre 2026
 
