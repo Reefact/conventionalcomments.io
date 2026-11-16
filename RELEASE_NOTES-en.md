@@ -28,6 +28,15 @@ the wrong moment to discover that nobody wrote what it contains.
 - **The adoption page starts with installing.** Its rollout sequence opens with links to
   the installation page and to deploying the extension across an organization.
 
+### 🐛 Fixed
+
+- **The site presents the extension as having two modes, `assist` and `enforce`.** It said
+  three, counting `off`, which switches the extension off rather than being a way to use
+  it, and the home page showed a three-step path, `assist` / `enforce` / `enforce`, left over
+  from the retired `warn` mode. The home page now shows the two modes side by side; the
+  rollout stays on the adoption page, whose table drops the `off` row. The Enforce page
+  speaks of two modes.
+
 ## release/2026-11-12T12-59-00Z — November 12, 2026
 
 ### ✨ New
