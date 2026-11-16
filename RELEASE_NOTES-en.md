@@ -16,6 +16,10 @@ the wrong moment to discover that nobody wrote what it contains.
 
 ## Unreleased
 
+_Nothing pending yet._
+
+## release/2026-11-16T15-09-22Z — November 16, 2026
+
 ### ✨ New
 
 - **Each supported platform has a page of its own.** `/platforms/github/`,

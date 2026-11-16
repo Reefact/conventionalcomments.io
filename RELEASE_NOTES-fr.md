@@ -16,6 +16,10 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 
 ## Unreleased
 
+_Rien en attente pour l'instant._
+
+## release/2026-11-16T15-09-22Z — 16 novembre 2026
+
 ### ✨ Nouveautés
 
 - **Chaque plateforme prise en charge a sa propre page.** `/fr/plateformes/github/`,
