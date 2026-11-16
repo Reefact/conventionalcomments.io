@@ -27,6 +27,8 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 - **La page d'installation figure dans la navigation principale.** Une entrée `installer :`
   se place entre `plateformes :` et `doc :`, au lieu de n'être accessible que depuis la
   documentation.
+- **La page Adoption commence par l'installation.** Ses étapes s'ouvrent sur des liens vers
+  la page d'installation et vers le déploiement de l'extension dans toute une organisation.
 
 ## release/2026-11-12T12-59-00Z — 12 novembre 2026
 

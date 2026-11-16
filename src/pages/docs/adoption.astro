@@ -16,6 +16,7 @@ const page = 'adoption' as const;
 
         <section class="dsec">
           <h2>The rollout sequence</h2>
+          <p>Everything starts with the extension in each reviewer's browser. The <a href={href('install', 'en')}>installation page</a> covers one machine, step by step; to roll it out to a whole team at once, see <a href={`${href('install', 'en')}#organization`}>deploying it across an organization</a>. Once you authorize your review domain, the extension runs in <code>assist</code>, the default mode, unless a configuration says otherwise.</p>
           <div class="timeline">
             <div class="tcell" style="--st:var(--fg-faint)"><span class="wk">from day one</span><span class="md">assist</span><span class="ds">Install the extension and let people use it. Nothing is blocked and nothing is published. Nothing is measured centrally either, unless your organization has explicitly enabled telemetry.</span></div>
             <div class="tcell" style="--st:var(--warn)"><span class="wk">when the team is ready</span><span class="md">enforce, one pilot</span><span class="ds">On a single repository, the extension refuses to send a comment that does not follow the convention. Every other repository stays in <code>assist</code>.</span></div>

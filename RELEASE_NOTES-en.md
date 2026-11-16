@@ -25,6 +25,8 @@ the wrong moment to discover that nobody wrote what it contains.
   `/platforms/` now list only the hosts covered and the support level.
 - **The installation page is in the main navigation.** An `install:` entry sits between
   `platforms:` and `docs:`, instead of being reachable only from the documentation.
+- **The adoption page starts with installing.** Its rollout sequence opens with links to
+  the installation page and to deploying the extension across an organization.
 
 ## release/2026-11-12T12-59-00Z — November 12, 2026
 
