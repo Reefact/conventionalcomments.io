@@ -1,0 +1,26 @@
+---
+import Platform from '../../layouts/Platform.astro';
+import { href } from '../../i18n/routes';
+
+const lang = 'en' as const;
+---
+<Platform lang={lang} page="github"
+  title="GitHub — Supported platforms"
+  description="The extension on GitHub: github.com, Enterprise Cloud, Enterprise Managed Users and Enterprise Server, with every feature, blocking included.">
+  <Fragment slot="intro">
+    <p>GitHub is where the extension started, and where it does everything it can do. Reviews happen in pull requests: the toolbar sits above every comment box, published comments get their badges, and in <code>enforce</code> a non-compliant comment is held back until it is fixed.</p>
+    <p>The extension reads the repository's <code>.conventional-comments.json</code> with your own browser session, so a private repository needs nothing more than being signed in.</p>
+  </Fragment>
+
+  <Fragment slot="where">
+    <p>The extension works on a pull request's classic <strong>Conversation</strong> page and on the new <strong>Overview</strong> page, as well as in the comment boxes of <strong>Files changed</strong>. On the Overview, the banner sits under the pull request header and the thread filter above the list of threads.</p>
+  </Fragment>
+
+  <Fragment slot="setup">
+    <p>github.com has its own card on the extension's options page: one click asks your browser for that domain. A GitHub Enterprise Server instance, or an Enterprise Cloud domain on <code>ghe.com</code>, is typed in by hand, and you select GitHub as its platform so the extension knows which adapter to use. The <a href={href('install', lang)}>installation page</a> walks through it.</p>
+  </Fragment>
+
+  <Fragment slot="merge">
+    <p>The extension never blocks a merge. To make a pull request wait until its conversations are resolved, turn on <strong>Require conversation resolution before merging</strong> in a branch protection rule or a ruleset. That rule waits for every conversation, not only the blocking ones. See <a href={href('enforce', lang)}>Enforce</a> for how the two fit together.</p>
+  </Fragment>
+</Platform>

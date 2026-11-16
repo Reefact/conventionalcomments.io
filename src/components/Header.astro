@@ -1,6 +1,6 @@
 ---
 import Mark from './Mark.astro';
-import { href, otherLocale, DOCS_PAGES, type Locale, type PageKey } from '../i18n/routes';
+import { href, otherLocale, DOCS_PAGES, PLATFORM_PAGES, type Locale, type PageKey } from '../i18n/routes';
 import { t } from '../i18n/ui';
 
 interface Props { lang: Locale; page: PageKey }
@@ -9,9 +9,12 @@ const ui = t(lang);
 const other = otherLocale(lang);
 
 // « doc : » reste l'entrée courante sur n'importe quelle page de documentation — sinon
-// le lecteur perd le repère de la section dès qu'il descend d'un niveau.
+// le lecteur perd le repère de la section dès qu'il descend d'un niveau. The same holds
+// for "platforms:" on the page of each platform.
 const current = (key: PageKey) =>
-  key === page || (key === 'docsindex' && DOCS_PAGES.includes(page)) ? 'page' : undefined;
+  key === page
+  || (key === 'docsindex' && DOCS_PAGES.includes(page))
+  || (key === 'platforms' && PLATFORM_PAGES.includes(page)) ? 'page' : undefined;
 ---
 <header class="sheader">
   <div class="in">

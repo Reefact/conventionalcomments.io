@@ -1,0 +1,37 @@
+---
+import Platform from '../../../layouts/Platform.astro';
+import { href } from '../../../i18n/routes';
+
+const lang = 'fr' as const;
+---
+<Platform lang={lang} page="azuredevops"
+  title="Azure DevOps — Plateformes prises en charge"
+  description="L'extension sur Azure DevOps Services (dev.azure.com), avec toutes ses fonctionnalités, blocage compris. Azure DevOps Server et les adresses visualstudio.com ne sont pas couverts.">
+  <Fragment slot="intro">
+    <p>Azure DevOps est la plateforme de développement de Microsoft, et Azure DevOps Services en est l'édition hébergée. Les revues s'y font dans les pull requests, sous Repos. L'extension y fait tout ce qu'elle fait sur GitHub&nbsp;: barre de labels, validation en direct, badges et, en <code>enforce</code>, un commentaire non conforme est retenu, qu'on clique sur Comment ou qu'on passe par le clavier.</p>
+    <p>L'extension lit le <code>.conventional-comments.json</code> du dépôt avec votre propre session de navigateur.</p>
+  </Fragment>
+
+  <Fragment slot="hosts">
+    <p class="small">L'extension n'a été développée et évaluée que sur <code>dev.azure.com</code>. Autoriser une autre adresse Azure DevOps dans l'extension n'y change rien.</p>
+  </Fragment>
+
+  <Fragment slot="where">
+    <p>L'extension fonctionne sur les pages d'une pull request&nbsp;: elle reconnaît les zones de commentaire, les boutons d'envoi et les fils, et l'aperçu d'un commentaire reçoit ses badges. La modification d'un commentaire déjà publié n'est pas confondue avec la rédaction d'un nouveau. La barre de labels suit le thème d'Azure DevOps.</p>
+  </Fragment>
+
+  <Fragment slot="setup">
+    <p>Azure DevOps Services (<code>dev.azure.com</code>) a sa propre carte dans la page d'options de l'extension&nbsp;: un clic demande l'accès à ce domaine à votre navigateur. La page <a href={href('install', lang)}>Installation</a> détaille la marche à suivre.</p>
+  </Fragment>
+
+  <Fragment slot="merge">
+    <p>L'extension ne bloque jamais une fusion. Pour qu'une pull request attende la résolution de ses commentaires, ajoutez la stratégie de branche <strong>Check for comment resolution</strong> et rendez-la obligatoire (<em>Required</em>). Cette stratégie attend tous les commentaires, pas seulement les bloquants. La page <a href={href('enforce', lang)}>Enforce</a> explique comment les deux s'articulent.</p>
+  </Fragment>
+
+  <Fragment slot="limits">
+    <ul class="bul">
+      <li><strong>Un commentaire publié garde son préfixe.</strong> Personne n'a encore mesuré comment Azure DevOps affiche le corps d'un commentaire&nbsp;: l'extension y ajoute ses badges et laisse le corps entier, au lieu de masquer le préfixe comme sur GitHub.</li>
+      <li><strong>Lire la configuration demande une session ouverte.</strong> Sans elle, Azure DevOps redirige la requête vers sa page de connexion&nbsp;: l'extension signale la configuration comme non lue et assiste sans bloquer. Voir <a href={href('troubleshooting', lang)}>Diagnostic</a>.</li>
+    </ul>
+  </Fragment>
+</Platform>

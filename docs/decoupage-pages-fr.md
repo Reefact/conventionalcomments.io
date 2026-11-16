@@ -68,6 +68,28 @@ quelqu'un qui a déjà décidé vient chercher des faits.
 
 Source : `README.md`, `manifest.json`.
 
+**The cards list hosts, and nothing else.** Each card carries the platform's name, its
+support level (`full support` or `assistance only`), the hosts it covers and a link to the
+platform's own page. Caveats grew inside the cards one fix at a time, until the three cards
+had three different shapes; they now live on the platform pages. Hosts and support level
+come from `src/i18n/platforms.ts`, shared by the cards and the pages.
+
+### `/platforms/{github,azure-devops,gitlab}/` · `/fr/plateformes/{…}/`
+
+**Job:** answer "how well does it work on *my* platform", for someone whose platform is
+listed.
+
+Every platform page has the same seven sections, in the same order, enforced by
+`src/layouts/Platform.astro`: the platform · hosts and editions (covered and not covered) ·
+features (a fixed grid, identical on every page) · where the extension acts · setting it up ·
+making merges wait (the platform's native setting) · limitations. A section with nothing to
+say is never dropped: it prints "Nothing to report" — or "No known limitation" — so that two
+pages can be compared section by section.
+
+This is where a platform's real limits go. They are stated as facts with their reason, not
+as open hypotheses; the warning above about turning an availability page into a page of
+confessions still holds.
+
 ### `/privacy/` · `/fr/confidentialite/`
 
 **Travail :** passer une revue sécurité, **et** servir d'URL de politique de

@@ -1,0 +1,36 @@
+---
+import Platform from '../../layouts/Platform.astro';
+import { href } from '../../i18n/routes';
+
+const lang = 'en' as const;
+---
+<Platform lang={lang} page="gitlab"
+  title="GitLab — Supported platforms"
+  description="The extension on gitlab.com: toolbar, live validation, badges, thread filter and banner, without blocking. GitLab Self-Managed and Dedicated are not covered.">
+  <Fragment slot="intro">
+    <p>GitLab is a development platform, and gitlab.com is its hosted edition. Reviews happen in merge requests. The extension assists there — toolbar, live validation, badges, thread filter and banner — but it never blocks a comment, whatever mode the repository asks for.</p>
+  </Fragment>
+
+  <Fragment slot="hosts">
+    <p class="small">The extension has only been built and measured against gitlab.com.</p>
+  </Fragment>
+
+  <Fragment slot="where">
+    <p>The extension works on merge requests, in GitLab's <strong>plain-text (Markdown) editor</strong>. GitLab offers a second, rich text editor under every comment box and remembers your choice for your account: in that one, the extension adds nothing.</p>
+  </Fragment>
+
+  <Fragment slot="setup">
+    <p>gitlab.com has its own card on the extension's options page: one click asks your browser for that domain. The <a href={href('install', lang)}>installation page</a> walks through it.</p>
+  </Fragment>
+
+  <Fragment slot="merge">
+    <p>The extension never blocks a merge. To make a merge request wait until its threads are resolved, turn on <strong>All threads must be resolved</strong> in the project's merge request settings, under merge checks. That check waits for every thread, not only the blocking ones. See <a href={href('enforce', lang)}>Enforce</a> for how the two fit together.</p>
+  </Fragment>
+
+  <Fragment slot="limits">
+    <ul class="bul">
+      <li><strong>It never blocks a comment.</strong> The extension cannot read a repository's configuration on GitLab yet, and it does not refuse a comment in the name of rules it could not read. <code>enforce</code> therefore behaves like <code>assist</code>, and the status pill always says the configuration is unread.</li>
+      <li><strong>It does not act in the rich text editor.</strong> Switch to the plain-text editor to get the toolbar and the validation. See <a href={href('troubleshooting', lang)}>Troubleshooting</a>.</li>
+    </ul>
+  </Fragment>
+</Platform>

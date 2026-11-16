@@ -1,0 +1,26 @@
+---
+import Platform from '../../../layouts/Platform.astro';
+import { href } from '../../../i18n/routes';
+
+const lang = 'fr' as const;
+---
+<Platform lang={lang} page="github"
+  title="GitHub — Plateformes prises en charge"
+  description="L'extension sur GitHub : github.com, Enterprise Cloud, Enterprise Managed Users et Enterprise Server, avec toutes ses fonctionnalités, blocage compris.">
+  <Fragment slot="intro">
+    <p>GitHub est la plateforme sur laquelle l'extension est née, et celle où elle fait tout ce qu'elle sait faire. Les revues s'y font dans les pull requests&nbsp;: la barre de labels se place au-dessus de chaque zone de commentaire, les commentaires publiés reçoivent leurs badges et, en <code>enforce</code>, un commentaire non conforme est retenu jusqu'à ce qu'il soit corrigé.</p>
+    <p>L'extension lit le <code>.conventional-comments.json</code> du dépôt avec votre propre session de navigateur&nbsp;: sur un dépôt privé, il suffit d'être connecté.</p>
+  </Fragment>
+
+  <Fragment slot="where">
+    <p>L'extension fonctionne sur la page <strong>Conversation</strong> classique d'une pull request comme sur la nouvelle page <strong>Overview</strong>, ainsi que dans les zones de commentaire de <strong>Files changed</strong>. Sur l'Overview, le bandeau se place sous l'en-tête de la pull request et le filtre des fils au-dessus de la liste des fils.</p>
+  </Fragment>
+
+  <Fragment slot="setup">
+    <p>github.com a sa propre carte dans la page d'options de l'extension&nbsp;: un clic demande l'accès à ce domaine à votre navigateur. Une instance GitHub Enterprise Server, ou un domaine Enterprise Cloud en <code>ghe.com</code>, se saisit à la main, en choisissant GitHub comme plateforme pour que l'extension sache quel adaptateur utiliser. La page <a href={href('install', lang)}>Installation</a> détaille la marche à suivre.</p>
+  </Fragment>
+
+  <Fragment slot="merge">
+    <p>L'extension ne bloque jamais une fusion. Pour qu'une pull request attende la résolution de ses conversations, activez <strong>Require conversation resolution before merging</strong> dans une règle de protection de branche ou un ruleset. Cette règle attend toutes les conversations, pas seulement les bloquantes. La page <a href={href('enforce', lang)}>Enforce</a> explique comment les deux s'articulent.</p>
+  </Fragment>
+</Platform>
