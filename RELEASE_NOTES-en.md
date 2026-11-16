@@ -23,6 +23,8 @@ the wrong moment to discover that nobody wrote what it contains.
   platform, hosts and editions, features, where the extension acts, setup, making merges
   wait, limitations — so two platforms can be compared section by section. The cards on
   `/platforms/` now list only the hosts covered and the support level.
+- **The installation page is in the main navigation.** An `install:` entry sits between
+  `platforms:` and `docs:`, instead of being reachable only from the documentation.
 
 ## release/2026-11-12T12-59-00Z — November 12, 2026
 

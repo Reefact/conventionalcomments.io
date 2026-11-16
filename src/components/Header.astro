@@ -9,10 +9,11 @@ const ui = t(lang);
 const other = otherLocale(lang);
 
 // Keep "doc:" current on documentation pages, and "platforms:" on platform pages,
-// so readers retain their section reference when navigating one level down.
+// so readers retain their section reference when navigating one level down. The
+// installation page is the exception: it has its own "install:" entry.
 const current = (key: PageKey) =>
   key === page
-  || (key === 'docsindex' && DOCS_PAGES.includes(page))
+  || (key === 'docsindex' && page !== 'install' && DOCS_PAGES.includes(page))
   || (key === 'platforms' && PLATFORM_PAGES.includes(page)) ? 'page' : undefined;
 ---
 <header class="sheader">
@@ -25,6 +26,7 @@ const current = (key: PageKey) =>
     <nav class="snav" aria-label={lang === 'fr' ? 'Principale' : 'Main'}>
       <a class="navlink" href={href('howitworks', lang)} aria-current={current('howitworks')}>{ui.nav.howitworks}</a>
       <a class="navlink" href={href('platforms', lang)} aria-current={current('platforms')}>{ui.nav.platforms}</a>
+      <a class="navlink" href={href('install', lang)} aria-current={current('install')}>{ui.nav.install}</a>
       <a class="navlink" href={href('docsindex', lang)} aria-current={current('docsindex')}>{ui.nav.docs}</a>
     </nav>
 
