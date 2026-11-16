@@ -16,7 +16,7 @@ import type { Locale, PageKey } from './routes';
 const NBSP = ' ';
 
 type Dict = {
-  nav: Record<'howitworks' | 'platforms' | 'docs', string>;
+  nav: Record<'howitworks' | 'platforms' | 'install' | 'docs', string>;
   cta: string;
   github: string;
   brandAria: string;
@@ -36,7 +36,7 @@ type Dict = {
 
 export const UI: Record<Locale, Dict> = {
   en: {
-    nav: { howitworks: 'how it works:', platforms: 'platforms:', docs: 'docs:' },
+    nav: { howitworks: 'how it works:', platforms: 'platforms:', install: 'install:', docs: 'docs:' },
     cta: 'Bring it to your team',
     github: 'github ↗',
     brandAria: 'conventionalcomments.io — home',
@@ -69,6 +69,7 @@ export const UI: Record<Locale, Dict> = {
     nav: {
       howitworks: `comment${NBSP}ça${NBSP}marche${NBSP}:`,
       platforms: `plateformes${NBSP}:`,
+      install: `installer${NBSP}:`,
       docs: `doc${NBSP}:`,
     },
     cta: "L'adopter dans mon équipe",
