@@ -30,6 +30,15 @@ taguée est le mauvais moment pour découvrir que personne n'a écrit ce qu'elle
 - **La page Adoption commence par l'installation.** Ses étapes s'ouvrent sur des liens vers
   la page d'installation et vers le déploiement de l'extension dans toute une organisation.
 
+### 🐛 Corrections
+
+- **Le site présente l'extension avec deux modes, `assist` et `enforce`.** Il en annonçait
+  trois en comptant `off`, qui désactive l'extension plutôt qu'il ne permet de l'utiliser, et
+  l'accueil montrait un parcours en trois étapes, `assist` / `enforce` / `enforce`, hérité de
+  l'ancien mode `warn`. L'accueil présente désormais les deux modes côte à côte ; le
+  déploiement progressif reste sur la page Adoption, dont le tableau perd la ligne `off`. La
+  page Enforce parle de deux modes.
+
 ## release/2026-11-12T12-59-00Z — 12 novembre 2026
 
 ### ✨ Nouveautés
