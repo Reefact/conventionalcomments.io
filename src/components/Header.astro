@@ -8,9 +8,8 @@ const { lang, page } = Astro.props;
 const ui = t(lang);
 const other = otherLocale(lang);
 
-// « doc : » reste l'entrée courante sur n'importe quelle page de documentation — sinon
-// le lecteur perd le repère de la section dès qu'il descend d'un niveau. The same holds
-// for "platforms:" on the page of each platform.
+// Keep "doc:" current on documentation pages, and "platforms:" on platform pages,
+// so readers retain their section reference when navigating one level down.
 const current = (key: PageKey) =>
   key === page
   || (key === 'docsindex' && DOCS_PAGES.includes(page))

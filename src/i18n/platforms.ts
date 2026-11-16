@@ -73,7 +73,7 @@ export const PLATFORMS: Record<PlatformKey, Platform> = {
           fr: 'Le préfixe du label reste visible dans un commentaire publié.',
         },
       },
-      filter: true,
+      filter: { ok: true, note: { en: 'Overview only, not in Files.', fr: 'Dans Overview seulement, pas dans Files.' } },
       banner: true,
       block: true,
     },
@@ -90,7 +90,7 @@ export const PLATFORMS: Record<PlatformKey, Platform> = {
       toolbar: true,
       live: true,
       badges: true,
-      filter: true,
+      filter: { ok: true, note: { en: 'Overview only, not in Changes.', fr: 'Dans Overview seulement, pas dans Changes.' } },
       banner: true,
       block: {
         ok: false,
