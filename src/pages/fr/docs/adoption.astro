@@ -16,6 +16,7 @@ const page = 'adoption' as const;
 
         <section class="dsec">
           <h2>Les étapes d'adoption</h2>
+          <p>Tout commence par l'extension, dans le navigateur de chaque relecteur. La page <a href={href('install', 'fr')}>Installation</a> détaille la marche à suivre sur un poste&nbsp;; pour équiper toute une équipe d'un coup, voir <a href={`${href('install', 'fr')}#organization`}>Déployer l'extension dans toute une organisation</a>. Une fois votre domaine de revue autorisé, l'extension fonctionne en <code>assist</code>, le mode par défaut, sauf si une configuration en décide autrement.</p>
           <div class="timeline">
             <div class="tcell" style="--st:var(--fg-faint)"><span class="wk">dès le premier jour</span><span class="md">assist</span><span class="ds">Installez l'extension et laissez l'équipe se l'approprier. Rien n'est bloqué, rien n'est publié. Rien n'est mesuré de façon centralisée non plus, sauf si votre organisation a explicitement activé la télémétrie.</span></div>
             <div class="tcell" style="--st:var(--warn)"><span class="wk">quand l'équipe est prête</span><span class="md">enforce, un pilote</span><span class="ds">Sur un seul dépôt, l'extension refuse l'envoi d'un commentaire qui ne respecte pas la convention. Tous les autres dépôts restent en <code>assist</code>.</span></div>
