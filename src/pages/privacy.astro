@@ -14,11 +14,11 @@ const page = 'privacy' as const;
           <span class="eyebrow acc">privacy:</span>
           <h1 style="font-size:clamp(29px,3.8vw,41px);font-weight:700;letter-spacing:-.031em;line-height:1.05">The extension doesn't send what you write in a review anywhere.</h1>
           <p class="lede">Review comments can be more sensitive than the code itself: they contain not only technical information, but also what people think about someone else's work. <strong>The extension does not collect, remotely store, or transmit the content of your code, comments, or diffs.</strong> This page explains exactly what data exists, where it lives, and under what conditions anything can leave your browser.</p>
-          <p class="small">Last revised: November 12, 2026.</p>
+          <p class="small">Last revised: November 21, 2026.</p>
         </div>
         <div class="callout">
           <span class="ct">scope</span>
-          <p style="margin:0">This page covers the <strong>browser extension</strong>, which is the whole product. The toolkit once planned a second component that would have run outside the browser — a companion server, then a verifier; both are abandoned, so there is no other part of the product for your data to reach. The extension is not listed in the browser stores yet: today it is installed from a release archive.</p>
+          <p style="margin:0">This page covers the <strong>browser extension</strong>, which is the whole product, and, in a dedicated section below, the audience measurement of this website. The toolkit once planned a second component that would have run outside the browser — a companion server, then a verifier; both are abandoned, so there is no other part of the product for your data to reach. The extension is not listed in the browser stores yet: today it is installed from a release archive.</p>
         </div>
       </div>
     </section>
@@ -123,6 +123,16 @@ const page = 'privacy' as const;
           <li>It does not track your browsing outside review pages on supported code platforms.</li>
         </ul>
         <p class="small measure">The source code is public and auditable under the Apache-2.0 license. The repository documents why each browser permission is required, and holds the privacy policy that this page restates.</p>
+      </div>
+    </section>
+
+    <section class="hband">
+      <div class="in">
+        <div class="stack g14 measure">
+          <span class="eyebrow">this website:</span>
+          <h2>The website uses cookieless audience measurement.</h2>
+          <p style="font-size:15px;color:var(--fg-2);line-height:1.6">This applies to <strong>conventionalcomments.io</strong> only, not to the extension. The site is measured with <strong>Cloudflare Web Analytics</strong>, which counts page views, referrers, countries and page-load performance. It sets <strong>no cookie</strong>, does not use <code>localStorage</code> to recognize you, and does not build a profile of individual visitors or follow you from one site to another. No advertising is involved. Cloudflare's own documentation describes the data it handles.</p>
+        </div>
       </div>
     </section>
 
