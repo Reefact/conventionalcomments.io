@@ -42,7 +42,18 @@ jobs:
 
       - run: npm ci
 
-      # build + les invariants du site + le schéma comparé au toolkit
-      - run: npm run check
+      # Blocking: build + the site invariants + the schema compared with the toolkit
+      # + labels + release-notes pairing. `check:toolkit` is deliberately not in here.
+      - run: npm run check:ci
+        env:
+          TOOLKIT_PATH: ./toolkit
+
+      # Not blocking: it compares the release-notes pages with the toolkit's live default
+      # branch, so it turns red on every open pull request the moment the toolkit
+      # publishes a version, whatever the pull request changes. The drift is reported as
+      # a warning annotation instead; `npm run check` (and so `npm run deploy`) still
+      # fails on it, so a release cannot go out while the pages are behind.
+      - name: Release notes against the toolkit (warning only)
+        run: npm run check:toolkit || echo "::warning title=check:toolkit::Release-notes pages are out of sync with the toolkit; see this step's log."
         env:
           TOOLKIT_PATH: ./toolkit

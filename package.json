@@ -8,6 +8,7 @@
     "dev": "node scripts/generate-version.mjs && node scripts/generate-site-release-note.mjs && astro dev",
     "build": "node scripts/generate-version.mjs && node scripts/generate-site-release-note.mjs && astro build",
     "preview": "astro preview",
+    "check:ci": "npm run build && node scripts/check-site.mjs && npm run check:schema && npm run check:labels && npm run check:notes",
     "check": "npm run build && node scripts/check-site.mjs && npm run check:schema && npm run check:toolkit && npm run check:labels && npm run check:notes",
     "check:site": "node scripts/check-site.mjs",
     "check:schema": "node scripts/check-schema.mjs",

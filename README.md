@@ -24,7 +24,8 @@ npm run check    # build + tous les contrôles ci-dessous
 | --- | --- |
 | `npm run dev` | Estampille le build, puis sert le site en développement |
 | `npm run build` | Stamps the build, then produces `dist/` (30 pages) |
-| `npm run check` | `build`, puis les invariants du site et du schéma |
+| `npm run check` | `build`, puis les invariants du site, du schéma et des notes de version contre le toolkit |
+| `npm run check:ci` | Comme `check`, sans `check:toolkit` : ce que la CI exige d'une pull request |
 | `npm run check:site` | Les treize invariants, sur ce qui est réellement produit |
 | `npm run check:schema` | Le schéma JSON contre ses gabarits ; `-- <chemin>` ou `TOOLKIT_PATH` le compare à la source |
 | `npm run check:toolkit` | Les notes de version du site contre celles du toolkit |
@@ -101,6 +102,9 @@ bruyamment : elle reste juste, en retard. La CI récupère donc le toolkit et co
 - `check:schema` compare les clés, les domaines et les bornes à `schema.ts`.
 - `check:toolkit` compare la liste des versions de `/release-notes/v1/` à celle que le
   toolkit publie — la page a été mise en ligne à jour et l'était déjà moins le lendemain.
+  La CI le lance à part, en simple avertissement : il compare avec la branche par défaut du
+  toolkit, donc il rougirait toutes les pull requests dès que le toolkit publie une version.
+  `npm run check` et `npm run deploy` y restent soumis.
 - `check:labels` compares the icons, colours and kinds the site **displays** for the
   nineteen labels with `defaults.ts`, read declaration by declaration. When there were
   thirteen, a hand transcription already had one wrong and nothing flagged it: both emoji
