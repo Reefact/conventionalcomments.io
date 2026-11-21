@@ -1,39 +1,43 @@
 # CLAUDE.md
 
-## Infrastructure : règle WAF Cloudflare « Block .env probes »
+## Infrastructure: Cloudflare WAF rule "Block .env probes"
 
-Une règle de sécurité personnalisée (WAF) a été créée le 21/11/2026 sur le
-domaine conventionalcomments.io, dans Cloudflare (Security → Security rules →
+A custom security rule (WAF) was created on 2026-11-21 for the
+conventionalcomments.io domain, in Cloudflare (Security → Security rules →
 Custom rules).
 
-- Nom : `Block .env probes`
-- Condition : `(http.request.uri.path contains ".env")`
-- Action : Block (la requête est refusée par Cloudflare avant d'atteindre le site)
-- Statut : Active
+- Name: `Block .env probes`
+- Condition: `(http.request.uri.path contains ".env")`
+- Action: Block (Cloudflare refuses the request before it reaches the site)
+- Status: Active
 
-Pourquoi : des scanners automatisés testent en permanence des chemins comme
-`/.env`, `/.env.txt`, `/old/.env` ou `/frontend/.env` pour récupérer des
-secrets. Environ 300 requêtes de ce type sur 24 h (≈ 28 % du trafic sur
-30 jours), toutes refusées. La règle les arrête en amont et allège les
-statistiques.
+Why: automated scanners constantly probe paths such as `/.env`, `/.env.txt`,
+`/old/.env` or `/frontend/.env` to retrieve secrets. About 300 such requests
+were seen over 24 hours (about 28% of the traffic over 30 days), all refused.
+The rule stops them upstream and keeps the statistics cleaner.
 
-### Conséquences pour le développement
+### What this means for development
 
-1. Aucune URL du site ne doit contenir la chaîne `.env` (page, asset, ancre
-   côté serveur, route d'API, fichier statique…). Elle serait bloquée par
-   Cloudflare, y compris pour de vrais visiteurs. Exemples à éviter :
-   `/docs/.environment`, `config.env.json`.
-2. Un 403 sur une URL contenant `.env` (test, monitoring, vérificateur de
-   liens) vient très probablement de cette règle, pas d'un bug du site.
-3. Ne jamais déployer de fichier `.env` (ni variante) dans le dossier publié.
-   La règle est une protection supplémentaire, pas la seule : elle ne remplace
-   pas une bonne configuration du build.
-4. Ne pas supprimer ni désactiver la règle sans en parler d'abord. Toute
-   modification passe par le tableau de bord Cloudflare.
-5. La règle n'est pas décrite dans le code du dépôt. Si une infrastructure as
-   code (Terraform, Wrangler, etc.) est ajoutée, l'y reproduire pour éviter
-   qu'elle soit perdue ou écrasée.
+The rule tests the **request path** only (`http.request.uri.path`). The query
+string and the fragment are not part of it: a fragment never leaves the
+browser, and `/docs/configure/?example=.env` has no `.env` in its path.
 
-Le filtre `contains` est volontairement large (il couvre aussi `/.env.txt`,
-`/.env.dist`, etc.). Les pages actuelles (`/docs/...`, `/fr/...`) ne sont pas
-concernées.
+1. No path served by the site may contain the string `.env` (page, asset,
+   API route, static file…). Cloudflare would block it, real visitors
+   included. Examples to avoid: `/docs/.environment`, `config.env.json`.
+2. A 403 on a URL whose path contains `.env` (test, monitoring, link checker)
+   most likely comes from this rule, not from a bug in the site. A `.env`
+   only in the query string or the fragment is not matched by the rule, so do
+   not blame it there.
+3. Never deploy a `.env` file (or a variant) in the published folder. The rule
+   is an additional protection, not the only one: it does not replace a proper
+   build configuration.
+4. Do not delete or disable the rule without discussing it first. Any change
+   goes through the Cloudflare dashboard.
+5. The rule is not described in the repository's code. If infrastructure as
+   code (Terraform, Wrangler, etc.) is added later, reproduce it there so it
+   is not lost or overwritten.
+
+The `contains` filter is deliberately broad (it also covers `/.env.txt`,
+`/.env.dist`, etc.). The site's current pages (`/docs/...`, `/fr/...`) are not
+affected.
